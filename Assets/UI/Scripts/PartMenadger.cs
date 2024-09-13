@@ -13,7 +13,7 @@ public class PartMenadger : MonoBehaviour
     private int a = 0;
     private float howManyStart;
     private List<GameObject> parts = new List<GameObject>();
-    private int lastKey = 0;
+    private int lastKey;
     private int beforLastKey;
     private int howManyChois = 0;
 
@@ -115,7 +115,10 @@ public class PartMenadger : MonoBehaviour
         {
            if (beforLastKey == index || lastKey == index)
             {
-                throw new ArgumentException($"I cant chous this part");
+                if(howManyChois > 1) 
+                {
+                    throw new ArgumentException($"You cant chous this part");
+                }
             }
         }
 
