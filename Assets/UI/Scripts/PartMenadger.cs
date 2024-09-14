@@ -140,4 +140,11 @@ public class PartMenadger : MonoBehaviour
             lastKey = index;
         }
     }
+
+    public void WhenButtonClicked()
+    {
+       var UB = gameObject.GetComponent<UbgraidButton>();
+        UB.UbgraidChoisenPart(lastKey, beforLastKey, parts) ;
+    }
+
 }
