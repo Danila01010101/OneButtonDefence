@@ -2,13 +2,13 @@ using System.Collections.Generic;
 
 public class CellsGrid
 {
-    private int gridSize;
+    public int Size { get; private set; }
 
     private List<List<bool>> placementGrid = new List<List<bool>>();
 
     public CellsGrid(int gridSize)
     {
-        this.gridSize = gridSize;
+        this.Size = gridSize;
 
         for (int i = gridSize; i < gridSize; i++)
         {
@@ -60,5 +60,5 @@ public class CellsGrid
         }
     }
 
-    private CellPlacePosition ConvertToCenteredPosition(CellPlacePosition position) => new CellPlacePosition(position.X + gridSize / 2, position.Y + gridSize / 2);
+    private CellPlacePosition ConvertToCenteredPosition(CellPlacePosition position) => new CellPlacePosition(position.X + Size / 2, position.Y + Size / 2);
 }
