@@ -15,9 +15,15 @@ MonoBehaviour:
   <GridSize>k__BackingField: 100
   <CellSize>k__BackingField: 3.2
   <EarthBlocks>k__BackingField:
-  - {fileID: 919132149155446097, guid: 01acac1a2ef1b7240888a05f48b4a273, type: 3}
-  - {fileID: 919132149155446097, guid: ad068fa01eb61f146bef15e3f49861f2, type: 3}
-  - {fileID: 919132149155446097, guid: 75b4777c3339cab4b871b9266cfe392d, type: 3}
-  - {fileID: 919132149155446097, guid: 975f8a7a9d464c043af4bcb0063422d2, type: 3}
-  - {fileID: 919132149155446097, guid: 8f0ff4222b8f11e4f94b4f0844b37b18, type: 3}
+  - {fileID: 618068855174629929, guid: 8987fc757bf0b4142956f8bd744c80aa, type: 3}
+  - {fileID: 4711833516190144060, guid: f925a1820f8daa846a431cf62f62c8e7, type: 3}
+  - {fileID: 7003857209764836653, guid: 500372b7db3328e419ec5df6ffbc4a17, type: 3}
+  - {fileID: 2209826011940322675, guid: 964b60a804033294ea8b117eb4340b9f, type: 3}
+  - {fileID: 49771686623821801, guid: c873dee018bb7144d8097317513f23fa, type: 3}
+  - {fileID: 9064922914977122920, guid: 1ad2c5d2b76b53a49b6c388fb738ccff, type: 3}
+  - {fileID: 5554993568726305227, guid: aa48365c8492c5c4199e74bb195156fe, type: 3}
+  - {fileID: 8716300696771434294, guid: c42068d60305bec43abf1aa4bb26bd97, type: 3}
+  - {fileID: 2517525556825222708, guid: ad4b2966ab5a4e748803a918397fb093, type: 3}
+  - {fileID: 4912665412622915643, guid: 774b109edd3d7354da3eb56e5e4e4c5f, type: 3}
+  - {fileID: 2132185140179284094, guid: 5dcbb7792b46df249b5f9b6022122ed4, type: 3}
   <BuildingPrefabs>k__BackingField: []

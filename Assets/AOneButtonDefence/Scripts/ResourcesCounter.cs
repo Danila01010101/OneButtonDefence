@@ -1,13 +1,10 @@
 using UnityEngine;
 
-public class Resources : MonoBehaviour
+public class ResourcesCounter : MonoBehaviour
 {
-	public static Resources Instance;
+	public static ResourcesCounter Instance;
 
     public ResourcesData Data { get; private set; }
-
-    // должен быть этот скрипт в сцене, но ТОЛЬКО один
-    // для изменения из другого скрипта пишем Resources.Instance.Data += x; для изменения наших характеристик
 
     private void Awake()
     {
@@ -23,7 +20,8 @@ public class Resources : MonoBehaviour
     public class ResourcesData
     {
         public int FoodAmount { get; set; }
-
-        //остальная нужная статистика
+        public int Warriors { get; set; }
+        public int Materials { get; set; }
+        public int SurvivorSpirit { get; set; }
     }
 }
