@@ -10,9 +10,15 @@ public class CellsGrid
     {
         this.Size = gridSize;
 
-        for (int i = gridSize; i < gridSize; i++)
+        for (int i = 0; i < gridSize; i++)
         {
-            var newRow = new List<bool>(gridSize);
+            var newRow = new List<bool>();
+
+            for (int j = 0; j < gridSize; j++)
+            {
+                newRow.Add(false);
+            }
+
             placementGrid.Add(newRow);
         }
     }
@@ -43,9 +49,7 @@ public class CellsGrid
 
     private bool IsPlaceBusy(CellPlacePosition position)
     {
-        CellPlacePosition centeredPosition = ConvertToCenteredPosition(position);
-
-        return placementGrid[centeredPosition.X][centeredPosition.Y];
+        return placementGrid[position.X][position.Y];
     }
 
     private CellPlacePosition GetFurtherCellPosition(CellPlacePosition position)

@@ -19,9 +19,11 @@ public class WorldCreator : GridUser
         {
             for (int j = 0; j < grid.Size; j++)
             {
+                var blockPlacingIndexes = new CellPlacePosition(i, j);
                 var position = new Vector3 (i * data.CellSize, 0, j * data.CellSize);
                 var spawnedBlock = Instantiate(GetRandomEarthBlock(), position, Quaternion.identity);
                 spawnedBlock.transform.SetParent(blocksParent);
+                grid.Place(blockPlacingIndexes);
             }
         }
     }
