@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using UnityEngine;
 
-public class CellsGrid : MonoBehaviour
+public class CellsGrid
 {
     private int gridSize;
 
     private List<List<bool>> placementGrid = new List<List<bool>>();
 
-    public void Initialize(int gridSize)
+    public CellsGrid(int gridSize)
     {
         this.gridSize = gridSize;
 
