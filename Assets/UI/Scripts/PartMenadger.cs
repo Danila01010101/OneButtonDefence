@@ -10,8 +10,8 @@ public class PartMenadger : MonoBehaviour
     [SerializeField] private float HowManyPart = 1;
     [SerializeField] private GameObject CanvasObject;
 
-    private int a = 0;
-    private float howManyStart;
+    private int partPlacingInterval = 0;
+    private float startButtonsAmount;
     private List<GameObject> parts = new List<GameObject>();
     private int lastKey;
     private int beforLastKey;
@@ -21,44 +21,44 @@ public class PartMenadger : MonoBehaviour
     {
         if (HowManyPart % 2 == 0)
         {
-            a = 50;
+            partPlacingInterval = 50;
 
-            howManyStart = HowManyPart / 2;
-            for (int i = 0; i < howManyStart; i++)
+            startButtonsAmount = HowManyPart / 2;
+            for (int i = 0; i < startButtonsAmount; i++)
             {
 
-                var spa = Instantiate(part, CanvasObject.transform.position + new Vector3(a, 0, 0), Quaternion.identity);
+                var spa = Instantiate(part, CanvasObject.transform.position + new Vector3(partPlacingInterval, 0, 0), Quaternion.identity);
                 spa.transform.SetParent(CanvasObject.transform);
 
                 parts.Add(spa);
 
-                var sp = Instantiate(part, CanvasObject.transform.position + new Vector3(-a, 0, 0), Quaternion.identity);
+                var sp = Instantiate(part, CanvasObject.transform.position + new Vector3(-partPlacingInterval, 0, 0), Quaternion.identity);
                 sp.transform.SetParent(CanvasObject.transform);
                 parts.Add(sp);
-                a = a + 100;
+                partPlacingInterval = partPlacingInterval + 100;
 
 
             }
         }
         else
         {
-            howManyStart = HowManyPart / 2 + 0.5f;
-            for (int i = 0; i < howManyStart; i++)
+            startButtonsAmount = HowManyPart / 2 + 0.5f;
+            for (int i = 0; i < startButtonsAmount; i++)
             {
 
-                var spawn = Instantiate(part, CanvasObject.transform.position + new Vector3(a, 0, 0), Quaternion.identity);
+                var spawn = Instantiate(part, CanvasObject.transform.position + new Vector3(partPlacingInterval, 0, 0), Quaternion.identity);
                 spawn.transform.SetParent(CanvasObject.transform);
                 parts.Add(spawn);
 
 
-                if (a != 0)
+                if (partPlacingInterval != 0)
                 {
-                    var spaw = Instantiate(part, CanvasObject.transform.position + new Vector3(-a, 0, 0), Quaternion.identity);
+                    var spaw = Instantiate(part, CanvasObject.transform.position + new Vector3(-partPlacingInterval, 0, 0), Quaternion.identity);
                     spaw.transform.SetParent(CanvasObject.transform);
                     parts.Add(spaw);
 
                 }
-                a = a + 100;
+                partPlacingInterval = partPlacingInterval + 100;
 
 
             }
@@ -143,7 +143,7 @@ public class PartMenadger : MonoBehaviour
 
     public void WhenButtonClicked()
     {
-       var UB = gameObject.GetComponent<UbgraidButton>();
+       var UB = gameObject.GetComponent<UpgradeButton>();
         UB.UbgraidChoisenPart(lastKey, beforLastKey, parts) ;
     }
 
