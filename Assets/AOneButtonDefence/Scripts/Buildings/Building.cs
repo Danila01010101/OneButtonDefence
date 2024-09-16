@@ -11,12 +11,12 @@ public class Building : MonoBehaviour
         resources = ResourcesCounter.Instance.Data;
     }
 
-    public virtual void ActivateSpawnBonus()
+    public virtual void ActivateSpawnAction()
     {
         
     }
 
-    public virtual void AddBonus()
+    public virtual void ActivateEndMoveAction()
     {
         resources.FoodAmount -= humanAmount;
     }

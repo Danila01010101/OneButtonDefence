@@ -27,7 +27,7 @@ public class CellsGrid
     {
         if (IsPlaceBusy(placePosition) == false)
         {
-            placementGrid[placePosition.X][placePosition.Y] = true;
+            placementGrid[placePosition.X][placePosition.Z] = true;
         }
         else
         {
@@ -49,20 +49,20 @@ public class CellsGrid
 
     private bool IsPlaceBusy(CellPlacePosition position)
     {
-        return placementGrid[position.X][position.Y];
+        return placementGrid[position.X][position.Z];
     }
 
     private CellPlacePosition GetFurtherCellPosition(CellPlacePosition position)
     {
-        if (position.X > position.Y)
+        if (position.X > position.Z)
         {
-            return new CellPlacePosition(position.X, position.Y + 1);
+            return new CellPlacePosition(position.X, position.Z + 1);
         }
         else
         {
-            return new CellPlacePosition(position.X + 1, position.Y);
+            return new CellPlacePosition(position.X + 1, position.Z);
         }
     }
 
-    private CellPlacePosition ConvertToCenteredPosition(CellPlacePosition position) => new CellPlacePosition(position.X + Size / 2, position.Y + Size / 2);
+    private CellPlacePosition ConvertToCenteredPosition(CellPlacePosition position) => new CellPlacePosition(position.X + Size / 2, position.Z + Size / 2);
 }

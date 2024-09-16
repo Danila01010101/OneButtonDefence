@@ -1,6 +1,6 @@
 using UnityEngine;
 
-	public class MilitaryCamp : MonoBehaviour
-	{
-    	
-	}
+public class MilitaryCamp : Building
+{
+    
+}

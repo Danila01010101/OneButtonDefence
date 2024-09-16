@@ -1,13 +1,13 @@
 public class Factory : Building
 {
-    public override void ActivateSpawnBonus()
+    public override void ActivateSpawnAction()
     {
-        base.ActivateSpawnBonus();
+        base.ActivateSpawnAction();
     }
 
-    public override void AddBonus()
+    public override void ActivateEndMoveAction()
     {
-        base.AddBonus();
+        base.ActivateEndMoveAction();
 
     }
 }

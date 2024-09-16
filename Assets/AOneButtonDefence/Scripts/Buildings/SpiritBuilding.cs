@@ -1,6 +1,6 @@
 using UnityEngine;
 
-	public class SpiritBuilding : MonoBehaviour
-	{
-    	
-	}
+public class SpiritBuilding : Building
+{
+    
+}
