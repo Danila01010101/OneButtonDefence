@@ -1,17 +1,19 @@
 using UnityEngine;
 
-public class WorldCreator : GridUser
+public class WorldCreator : MonoBehaviour
 {
     [SerializeField] private GameData data;
 
     private Transform blocksParent;
+    private CellsGrid grid;
 
-    private void Start()
+    public void SetupGrid(CellsGrid grid, GridChanger cellsChanger)
     {
-        GenerateWorld();
+        this.grid = grid;
+        GenerateWorld(cellsChanger);
     }
 
-    private void GenerateWorld()
+    private void GenerateWorld(GridChanger cellsChanger)
     {
         blocksParent = new GameObject("Earth blocks").transform;
 
@@ -19,13 +21,13 @@ public class WorldCreator : GridUser
         {
             for (int j = 0; j < grid.Size; j++)
             {
-                var blockPlacingIndexes = new CellPlacePosition(i, j);
                 var position = new Vector3 (i * data.CellSize, 0, j * data.CellSize);
                 var spawnedBlock = Instantiate(GetRandomEarthBlock(), position, Quaternion.identity);
                 spawnedBlock.transform.SetParent(blocksParent);
-                grid.Place(blockPlacingIndexes);
             }
         }
+
+        cellsChanger.Initialize(grid);
     }
 
     private GameObject GetRandomEarthBlock()
