@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class CellsGrid
 {
     public int Size { get; private set; }
 
     private List<List<bool>> placementGrid = new List<List<bool>>();
+    private CellPlacePosition centerPosition = new CellPlacePosition(49, 49);
 
     public CellsGrid(int gridSize)
     {
@@ -37,32 +39,64 @@ public class CellsGrid
 
     public CellPlacePosition GetBestCellPlace()
     {
-        CellPlacePosition newCellPlace = new CellPlacePosition(0, 0);
+        CellPlacePosition newCellPlace = centerPosition;
 
         while (IsPlaceBusy(newCellPlace))
         {
             newCellPlace = GetFurtherCellPosition(newCellPlace);
         }
 
+        Debug.Log(string.Format("Best place position is {0} : {1}", newCellPlace.X, newCellPlace.Z));
         return newCellPlace;
     }
 
-    private bool IsPlaceBusy(CellPlacePosition position)
-    {
-        return placementGrid[position.X][position.Z];
-    }
+    private bool IsPlaceBusy(CellPlacePosition position) => placementGrid[position.X][position.Z];
 
     private CellPlacePosition GetFurtherCellPosition(CellPlacePosition position)
     {
-        if (position.X > position.Z)
+        int checkDistance = 1;
+        List<CellPlacePosition> cellsAround = GetSurroundingCells(position, checkDistance);
+        List<CellPlacePosition> checkedCells = new List<CellPlacePosition>();
+        int randomIndex = Random.Range(0, cellsAround.Count);
+        CellPlacePosition furtherCellPosition = cellsAround[randomIndex];
+
+        while (IsPlaceBusy(furtherCellPosition))
         {
-            return new CellPlacePosition(position.X, position.Z + 1);
+            checkedCells.Add(furtherCellPosition);
+
+            if (checkedCells.Count == cellsAround.Count)
+            {
+                checkDistance++;
+                cellsAround = GetSurroundingCells(position, checkDistance);
+            }
+
+            randomIndex = Random.Range(0, cellsAround.Count);
+            furtherCellPosition = cellsAround[randomIndex];
         }
-        else
-        {
-            return new CellPlacePosition(position.X + 1, position.Z);
-        }
+
+        return furtherCellPosition;
     }
 
-    private CellPlacePosition ConvertToCenteredPosition(CellPlacePosition position) => new CellPlacePosition(position.X + Size / 2, position.Z + Size / 2);
+    private List<CellPlacePosition> GetSurroundingCells(CellPlacePosition position, int distance)
+    {
+        List<CellPlacePosition> elements = new List<CellPlacePosition>();
+
+        int rows = placementGrid.Count;
+        int cols = placementGrid[0].Count;
+        int x = position.X;
+        int z = position.Z;
+
+        for (int i =  - distance; i <= x + distance; i++)
+        {
+            for (int j = z - distance; j <= z + distance; j++)
+            {
+                if (i >= x && i < rows && j >= z && j < cols && (i != x || j != z))
+                {
+                    elements.Add(new CellPlacePosition(i, j));
+                }
+            }
+        }
+
+        return elements;
+    }
 }

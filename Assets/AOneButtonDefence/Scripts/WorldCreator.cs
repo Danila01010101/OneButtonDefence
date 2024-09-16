@@ -38,6 +38,7 @@ public class WorldCreator : MonoBehaviour
         CellPlacePosition placePosition = grid.GetBestCellPlace();
         Destroy(groundBlocks[placePosition.X][placePosition.Z].gameObject);
         SpawnBlock(data.CentralBlock, placePosition.X, placePosition.Z);
+        grid.Place(placePosition);
     }
 
     private Ground SpawnBlock(Ground block, int xCoordinate, int zCoordinate)
