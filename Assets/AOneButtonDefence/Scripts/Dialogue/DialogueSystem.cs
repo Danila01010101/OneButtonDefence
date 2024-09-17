@@ -35,6 +35,7 @@ public class DialogueSystem : MonoBehaviour
     //Первый кадр и дальше
     void Start()
     {
+        
         numReplic = 0;
         Text.text = DialogueData.Label[numLabel].Replic[numReplic];
 
@@ -46,7 +47,7 @@ public class DialogueSystem : MonoBehaviour
         }
 
         AnswerPanel.SetActive(false);
-        gameObject.SetActive(false);
+        gameObject.SetActive(true);
     }
     private void Update()
     {
@@ -87,19 +88,20 @@ public class DialogueSystem : MonoBehaviour
             return;
         }
 
-        if (DialogueData.Label[numLabel].Answers.Any() == false)
-        {
-            numLabel = DialogueData.Label[numLabel].NextLabel;
-            numReplic = 0;
-            showReplic = "";
-            StopAllCoroutines();
-            StartCoroutine(ShowReplic());
-            return;
-        }
+        //if (DialogueData.Label[numLabel].Answers.Any() == false)
+        //{
+        //    numLabel = DialogueData.Label[numLabel].NextLabel;
+        //    numReplic = 0;
+        //    showReplic = "";
+        //    StopAllCoroutines();
+        //    StartCoroutine(ShowReplic());
+        //    return;
+        //}
 
         else
         {
-            ShowMenu();
+            //ShowMenu();
+            Destroy(gameObject);
         }
     }
 
