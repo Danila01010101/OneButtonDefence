@@ -341,6 +341,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 90668660232762341, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 245.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822537111659856841, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 240
+      objectReference: {fileID: 0}
     - target: {fileID: 4226047205002958969, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
       propertyPath: DialogueData
       value: 
@@ -429,9 +437,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5245157486026277302, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 5245157486026277302, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -275
+      objectReference: {fileID: 0}
+    - target: {fileID: 5245157486026277302, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 75
+      objectReference: {fileID: 0}
     - target: {fileID: 5272876805176009859, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271028155486610511, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
+      propertyPath: m_text
+      value: '
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340014048093494301, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
+      propertyPath: m_text
+      value: '
+
+'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
