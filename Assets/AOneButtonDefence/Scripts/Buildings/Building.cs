@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+    [field : SerializeField] public Vector3 Offset { get; private set; }
+
     [SerializeField] private int humanAmount = 1;
 
     private ResourcesCounter.ResourcesData resources;

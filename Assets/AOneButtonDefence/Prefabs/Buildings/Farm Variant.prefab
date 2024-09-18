@@ -81,3 +81,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 501d3333daf42d14993128227bb5ecd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Offset>k__BackingField: {x: 0, y: -0.6, z: 0}
+  humanAmount: 1

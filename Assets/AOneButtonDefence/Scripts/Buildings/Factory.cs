@@ -8,6 +8,5 @@ public class Factory : Building
     public override void ActivateEndMoveAction()
     {
         base.ActivateEndMoveAction();
-
     }
 }

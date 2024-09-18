@@ -5,12 +5,14 @@ public class CellsGrid
 {
     public int Size { get; private set; }
 
+    private float cellsSpawnDistance;
     private List<List<bool>> placementGrid = new List<List<bool>>();
     private CellPlacePosition centerPosition = new CellPlacePosition(49, 49);
 
-    public CellsGrid(int gridSize)
+    public CellsGrid(int gridSize, float cellsSpawnDistance)
     {
         this.Size = gridSize;
+        this.cellsSpawnDistance = cellsSpawnDistance;
 
         for (int i = 0; i < gridSize; i++)
         {
@@ -49,6 +51,9 @@ public class CellsGrid
         Debug.Log(string.Format("Best place position is {0} : {1}", newCellPlace.X, newCellPlace.Z));
         return newCellPlace;
     }
+
+    public Vector3 GetWorldPositionByCoordinates(int xCoordinate, int zCoordinate) =>
+        new Vector3(xCoordinate * cellsSpawnDistance, 0, zCoordinate * cellsSpawnDistance);
 
     private bool IsPlaceBusy(CellPlacePosition position) => placementGrid[position.X][position.Z];
 
