@@ -157,6 +157,6 @@ public class PartMenadger : MonoBehaviour
             return;
         }
 
-        upgradeButton.UbgraidChoisenPart(lastKey, beforLastKey);
+        upgradeButton.UbgraidChoisenPart((UpgradeButton.Upgrades) lastKey, (UpgradeButton.Upgrades) beforLastKey);
     }
 }

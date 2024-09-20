@@ -23,6 +23,27 @@ public class BuildingSpawner : MonoBehaviour
         SetupBuildingPosition(SpawnMilitaryCamp(), grid.GetBestCellPlace());
     }
 
+    private void ActivateUpgrade(UpgradeButton.Upgrades upgrade)
+    {
+        switch (upgrade)
+        {
+            case UpgradeButton.Upgrades.Farm:
+                SetupBuildingPosition(SpawnFarm(), grid.GetBestCellPlace());
+                break;
+            case UpgradeButton.Upgrades.SpiritBuilding:
+                SetupBuildingPosition(SpawnSpiritBuilding(), grid.GetBestCellPlace());
+                break;
+            case UpgradeButton.Upgrades.MilitaryCamp:
+                SetupBuildingPosition(SpawnMilitaryCamp(), grid.GetBestCellPlace());
+                break;
+            case UpgradeButton.Upgrades.ResourcesCenter:
+                SetupBuildingPosition(SpawnFactory(), grid.GetBestCellPlace());
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+    }
+
     private Farm SpawnFarm() => buildingFacrory.SpawnBuilding<Farm>();
 
     private SpiritBuilding SpawnSpiritBuilding() => buildingFacrory.SpawnBuilding<SpiritBuilding>();
@@ -36,5 +57,15 @@ public class BuildingSpawner : MonoBehaviour
         building.transform.position = grid.GetWorldPositionByCoordinates(placePosition.X, placePosition.Z) + building.Offset;
         grid.Place(placePosition);
         BuildingSpawned?.Invoke(placePosition);
+    }
+
+    private void OnEnable()
+    {
+        UpgradeButton.Upgrade += ActivateUpgrade;
+    }
+
+    private void OnDisable()
+    {
+        UpgradeButton.Upgrade -= ActivateUpgrade;
     }
 }
