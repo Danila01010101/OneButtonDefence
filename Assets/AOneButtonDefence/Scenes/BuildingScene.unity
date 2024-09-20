@@ -350,6 +350,7 @@ MonoBehaviour:
   gameData: {fileID: 11400000, guid: 0a5f9a6cff94cdd4e8ba60c38855587b, type: 2}
   worldCreator: {fileID: 1053520090}
   changer: {fileID: 11821304}
+  partManagerPrefab: {fileID: 263800998971773282, guid: ecbdf0191c1061f4791cc69571515763, type: 3}
 --- !u!1 &1050227744
 GameObject:
   m_ObjectHideFlags: 0

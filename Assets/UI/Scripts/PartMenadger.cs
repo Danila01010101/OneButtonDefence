@@ -1,23 +1,24 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PartMenadger : MonoBehaviour
 {
-    [SerializeField] private GameObject partPrefab;
-    [SerializeField] private float partsAmount = 1;
+    [SerializeField] private Button partPrefab;
     [SerializeField] private GameObject CanvasObject;
+    [SerializeField] private UpgradeButton upgradeButton;
 
     private int partPlacingInterval = 0;
     private float startButtonsAmount;
-    private List<GameObject> parts = new List<GameObject>();
-    private int lastKey;
-    private int beforLastKey;
+    private List<Button> parts = new List<Button>();
+    private int lastKey = -1;
+    private int beforLastKey = -1;
     private int howManyChois = 0;
 
-    void Start()
+    public void Initialize(int partsAmount)
     {
         if (partsAmount % 2 == 0)
         {
@@ -38,6 +39,7 @@ public class PartMenadger : MonoBehaviour
         else
         {
             startButtonsAmount = partsAmount / 2 + 0.5f;
+
             for (int i = 0; i < startButtonsAmount; i++)
             {
                 var spawn = Instantiate(partPrefab, CanvasObject.transform.position + new Vector3(partPlacingInterval, 0, 0), Quaternion.identity);
@@ -49,14 +51,19 @@ public class PartMenadger : MonoBehaviour
                     var spaw = Instantiate(partPrefab, CanvasObject.transform.position + new Vector3(-partPlacingInterval, 0, 0), Quaternion.identity);
                     spaw.transform.SetParent(CanvasObject.transform);
                     parts.Add(spaw);
-
                 }
 
                 partPlacingInterval = partPlacingInterval + 100;
             }
-
         }
+
         parts = parts.OrderBy(part => part.transform.position.x).ToList();
+        
+        for (int i = 0; i < parts.Count; i++)
+        {
+            int partIndex = i;
+            parts[i].onClick.AddListener(delegate { ChoosePart(partIndex); });
+        }
     }
 
 
@@ -116,10 +123,8 @@ public class PartMenadger : MonoBehaviour
         {
             if (beforLastKey == index || lastKey == index)
             {
-                if(howManyChois > 1) 
-                {
-                    throw new ArgumentException($"You cant chous this part");
-                }
+                Debug.Log("Part already chosen");
+                return;
             }
         }
 
@@ -146,7 +151,12 @@ public class PartMenadger : MonoBehaviour
 
     public void WhenButtonClicked()
     {
-       var UB = gameObject.GetComponent<UpgradeButton>();
-        UB.UbgraidChoisenPart(lastKey, beforLastKey, parts) ;
+        if (lastKey == -1 || beforLastKey == -1)
+        {
+            Debug.Log("No upgrades choosen");
+            return;
+        }
+
+        upgradeButton.UbgraidChoisenPart(lastKey, beforLastKey);
     }
 }
