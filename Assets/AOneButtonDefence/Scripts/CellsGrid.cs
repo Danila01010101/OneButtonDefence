@@ -91,11 +91,11 @@ public class CellsGrid
         int x = position.X;
         int z = position.Z;
 
-        for (int i =  - distance; i <= x + distance; i++)
+        for (int i = x - distance; i <= x + distance; i++)
         {
             for (int j = z - distance; j <= z + distance; j++)
             {
-                if (i >= x && i < rows && j >= z && j < cols && (i != x || j != z))
+                if (i >= 0 && i < rows && j >= 0 && j < cols && (i != x || j != z))
                 {
                     elements.Add(new CellPlacePosition(i, j));
                 }
