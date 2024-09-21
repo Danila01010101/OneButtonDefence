@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1011ef0c09ebc72449e4af2c8ee919d0, type: 3}
+  m_Name: GameBasicData
+  m_EditorClassIdentifier: 
+  <GridSize>k__BackingField: 100
+  <CellSize>k__BackingField: 6.4
+  <Buildings>k__BackingField: {fileID: 11400000, guid: 6dd5925a9be5abb4a974feb6937caa99, type: 2}
+  <CentralBlock>k__BackingField: {fileID: 3221724995994378359, guid: 6cb43c6ee1bd9d74aa86f45effcd7636, type: 3}
+  <EmptyBlock>k__BackingField: {fileID: 4089697000895748911, guid: 1ad2c5d2b76b53a49b6c388fb738ccff, type: 3}
+  <EarthBlocks>k__BackingField:
+  - {fileID: 4191383479226347155, guid: 8987fc757bf0b4142956f8bd744c80aa, type: 3}
+  - {fileID: 5249005725236503806, guid: f925a1820f8daa846a431cf62f62c8e7, type: 3}
+  - {fileID: 4089697000895748911, guid: 1ad2c5d2b76b53a49b6c388fb738ccff, type: 3}
+  - {fileID: 3959854250558577336, guid: aa48365c8492c5c4199e74bb195156fe, type: 3}
+  - {fileID: 7470292577923272929, guid: c42068d60305bec43abf1aa4bb26bd97, type: 3}
+  - {fileID: 1015071137413198596, guid: 774b109edd3d7354da3eb56e5e4e4c5f, type: 3}
+  - {fileID: 3802131272404619910, guid: ad4b2966ab5a4e748803a918397fb093, type: 3}
+  - {fileID: 1903130265031218091, guid: 74df4a6088caf69449971cb64389f397, type: 3}
+  - {fileID: 5861004309827061891, guid: c873dee018bb7144d8097317513f23fa, type: 3}
+  - {fileID: 1275989571988941334, guid: 500372b7db3328e419ec5df6ffbc4a17, type: 3}

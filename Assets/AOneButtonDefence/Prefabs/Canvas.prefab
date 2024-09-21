@@ -1,5 +1,73 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1609723072322149319
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4781528985164583372}
+  - component: {fileID: 7069350774091154357}
+  - component: {fileID: 7759178686948649263}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4781528985164583372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609723072322149319}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -960, y: -540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5219540470573556592}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7069350774091154357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609723072322149319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!114 &7759178686948649263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609723072322149319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!1 &3144291445332204931
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,6 +80,7 @@ GameObject:
   - component: {fileID: 7673868623580846189}
   - component: {fileID: 4238861677234298896}
   - component: {fileID: 1509559820272725973}
+  - component: {fileID: 263800998971773282}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -33,6 +102,7 @@ RectTransform:
   m_Children:
   - {fileID: 6926629298687513816}
   - {fileID: 7751394839000459234}
+  - {fileID: 4781528985164583372}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -104,6 +174,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &263800998971773282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3144291445332204931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e4b684a7215ef47a13d382af47d34f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partPrefab: {fileID: 7422801006826303249, guid: 43e65ab3302d4f641a1535259ebffca6, type: 3}
+  CanvasObject: {fileID: 8992444948825409741}
+  upgradeButton: {fileID: 5885229899465172706}
 --- !u!1 &5558064745345908558
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,7 +336,6 @@ GameObject:
   - component: {fileID: 3828858728260488748}
   - component: {fileID: 5770847225223544120}
   - component: {fileID: 3834143225772389713}
-  - component: {fileID: 111139491196180793}
   - component: {fileID: 5885229899465172706}
   m_Layer: 5
   m_Name: Upgrade
@@ -363,7 +447,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 111139491196180793}
+      - m_Target: {fileID: 263800998971773282}
         m_TargetAssemblyTypeName: PartMenadger, Assembly-CSharp
         m_MethodName: WhenButtonClicked
         m_Mode: 1
@@ -375,21 +459,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &111139491196180793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6613561797847327753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77e4b684a7215ef47a13d382af47d34f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  part: {fileID: 5197255074521863479, guid: 43e65ab3302d4f641a1535259ebffca6, type: 3}
-  HowManyPart: 4
-  CanvasObject: {fileID: 8992444948825409741}
 --- !u!114 &5885229899465172706
 MonoBehaviour:
   m_ObjectHideFlags: 0
