@@ -22,6 +22,7 @@ public class DialogueSystem : MonoBehaviour
     
     private int numReplic;
     private int numLabel = 0;
+    private bool ASPlayingNeed;
 
     private string showReplic;
     private int countReplic;
@@ -147,12 +148,14 @@ public class DialogueSystem : MonoBehaviour
         foreach (var replic in DialogueData.Label[numLabel].Replic[numReplic])
         {
             yield return new WaitForSeconds(ReplicSpeed);
-            
             showReplic += replic;
+            var AS = GetComponent<AudioSource>();
+            if(AS.isPlaying == false)
+            {
+                AS.Play();
+            }
             Text.text = showReplic;
         }
         yield break;
     }
-
-   
 }
