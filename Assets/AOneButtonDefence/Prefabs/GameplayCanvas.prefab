@@ -576,7 +576,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Power
+  m_text: Warriors
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 3e80c33bb320e0547aa011e890a5533c, type: 2}
@@ -1509,6 +1509,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8069783787754665368}
+  - component: {fileID: 2296776529434325434}
   m_Layer: 5
   m_Name: StatisticWindow
   m_TagString: Untagged
@@ -1540,6 +1541,22 @@ RectTransform:
   m_AnchoredPosition: {x: 32, y: -15.200012}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2296776529434325434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6465434972758995494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3810a6dc5d6e4914e9d0af9a4170029c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodValueText: {fileID: 5003953191013894153}
+  spiritValueText: {fileID: 6478412237655823025}
+  strenghtValueText: {fileID: 7603662512091612599}
+  materialsValueText: {fileID: 5528503480398851068}
 --- !u!1 &6613561797847327753
 GameObject:
   m_ObjectHideFlags: 0

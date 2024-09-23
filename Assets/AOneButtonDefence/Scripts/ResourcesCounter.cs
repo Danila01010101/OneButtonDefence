@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ResourcesCounter : MonoBehaviour
@@ -13,15 +14,62 @@ public class ResourcesCounter : MonoBehaviour
             Destroy(Instance);
         }
 
+        Data = new ResourcesData();
         Instance = this;
     }
 
 
     public class ResourcesData
     {
-        public int FoodAmount { get; set; }
-        public int Warriors { get; set; }
-        public int Materials { get; set; }
-        public int SurvivorSpirit { get; set; }
+        public int FoodAmount 
+        {
+            get => foodAmount;
+
+            set
+            {
+                FoodAmountChanged?.Invoke(value);
+                foodAmount = value;
+            }
+        }
+        public int Warriors
+        {
+            get => warriors;
+
+            set
+            {
+                WarriorsAmountChanged?.Invoke(value);
+                warriors = value;
+            }
+        }
+        public int Materials
+        {
+            get => materials;
+
+            set
+            {
+                MaterialsAmountChanged?.Invoke(value);
+                materials = value;
+            }
+        }
+        public int SurvivorSpirit
+        {
+            get => survivorSpirit;
+
+            set
+            {
+                SpiritAmountChanged?.Invoke(value);
+                survivorSpirit = value;
+            }
+        }
+
+        private int foodAmount;
+        private int warriors;
+        private int materials;
+        private int survivorSpirit;
+
+        public Action<int> FoodAmountChanged;
+        public Action<int> WarriorsAmountChanged;
+        public Action<int> MaterialsAmountChanged;
+        public Action<int> SpiritAmountChanged;
     }
 }
