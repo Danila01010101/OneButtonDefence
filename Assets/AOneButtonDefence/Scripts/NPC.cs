@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class NPC : MonoBehaviour
 {
     public int Health;
@@ -9,7 +10,6 @@ public class NPC : MonoBehaviour
 
     private void Start()
     {
-        // Получаем компонент Rigidbody
         rb = GetComponent<Rigidbody>();
     }
 
@@ -20,13 +20,9 @@ public class NPC : MonoBehaviour
 
     public virtual void Movement() 
     {
-        // Направление движения NPC (например, вперед)
         Vector3 direction = -1*transform.forward;
-
-        // Вычисляем новую позицию
         Vector3 newPosition = rb.position + direction * Speed * Time.fixedDeltaTime;
-
-        // Перемещаем Rigidbody к новой позиции
+        rb.rotation.SetLookRotation(newPosition - transform.position);
         rb.MovePosition(newPosition);
     }
 
