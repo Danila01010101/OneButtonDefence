@@ -123,7 +123,7 @@ public class PartMenadger : MonoBehaviour
         {
             if (beforLastKey == index || lastKey == index)
             {
-                Debug.Log("Part already chosen");
+                Debug.Log("Part already chosen or value is incorrect");
                 return;
             }
         }
@@ -132,7 +132,7 @@ public class PartMenadger : MonoBehaviour
         {
             parts[index].transform.GetChild(0).gameObject.SetActive(true);
             parts[beforLastKey].transform.GetChild(0).gameObject.SetActive(false);
-            beforLastKey = 0;
+            beforLastKey = -1;
             beforLastKey = lastKey;
             lastKey = index;
         }
@@ -140,7 +140,7 @@ public class PartMenadger : MonoBehaviour
         {
             parts[index].transform.GetChild(0).gameObject.SetActive(true);
 
-            if (lastKey != 0)
+            if (lastKey != -1)
             {
                 beforLastKey = lastKey;
             }

@@ -12,6 +12,10 @@ public class BuildingSpawner : MonoBehaviour
     {
         buildingFacrory = new BuildingFactory(upgradeBuildings);
         this.grid = grid;
+    }
+
+    private void Start()
+    {
         SetupStartBuildings();
     }
 
