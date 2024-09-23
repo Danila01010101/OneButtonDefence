@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <GridSize>k__BackingField: 100
   <CellSize>k__BackingField: 6.4
+  <startButtonsAmount>k__BackingField: 4
   <Buildings>k__BackingField: {fileID: 11400000, guid: 6dd5925a9be5abb4a974feb6937caa99, type: 2}
   <CentralBlock>k__BackingField: {fileID: 3221724995994378359, guid: 6cb43c6ee1bd9d74aa86f45effcd7636, type: 3}
   <EmptyBlock>k__BackingField: {fileID: 4089697000895748911, guid: 1ad2c5d2b76b53a49b6c388fb738ccff, type: 3}
@@ -24,7 +25,8 @@ MonoBehaviour:
   - {fileID: 3959854250558577336, guid: aa48365c8492c5c4199e74bb195156fe, type: 3}
   - {fileID: 7470292577923272929, guid: c42068d60305bec43abf1aa4bb26bd97, type: 3}
   - {fileID: 1015071137413198596, guid: 774b109edd3d7354da3eb56e5e4e4c5f, type: 3}
-  - {fileID: 3802131272404619910, guid: ad4b2966ab5a4e748803a918397fb093, type: 3}
-  - {fileID: 1903130265031218091, guid: 74df4a6088caf69449971cb64389f397, type: 3}
+  - {fileID: -8005135534779997197, guid: ad4b2966ab5a4e748803a918397fb093, type: 3}
+  - {fileID: -5478917161353705431, guid: 5dcbb7792b46df249b5f9b6022122ed4, type: 3}
   - {fileID: 5861004309827061891, guid: c873dee018bb7144d8097317513f23fa, type: 3}
+  - {fileID: -338059589071703556, guid: 74df4a6088caf69449971cb64389f397, type: 3}
   - {fileID: 1275989571988941334, guid: 500372b7db3328e419ec5df6ffbc4a17, type: 3}

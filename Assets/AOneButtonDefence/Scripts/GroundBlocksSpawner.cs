@@ -48,6 +48,7 @@ public class GroundBlocksSpawner : MonoBehaviour
     {
         Ground spawnedBlock = Instantiate(block, grid.GetWorldPositionByCoordinates(xCoordinate, zCoordinate), Quaternion.identity);
         spawnedBlock.gameObject.transform.SetParent(blocksParent);
+        spawnedBlock.ActivateBonus();
         return spawnedBlock;
     }
 
