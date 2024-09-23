@@ -514,5 +514,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 0a5f9a6cff94cdd4e8ba60c38855587b, type: 2}
-  buildingSpawner: {fileID: 0}
-  blocksParent: {fileID: 0}
