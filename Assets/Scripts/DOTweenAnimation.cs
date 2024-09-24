@@ -34,19 +34,20 @@ public class DOTweenAnimation : MonoBehaviour
             point.transform.localScale = Vector3.zero;
             DoneHarvestPoints.RemoveAt(randpoint);
             GrowingPlants.Add(point);
-            Growing();
+            StartCoroutine(Growing());
 
             worker.transform.DOMove(SpawnPoint.position, WalkDuration);
             yield return new WaitForSeconds(WalkDuration);
         }
     }
 
-    private void Growing() 
+    IEnumerator Growing() 
     {
         for(int i = 0; i <= GrowingPlants.Count; i++)
         {
             var plants = GrowingPlants[i];
             plants.transform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), GrowTime);
+            yield return new WaitForSeconds(GrowTime);
             GrowingPlants.Remove(plants);
             DoneHarvestPoints.Add(plants);
         }
