@@ -4,6 +4,7 @@ public class Building : MonoBehaviour
 {
     [field : SerializeField] public Vector3 Offset { get; private set; }
 
+    [SerializeField] protected BuildingsData BuildingsData { get; private set; }
     [SerializeField] protected int humanAmount = 1;
 
     private ResourcesCounter.ResourcesData resources;
@@ -13,12 +14,11 @@ public class Building : MonoBehaviour
         resources = ResourcesCounter.Instance.Data;
     }
 
-    public virtual void ActivateSpawnAction()
-    {
-        
-    }
+    public virtual void ActivateSpawnAction() { }
 
-    public virtual void ActivateEndMoveAction()
+    protected virtual void SetupData() { }
+
+    protected virtual void ActivateEndMoveAction()
     {
         resources.FoodAmount -= humanAmount;
     }

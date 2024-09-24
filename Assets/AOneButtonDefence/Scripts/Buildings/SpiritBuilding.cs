@@ -1,14 +1,22 @@
 public class SpiritBuilding : Building
 {
+    private SpiritBuildingData data;
+
     public override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();
-        ResourcesCounter.Instance.Data.SurvivorSpirit += 15;
+        ResourcesCounter.Instance.Data.SurvivorSpirit += data.SpawnBonus;
     }
 
-    public override void ActivateEndMoveAction()
+    protected override void SetupData()
+    {
+        base.SetupData();
+        data = BuildingsData.SpiritBuildingData;
+    }
+
+    protected override void ActivateEndMoveAction()
     {
         base.ActivateEndMoveAction();
-        ResourcesCounter.Instance.Data.SurvivorSpirit += 15;
+        ResourcesCounter.Instance.Data.SurvivorSpirit += data.EveryTurnBonus;
     }
 }

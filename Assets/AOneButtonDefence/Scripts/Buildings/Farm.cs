@@ -1,14 +1,22 @@
 public class Farm : Building
 {
+    private FarmData data;
+
     public override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();
-        ResourcesCounter.Instance.Data.FoodAmount += 15;
+        ResourcesCounter.Instance.Data.FoodAmount += data.SpawnBonus;
     }
 
-    public override void ActivateEndMoveAction()
+    protected override void SetupData()
+    {
+        base.SetupData();
+        data = BuildingsData.FarmData;
+    }
+
+    protected override void ActivateEndMoveAction()
     {
         base.ActivateEndMoveAction();
-        ResourcesCounter.Instance.Data.FoodAmount += 5;
+        ResourcesCounter.Instance.Data.FoodAmount += data.EveryTurnBonus;
     }
 }

@@ -8,7 +8,7 @@ public class BuildingSpawner : MonoBehaviour
 
     public Action<CellPlacePosition> BuildingSpawned;
 
-    public void Initialize(CellsGrid grid, UpgradeBuildings upgradeBuildings)
+    public void Initialize(CellsGrid grid, BuildingsData upgradeBuildings)
     {
         buildingFacrory = new BuildingFactory(upgradeBuildings);
         this.grid = grid;

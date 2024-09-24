@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class BuildingFactory
 {
-    private UpgradeBuildings upgradeBuildings;
+    private BuildingsData upgradeBuildings;
     private List<Building> buildingsList = new List<Building>();
 
-    public BuildingFactory(UpgradeBuildings buildings)
+    public BuildingFactory(BuildingsData buildings)
     {
         buildingsList = buildings.buildings;
     }

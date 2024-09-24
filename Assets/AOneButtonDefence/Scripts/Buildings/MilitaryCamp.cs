@@ -2,18 +2,24 @@ using UnityEngine;
 
 public class MilitaryCamp : Building
 {
-    [SerializeField] private int spawnWarriorsAmount = 1;
+    private MilitaryCampData data;
 
     public override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();
-        AddWarrior(3);
+        AddWarrior(data.SpawnWarriorsAmount);
     }
 
-    public override void ActivateEndMoveAction()
+    protected override void SetupData()
+    {
+        base.SetupData();
+        data = BuildingsData.MilitaryCampData;
+    }
+
+    protected override void ActivateEndMoveAction()
     {
         base.ActivateEndMoveAction();
-        AddWarrior(spawnWarriorsAmount);
+        AddWarrior(data.EveryTurnWarriorsAmount);
     }
 
     private void AddWarrior(int amount)
