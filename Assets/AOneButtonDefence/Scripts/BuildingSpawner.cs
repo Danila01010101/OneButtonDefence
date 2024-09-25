@@ -32,16 +32,20 @@ public class BuildingSpawner : MonoBehaviour
         switch (upgrade)
         {
             case UpgradeButton.Upgrades.Farm:
-                SetupBuildingPosition(SpawnFarm(), grid.GetBestCellPlace());
+                Farm farm = SpawnFarm();
+                SetupBuildingPosition(farm, grid.GetBestCellPlace());
                 break;
             case UpgradeButton.Upgrades.SpiritBuilding:
-                SetupBuildingPosition(SpawnSpiritBuilding(), grid.GetBestCellPlace());
+                SpiritBuilding spiritBuilding = SpawnSpiritBuilding();
+                SetupBuildingPosition(spiritBuilding, grid.GetBestCellPlace());
                 break;
             case UpgradeButton.Upgrades.MilitaryCamp:
+                MilitaryCamp militaryCamp = SpawnMilitaryCamp();
                 SetupBuildingPosition(SpawnMilitaryCamp(), grid.GetBestCellPlace());
                 break;
             case UpgradeButton.Upgrades.ResourcesCenter:
-                SetupBuildingPosition(SpawnFactory(), grid.GetBestCellPlace());
+                Factory resourcesCenter = SpawnFactory();
+                SetupBuildingPosition(resourcesCenter, grid.GetBestCellPlace());
                 break;
             default:
                 throw new NotImplementedException();

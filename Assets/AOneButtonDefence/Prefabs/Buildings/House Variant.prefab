@@ -84,10 +84,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a438cff62809b4e9f48976f5af72ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildingsData: {fileID: 11400000, guid: 6dd5925a9be5abb4a974feb6937caa99, type: 2}
   <Offset>k__BackingField: {x: 0, y: -0.6, z: 0}
+  <BuildingsData>k__BackingField: {fileID: 11400000, guid: 6dd5925a9be5abb4a974feb6937caa99, type: 2}
   humanAmount: 1
-  spawnWarriorsAmount: 1
 --- !u!1 &5478306531379851010 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: ab9944c38d5aef34bbe08552fc05f37b, type: 3}
