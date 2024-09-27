@@ -8,10 +8,10 @@ public class Farm : Building
         ResourcesCounter.Instance.Data.FoodAmount += data.SpawnBonus;
     }
 
-    protected override void SetupData()
+    public override void SetupData(BuildingsData buildingsData)
     {
-        base.SetupData();
-        data = BuildingsData.FarmData;
+        data = buildingsData.FarmData;
+        humanAmount = data.StartHumanAmount;
     }
 
     protected override void ActivateEndMoveAction()

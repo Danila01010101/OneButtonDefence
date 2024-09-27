@@ -8,10 +8,11 @@ public class SpiritBuilding : Building
         ResourcesCounter.Instance.Data.SurvivorSpirit += data.SpawnBonus;
     }
 
-    protected override void SetupData()
+    public override void SetupData(BuildingsData buildingsData)
     {
-        base.SetupData();
-        data = BuildingsData.SpiritBuildingData;
+        base.SetupData(buildingsData);
+        data = buildingsData.SpiritBuildingData;
+        humanAmount = data.StartHumanAmount;
     }
 
     protected override void ActivateEndMoveAction()

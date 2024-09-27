@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class BuildingFactory
 {
-    private BuildingsData upgradeBuildings;
+    private BuildingsData buildingsData;
     private List<Building> buildingsList = new List<Building>();
 
-    public BuildingFactory(BuildingsData buildings)
+    public BuildingFactory(BuildingsData buildingsData)
     {
-        buildingsList = buildings.buildings;
+        this.buildingsData = buildingsData;
+        buildingsList = buildingsData.buildingsList;
     }
 
     public T SpawnBuilding<T>() where T : Building
@@ -20,11 +21,12 @@ public class BuildingFactory
             if (building is T)
             {
                 Building spawnedBuilding = MonoBehaviour.Instantiate(building);
+                spawnedBuilding.SetupData(buildingsData);
                 spawnedBuilding.ActivateSpawnAction();
                 return spawnedBuilding as T;
             }
         }
 
-        throw new System.ArgumentException("Invalid type of building");
+        throw new System.ArgumentException("Invalid type of building or building list is incorrect");
     }
 }
