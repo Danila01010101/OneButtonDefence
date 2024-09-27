@@ -10,10 +10,10 @@ public class MilitaryCamp : Building
         AddWarrior(data.SpawnWarriorsAmount);
     }
 
-    protected override void SetupData()
+    public override void SetupData(BuildingsData buildingsData)
     {
-        base.SetupData();
-        data = BuildingsData.MilitaryCampData;
+        base.SetupData(buildingsData);
+        data = buildingsData.MilitaryCampData;
     }
 
     protected override void ActivateEndMoveAction()

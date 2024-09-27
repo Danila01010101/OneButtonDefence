@@ -8,10 +8,11 @@ public class Factory : Building
         ResourcesCounter.Instance.Data.Materials += data.SpawnBonus;
     }
 
-    protected override void SetupData()
+    public override void SetupData(BuildingsData buildingsData)
     {
-        base.SetupData();
-        data = BuildingsData.FactoryData;
+        base.SetupData(buildingsData);
+        data = buildingsData.FactoryData;
+        humanAmount = data.StartHumanAmount;
     }
 
     protected override void ActivateEndMoveAction()

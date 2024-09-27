@@ -84,8 +84,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56fbcf38cd70f3141bf8ff59b2136158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildingsData: {fileID: 11400000, guid: 6dd5925a9be5abb4a974feb6937caa99, type: 2}
   <Offset>k__BackingField: {x: 0, y: -0.6, z: 0}
+  <BuildingsData>k__BackingField: {fileID: 11400000, guid: 6dd5925a9be5abb4a974feb6937caa99, type: 2}
   humanAmount: 1
 --- !u!1 &6873690972613351004 stripped
 GameObject:

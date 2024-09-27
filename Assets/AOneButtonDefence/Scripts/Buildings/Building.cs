@@ -4,8 +4,7 @@ public class Building : MonoBehaviour
 {
     [field : SerializeField] public Vector3 Offset { get; private set; }
 
-    [SerializeField] protected BuildingsData BuildingsData { get; private set; }
-    [SerializeField] protected int humanAmount = 1;
+    protected int humanAmount;
 
     private ResourcesCounter.ResourcesData resources;
 
@@ -16,7 +15,7 @@ public class Building : MonoBehaviour
 
     public virtual void ActivateSpawnAction() { }
 
-    protected virtual void SetupData() { }
+    public virtual void SetupData(BuildingsData buildingsData) { }
 
     protected virtual void ActivateEndMoveAction()
     {
