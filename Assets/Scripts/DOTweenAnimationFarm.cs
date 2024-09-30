@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DOTweenAnimation : MonoBehaviour
+public class DOTweenAnimationFarm : MonoBehaviour
 {
     public GameObject Human;
     public Transform SpawnPoint;
