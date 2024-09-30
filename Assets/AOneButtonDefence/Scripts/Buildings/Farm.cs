@@ -11,7 +11,8 @@ public class Farm : Building
     public override void SetupData(BuildingsData buildingsData)
     {
         data = buildingsData.FarmData;
-        humanAmount = data.StartHumanAmount;
+        cost = data.Cost;
+        foodPerTurnAmount = data.FoodPerTurnAmount;
     }
 
     protected override void ActivateEndMoveAction()

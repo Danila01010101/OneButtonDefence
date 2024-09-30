@@ -10,9 +10,9 @@ public class Factory : Building
 
     public override void SetupData(BuildingsData buildingsData)
     {
-        base.SetupData(buildingsData);
         data = buildingsData.FactoryData;
-        humanAmount = data.StartHumanAmount;
+        cost = data.Cost;
+        foodPerTurnAmount = data.FoodPerTurnAmount;
     }
 
     protected override void ActivateEndMoveAction()

@@ -10,9 +10,9 @@ public class SpiritBuilding : Building
 
     public override void SetupData(BuildingsData buildingsData)
     {
-        base.SetupData(buildingsData);
         data = buildingsData.SpiritBuildingData;
-        humanAmount = data.StartHumanAmount;
+        cost = data.Cost;
+        foodPerTurnAmount = data.FoodPerTurnAmount;
     }
 
     protected override void ActivateEndMoveAction()
