@@ -60,7 +60,9 @@ public class GroundBlocksSpawner : MonoBehaviour
 
     private void ReplaceBlockWithDefaultBlock(CellPlacePosition placePosition)
     {
-        Destroy(groundBlocks[placePosition.X][placePosition.Z].gameObject);
+        Ground replacedBlock = groundBlocks[placePosition.X][placePosition.Z];
+        replacedBlock.ActivateBonus();
+        Destroy(replacedBlock.gameObject);
         SpawnBlock(data.EmptyBlock, placePosition.X, placePosition.Z);
     }
 
