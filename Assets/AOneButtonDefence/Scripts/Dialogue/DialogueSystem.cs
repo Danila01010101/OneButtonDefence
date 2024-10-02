@@ -1,16 +1,13 @@
 ﻿using Adventurer;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// (https://vk.com/video-149258223_456242495)
 public class DialogueSystem : MonoBehaviour
 {
     public DialogueData DialogueData;
-
     public TextMeshProUGUI Name;
     public TextMeshProUGUI Text;
     public GameObject AnswerPanel;
@@ -29,11 +26,6 @@ public class DialogueSystem : MonoBehaviour
 
     private bool activeChangeReplic = true;
 
-    //До первого кадра
-    private void Awake()
-    {
-    }
-    //Первый кадр и дальше
     void Start()
     {
         
@@ -50,6 +42,7 @@ public class DialogueSystem : MonoBehaviour
         AnswerPanel.SetActive(false);
         gameObject.SetActive(true);
     }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -88,20 +81,8 @@ public class DialogueSystem : MonoBehaviour
             StartCoroutine(ShowReplic());
             return;
         }
-
-        //if (DialogueData.Label[numLabel].Answers.Any() == false)
-        //{
-        //    numLabel = DialogueData.Label[numLabel].NextLabel;
-        //    numReplic = 0;
-        //    showReplic = "";
-        //    StopAllCoroutines();
-        //    StartCoroutine(ShowReplic());
-        //    return;
-        //}
-
         else
         {
-            //ShowMenu();
             Destroy(gameObject);
         }
     }
