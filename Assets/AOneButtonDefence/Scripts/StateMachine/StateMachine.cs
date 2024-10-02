@@ -1,14 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class StateMachine
 {
     protected IState currentState;
+    protected Dictionary<string, IState> states;
 
-    public void ChangeState(IState newState)
+    public void ChangeState(string stateName)
     {
         currentState?.Exit();
 
-        currentState = newState;
+        currentState = states[stateName];
 
         currentState.Enter();
     }
