@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class Building : MonoBehaviour
+public abstract class Building : MonoBehaviour
 {
     [field : SerializeField] public Vector3 Offset { get; private set; }
 
-    protected int humanAmount;
+    protected int foodPerTurnAmount;
+    protected int cost;
 
     private ResourcesCounter.ResourcesData resources;
 
@@ -13,13 +14,16 @@ public class Building : MonoBehaviour
         resources = ResourcesCounter.Instance.Data;
     }
 
-    public virtual void ActivateSpawnAction() { }
+    public virtual void ActivateSpawnAction()
+    {
+        ResourcesCounter.Instance.Data.Materials -= cost;
+    }
 
-    public virtual void SetupData(BuildingsData buildingsData) { }
+    public abstract void SetupData(BuildingsData buildingsData);
 
     protected virtual void ActivateEndMoveAction()
     {
-        resources.FoodAmount -= humanAmount;
+        resources.FoodAmount -= foodPerTurnAmount;
     }
 
     private void OnEnable()
