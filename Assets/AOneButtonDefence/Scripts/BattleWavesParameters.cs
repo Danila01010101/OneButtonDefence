@@ -12,6 +12,6 @@ public class BattleWavesParameters : ScriptableObject
     {
         [field: SerializeField] public int amountOfEnemySpawns = 3;
         [field: SerializeField] public int enemiesAmountPerSpawn = 2;
-        [field: SerializeField] public int spawnInterval = 3;
+        [field: SerializeField] public float spawnInterval = 3;
     }
 }
