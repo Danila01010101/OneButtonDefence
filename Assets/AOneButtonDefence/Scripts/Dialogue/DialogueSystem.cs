@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
 public class DialogueSystem : MonoBehaviour
 {
     public DialogueData DialogueData;
@@ -26,9 +27,11 @@ public class DialogueSystem : MonoBehaviour
 
     private bool activeChangeReplic = true;
 
+    private AudioSource audioSource;
+
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
         numReplic = 0;
         Text.text = DialogueData.Label[numLabel].Replic[numReplic];
 
@@ -130,10 +133,9 @@ public class DialogueSystem : MonoBehaviour
         {
             yield return new WaitForSeconds(ReplicSpeed);
             showReplic += replic;
-            var AS = GetComponent<AudioSource>();
-            if(AS.isPlaying == false)
+            if(audioSource.isPlaying == false)
             {
-                AS.Play();
+                audioSource.Play();
             }
             Text.text = showReplic;
         }
