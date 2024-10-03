@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GroundBlocksSpawner : MonoBehaviour
 {
-    [SerializeField] private GameData data;
+    [SerializeField] private WorldGenerationData data;
 
     private List<List<Ground>> groundBlocks = new List<List<Ground>>();
     private BuildingSpawner buildingSpawner;

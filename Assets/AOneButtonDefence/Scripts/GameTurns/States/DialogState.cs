@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class DialogState : IState
 {
+    private IStateChanger stateMachine;
     private DialogueSystem startDialogPrefab;
-    private DialogueSystem spawnedDialogCanvas;
+    private DialogueSystem spawnedDialog;
     private Canvas gamePlayCanvas;
 
-    public DialogState(DialogueSystem newDialog)
+    public DialogState(IStateChanger stateMachine, DialogueSystem newDialog)
     {
+        this.stateMachine = stateMachine;
         startDialogPrefab = newDialog;
     }
 
@@ -18,50 +20,36 @@ public class DialogState : IState
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+        RemoveStartCanvas();
     }
 
-    public void HandleInput()
+    public void HandleInput() { }
+
+    public void OnAnimationEnterEvent() { } 
+
+    public void OnAnimationExitEvent() { }
+
+    public void OnAnimationTransitionEvent() { }
+
+    public void OnTriggerEnter(Collider collider) { }
+
+    public void OnTriggerExit(Collider collider) { }
+
+    public void PhysicsUpdate() { }
+
+    public void Update() { }
+
+    private void SpawnDialogCanvas()
+    { 
+        spawnedDialog = MonoBehaviour.Instantiate(startDialogPrefab);
+        spawnedDialog.DialogEnded += EndDialog;
+    }
+
+    private void RemoveStartCanvas() => MonoBehaviour.Destroy(spawnedDialog.gameObject);
+
+    private void EndDialog()
     {
-        throw new System.NotImplementedException();
+        spawnedDialog.DialogEnded -= EndDialog;
+        stateMachine.ChangeState(GameStateNames.Upgrade);
     }
-
-    public void OnAnimationEnterEvent()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnAnimationExitEvent()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnAnimationTransitionEvent()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnTriggerEnter(Collider collider)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnTriggerExit(Collider collider)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void PhysicsUpdate()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void Update()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    private void SpawnDialogCanvas() => spawnedDialogCanvas = MonoBehaviour.Instantiate(startDialogPrefab);
-
-    public void RemoveStartCanvas() => MonoBehaviour.Destroy(spawnedDialogCanvas.gameObject);
 }

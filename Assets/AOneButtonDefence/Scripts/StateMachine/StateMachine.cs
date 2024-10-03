@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class StateMachine
+public abstract class StateMachine : IStateChanger
 {
     protected IState currentState;
     protected Dictionary<string, IState> states;

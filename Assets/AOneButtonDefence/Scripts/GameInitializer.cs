@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameInitializer : MonoBehaviour
 {
     [SerializeField] private GameData gameData;
+    [SerializeField] private WorldGenerationData worldGenerationData;
     [SerializeField] private GroundBlocksSpawner worldCreator;
     [SerializeField] private BuildingSpawner changer;
     [SerializeField] private PartMenadger partManagerPrefab;
@@ -12,9 +13,9 @@ public class GameInitializer : MonoBehaviour
     private void Awake()
     {
         new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
-        var newGrid = new CellsGrid(gameData.GridSize, gameData.CellsInterval);
+        var newGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
         worldCreator.SetupGrid(newGrid, changer);
-        Instantiate(partManagerPrefab).Initialize(gameData.startButtonsAmount);
-        gameStateMachine = new GameStateMachine();
+        Instantiate(partManagerPrefab).Initialize(worldGenerationData.startButtonsAmount);
+        gameStateMachine = new GameStateMachine(worldCreator, gameData);
     }
 }

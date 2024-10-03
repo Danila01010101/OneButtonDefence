@@ -1,4 +1,5 @@
 ﻿using Adventurer;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -29,7 +30,9 @@ public class DialogueSystem : MonoBehaviour
 
     private AudioSource audioSource;
 
-    void Start()
+    public Action DialogEnded;
+
+    private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         numReplic = 0;
@@ -60,7 +63,7 @@ public class DialogueSystem : MonoBehaviour
         StartCoroutine(ShowReplic());
     }
 
-    void ChangeReplic() 
+    private void ChangeReplic() 
     {
         Debug.Log("numLabel:" + numLabel + "numReplic:" + numReplic);
         if (activeChangeReplic == false)
@@ -87,10 +90,11 @@ public class DialogueSystem : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            DialogEnded?.Invoke();
         }
     }
 
-    void ShowMenu()
+    private void ShowMenu()
     {
         countReplic = 0;
         activeChangeReplic = false;
@@ -127,7 +131,7 @@ public class DialogueSystem : MonoBehaviour
         StartCoroutine(ShowReplic());
     }
 
-    IEnumerator ShowReplic()
+    private IEnumerator ShowReplic()
     {
         foreach (var replic in DialogueData.Label[numLabel].Replic[numReplic])
         {

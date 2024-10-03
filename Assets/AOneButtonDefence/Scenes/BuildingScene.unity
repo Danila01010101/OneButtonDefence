@@ -391,11 +391,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d99624e5e8248224a9d2162c1eca3fd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameData: {fileID: 11400000, guid: 0a5f9a6cff94cdd4e8ba60c38855587b, type: 2}
+  gameData: {fileID: 11400000, guid: 1736fbe24c24d7e4c83db94aa59a4d30, type: 2}
+  worldGenerationData: {fileID: 11400000, guid: 0a5f9a6cff94cdd4e8ba60c38855587b, type: 2}
   worldCreator: {fileID: 1053520090}
   changer: {fileID: 11821304}
   partManagerPrefab: {fileID: 263800998971773282, guid: ecbdf0191c1061f4791cc69571515763, type: 3}
-  startDialogCanvas: {fileID: 1260974449}
 --- !u!1 &1050227744
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,4 +603,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ac7676b4ee15f44a3a1bfb9107e000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDialogCanvas: {fileID: 4246323348125233415, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}

@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class UpgradeState : IState
 {
+    private IStateChanger stateMachine;
+
+    public UpgradeState(IStateChanger stateMachine)
+    {
+        this.stateMachine = stateMachine;
+    }
+
     public void Enter()
     {
         throw new System.NotImplementedException();

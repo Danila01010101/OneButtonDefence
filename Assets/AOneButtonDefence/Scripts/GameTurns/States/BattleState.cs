@@ -1,7 +1,19 @@
+using System.Collections;
 using UnityEngine;
 
 public class BattleState : IState
 {
+    private IStateChanger stateMachine;
+    private MonoBehaviour coroutineStarter;
+    private BattleWavesParameters wavesParameters;
+
+    public BattleState(IStateChanger stateMachine, MonoBehaviour coroutineStarter, BattleWavesParameters wavesParameters)
+    {
+        this.stateMachine = stateMachine;
+        this.coroutineStarter = coroutineStarter;
+        this.wavesParameters = wavesParameters;
+    }
+
     public void Enter()
     {
         throw new System.NotImplementedException();
@@ -50,5 +62,15 @@ public class BattleState : IState
     public void Update()
     {
         throw new System.NotImplementedException();
+    }
+
+    private void StartWave()
+    {
+        coroutineStarter.StartCoroutine(StartEnemiesSpawn());
+    }
+
+    private IEnumerator StartEnemiesSpawn()
+    {
+        yield return null;
     }
 }
