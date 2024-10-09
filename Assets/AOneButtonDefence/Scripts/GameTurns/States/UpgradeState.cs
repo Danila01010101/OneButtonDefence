@@ -2,60 +2,42 @@ using UnityEngine;
 
 public class UpgradeState : IState
 {
+    private GameObject upgradeUI;
     private IStateChanger stateMachine;
 
-    public UpgradeState(IStateChanger stateMachine)
+    public UpgradeState(IStateChanger stateMachine, GameObject upgradeUI)
     {
         this.stateMachine = stateMachine;
+        this.upgradeUI = upgradeUI;
     }
 
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        UpgradeButton.TurnEnded += EndTurn;
+        upgradeUI.SetActive(true);
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+        UpgradeButton.TurnEnded -= EndTurn;
+        upgradeUI.SetActive(true);
     }
 
-    public void HandleInput()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void HandleInput() { }
 
-    public void OnAnimationEnterEvent()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnAnimationEnterEvent() { }
 
-    public void OnAnimationExitEvent()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnAnimationExitEvent() { }
 
-    public void OnAnimationTransitionEvent()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnAnimationTransitionEvent() { }
 
-    public void OnTriggerEnter(Collider collider)
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnTriggerEnter(Collider collider) { }
 
-    public void OnTriggerExit(Collider collider)
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnTriggerExit(Collider collider) { }
 
-    public void PhysicsUpdate()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void PhysicsUpdate() { }
 
-    public void Update()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void Update() { }
+
+    private void EndTurn() => stateMachine.ChangeState(GameStateNames.BattleState);
 }

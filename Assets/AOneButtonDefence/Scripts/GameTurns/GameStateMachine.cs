@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class GameStateMachine : StateMachine
 {
-    public GameStateMachine(MonoBehaviour coroutineStarter, GameData gameData)
+    public GameStateMachine(MonoBehaviour coroutineStarter, GameData gameData, GameObject upgradeUI)
     {
         states = new Dictionary<string, IState>()
         {
             { GameStateNames.StartDialog, new DialogState(this, gameData.StartDialogCanvas) },
             //{ GameStateNames.DragonDialog, new DialogState(this, gameData.EndTurnDialogCanvas) },
             { GameStateNames.BattleState, new BattleState(this, coroutineStarter, gameData.BattleWavesParameters) },
-            { GameStateNames.Upgrade, new UpgradeState(this) }
+            { GameStateNames.Upgrade, new UpgradeState(this, upgradeUI) }
         };
 
         ChangeState(GameStateNames.StartDialog);

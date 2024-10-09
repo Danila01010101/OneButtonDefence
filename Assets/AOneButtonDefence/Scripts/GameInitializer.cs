@@ -6,7 +6,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private WorldGenerationData worldGenerationData;
     [SerializeField] private GroundBlocksSpawner worldCreator;
     [SerializeField] private BuildingSpawner changer;
-    [SerializeField] private PartMenadger partManagerPrefab;
+    [SerializeField] private PartManager partManagerPrefab;
 
     private GameStateMachine gameStateMachine;
 
@@ -15,7 +15,8 @@ public class GameInitializer : MonoBehaviour
         new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
         var newGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
         worldCreator.SetupGrid(newGrid, changer);
-        Instantiate(partManagerPrefab).Initialize(worldGenerationData.startButtonsAmount);
-        gameStateMachine = new GameStateMachine(worldCreator, gameData);
+        PartManager upgradeCanvas = Instantiate(partManagerPrefab);
+        upgradeCanvas.Initialize(worldGenerationData.startButtonsAmount);
+        gameStateMachine = new GameStateMachine(worldCreator, gameData, upgradeCanvas.gameObject);
     }
 }
