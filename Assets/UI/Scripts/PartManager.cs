@@ -5,7 +5,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PartMenadger : MonoBehaviour
+public class PartManager : MonoBehaviour
 {
     [SerializeField] private Button partPrefab;
     [SerializeField] private GameObject CanvasObject;
