@@ -25,6 +25,6 @@ public class EnemieFactory
             }
         }
 
-        throw new System.ArgumentException("Invalid type of building or building list is incorrect");
+        throw new System.ArgumentException("Invalid type of enemy or enemy list is incorrect");
     }
 }

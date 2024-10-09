@@ -4,15 +4,26 @@ using UnityEngine;
 public abstract class StateMachine : IStateChanger
 {
     protected IState currentState;
-    protected Dictionary<string, IState> states;
+    protected List<IState> states;
 
-    public void ChangeState(string stateName)
+    public virtual void ChangeState(IState enwState)
     {
         currentState?.Exit();
 
-        currentState = states[stateName];
+        currentState = enwState;
 
         currentState.Enter();
+    }
+
+    public void ChangeState<T>() where T : IState
+    {
+        foreach (var state in states)
+        {
+            if (state is T)
+                ChangeState(state);
+        }
+
+        throw new System.ArgumentException("No such state as " + typeof(T));
     }
 
     public void HandleInput()

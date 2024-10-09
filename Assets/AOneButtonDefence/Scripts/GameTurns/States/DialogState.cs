@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class DialogState : IState
 {
-    private IStateChanger stateMachine;
+    private IStringStateChanger stateMachine;
     private DialogueSystem startDialogPrefab;
     private DialogueSystem spawnedDialog;
     private Canvas gamePlayCanvas;
 
-    public DialogState(IStateChanger stateMachine, DialogueSystem newDialog)
+    public DialogState(IStringStateChanger stateMachine, DialogueSystem newDialog)
     {
         this.stateMachine = stateMachine;
         startDialogPrefab = newDialog;
@@ -50,6 +50,6 @@ public class DialogState : IState
     private void EndDialog()
     {
         spawnedDialog.DialogEnded -= EndDialog;
-        stateMachine.ChangeState(GameStateNames.Upgrade);
+        stateMachine.ChangeStateWithString(GameStateNames.Upgrade);
     }
 }

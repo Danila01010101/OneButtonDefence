@@ -3,9 +3,9 @@ using UnityEngine;
 public class UpgradeState : IState
 {
     private GameObject upgradeUI;
-    private IStateChanger stateMachine;
+    private IStringStateChanger stateMachine;
 
-    public UpgradeState(IStateChanger stateMachine, GameObject upgradeUI)
+    public UpgradeState(IStringStateChanger stateMachine, GameObject upgradeUI)
     {
         this.stateMachine = stateMachine;
         this.upgradeUI = upgradeUI;
@@ -39,5 +39,5 @@ public class UpgradeState : IState
 
     public void Update() { }
 
-    private void EndTurn() => stateMachine.ChangeState(GameStateNames.BattleState);
+    private void EndTurn() => stateMachine.ChangeStateWithString(GameStateNames.BattleState);
 }

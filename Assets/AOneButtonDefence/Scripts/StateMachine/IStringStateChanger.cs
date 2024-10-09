@@ -1,10 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-public interface IStateChanger
+public interface IStringStateChanger
 {
-    public void ChangeState<T>() where T : IState;
-
-    public void ChangeState(IState state);
+    public void ChangeStateWithString(string stateName);
 
     public void HandleInput();
 
