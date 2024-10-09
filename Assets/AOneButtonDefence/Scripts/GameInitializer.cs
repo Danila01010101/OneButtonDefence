@@ -1,4 +1,5 @@
 using UnityEngine;
+using static GameStateMachine;
 
 public class GameInitializer : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class GameInitializer : MonoBehaviour
         worldCreator.SetupGrid(newGrid, changer);
         PartManager upgradeCanvas = Instantiate(partManagerPrefab);
         upgradeCanvas.Initialize(worldGenerationData.startButtonsAmount);
-        gameStateMachine = new GameStateMachine(worldCreator, gameData, upgradeCanvas.gameObject);
+        GameStateMachineData gameStateMachineData = new GameStateMachineData
+        (
+            upgradeCanvas.gameObject,
+            gameData,
+            worldCreator
+        );
+        gameStateMachine = new GameStateMachine(gameStateMachineData);
     }
 }
