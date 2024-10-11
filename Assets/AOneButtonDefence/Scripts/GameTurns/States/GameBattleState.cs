@@ -1,13 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class BattleState : IState
+public class GameBattleState : IState
 {
     private IStateChanger stateMachine;
     private MonoBehaviour coroutineStarter;
     private BattleWavesParameters wavesParameters;
 
-    public BattleState(IStateChanger stateMachine, MonoBehaviour coroutineStarter, BattleWavesParameters wavesParameters)
+    public GameBattleState(IStateChanger stateMachine, MonoBehaviour coroutineStarter, BattleWavesParameters wavesParameters)
     {
         this.stateMachine = stateMachine;
         this.coroutineStarter = coroutineStarter;

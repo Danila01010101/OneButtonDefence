@@ -1,54 +1,84 @@
 using UnityEngine;
 
-public class TargetFollowingState : IState
+public class TargetFollowingState : IState, ITargetFollower
 {
+    private IStateChanger stateMachine;
+    private ITargetAttacker targetAttacker;
+    private CharacterController characterController;
+    private Transform transform;
+    private Transform target;
+    private float speed;
+    private float attackRange;
+
+    public TargetFollowingState(IStateChanger stateMachine, CharacterController characterController, CharacterStats stats, ITargetAttacker targetAttacker)
+    {
+        this.stateMachine = stateMachine;
+        this.characterController = characterController;
+        this.speed = stats.Speed;
+        this.attackRange = stats.AttackRange;
+        transform = characterController.transform;
+        this.targetAttacker = targetAttacker;
+    }
+
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Following target" + target.gameObject.name);
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+        target = null;
     }
 
-    public void HandleInput()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void HandleInput() { }
 
-    public void OnAnimationEnterEvent()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnAnimationEnterEvent() { }
 
-    public void OnAnimationExitEvent()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnAnimationExitEvent() { }
 
-    public void OnAnimationTransitionEvent()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnAnimationTransitionEvent() { }
 
-    public void OnTriggerEnter(Collider collider)
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnTriggerEnter(Collider collider) { }
 
-    public void OnTriggerExit(Collider collider)
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnTriggerExit(Collider collider) { }
 
     public void PhysicsUpdate()
     {
-        throw new System.NotImplementedException();
+        float distanceToEnemy = Vector3.Distance(transform.position, target.position);
+
+        if (distanceToEnemy < attackRange)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange);
+            IDamagable foundTarget = FindTarget(colliders);
+
+            if (foundTarget != null)
+            {
+                targetAttacker.SetTarget(foundTarget);
+                stateMachine.ChangeState<FightState>();
+            }
+        }
     }
 
-    public void Update()
+    public void Update() 
     {
-        throw new System.NotImplementedException();
+        characterController.Move(GetDirection());
+    }
+
+    public void SetTarget(Transform transform) => target = transform;
+
+    private Vector3 GetDirection() => (target.position - transform.position).normalized * speed;
+    private IDamagable FindTarget(Collider[] colliders)
+    {
+        foreach (Collider collider in colliders)
+        {
+            IDamagable foundTarget;
+
+            if (collider.transform != transform && collider.gameObject.TryGetComponent<IDamagable>(out foundTarget))
+            {
+                return foundTarget;
+            }
+        }
+
+        return null;
     }
 }

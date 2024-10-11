@@ -3,38 +3,22 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class BasicKnight : MonoBehaviour, IDamagable
 {
-    private CharacterStats characterStats;
+    [SerializeField] private CharacterStats characterStats;
     private Health health;
     private CharacterController characterController;
-    private bool isLookingForTarget = true;
-    private float speed => characterStats.Speed;
+    private EnemieStateMachine stateMachine;
 
-    private void Awake()
+    private void Start()
     {
-        characterStats = GetComponent<CharacterStats>();
+        characterController = GetComponent<CharacterController>();
+        stateMachine = new EnemieStateMachine(transform, characterStats, characterController, this);
     }
 
     public void TakeDamage(int damage) => health.TakeDamage(damage);
 
-    private void Update()
-    {
-        if (isLookingForTarget)
-        {
-            LookForTarget();
-        }
-        else
-        {
+    public bool IsAlive() => health.amount > 0;
 
-        }
-    }
+    private void Update() => stateMachine.Update();
 
-    private void MoveTorvardsTarget()
-    {
-
-    }
-
-    private void LookForTarget()
-    {
-
-    }
+    private void FixedUpdate() => stateMachine.PhysicsUpdate();
 }

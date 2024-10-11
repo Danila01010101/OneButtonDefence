@@ -1,54 +1,62 @@
+using System.Collections;
 using UnityEngine;
 
-public class FightState : IState
+public class FightState : IState, ITargetAttacker
 {
+    private IStateChanger stateMachine;
+    private IDamagable target;
+    private MonoBehaviour coroutineStarter;
+    private float attackDelay;
+    private int damage;
+
+    public FightState(IStateChanger stateChanger, MonoBehaviour coroutineStarter, float attackDelay, int damage)
+    {
+        this.stateMachine = stateChanger;
+        this.coroutineStarter = coroutineStarter;
+        this.attackDelay = attackDelay;
+        this.damage = damage;
+    }
+
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        coroutineStarter.StartCoroutine(AtackProcess());
     }
 
-    public void Exit()
+    public void Exit() 
     {
-        throw new System.NotImplementedException();
+        target = null;
     }
 
-    public void HandleInput()
+    public void HandleInput() { }
+
+    public void OnAnimationEnterEvent() { }
+
+    public void OnAnimationExitEvent() { }
+
+    public void OnAnimationTransitionEvent() { }
+
+    public void OnTriggerEnter(Collider collider) { }
+
+    public void OnTriggerExit(Collider collider) { }
+
+    public void PhysicsUpdate() { }
+
+    public void Update() { }
+
+    public void SetTarget(IDamagable target)
     {
-        throw new System.NotImplementedException();
+        this.target = target;
     }
 
-    public void OnAnimationEnterEvent()
+    private IEnumerator AtackProcess()
     {
-        throw new System.NotImplementedException();
-    }
+        while (target.IsAlive())
+        {
+            target.TakeDamage(damage);
+            Debug.Log("Knight is attacking!");
+            yield return new WaitForSeconds(attackDelay);
+        }
 
-    public void OnAnimationExitEvent()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnAnimationTransitionEvent()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnTriggerEnter(Collider collider)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnTriggerExit(Collider collider)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void PhysicsUpdate()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void Update()
-    {
-        throw new System.NotImplementedException();
+        stateMachine.ChangeState<TargetSearchState>();
     }
 }

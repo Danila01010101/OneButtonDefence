@@ -1,13 +1,13 @@
 public class Health
 {
-    public float health { get; private set; }
+    public float amount { get; private set; }
 
     public void TakeDamage(int damage)
     {
         if (damage < 0)
             throw new System.ArgumentOutOfRangeException();
 
-        health -= damage;
+        amount -= damage;
     }
 
     public void Heal(int amount)
@@ -15,6 +15,6 @@ public class Health
         if (amount < 0)
             throw new System.ArgumentOutOfRangeException();
 
-        health += amount;
+        this.amount += amount;
     }
 }

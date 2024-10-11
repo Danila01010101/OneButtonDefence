@@ -20,7 +20,10 @@ public abstract class StateMachine : IStateChanger
         foreach (var state in states)
         {
             if (state is T)
+            {
                 ChangeState(state);
+                return;
+            }
         }
 
         throw new System.ArgumentException("No such state as " + typeof(T));

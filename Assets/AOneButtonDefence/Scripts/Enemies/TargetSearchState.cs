@@ -7,13 +7,15 @@ public class TargetSearchState : IState
     private Transform transform;
     private float detectRange;
     private LayerMask detectMask;
+    private ITargetFollower targetFollower;
 
-    public TargetSearchState(IStateChanger stateMachine, Transform transform, float detectRange, LayerMask detectMask)
+    public TargetSearchState(IStateChanger stateMachine, Transform transform, float detectRange, LayerMask detectMask, ITargetFollower targetFollower)
     {
         this.stateMachine = stateMachine;
         this.transform = transform;
         this.detectRange = detectRange;
         this.detectMask = detectMask;
+        this.targetFollower = targetFollower;
     }
 
     public void Enter() { }
@@ -42,7 +44,10 @@ public class TargetSearchState : IState
         Transform detectedEnemy = ChooseEnemy(detectedEnemies);
 
         if (detectedEnemy != null)
+        {
+            targetFollower.SetTarget(detectedEnemy);
             stateMachine.ChangeState<TargetFollowingState>();
+        }
     }
 
     public void Update() { }

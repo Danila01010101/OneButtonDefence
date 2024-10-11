@@ -11,7 +11,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
         {
             { GameStateNames.StartDialog, new DialogState(this, data.GameTurnsData.StartDialogCanvas) },
             //{ GameStateNames.DragonDialog, new DialogState(this, gameData.EndTurnDialogCanvas) },
-            { GameStateNames.BattleState, new BattleState(this, data.CoroutineStarter, data.GameTurnsData.BattleWavesParameters) },
+            { GameStateNames.BattleState, new GameBattleState(this, data.CoroutineStarter, data.GameTurnsData.BattleWavesParameters) },
             { GameStateNames.Upgrade, new UpgradeState(this, data.UpgradeUIGameobject) }
         };
 
