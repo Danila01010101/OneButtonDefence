@@ -8,20 +8,106 @@ public class DOTweenAnimationCitadel : MonoBehaviour
     public GameObject Core;
     public GameObject CenterCore;
     public GameObject BothCore;
+    public GameObject Gnome;
+    public List<Transform> SpawnPositions;
+    public List<Transform> EndPositions;
     public float RotationSpeedX = 45f; // Скорость вращения по оси X
     public float RotationSpeedY = 45f; // Скорость вращения по оси Y
     public float RotationSpeedZ = 45f; // Скорость вращения по оси Z
     public float MovingDistance = 0.1f; // Максимальная дистанция перемещения
     public float MovingSpeed = 1f; // Скорость перемещения
+    public float SpawnDelay;
+    public float WalkDuration;
+    public float FadeDuration;
+    public float PoklonTime;
+    public float Poklon;
+    public float Wait;
+    public int ModelChildIndex = 0;
+    public Color endvalue;
+    public Color startvalue;
+
+    private ChangeMaterial changeMaterial;
     private Vector3 startBothCorePosition; // Начальная позиция BothCore
     private float journeyProgress = 0f; // Прогресс движения
 
     private void Start()
     {
+        changeMaterial = gameObject.GetComponent<ChangeMaterial>();
         startBothCorePosition = BothCore.transform.position; // Запоминаем начальную позицию
+        StartCoroutine(StartSpawnGnomes());
     }
 
-    void Update()
+    // Спавняться на старте
+    private IEnumerator StartSpawnGnomes()
+    {
+        for (int i = 0; i < SpawnPositions.Count; i++)
+        {
+            GameObject gnome = Instantiate(Gnome, SpawnPositions[i].position, Quaternion.identity);
+            gnome.transform.GetChild(1).gameObject.SetActive(false);
+            Material material = gnome.transform.GetChild(ModelChildIndex).GetChild(ModelChildIndex).gameObject.GetComponent<Renderer>().material;
+            material.color = startvalue;
+            changeMaterial.SetTransparent(material);
+            material.DOColor(endvalue, FadeDuration);
+            yield return new WaitForSeconds(FadeDuration);
+            changeMaterial.SetOpaque(material);
+            yield return new WaitForSeconds(SpawnDelay);
+            StartCoroutine(AnimationGnomes(gnome, SpawnPositions[i], EndPositions[i]));
+        }
+    }
+
+    // Анимация движения и поклона гнома
+    private IEnumerator AnimationGnomes(GameObject gnome, Transform startposition, Transform endposition)
+    {
+        // Вращение к конечной точке только по оси Y
+        Vector3 directionToTarget = (endposition.position - gnome.transform.position).normalized;
+        float targetYRotation = Quaternion.LookRotation(directionToTarget).eulerAngles.y;
+        gnome.transform.DORotate(new Vector3(0, targetYRotation, 0), 0.5f);
+
+        // Движение гнома
+        Material material = gnome.transform.GetChild(ModelChildIndex).GetChild(ModelChildIndex).gameObject.GetComponent<Renderer>().material;
+        gnome.transform.DOMove(endposition.position, WalkDuration);
+        yield return new WaitForSeconds(WalkDuration);
+
+        // Поклон перед возвратом
+        gnome.transform.DOLocalRotate(new Vector3(Poklon, gnome.transform.localEulerAngles.y, gnome.transform.localEulerAngles.z), PoklonTime).OnComplete(() =>
+        {
+            gnome.transform.DOLocalRotate(new Vector3(0, gnome.transform.localEulerAngles.y, gnome.transform.localEulerAngles.z), PoklonTime);  // Возвращаем в исходное положение после поклона
+        });
+        yield return new WaitForSeconds(PoklonTime * 2 + Wait);
+
+        // Вращение к стартовой позиции только по оси Y
+        Vector3 directionToStart = (startposition.position - gnome.transform.position).normalized;
+        float returnYRotation = Quaternion.LookRotation(directionToStart).eulerAngles.y;
+        gnome.transform.DORotate(new Vector3(0, returnYRotation, 0), 0.5f);
+
+        // Возвращение к стартовой позиции
+        gnome.transform.DOMove(startposition.position, WalkDuration);
+        yield return new WaitForSeconds(WalkDuration);
+
+        // Исчезновение
+        changeMaterial.SetTransparent(material);
+        material.DOColor(startvalue, FadeDuration);
+        yield return new WaitForSeconds(FadeDuration);
+        Destroy(gnome);
+
+        // Спавн нового гнома
+        StartCoroutine(SpawnGnome(startposition, endposition));
+    }
+
+    private IEnumerator SpawnGnome(Transform startposition, Transform endposition)
+    {
+        GameObject gnome = Instantiate(Gnome, startposition.position, Quaternion.identity);
+        gnome.transform.GetChild(1).gameObject.SetActive(false);
+        Material material = gnome.transform.GetChild(ModelChildIndex).GetChild(ModelChildIndex).gameObject.GetComponent<Renderer>().material;
+        material.color = startvalue;
+        changeMaterial.SetTransparent(material);
+        material.DOColor(endvalue, FadeDuration);
+        yield return new WaitForSeconds(FadeDuration);
+        changeMaterial.SetOpaque(material);
+        StartCoroutine(AnimationGnomes(gnome, startposition, endposition));
+    }
+
+    private void Update()
     {
         // Вычисляем поворот для текущего кадра
         float rotationX = RotationSpeedX * Time.deltaTime;
@@ -36,9 +122,9 @@ public class DOTweenAnimationCitadel : MonoBehaviour
         journeyProgress += MovingSpeed * Time.deltaTime;
 
         // Периодическое значение для движения (от -1 до 1)
-        float t = Mathf.PingPong(journeyProgress, MovingDistance * 2) - MovingDistance; // Двигается от -MovingDistance до MovingDistance
+        float t = Mathf.PingPong(journeyProgress, MovingDistance * 2) - MovingDistance;
 
-        // Используем SmoothStep для плавного движения
+        // Плавное движение
         float smoothY = Mathf.SmoothStep(-MovingDistance, MovingDistance, (t + MovingDistance) / (MovingDistance * 2));
 
         // Обновляем позицию BothCore

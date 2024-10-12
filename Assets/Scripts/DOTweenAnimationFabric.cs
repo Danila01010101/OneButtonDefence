@@ -1,31 +1,84 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 
 public class DOTweenAnimationFabric : MonoBehaviour
 {
-    public int WorkersCount;
-    public GameObject WorkersPrefab;
-    public Transform WorkerSpawnPoint;
     public float SpawnDelay;
-    // Start is called before the first frame update
-    void Start()
+    public float WalkDuration;
+    public float WorkTime;
+    public float LookAtDuration;
+    public GameObject WorkersPrefab;
+    public List<Transform> WorkerSpawnPoints;
+    public List<Transform> WorkPoints;
+    public string Blocktag = "Coal";
+    public int Blockindex = 1;
+    public float ShakeStrenght = 90;
+    public int ShakeVibrato = 10;
+
+    [SerializeField] private List<GameObject> gnomes = new List<GameObject>();
+
+    private int WorkersCount;
+
+    private void Start()
     {
+        WorkersCount = WorkerSpawnPoints.Count;
         StartCoroutine(SpawnWorkers());
     }
 
-    IEnumerator SpawnWorkers() 
+    private IEnumerator SpawnWorkers()
     {
-        for (int i = 0; i < WorkersCount; i++) 
+        for (int i = 0; i < WorkersCount; i++)
         {
-            Instantiate(WorkersPrefab, WorkerSpawnPoint);
+            gnomes.Add(Instantiate(WorkersPrefab, WorkerSpawnPoints[i].position, Quaternion.identity));
             yield return new WaitForSeconds(SpawnDelay);
         }
-        StartCoroutine(WorkersAnimation());
+
+        foreach (GameObject gnome in gnomes)
+        {
+            StartCoroutine(WorkersAnimation(gnome));
+        }
     }
-    IEnumerator WorkersAnimation() 
+
+    private IEnumerator WorkersAnimation(GameObject gnome)
     {
-        yield return null;
+        int index = gnomes.IndexOf(gnome);
+        Vector3 workposition = WorkPoints[index].position;
+        Vector3 spawnposition = WorkerSpawnPoints[index].position;
+         GameObject[] test = GameObject.FindGameObjectsWithTag(Blocktag);
+        var example = gnome.transform.GetChild(Blockindex);
+        GameObject Block = null;
+
+        foreach (GameObject block in test)
+        {
+            if(block.transform == example)
+            {
+                Block = block;
+                break;
+            }
+        }
+
+        Block.SetActive(false);
+
+        while (true)
+        {
+            gnome.transform.DOLookAt(workposition, LookAtDuration);
+            gnome.transform.DOShakeRotation(WalkDuration, ShakeStrenght, ShakeVibrato);
+            gnome.transform.DOMove(workposition, WalkDuration);
+
+            yield return new WaitForSeconds(WalkDuration);
+            gnome.transform.DOShakeRotation(WalkDuration, ShakeStrenght, ShakeVibrato);
+            yield return new WaitForSeconds(WorkTime);
+            Block.SetActive(true);
+
+            gnome.transform.DOLookAt(spawnposition, LookAtDuration);
+            gnome.transform.DOShakeRotation(WalkDuration, ShakeStrenght, ShakeVibrato);
+            gnome.transform.DOMove(spawnposition, WalkDuration);
+
+            yield return new WaitForSeconds(WalkDuration);
+            Block.SetActive(false);
+        }
     }
 }
