@@ -9,6 +9,7 @@ public class GameBattleState : IState
     private BattleWavesParameters wavesParameters;
     private EnemieFactory enemieFactory;
     private Coroutine spawnCoroutine;
+    private int currentWaveIndex = 0;
 
     public GameBattleState(IStateChanger stateMachine, MonoBehaviour coroutineStarter, BattleWavesParameters wavesParameters, EnemiesData data)
     {
@@ -46,11 +47,22 @@ public class GameBattleState : IState
 
     private void StartWave()
     {
-        spawnCoroutine = coroutineStarter.StartCoroutine(StartEnemiesSpawn());
+        BattleWavesParameters.WaveData waveParameters = wavesParameters.waves[currentWaveIndex];
+        spawnCoroutine = coroutineStarter.StartCoroutine(StartEnemiesSpawn(waveParameters));
     }
 
-    private IEnumerator StartEnemiesSpawn()
+    private IEnumerator StartEnemiesSpawn(BattleWavesParameters.WaveData waveData)
     {
-        yield return null;
+        for (int i = 0; i < waveData.amountOfEnemySpawns; i++)
+        {
+            yield return new WaitForSeconds(waveData.spawnInterval);
+
+            for (int enemiesAmount = 0; enemiesAmount < waveData.amountOfEnemySpawns; enemiesAmount++)
+            {
+                enemieFactory.SpawnEnemy();
+            }
+        }
+
+        currentWaveIndex++;
     }
 }

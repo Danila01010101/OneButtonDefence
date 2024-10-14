@@ -12,7 +12,7 @@ public class EnemieFactory
         enemies = data.enemies;
     }
 
-    public T SpawnBuilding<T>() where T : Building
+    public T SpawnEnemy<T>(Vector3 position) where T : Building
     {
         for (int i = 0; i < enemies.Count; i++)
         {
@@ -20,7 +20,7 @@ public class EnemieFactory
 
             if (enemies is T)
             {
-                GameObject spawnedEnemy = MonoBehaviour.Instantiate(enemy);
+                GameObject spawnedEnemy = MonoBehaviour.Instantiate(enemy, position, Quaternion.identity);
                 return spawnedEnemy as T;
             }
         }

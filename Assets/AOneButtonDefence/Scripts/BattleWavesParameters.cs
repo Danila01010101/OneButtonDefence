@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Waves data", menuName = "ScriptableObjects/NewWaveData")]
 public class BattleWavesParameters : ScriptableObject
 {
-    [field : SerializeField] private List<WaveData> waves;
+    [field: SerializeField] public List<WaveData> waves { get; private set; }
 
     [Serializable]
     public class WaveData
