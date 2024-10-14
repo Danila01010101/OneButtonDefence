@@ -5,13 +5,13 @@ public class GameStateMachine : StateMachine, IStringStateChanger
 {
     private Dictionary<string, IState> stringStates;
 
-    public GameStateMachine(GameStateMachineData data)
+    public GameStateMachine(GameStateMachineData data, EnemiesData enemies)
     {
         stringStates = new Dictionary<string, IState>()
         {
             { GameStateNames.StartDialog, new DialogState(this, data.GameTurnsData.StartDialogCanvas) },
             //{ GameStateNames.DragonDialog, new DialogState(this, gameData.EndTurnDialogCanvas) },
-            { GameStateNames.BattleState, new GameBattleState(this, data.CoroutineStarter, data.GameTurnsData.BattleWavesParameters) },
+            { GameStateNames.BattleState, new GameBattleState(this, data.CoroutineStarter, data.GameTurnsData.BattleWavesParameters, enemies) },
             { GameStateNames.Upgrade, new UpgradeState(this, data.UpgradeUIGameobject) }
         };
 

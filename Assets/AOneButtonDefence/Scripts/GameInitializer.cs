@@ -4,6 +4,7 @@ using static GameStateMachine;
 public class GameInitializer : MonoBehaviour
 {
     [SerializeField] private GameData gameData;
+    [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
     [SerializeField] private GroundBlocksSpawner worldCreator;
     [SerializeField] private BuildingSpawner changer;
@@ -24,6 +25,6 @@ public class GameInitializer : MonoBehaviour
             gameData,
             worldCreator
         );
-        gameStateMachine = new GameStateMachine(gameStateMachineData);
+        gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData);
     }
 }

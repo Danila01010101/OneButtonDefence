@@ -20,8 +20,8 @@ public class EnemieFactory
 
             if (enemies is T)
             {
-                GameObject spawnedBuilding = MonoBehaviour.Instantiate(enemy);
-                return spawnedBuilding as T;
+                GameObject spawnedEnemy = MonoBehaviour.Instantiate(enemy);
+                return spawnedEnemy as T;
             }
         }
 
