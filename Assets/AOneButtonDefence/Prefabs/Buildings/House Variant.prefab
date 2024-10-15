@@ -63,6 +63,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ab9944c38d5aef34bbe08552fc05f37b, type: 3}
       insertIndex: -1
       addedObject: {fileID: -8881658859567159356}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ab9944c38d5aef34bbe08552fc05f37b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7453764361799450534}
     - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: ab9944c38d5aef34bbe08552fc05f37b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6166291844899677376}
@@ -85,8 +88,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Offset>k__BackingField: {x: 0, y: -0.6, z: 0}
-  <BuildingsData>k__BackingField: {fileID: 11400000, guid: 6dd5925a9be5abb4a974feb6937caa99, type: 2}
-  humanAmount: 1
+--- !u!114 &7453764361799450534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3569965974268041179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b547cb142f8d9e245aa0134434861466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WarriorPrefab: {fileID: 7684702100988935255, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+  Path:
+  - Path:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - Path:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - Path:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  SpawnDelay: 2
+  WalkDelay: 5
+  SleepTime: 10
+  SpawnCount: 5
+  TrainingDelay: 10
+  AttackDuration: 1
+  RotateDuration: 0.5
+  Z: -0.3
+  ShakeStrenght: 20
 --- !u!1 &5478306531379851010 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: ab9944c38d5aef34bbe08552fc05f37b, type: 3}
