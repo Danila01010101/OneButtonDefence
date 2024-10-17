@@ -14,7 +14,7 @@ public class GroundBlocksSpawner : MonoBehaviour
     {
         this.grid = grid;
         this.buildingSpawner = buildingSpawner;
-        buildingSpawner.BuildingSpawned += ReplaceBlockWithDefaultBlock;
+        buildingSpawner.CellFilled += ReplaceBlockWithDefaultBlock;
         GenerateWorld(buildingSpawner);
     }
 
@@ -68,6 +68,6 @@ public class GroundBlocksSpawner : MonoBehaviour
 
     private void OnDestroy()
     {
-        buildingSpawner.BuildingSpawned -= ReplaceBlockWithDefaultBlock;
+        buildingSpawner.CellFilled -= ReplaceBlockWithDefaultBlock;
     }
 }

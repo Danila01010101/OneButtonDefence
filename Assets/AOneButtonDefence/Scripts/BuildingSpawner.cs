@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
 
-public class BuildingSpawner : MonoBehaviour
+public class BuildingSpawner : MonoBehaviour, ICellPlacer
 {
     private CellsGrid grid;
     private BuildingFactory buildingFacrory;
 
-    public Action<CellPlacePosition> BuildingSpawned;
+    public Action<CellPlacePosition> CellFilled { get; set; }
 
     public void Initialize(CellsGrid grid, BuildingsData upgradeBuildings)
     {
@@ -64,7 +64,7 @@ public class BuildingSpawner : MonoBehaviour
     {
         building.transform.position = grid.GetWorldPositionByCoordinates(placePosition.X, placePosition.Z) + building.Offset;
         grid.Place(placePosition);
-        BuildingSpawned?.Invoke(placePosition);
+        CellFilled?.Invoke(placePosition);
     }
 
     private void OnEnable()

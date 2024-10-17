@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemieFactory
 {
     private EnemiesData data;
-    private List<GameObject> enemies = new List<GameObject>();
+    private List<Enemy> enemies = new List<Enemy>();
 
     public EnemieFactory(EnemiesData data)
     {
@@ -12,15 +12,15 @@ public class EnemieFactory
         enemies = data.enemies;
     }
 
-    public T SpawnEnemy<T>(Vector3 position) where T : Building
+    public T SpawnEnemy<T>(Vector3 position) where T : Enemy
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            GameObject enemy = enemies[i];
+            Enemy enemy = enemies[i];
 
             if (enemies is T)
             {
-                GameObject spawnedEnemy = MonoBehaviour.Instantiate(enemy, position, Quaternion.identity);
+                Enemy spawnedEnemy = MonoBehaviour.Instantiate(enemy, position, Quaternion.identity);
                 return spawnedEnemy as T;
             }
         }

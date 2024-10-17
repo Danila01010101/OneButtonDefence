@@ -1,9 +1,10 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class BasicKnight : MonoBehaviour, IDamagable
+public class Enemy : MonoBehaviour, IDamagable
 {
     [SerializeField] private CharacterStats characterStats;
+
     private Health health;
     private CharacterController characterController;
     private EnemieStateMachine stateMachine;

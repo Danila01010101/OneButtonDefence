@@ -56,10 +56,11 @@ public class GameBattleState : IState
         for (int i = 0; i < waveData.amountOfEnemySpawns; i++)
         {
             yield return new WaitForSeconds(waveData.spawnInterval);
+            Vector3 position = Vector3.zero;
 
             for (int enemiesAmount = 0; enemiesAmount < waveData.amountOfEnemySpawns; enemiesAmount++)
             {
-                enemieFactory.SpawnEnemy();
+                enemieFactory.SpawnEnemy<Enemy>(position);
             }
         }
 
