@@ -148,7 +148,7 @@ Transform:
   m_Children:
   - {fileID: 2293607769327776404}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &7762375295169582057
 CapsuleCollider:
@@ -212,3 +212,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterStats: {fileID: 11400000, guid: 4a1071477bb356043ad0a2f933ba70b5, type: 2}
+  render: {fileID: 3422744590764446703}

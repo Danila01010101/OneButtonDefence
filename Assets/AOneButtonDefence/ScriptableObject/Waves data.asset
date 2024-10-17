@@ -12,34 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58873bf6bf207f64aa94e0bfa1397581, type: 3}
   m_Name: Waves data
   m_EditorClassIdentifier: 
-  waves:
-  - amountOfEnemySpawns: 3
+  <waves>k__BackingField:
+  - amountOfEnemySpawns: 4
     enemiesAmountPerSpawn: 1
-    spawnInterval: 2
-  - amountOfEnemySpawns: 0
+    spawnInterval: 1
+  - amountOfEnemySpawns: 8
     enemiesAmountPerSpawn: 2
-    spawnInterval: 3
-  - amountOfEnemySpawns: 0
-    enemiesAmountPerSpawn: 2
-    spawnInterval: 3
-  - amountOfEnemySpawns: 0
-    enemiesAmountPerSpawn: 2
-    spawnInterval: 3
-  - amountOfEnemySpawns: 0
-    enemiesAmountPerSpawn: 2
-    spawnInterval: 3
-  - amountOfEnemySpawns: 0
-    enemiesAmountPerSpawn: 2
-    spawnInterval: 3
-  - amountOfEnemySpawns: 0
-    enemiesAmountPerSpawn: 2
-    spawnInterval: 3
-  - amountOfEnemySpawns: 0
-    enemiesAmountPerSpawn: 2
-    spawnInterval: 3
-  - amountOfEnemySpawns: 0
-    enemiesAmountPerSpawn: 2
-    spawnInterval: 3
-  - amountOfEnemySpawns: 0
-    enemiesAmountPerSpawn: 2
-    spawnInterval: 3
+    spawnInterval: 1
+  - amountOfEnemySpawns: 12
+    enemiesAmountPerSpawn: 3
+    spawnInterval: 1
+  - amountOfEnemySpawns: 8
+    enemiesAmountPerSpawn: 4
+    spawnInterval: 1

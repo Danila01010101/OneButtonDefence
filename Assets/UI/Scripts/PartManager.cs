@@ -18,6 +18,8 @@ public class PartManager : MonoBehaviour
     private int beforLastKey = -1;
     private int howManyChois = 0;
 
+    public UpgradeButton UpgradeButton => upgradeButton;
+
     public void Initialize(int partsAmount)
     {
         if (partsAmount % 2 == 0)

@@ -38,7 +38,7 @@ public class GroundBlocksSpawner : MonoBehaviour
 
     private void SpawnStartCamp()
     {
-        CellPlacePosition placePosition = grid.GetBestCellPlace();
+        CellPlaceCoordinates placePosition = grid.GetBestCellCoordinates();
         Destroy(groundBlocks[placePosition.X][placePosition.Z].gameObject);
         SpawnBlock(data.CentralBlock, placePosition.X, placePosition.Z);
         grid.Place(placePosition);
@@ -58,7 +58,7 @@ public class GroundBlocksSpawner : MonoBehaviour
         return data.EarthBlocks[blockIndex];
     }
 
-    private void ReplaceBlockWithDefaultBlock(CellPlacePosition placePosition)
+    private void ReplaceBlockWithDefaultBlock(CellPlaceCoordinates placePosition)
     {
         Ground replacedBlock = groundBlocks[placePosition.X][placePosition.Z];
         replacedBlock.ActivateBonus();

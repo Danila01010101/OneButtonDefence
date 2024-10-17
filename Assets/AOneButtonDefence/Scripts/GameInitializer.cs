@@ -12,12 +12,12 @@ public class GameInitializer : MonoBehaviour
 
     private GameStateMachine gameStateMachine;
     private PartManager upgradeCanvas;
+    private CellsGrid buildingsGrid;
 
     private void Awake()
     {
         SpawnResourceCounter();
         SpawnWorldGrid();
-        SetupBorderRememberer();
         SpawnUpgradeCanvas();
         SetupStateMachine();
     }
@@ -26,14 +26,8 @@ public class GameInitializer : MonoBehaviour
 
     private void SpawnWorldGrid()
     {
-        var newGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
-        worldCreator.SetupGrid(newGrid, buildingSpawner);
-    }
-
-    private void SetupBorderRememberer()
-    {
-        BorderRememberer borderRememberer = new GameObject("BorderRememberer").AddComponent<BorderRememberer>();
-        borderRememberer.Initialize(buildingSpawner, worldGenerationData.CellSize, gameData.EnemiesSpawnSpread);
+        buildingsGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
+        worldCreator.SetupGrid(buildingsGrid, buildingSpawner);
     }
 
     private void SpawnUpgradeCanvas()
@@ -46,9 +40,10 @@ public class GameInitializer : MonoBehaviour
     {
         GameStateMachineData gameStateMachineData = new GameStateMachineData
         (
-            upgradeCanvas.gameObject,
+            upgradeCanvas,
             gameData,
-            worldCreator
+            worldCreator,
+            buildingsGrid
         );
         gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData);
     }

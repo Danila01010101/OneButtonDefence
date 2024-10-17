@@ -9,17 +9,19 @@ public class GameBattleState : IState
     private BattleWavesParameters wavesParameters;
     private EnemieFactory enemieFactory;
     private Coroutine spawnCoroutine;
+    private CellsGrid grid;
     private int currentWaveIndex = 0;
 
-    public GameBattleState(IStateChanger stateMachine, MonoBehaviour coroutineStarter, BattleWavesParameters wavesParameters, EnemiesData data)
+    public GameBattleState(IStateChanger stateMachine, MonoBehaviour coroutineStarter, BattleWavesParameters wavesParameters, EnemiesData data, CellsGrid cellsGrid)
     {
         this.stateMachine = stateMachine;
         this.coroutineStarter = coroutineStarter;
         this.wavesParameters = wavesParameters;
+        grid = cellsGrid;
         enemieFactory = new EnemieFactory(data);
     }
 
-    public void Enter() { }
+    public void Enter() => StartWave();
 
     public void Exit()
     {
@@ -56,11 +58,10 @@ public class GameBattleState : IState
         for (int i = 0; i < waveData.amountOfEnemySpawns; i++)
         {
             yield return new WaitForSeconds(waveData.spawnInterval);
-            Vector3 position = Vector3.zero;
 
             for (int enemiesAmount = 0; enemiesAmount < waveData.amountOfEnemySpawns; enemiesAmount++)
             {
-                enemieFactory.SpawnEnemy<Enemy>(position);
+                enemieFactory.SpawnEnemy<Enemy>(grid.GetBestCellPosition());
             }
         }
 

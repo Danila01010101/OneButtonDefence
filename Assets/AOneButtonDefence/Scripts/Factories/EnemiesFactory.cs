@@ -18,7 +18,7 @@ public class EnemieFactory
         {
             Enemy enemy = enemies[i];
 
-            if (enemies is T)
+            if (enemy is T)
             {
                 Enemy spawnedEnemy = MonoBehaviour.Instantiate(enemy, position, Quaternion.identity);
                 return spawnedEnemy as T;

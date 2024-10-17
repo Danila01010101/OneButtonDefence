@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CellsGrid
 {
@@ -7,7 +8,7 @@ public class CellsGrid
 
     private float cellsSpawnDistance;
     private List<List<bool>> placementGrid = new List<List<bool>>();
-    private CellPlacePosition centerPosition = new CellPlacePosition(49, 49);
+    private CellPlaceCoordinates centerPosition = new CellPlaceCoordinates(49, 49);
 
     public CellsGrid(int gridSize, float cellsSpawnDistance)
     {
@@ -27,7 +28,7 @@ public class CellsGrid
         }
     }
 
-    public void Place(CellPlacePosition placePosition) 
+    public void Place(CellPlaceCoordinates placePosition) 
     {
         if (IsPlaceBusy(placePosition) == false)
         {
@@ -39,31 +40,36 @@ public class CellsGrid
         }
     }
 
-    public CellPlacePosition GetBestCellPlace()
+    public CellPlaceCoordinates GetBestCellCoordinates()
     {
-        CellPlacePosition newCellPlace = centerPosition;
+        CellPlaceCoordinates newCellPlace = centerPosition;
 
         while (IsPlaceBusy(newCellPlace))
         {
             newCellPlace = GetFurtherCellPosition(newCellPlace);
         }
 
-        Debug.Log(string.Format("Best place position is {0} : {1}", newCellPlace.X, newCellPlace.Z));
         return newCellPlace;
+    }
+
+    public Vector3 GetBestCellPosition()
+    {
+        CellPlaceCoordinates cellPlace = GetBestCellCoordinates();
+        return GetWorldPositionByCoordinates(cellPlace.X, cellPlace.Z);
     }
 
     public Vector3 GetWorldPositionByCoordinates(int xCoordinate, int zCoordinate) =>
         new Vector3(xCoordinate * cellsSpawnDistance, 0, zCoordinate * cellsSpawnDistance);
 
-    private bool IsPlaceBusy(CellPlacePosition position) => placementGrid[position.X][position.Z];
+    private bool IsPlaceBusy(CellPlaceCoordinates position) => placementGrid[position.X][position.Z];
 
-    private CellPlacePosition GetFurtherCellPosition(CellPlacePosition position)
+    private CellPlaceCoordinates GetFurtherCellPosition(CellPlaceCoordinates position)
     {
         int checkDistance = 1;
-        List<CellPlacePosition> cellsAround = GetSurroundingCells(position, checkDistance);
-        List<CellPlacePosition> checkedCells = new List<CellPlacePosition>();
+        List<CellPlaceCoordinates> cellsAround = GetSurroundingCells(position, checkDistance);
+        List<CellPlaceCoordinates> checkedCells = new List<CellPlaceCoordinates>();
         int randomIndex = Random.Range(0, cellsAround.Count);
-        CellPlacePosition furtherCellPosition = cellsAround[randomIndex];
+        CellPlaceCoordinates furtherCellPosition = cellsAround[randomIndex];
 
         while (IsPlaceBusy(furtherCellPosition))
         {
@@ -82,9 +88,9 @@ public class CellsGrid
         return furtherCellPosition;
     }
 
-    private List<CellPlacePosition> GetSurroundingCells(CellPlacePosition position, int distance)
+    private List<CellPlaceCoordinates> GetSurroundingCells(CellPlaceCoordinates position, int distance)
     {
-        List<CellPlacePosition> elements = new List<CellPlacePosition>();
+        List<CellPlaceCoordinates> elements = new List<CellPlaceCoordinates>();
 
         int rows = placementGrid.Count;
         int cols = placementGrid[0].Count;
@@ -97,7 +103,7 @@ public class CellsGrid
             {
                 if (i >= 0 && i < rows && j >= 0 && j < cols && (i != x || j != z))
                 {
-                    elements.Add(new CellPlacePosition(i, j));
+                    elements.Add(new CellPlaceCoordinates(i, j));
                 }
             }
         }

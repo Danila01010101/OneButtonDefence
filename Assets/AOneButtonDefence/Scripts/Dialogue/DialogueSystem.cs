@@ -65,7 +65,6 @@ public class DialogueSystem : MonoBehaviour
 
     private void ChangeReplic() 
     {
-        Debug.Log("numLabel:" + numLabel + "numReplic:" + numReplic);
         if (activeChangeReplic == false)
         {
             return;
@@ -78,7 +77,6 @@ public class DialogueSystem : MonoBehaviour
 
             if (DialogueData.Label[numLabel].Replic[numReplic] == DialogueCommands.Debug)
             {
-                Debug.Log("Debug!");
                 ChangeReplic();
                 return;
             }

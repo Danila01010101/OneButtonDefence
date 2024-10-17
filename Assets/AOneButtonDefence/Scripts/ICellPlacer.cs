@@ -3,5 +3,5 @@ using UnityEngine;
 
 public interface ICellPlacer
 {
-    Action<CellPlacePosition> CellFilled { get; set; }
+    Action<CellPlaceCoordinates> CellFilled { get; set; }
 }
