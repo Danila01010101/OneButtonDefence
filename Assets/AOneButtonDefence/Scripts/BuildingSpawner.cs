@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
 
-public class BuildingSpawner : MonoBehaviour
+public class BuildingSpawner : MonoBehaviour, ICellPlacer
 {
     private CellsGrid grid;
     private BuildingFactory buildingFacrory;
 
-    public Action<CellPlacePosition> BuildingSpawned;
+    public Action<CellPlaceCoordinates> CellFilled { get; set; }
 
     public void Initialize(CellsGrid grid, BuildingsData upgradeBuildings)
     {
@@ -21,10 +21,10 @@ public class BuildingSpawner : MonoBehaviour
 
     public void SetupStartBuildings()
     {
-        SetupBuildingPosition(SpawnFarm(), grid.GetBestCellPlace());
-        SetupBuildingPosition(SpawnFactory(), grid.GetBestCellPlace());
-        SetupBuildingPosition(SpawnSpiritBuilding(), grid.GetBestCellPlace());
-        SetupBuildingPosition(SpawnMilitaryCamp(), grid.GetBestCellPlace());
+        SetupBuildingPosition(SpawnFarm(), grid.GetBestCellCoordinates());
+        SetupBuildingPosition(SpawnFactory(), grid.GetBestCellCoordinates());
+        SetupBuildingPosition(SpawnSpiritBuilding(), grid.GetBestCellCoordinates());
+        SetupBuildingPosition(SpawnMilitaryCamp(), grid.GetBestCellCoordinates());
     }
 
     private void ActivateUpgrade(UpgradeButton.Upgrades upgrade)
@@ -32,16 +32,20 @@ public class BuildingSpawner : MonoBehaviour
         switch (upgrade)
         {
             case UpgradeButton.Upgrades.Farm:
-                SetupBuildingPosition(SpawnFarm(), grid.GetBestCellPlace());
+                Farm farm = SpawnFarm();
+                SetupBuildingPosition(farm, grid.GetBestCellCoordinates());
                 break;
             case UpgradeButton.Upgrades.SpiritBuilding:
-                SetupBuildingPosition(SpawnSpiritBuilding(), grid.GetBestCellPlace());
+                SpiritBuilding spiritBuilding = SpawnSpiritBuilding();
+                SetupBuildingPosition(spiritBuilding, grid.GetBestCellCoordinates());
                 break;
             case UpgradeButton.Upgrades.MilitaryCamp:
-                SetupBuildingPosition(SpawnMilitaryCamp(), grid.GetBestCellPlace());
+                MilitaryCamp militaryCamp = SpawnMilitaryCamp();
+                SetupBuildingPosition(SpawnMilitaryCamp(), grid.GetBestCellCoordinates());
                 break;
             case UpgradeButton.Upgrades.ResourcesCenter:
-                SetupBuildingPosition(SpawnFactory(), grid.GetBestCellPlace());
+                Factory resourcesCenter = SpawnFactory();
+                SetupBuildingPosition(resourcesCenter, grid.GetBestCellCoordinates());
                 break;
             default:
                 throw new NotImplementedException();
@@ -56,11 +60,11 @@ public class BuildingSpawner : MonoBehaviour
 
     private MilitaryCamp SpawnMilitaryCamp() => buildingFacrory.SpawnBuilding<MilitaryCamp>();
 
-    private void SetupBuildingPosition(Building building, CellPlacePosition placePosition) 
+    private void SetupBuildingPosition(Building building, CellPlaceCoordinates placePosition) 
     {
         building.transform.position = grid.GetWorldPositionByCoordinates(placePosition.X, placePosition.Z) + building.Offset;
         grid.Place(placePosition);
-        BuildingSpawned?.Invoke(placePosition);
+        CellFilled?.Invoke(placePosition);
     }
 
     private void OnEnable()

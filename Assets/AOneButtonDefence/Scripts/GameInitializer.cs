@@ -1,18 +1,50 @@
-using System.Collections.Generic;
 using UnityEngine;
+using static GameStateMachine;
 
 public class GameInitializer : MonoBehaviour
 {
     [SerializeField] private GameData gameData;
+    [SerializeField] private EnemiesData enemiesData;
+    [SerializeField] private WorldGenerationData worldGenerationData;
     [SerializeField] private GroundBlocksSpawner worldCreator;
-    [SerializeField] private BuildingSpawner changer;
-    [SerializeField] private PartMenadger partManagerPrefab;
+    [SerializeField] private BuildingSpawner buildingSpawner;
+    [SerializeField] private PartManager partManagerPrefab;
+
+    private GameStateMachine gameStateMachine;
+    private PartManager upgradeCanvas;
+    private CellsGrid buildingsGrid;
 
     private void Awake()
     {
-        new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
-        var newGrid = new CellsGrid(gameData.GridSize, gameData.CellsInterval);
-        worldCreator.SetupGrid(newGrid, changer);
-        Instantiate(partManagerPrefab).Initialize(gameData.startButtonsAmount);
+        SpawnResourceCounter();
+        SpawnWorldGrid();
+        SpawnUpgradeCanvas();
+        SetupStateMachine();
+    }
+
+    private void SpawnResourceCounter() => new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
+
+    private void SpawnWorldGrid()
+    {
+        buildingsGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
+        worldCreator.SetupGrid(buildingsGrid, buildingSpawner);
+    }
+
+    private void SpawnUpgradeCanvas()
+    {
+        upgradeCanvas = Instantiate(partManagerPrefab);
+        upgradeCanvas.Initialize(worldGenerationData.startButtonsAmount);
+    }
+
+    private void SetupStateMachine()
+    {
+        GameStateMachineData gameStateMachineData = new GameStateMachineData
+        (
+            upgradeCanvas,
+            gameData,
+            worldCreator,
+            buildingsGrid
+        );
+        gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData);
     }
 }

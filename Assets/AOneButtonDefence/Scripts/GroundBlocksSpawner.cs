@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GroundBlocksSpawner : MonoBehaviour
 {
-    [SerializeField] private GameData data;
+    [SerializeField] private WorldGenerationData data;
 
     private List<List<Ground>> groundBlocks = new List<List<Ground>>();
     private BuildingSpawner buildingSpawner;
@@ -14,7 +14,7 @@ public class GroundBlocksSpawner : MonoBehaviour
     {
         this.grid = grid;
         this.buildingSpawner = buildingSpawner;
-        buildingSpawner.BuildingSpawned += ReplaceBlockWithDefaultBlock;
+        buildingSpawner.CellFilled += ReplaceBlockWithDefaultBlock;
         GenerateWorld(buildingSpawner);
     }
 
@@ -38,7 +38,7 @@ public class GroundBlocksSpawner : MonoBehaviour
 
     private void SpawnStartCamp()
     {
-        CellPlacePosition placePosition = grid.GetBestCellPlace();
+        CellPlaceCoordinates placePosition = grid.GetBestCellCoordinates();
         Destroy(groundBlocks[placePosition.X][placePosition.Z].gameObject);
         SpawnBlock(data.CentralBlock, placePosition.X, placePosition.Z);
         grid.Place(placePosition);
@@ -58,7 +58,7 @@ public class GroundBlocksSpawner : MonoBehaviour
         return data.EarthBlocks[blockIndex];
     }
 
-    private void ReplaceBlockWithDefaultBlock(CellPlacePosition placePosition)
+    private void ReplaceBlockWithDefaultBlock(CellPlaceCoordinates placePosition)
     {
         Ground replacedBlock = groundBlocks[placePosition.X][placePosition.Z];
         replacedBlock.ActivateBonus();
@@ -68,6 +68,6 @@ public class GroundBlocksSpawner : MonoBehaviour
 
     private void OnDestroy()
     {
-        buildingSpawner.BuildingSpawned -= ReplaceBlockWithDefaultBlock;
+        buildingSpawner.CellFilled -= ReplaceBlockWithDefaultBlock;
     }
 }

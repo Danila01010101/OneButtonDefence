@@ -1,16 +1,15 @@
 ﻿using Adventurer;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// (https://vk.com/video-149258223_456242495)
+[RequireComponent(typeof(AudioSource))]
 public class DialogueSystem : MonoBehaviour
 {
     public DialogueData DialogueData;
-
     public TextMeshProUGUI Name;
     public TextMeshProUGUI Text;
     public GameObject AnswerPanel;
@@ -19,7 +18,14 @@ public class DialogueSystem : MonoBehaviour
     public List<TextMeshProUGUI> Answers = new List<TextMeshProUGUI>();
     [Header("Скорость текста")]
     public float ReplicSpeed;
-    
+
+    [Header("Спавн модельки нпс")]
+    [SerializeField] private GameObject DialogueNPCPrefab;
+    [SerializeField] private Vector2 viewportPosition;
+    [SerializeField] private float distanceFromCamera = 5f;
+
+    private GameObject spawnedNPC;
+    private Camera mainCamera;
     private int numReplic;
     private int numLabel = 0;
     private bool ASPlayingNeed;
@@ -29,14 +35,13 @@ public class DialogueSystem : MonoBehaviour
 
     private bool activeChangeReplic = true;
 
-    //До первого кадра
-    private void Awake()
+    private AudioSource audioSource;
+
+    public Action DialogEnded;
+
+    private void Start()
     {
-    }
-    //Первый кадр и дальше
-    void Start()
-    {
-        
+        audioSource = GetComponent<AudioSource>();
         numReplic = 0;
         Text.text = DialogueData.Label[numLabel].Replic[numReplic];
 
@@ -47,9 +52,11 @@ public class DialogueSystem : MonoBehaviour
             button.gameObject.SetActive(false);
         }
 
+        SpawnDialogNPC();
         AnswerPanel.SetActive(false);
         gameObject.SetActive(true);
     }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -64,9 +71,8 @@ public class DialogueSystem : MonoBehaviour
         StartCoroutine(ShowReplic());
     }
 
-    void ChangeReplic() 
+    private void ChangeReplic() 
     {
-        Debug.Log("numLabel:" + numLabel + "numReplic:" + numReplic);
         if (activeChangeReplic == false)
         {
             return;
@@ -79,7 +85,6 @@ public class DialogueSystem : MonoBehaviour
 
             if (DialogueData.Label[numLabel].Replic[numReplic] == DialogueCommands.Debug)
             {
-                Debug.Log("Debug!");
                 ChangeReplic();
                 return;
             }
@@ -88,25 +93,14 @@ public class DialogueSystem : MonoBehaviour
             StartCoroutine(ShowReplic());
             return;
         }
-
-        //if (DialogueData.Label[numLabel].Answers.Any() == false)
-        //{
-        //    numLabel = DialogueData.Label[numLabel].NextLabel;
-        //    numReplic = 0;
-        //    showReplic = "";
-        //    StopAllCoroutines();
-        //    StartCoroutine(ShowReplic());
-        //    return;
-        //}
-
         else
         {
-            //ShowMenu();
             Destroy(gameObject);
+            DialogEnded?.Invoke();
         }
     }
 
-    void ShowMenu()
+    private void ShowMenu()
     {
         countReplic = 0;
         activeChangeReplic = false;
@@ -143,19 +137,31 @@ public class DialogueSystem : MonoBehaviour
         StartCoroutine(ShowReplic());
     }
 
-    IEnumerator ShowReplic()
+    private void SpawnDialogNPC()
+    {
+        mainCamera = Camera.main;
+        Vector3 spawnPosition = new Vector3(viewportPosition.x, viewportPosition.y, distanceFromCamera);
+        Vector3 worldPosition = mainCamera.ViewportToWorldPoint(spawnPosition);
+        spawnedNPC = Instantiate(DialogueNPCPrefab, worldPosition, Quaternion.identity);
+    }
+
+    private IEnumerator ShowReplic()
     {
         foreach (var replic in DialogueData.Label[numLabel].Replic[numReplic])
         {
             yield return new WaitForSeconds(ReplicSpeed);
             showReplic += replic;
-            var AS = GetComponent<AudioSource>();
-            if(AS.isPlaying == false)
+            if(audioSource.isPlaying == false)
             {
-                AS.Play();
+                audioSource.Play();
             }
             Text.text = showReplic;
         }
         yield break;
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(spawnedNPC);
     }
 }

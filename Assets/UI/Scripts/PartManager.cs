@@ -5,7 +5,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PartMenadger : MonoBehaviour
+public class PartManager : MonoBehaviour
 {
     [SerializeField] private Button partPrefab;
     [SerializeField] private GameObject CanvasObject;
@@ -17,6 +17,8 @@ public class PartMenadger : MonoBehaviour
     private int lastKey = -1;
     private int beforLastKey = -1;
     private int howManyChois = 0;
+
+    public UpgradeButton UpgradeButton => upgradeButton;
 
     public void Initialize(int partsAmount)
     {
