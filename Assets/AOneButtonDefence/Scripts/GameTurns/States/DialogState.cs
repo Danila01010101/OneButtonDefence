@@ -6,11 +6,6 @@ public class DialogState : IState
     private DialogueSystem startDialogPrefab;
     private DialogueSystem spawnedDialog;
     private Canvas gamePlayCanvas;
-    private Camera mainCamera;
-
-    public GameObject DialogueGnomePrefab;  // Префаб вашего объекта
-    public Vector2 viewportPosition;  // Позиция в Viewport (значения от 0 до 1)
-    public float distanceFromCamera = 5f; // Расстояние от камеры
 
     public DialogState(IStringStateChanger stateMachine, DialogueSystem newDialog)
     {
@@ -21,26 +16,11 @@ public class DialogState : IState
     public void Enter()
     {
         SpawnDialogCanvas();
-        SpawnGnome();
     }
 
     public void Exit()
     {
         RemoveStartCanvas();
-    }
-
-    public void SpawnGnome() 
-    {
-        mainCamera = Camera.main;
-
-        // Позиция в пространстве камеры
-        Vector3 spawnPosition = new Vector3(viewportPosition.x, viewportPosition.y, distanceFromCamera);
-
-        // Преобразование Viewport в мировые координаты
-        Vector3 worldPosition = mainCamera.ViewportToWorldPoint(spawnPosition);
-
-        // Спавн объекта в этой позиции
-        MonoBehaviour.Instantiate(DialogueGnomePrefab, worldPosition, Quaternion.identity);
     }
 
     public void HandleInput() { }

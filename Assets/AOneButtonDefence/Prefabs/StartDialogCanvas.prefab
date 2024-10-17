@@ -960,6 +960,9 @@ MonoBehaviour:
   - {fileID: 2479944433429059477}
   Answers: []
   ReplicSpeed: 0.1
+  DialogueNPCPrefab: {fileID: 919132149155446097, guid: 3a31cbe11101fc0419cc440adbcbd881, type: 3}
+  viewportPosition: {x: 0, y: -1}
+  distanceFromCamera: 5
 --- !u!82 &8217856072385390231
 AudioSource:
   m_ObjectHideFlags: 0
