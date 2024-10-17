@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.UIElements;
 
 public class CellsGrid
@@ -46,15 +48,15 @@ public class CellsGrid
 
         while (IsPlaceBusy(newCellPlace))
         {
-            newCellPlace = GetFurtherCellPosition(newCellPlace);
+            newCellPlace = GetFurtherCellPosition(newCellPlace, 0);
         }
 
         return newCellPlace;
     }
 
-    public Vector3 GetBestCellPosition()
+    public Vector3 GetRandomEmptyCellPosition(int spread)
     {
-        CellPlaceCoordinates cellPlace = GetBestCellCoordinates();
+        CellPlaceCoordinates cellPlace = GetFurtherCellPosition(centerPosition, spread);
         return GetWorldPositionByCoordinates(cellPlace.X, cellPlace.Z);
     }
 
@@ -63,10 +65,10 @@ public class CellsGrid
 
     private bool IsPlaceBusy(CellPlaceCoordinates position) => placementGrid[position.X][position.Z];
 
-    private CellPlaceCoordinates GetFurtherCellPosition(CellPlaceCoordinates position)
+    private CellPlaceCoordinates GetFurtherCellPosition(CellPlaceCoordinates position, int spread)
     {
-        int checkDistance = 1;
-        List<CellPlaceCoordinates> cellsAround = GetSurroundingCells(position, checkDistance);
+        int minCheckDistance = 1;
+        List<CellPlaceCoordinates> cellsAround = GetSurroundingCells(position, minCheckDistance);
         List<CellPlaceCoordinates> checkedCells = new List<CellPlaceCoordinates>();
         int randomIndex = Random.Range(0, cellsAround.Count);
         CellPlaceCoordinates furtherCellPosition = cellsAround[randomIndex];
@@ -77,15 +79,31 @@ public class CellsGrid
 
             if (checkedCells.Count == cellsAround.Count)
             {
-                checkDistance++;
-                cellsAround = GetSurroundingCells(position, checkDistance);
+                minCheckDistance++;
+                cellsAround = GetSurroundingCells(position, minCheckDistance);
             }
 
             randomIndex = Random.Range(0, cellsAround.Count);
             furtherCellPosition = cellsAround[randomIndex];
         }
 
-        return furtherCellPosition;
+        if (spread > 0)
+        {
+            int maxCheckDistance = minCheckDistance + spread;
+            cellsAround = GetSurroundingCells(position, maxCheckDistance);
+
+            foreach (CellPlaceCoordinates cell in checkedCells)
+            {
+                cellsAround.Remove(cell);
+            }
+
+            randomIndex = Random.Range(0, cellsAround.Count);
+            return cellsAround[randomIndex];
+        }
+        else
+        {
+            return furtherCellPosition;
+        }
     }
 
     private List<CellPlaceCoordinates> GetSurroundingCells(CellPlaceCoordinates position, int distance)
