@@ -846,6 +846,7 @@ GameObject:
   - component: {fileID: 8677606783507908811}
   - component: {fileID: 6066843327004986940}
   - component: {fileID: 8217856072385390231}
+  - component: {fileID: -4006017165292560979}
   m_Layer: 5
   m_Name: StartDialogCanvas
   m_TagString: Untagged
@@ -960,9 +961,7 @@ MonoBehaviour:
   - {fileID: 2479944433429059477}
   Answers: []
   ReplicSpeed: 0.1
-  DialogueNPCPrefab: {fileID: 919132149155446097, guid: 3a31cbe11101fc0419cc440adbcbd881, type: 3}
-  viewportPosition: {x: 0, y: -1}
-  distanceFromCamera: 5
+  spawner: {fileID: -4006017165292560979}
 --- !u!82 &8217856072385390231
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1059,6 +1058,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-4006017165292560979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272876805176009859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12ae8e25bbb8b5049accb9c3e4291721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DialogueNPCPrefab: {fileID: 919132149155446097, guid: 3a31cbe11101fc0419cc440adbcbd881, type: 3}
+  viewportPosition: {x: 0.25, y: -0.1}
+  rotation: {x: 11.256703, y: 118.3776, z: 340.10446}
+  distanceFromCamera: 5
 --- !u!1 &6025605073475672359
 GameObject:
   m_ObjectHideFlags: 0

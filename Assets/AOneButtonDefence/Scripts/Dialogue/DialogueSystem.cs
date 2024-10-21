@@ -19,13 +19,8 @@ public class DialogueSystem : MonoBehaviour
     [Header("Скорость текста")]
     public float ReplicSpeed;
 
-    [Header("Спавн модельки нпс")]
-    [SerializeField] private GameObject DialogueNPCPrefab;
-    [SerializeField] private Vector2 viewportPosition;
-    [SerializeField] private float distanceFromCamera = 5f;
+    [SerializeField] private DialogNPCSpawner spawner;
 
-    private GameObject spawnedNPC;
-    private Camera mainCamera;
     private int numReplic;
     private int numLabel = 0;
     private bool ASPlayingNeed;
@@ -52,7 +47,9 @@ public class DialogueSystem : MonoBehaviour
             button.gameObject.SetActive(false);
         }
 
-        SpawnDialogNPC();
+        if (spawner != null)
+            spawner.SpawnDialogNPC();
+
         AnswerPanel.SetActive(false);
         gameObject.SetActive(true);
     }
@@ -137,14 +134,6 @@ public class DialogueSystem : MonoBehaviour
         StartCoroutine(ShowReplic());
     }
 
-    private void SpawnDialogNPC()
-    {
-        mainCamera = Camera.main;
-        Vector3 spawnPosition = new Vector3(viewportPosition.x, viewportPosition.y, distanceFromCamera);
-        Vector3 worldPosition = mainCamera.ViewportToWorldPoint(spawnPosition);
-        spawnedNPC = Instantiate(DialogueNPCPrefab, worldPosition, Quaternion.identity);
-    }
-
     private IEnumerator ShowReplic()
     {
         foreach (var replic in DialogueData.Label[numLabel].Replic[numReplic])
@@ -162,6 +151,7 @@ public class DialogueSystem : MonoBehaviour
 
     private void OnDestroy()
     {
-        Destroy(spawnedNPC);
+        if (spawner != null)
+            spawner.DeleteNPC();
     }
 }
