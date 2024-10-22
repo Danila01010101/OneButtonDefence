@@ -13,11 +13,11 @@ public class DOTweenAnimationFabric : MonoBehaviour
     public GameObject WorkersPrefab;
     public List<Transform> WorkerSpawnPoints;
     public List<Transform> WorkPoints;
-    public string Blocktag = "Coal";
-    public int Blockindex = 1;
-    public float ShakeStrenght = 90;
-    public int ShakeVibrato = 10;
 
+    [SerializeField] private string Blocktag = "Coal";
+    [SerializeField] private int Blockindex = 1;
+    [SerializeField] private float ShakeStrenght = 90;
+    [SerializeField] private int ShakeVibrato = 10;
     [SerializeField] private List<GameObject> gnomes = new List<GameObject>();
 
     private int WorkersCount;

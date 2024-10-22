@@ -29,9 +29,9 @@ public class DOTweenAnimationMillitary : MonoBehaviour
     {
         StartCoroutine(SpawnGnomes());
     }
+
     private IEnumerator SpawnGnomes()
     {
-        
         for (int i = 0; i < Path.Count; i++)
         {
             GameObject gnome = Instantiate(WarriorPrefab, new Vector3(Path[i].Path[0].position.x, Path[i].Path[0].position.y, Path[i].Path[0].position.z + Z), Quaternion.identity);
@@ -40,12 +40,13 @@ public class DOTweenAnimationMillitary : MonoBehaviour
             yield return new WaitForSeconds(SpawnDelay);
         }
     }
+
     private IEnumerator AnimationWarriors(GameObject gnome)
     {
         while (true)
         {
-            //Тут ошибка. Должны точки по порядку идти
             int index = gnomes.IndexOf(gnome);
+
             for (int i = 0; i < Path[index].Path.Count; i++)
             {
                 gnome.transform.DOLookAt(Path[index].Path[i].position, RotateDuration);
@@ -56,6 +57,7 @@ public class DOTweenAnimationMillitary : MonoBehaviour
             }
 
             int attackCount = (int)(TrainingDelay/AttackDuration);
+
             for (int i = 0; i < attackCount; i++)
             {
                 // Вращение во время атак

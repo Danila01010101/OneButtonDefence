@@ -22,13 +22,14 @@ public class DOTweenAnimationCitadel : MonoBehaviour
     public float PoklonTime;
     public float Poklon;
     public float Wait;
-    public int ModelChildIndex = 0;
-    public Color endvalue;
-    public Color startvalue;
 
     private ChangeMaterial changeMaterial;
     private Vector3 startBothCorePosition; // Начальная позиция BothCore
     private float journeyProgress = 0f; // Прогресс движения
+
+    [SerializeField]private int ModelChildIndex = 0;
+    [SerializeField] private Color endvalue;
+    [SerializeField] private Color startvalue;
 
     private void Start()
     {
