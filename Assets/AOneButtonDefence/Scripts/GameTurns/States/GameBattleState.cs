@@ -62,7 +62,7 @@ public class GameBattleState : IState
 
             for (int enemiesAmount = 0; enemiesAmount < waveData.amountOfEnemySpawns; enemiesAmount++)
             {
-                enemieFactory.SpawnEnemy<Enemy>(grid.GetRandomEmptyCellPosition(spawnSpread));
+                enemieFactory.SpawnEnemy<FightingUnit>(grid.GetRandomEmptyCellPosition(spawnSpread));
             }
         }
 
