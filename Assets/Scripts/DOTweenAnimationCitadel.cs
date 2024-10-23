@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DOTweenAnimationCitadel : MonoBehaviour
+public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
 {
     [SerializeField] private GameObject Core;
     [SerializeField] private GameObject CenterCore;
@@ -26,6 +26,7 @@ public class DOTweenAnimationCitadel : MonoBehaviour
     [SerializeField] private Color endvalue;
     [SerializeField] private Color startvalue;
 
+    private Coroutine currentAnimation;
     private ChangeMaterial changeMaterial;
     private Vector3 startBothCorePosition;
     private float journeyProgress = 0f;
@@ -34,8 +35,11 @@ public class DOTweenAnimationCitadel : MonoBehaviour
     {
         changeMaterial = gameObject.GetComponent<ChangeMaterial>();
         startBothCorePosition = BothCore.transform.position;
-        StartCoroutine(StartSpawnGnomes());
     }
+
+    public void StartAnimation() => currentAnimation = StartCoroutine(StartSpawnGnomes());
+
+    public void InteruptAnimation() => StopCoroutine(currentAnimation);
 
     private IEnumerator StartSpawnGnomes()
     {

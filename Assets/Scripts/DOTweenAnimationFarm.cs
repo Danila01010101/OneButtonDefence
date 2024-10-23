@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DOTweenAnimationFarm : MonoBehaviour
+public class DOTweenAnimationFarm : MonoBehaviour, IAnimatable
 {
     [SerializeField] private GameObject Human;
     [SerializeField] private Transform SpawnPoint;
@@ -13,17 +13,19 @@ public class DOTweenAnimationFarm : MonoBehaviour
     [SerializeField] private float HarvestTime;
     [SerializeField] private float GrowTime;
 
-    private Coroutine currentWorkerAnimation;
+    private Coroutine currentAnimation;
     private GameObject worker;
 
     private void Start()
     {
         worker = Instantiate(Human, SpawnPoint.transform.position, Quaternion.identity);
-        currentWorkerAnimation = StartCoroutine(WorkerRoutine(worker));
-        StopCoroutine(currentWorkerAnimation);
     }
 
-    private IEnumerator WorkerRoutine(GameObject worker)
+    public void StartAnimation() => currentAnimation = StartCoroutine(WorkerRoutine());
+
+    public void InteruptAnimation() => StopCoroutine(currentAnimation);
+
+    private IEnumerator WorkerRoutine()
     {
         while (true)
         {

@@ -9,7 +9,7 @@ public class Paths
     public List<Transform> Path;
 }
 
-public class DOTweenAnimationMillitary : MonoBehaviour
+public class DOTweenAnimationMillitary : MonoBehaviour, IAnimatable
 {
     [SerializeField] private GameObject WarriorPrefab;
     [SerializeField] private List<Paths> Path;
@@ -24,11 +24,11 @@ public class DOTweenAnimationMillitary : MonoBehaviour
     [SerializeField] private float ShakeStrenght;
 
     private List<GameObject> gnomes = new List<GameObject>();
+    private Coroutine currentAnimation;
 
-    private void Start()
-    {
-        StartCoroutine(SpawnGnomes());
-    }
+    public void StartAnimation() => currentAnimation = StartCoroutine(SpawnGnomes());
+
+    public void InteruptAnimation() => StopCoroutine(currentAnimation);
 
     private IEnumerator SpawnGnomes()
     {

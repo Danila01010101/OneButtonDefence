@@ -1,10 +1,9 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using UnityEngine;
 
-public class DOTweenAnimationFabric : MonoBehaviour
+public class DOTweenAnimationFabric : MonoBehaviour, IAnimatable
 {
     [SerializeField] private float SpawnDelay;
     [SerializeField] private float WalkDuration;
@@ -19,13 +18,17 @@ public class DOTweenAnimationFabric : MonoBehaviour
     [SerializeField] private int ShakeVibrato = 10;
     [SerializeField] private List<GameObject> gnomes = new List<GameObject>();
 
+    private Coroutine currentAnimation;
     private int WorkersCount;
 
     private void Start()
     {
         WorkersCount = WorkerSpawnPoints.Count;
-        StartCoroutine(SpawnWorkers());
     }
+
+    public void StartAnimation() => currentAnimation = StartCoroutine(SpawnWorkers());
+
+    public void InteruptAnimation() => StopCoroutine(currentAnimation);
 
     private IEnumerator SpawnWorkers()
     {
