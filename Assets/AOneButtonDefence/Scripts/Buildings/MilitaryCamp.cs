@@ -3,11 +3,11 @@ using UnityEngine;
 public class MilitaryCamp : Building
 {
     private MilitaryCampData data;
-
+    
     public override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();
-        AddWarrior(data.StartWarriorsAmount);
+        AddWarriors(data.StartWarriorsAmount);
     }
 
     public override void SetupData(BuildingsData buildingsData)
@@ -20,12 +20,13 @@ public class MilitaryCamp : Building
     {
         base.ActivateEndMoveAction();
 
-        AddWarrior(data.EveryTurnWarriorsAmount);
+        AddWarriors(data.EveryTurnWarriorsAmount);
     }
 
-    private void AddWarrior(int amount)
+    private void AddWarriors(int amount)
     {
         foodPerTurnAmount += amount;
         ResourcesCounter.Instance.Data.Warriors += amount;
+        Instantiate(data.GnomeWarriorPrefab, transform.position, transform.rotation);
     }
 }

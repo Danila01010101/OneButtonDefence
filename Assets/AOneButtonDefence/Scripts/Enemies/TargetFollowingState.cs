@@ -9,6 +9,7 @@ public class TargetFollowingState : IState, ITargetFollower
     private Transform target;
     private float speed;
     private float attackRange;
+    private bool IsTargetExists() => target == null;
 
     public TargetFollowingState(IStateChanger stateMachine, CharacterController characterController, CharacterStats stats, ITargetAttacker targetAttacker)
     {
@@ -44,6 +45,12 @@ public class TargetFollowingState : IState, ITargetFollower
 
     public void PhysicsUpdate()
     {
+        if (IsTargetExists())
+        {
+            stateMachine.ChangeState<TargetSearchState>();
+            return;
+        }
+
         float distanceToEnemy = Vector3.Distance(transform.position, target.position);
 
         if (distanceToEnemy < attackRange)
@@ -67,6 +74,7 @@ public class TargetFollowingState : IState, ITargetFollower
     public void SetTarget(Transform transform) => target = transform;
 
     private Vector3 GetDirection() => (target.position - transform.position).normalized * speed;
+
     private IDamagable FindTarget(Collider[] colliders)
     {
         foreach (Collider collider in colliders)
