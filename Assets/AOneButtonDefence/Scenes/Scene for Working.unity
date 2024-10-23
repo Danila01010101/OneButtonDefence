@@ -572,6 +572,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoneFarm
       objectReference: {fileID: 0}
+    - target: {fileID: 8260648654892295670, guid: 034bcc6654a56b64781c5e9e13ee617d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8784385988452007756, guid: 034bcc6654a56b64781c5e9e13ee617d, type: 3}
       propertyPath: m_RootOrder
       value: 2

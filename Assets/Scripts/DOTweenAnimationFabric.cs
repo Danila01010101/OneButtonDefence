@@ -6,14 +6,13 @@ using UnityEngine;
 
 public class DOTweenAnimationFabric : MonoBehaviour
 {
-    public float SpawnDelay;
-    public float WalkDuration;
-    public float WorkTime;
-    public float LookAtDuration;
-    public GameObject WorkersPrefab;
-    public List<Transform> WorkerSpawnPoints;
-    public List<Transform> WorkPoints;
-
+    [SerializeField] private float SpawnDelay;
+    [SerializeField] private float WalkDuration;
+    [SerializeField] private float WorkTime;
+    [SerializeField] private float LookAtDuration;
+    [SerializeField] private GameObject WorkersPrefab;
+    [SerializeField] private List<Transform> WorkerSpawnPoints;
+    [SerializeField] private List<Transform> WorkPoints;
     [SerializeField] private string Blocktag = "Coal";
     [SerializeField] private int Blockindex = 1;
     [SerializeField] private float ShakeStrenght = 90;

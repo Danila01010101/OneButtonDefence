@@ -11,17 +11,17 @@ public class Paths
 
 public class DOTweenAnimationMillitary : MonoBehaviour
 {
-    public GameObject WarriorPrefab;
-    public List<Paths> Path;
-    public float SpawnDelay;
-    public float WalkDelay;
-    public float SleepTime;
-    public int SpawnCount;
-    public float TrainingDelay;
-    public float AttackDuration;
-    public float RotateDuration;
-    public float Z;
-    public float ShakeStrenght;
+    [SerializeField] private GameObject WarriorPrefab;
+    [SerializeField] private List<Paths> Path;
+    [SerializeField] private float SpawnDelay;
+    [SerializeField] private float WalkDelay;
+    [SerializeField] private float SleepTime;
+    [SerializeField] private int SpawnCount;
+    [SerializeField] private float TrainingDelay;
+    [SerializeField] private float AttackDuration;
+    [SerializeField] private float RotateDuration;
+    [SerializeField] private float Z;
+    [SerializeField] private float ShakeStrenght;
 
     private List<GameObject> gnomes = new List<GameObject>();
 
@@ -60,12 +60,10 @@ public class DOTweenAnimationMillitary : MonoBehaviour
 
             for (int i = 0; i < attackCount; i++)
             {
-                // ¬ращение во врем€ атак
                 gnome.transform.DOShakeRotation(AttackDuration, ShakeStrenght);
-                yield return new WaitForSeconds(AttackDuration); // ∆дем до следующего кадра
+                yield return new WaitForSeconds(AttackDuration);
             }
 
-            //и тут соответчтвенно
             for (int i = Path[index].Path.Count - 1; i >= 0; i--)
             {
                 gnome.transform.DOLookAt(Path[index].Path[i].position, RotateDuration);
@@ -76,7 +74,6 @@ public class DOTweenAnimationMillitary : MonoBehaviour
             }
 
             yield return new WaitForSeconds(SleepTime);
-
         }
     }
 }

@@ -880,7 +880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b547cb142f8d9e245aa0134434861466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WarriorPrefab: {fileID: 7684702100988935255, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+  WarriorPrefab: {fileID: 919132149155446097, guid: d57359d4673695a4798fb4a5f036e705, type: 3}
   Path:
   - Path:
     - {fileID: 4211957904266287749}
