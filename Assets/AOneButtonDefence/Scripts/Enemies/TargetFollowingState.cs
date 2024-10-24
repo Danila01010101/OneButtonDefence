@@ -66,8 +66,14 @@ public class TargetFollowingState : IState, ITargetFollower
         }
     }
 
-    public void Update() 
+    public void Update()
     {
+        if (IsTargetExists())
+        {
+            stateMachine.ChangeState<TargetSearchState>();
+            return;
+        }
+
         characterController.Move(GetDirection());
     }
 
