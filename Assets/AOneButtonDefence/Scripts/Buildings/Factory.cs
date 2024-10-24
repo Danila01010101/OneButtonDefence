@@ -2,7 +2,7 @@ public class Factory : Building
 {
     private FactoryData data;
 
-    public override void ActivateSpawnAction()
+    protected override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();
         ResourcesCounter.Instance.Data.Materials += data.SpawnBonus;

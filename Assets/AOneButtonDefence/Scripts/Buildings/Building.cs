@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public abstract class Building : MonoBehaviour
@@ -14,7 +15,16 @@ public abstract class Building : MonoBehaviour
         resources = ResourcesCounter.Instance.Data;
     }
 
-    public virtual void ActivateSpawnAction()
+    public void ActivateSpawnActionWithDelay() => StartCoroutine(WaitFrameBeforeStartAction());
+
+    private IEnumerator WaitFrameBeforeStartAction()
+    {
+        //Delay needed to activate spawn action after building position setuped.
+        yield return null;
+        ActivateSpawnAction();
+    }
+
+    protected virtual void ActivateSpawnAction()
     {
         ResourcesCounter.Instance.Data.Materials -= cost;
     }

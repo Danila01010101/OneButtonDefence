@@ -22,7 +22,7 @@ public class BuildingFactory
             {
                 Building spawnedBuilding = MonoBehaviour.Instantiate(building);
                 spawnedBuilding.SetupData(buildingsData);
-                spawnedBuilding.ActivateSpawnAction();
+                spawnedBuilding.ActivateSpawnActionWithDelay();
                 return spawnedBuilding as T;
             }
         }

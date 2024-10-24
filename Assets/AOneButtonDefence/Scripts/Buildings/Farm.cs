@@ -2,7 +2,7 @@ public class Farm : Building
 {
     private FarmData data;
 
-    public override void ActivateSpawnAction()
+    protected override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();
         ResourcesCounter.Instance.Data.FoodAmount += data.SpawnBonus;

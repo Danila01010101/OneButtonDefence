@@ -1,8 +1,10 @@
+using System.Collections;
+
 public class SpiritBuilding : Building
 {
     private SpiritBuildingData data;
 
-    public override void ActivateSpawnAction()
+    protected override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();
         ResourcesCounter.Instance.Data.SurvivorSpirit += data.SpawnBonus;

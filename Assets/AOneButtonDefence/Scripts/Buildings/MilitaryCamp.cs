@@ -1,13 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 public class MilitaryCamp : Building
 {
     private MilitaryCampData data;
     
-    public override void ActivateSpawnAction()
+    protected override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();
-        AddWarriors(data.StartWarriorsAmount);
+        StartCoroutine(SpawnWithDelay());
     }
 
     public override void SetupData(BuildingsData buildingsData)
@@ -28,5 +29,11 @@ public class MilitaryCamp : Building
         foodPerTurnAmount += amount;
         ResourcesCounter.Instance.Data.Warriors += amount;
         Instantiate(data.GnomeWarriorPrefab, transform.position + data.spawnOffset, Quaternion.Euler(data.spawnRotation));
+    }
+
+    private IEnumerator SpawnWithDelay()
+    {
+        yield return null;
+        AddWarriors(data.StartWarriorsAmount);
     }
 }
