@@ -53,7 +53,6 @@ public class FightState : IState, ITargetAttacker
         while (target.IsAlive())
         {
             target.TakeDamage(damage);
-            Debug.Log("Knight is attacking!");
             yield return new WaitForSeconds(attackDelay);
         }
 

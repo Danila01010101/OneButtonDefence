@@ -23,7 +23,7 @@ public class TargetFollowingState : IState, ITargetFollower
 
     public void Enter()
     {
-        Debug.Log("Following target" + target.gameObject.name);
+
     }
 
     public void Exit()
