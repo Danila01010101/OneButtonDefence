@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <StartDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
   <EndTurnDialogCanvas>k__BackingField: {fileID: 0}
+  <TurnAmountBeforeEvent>k__BackingField: 4
   <BattleWavesParameters>k__BackingField: {fileID: 11400000, guid: d46257c332a947b4bb775c648410080f, type: 2}
+  <EnemiesSpawnSpread>k__BackingField: 0
+  <EnemiesSpawnOffset>k__BackingField: {x: 1.792, y: 0.72, z: 1.958}

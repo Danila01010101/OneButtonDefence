@@ -45,6 +45,6 @@ public class GameInitializer : MonoBehaviour
             worldCreator,
             buildingsGrid
         );
-        gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData);
+        gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset);
     }
 }

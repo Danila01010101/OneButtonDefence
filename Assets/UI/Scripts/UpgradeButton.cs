@@ -11,8 +11,6 @@ public class UpgradeButton : MonoBehaviour
     public void UbgraidChoisenPart(Upgrades firstPart, Upgrades secondPart)
     {
         TurnEnded?.Invoke();
-        Debug.Log(firstPart);
-        Debug.Log(secondPart);
         Upgrade(firstPart);
         Upgrade(secondPart);
     }

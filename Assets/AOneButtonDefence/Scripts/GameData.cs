@@ -8,4 +8,5 @@ public class GameData : ScriptableObject
     [field: SerializeField] public int TurnAmountBeforeEvent { get; private set; } = 4;
     [field: SerializeField] public BattleWavesParameters BattleWavesParameters { get; private set; }
     [field: SerializeField] public float EnemiesSpawnSpread { get; private set; }
+    [field: SerializeField] public Vector3 EnemiesSpawnOffset { get; private set; }
 }

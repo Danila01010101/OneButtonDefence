@@ -10,16 +10,18 @@ public class GameBattleState : IState
     private EnemieFactory enemieFactory;
     private Coroutine spawnCoroutine;
     private CellsGrid grid;
+    private Vector3 enemiesSpawnOffset;
     private int spawnSpread = 2;
     private int currentWaveIndex = 0;
 
-    public GameBattleState(IStateChanger stateMachine, MonoBehaviour coroutineStarter, BattleWavesParameters wavesParameters, EnemiesData data, CellsGrid cellsGrid)
+    public GameBattleState(GameBattleStateData data)
     {
-        this.stateMachine = stateMachine;
-        this.coroutineStarter = coroutineStarter;
-        this.wavesParameters = wavesParameters;
-        grid = cellsGrid;
-        enemieFactory = new EnemieFactory(data);
+        this.stateMachine = data.StateChanger;
+        this.coroutineStarter = data.CoroutineStarter;
+        this.wavesParameters = data.WavesParameters;
+        this.enemiesSpawnOffset = data.EnemiesSpawnOffset;
+        grid = data.CellsGrid;
+        enemieFactory = new EnemieFactory(data.EnemiesData);
     }
 
     public void Enter() => StartWave();
@@ -62,7 +64,7 @@ public class GameBattleState : IState
 
             for (int enemiesAmount = 0; enemiesAmount < waveData.amountOfEnemySpawns; enemiesAmount++)
             {
-                enemieFactory.SpawnEnemy<FightingUnit>(grid.GetRandomEmptyCellPosition(spawnSpread));
+                enemieFactory.SpawnEnemy<FightingUnit>(grid.GetRandomEmptyCellPosition(spawnSpread) + enemiesSpawnOffset);
             }
         }
 
