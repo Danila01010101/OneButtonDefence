@@ -21,10 +21,10 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
 
     public void SetupStartBuildings()
     {
-        SetupBuildingPosition(SpawnFarm(), grid.GetBestCellCoordinates());
-        SetupBuildingPosition(SpawnFactory(), grid.GetBestCellCoordinates());
-        SetupBuildingPosition(SpawnSpiritBuilding(), grid.GetBestCellCoordinates());
-        SetupBuildingPosition(SpawnMilitaryCamp(), grid.GetBestCellCoordinates());
+        SpawnBuilding<Farm>();
+        SpawnBuilding<SpiritBuilding>();
+        SpawnBuilding<MilitaryCamp>();
+        SpawnBuilding<Factory>();
     }
 
     private void ActivateUpgrade(UpgradeButton.Upgrades upgrade)
@@ -32,33 +32,27 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
         switch (upgrade)
         {
             case UpgradeButton.Upgrades.Farm:
-                Farm farm = SpawnFarm();
-                SetupBuildingPosition(farm, grid.GetBestCellCoordinates());
+                SpawnBuilding<Farm>();
                 break;
             case UpgradeButton.Upgrades.SpiritBuilding:
-                SpiritBuilding spiritBuilding = SpawnSpiritBuilding();
-                SetupBuildingPosition(spiritBuilding, grid.GetBestCellCoordinates());
+                SpawnBuilding<SpiritBuilding>();
                 break;
             case UpgradeButton.Upgrades.MilitaryCamp:
-                MilitaryCamp militaryCamp = SpawnMilitaryCamp();
-                SetupBuildingPosition(SpawnMilitaryCamp(), grid.GetBestCellCoordinates());
+                SpawnBuilding<MilitaryCamp>();
                 break;
             case UpgradeButton.Upgrades.ResourcesCenter:
-                Factory resourcesCenter = SpawnFactory();
-                SetupBuildingPosition(resourcesCenter, grid.GetBestCellCoordinates());
+                SpawnBuilding<Factory>();
                 break;
             default:
                 throw new NotImplementedException();
         }
     }
 
-    private Farm SpawnFarm() => buildingFacrory.SpawnBuilding<Farm>();
-
-    private SpiritBuilding SpawnSpiritBuilding() => buildingFacrory.SpawnBuilding<SpiritBuilding>();
-
-    private Factory SpawnFactory() => buildingFacrory.SpawnBuilding<Factory>();
-
-    private MilitaryCamp SpawnMilitaryCamp() => buildingFacrory.SpawnBuilding<MilitaryCamp>();
+    private void SpawnBuilding<T>() where T : Building
+    {
+        T building = buildingFacrory.SpawnBuilding<T>();
+        SetupBuildingPosition(building, grid.GetBestCellCoordinates());
+    }
 
     private void SetupBuildingPosition(Building building, CellPlaceCoordinates placePosition) 
     {
