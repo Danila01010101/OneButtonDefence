@@ -19556,7 +19556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 383be53655fa68a40a1cb75943fa4e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Offset>k__BackingField: {x: 0, y: -0.6, z: 0}
+  <BuildingOffset>k__BackingField: {x: 0, y: -0.6, z: 0}
 --- !u!114 &2412711547559725740
 MonoBehaviour:
   m_ObjectHideFlags: 0

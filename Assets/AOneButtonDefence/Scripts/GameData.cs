@@ -9,4 +9,5 @@ public class GameData : ScriptableObject
     [field: SerializeField] public BattleWavesParameters BattleWavesParameters { get; private set; }
     [field: SerializeField] public float EnemiesSpawnSpread { get; private set; }
     [field: SerializeField] public Vector3 EnemiesSpawnOffset { get; private set; }
+    public float UpgradeStateDuration { get; private set; }
 }

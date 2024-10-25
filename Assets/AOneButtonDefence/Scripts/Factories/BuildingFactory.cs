@@ -5,10 +5,12 @@ public class BuildingFactory
 {
     private BuildingsData buildingsData;
     private List<Building> buildingsList = new List<Building>();
+    private float animationDuration;
 
-    public BuildingFactory(BuildingsData buildingsData)
+    public BuildingFactory(BuildingsData buildingsData, float animationDuration)
     {
         this.buildingsData = buildingsData;
+        this.animationDuration = animationDuration;
         buildingsList = buildingsData.buildingsList;
     }
 
@@ -22,6 +24,7 @@ public class BuildingFactory
             {
                 Building spawnedBuilding = MonoBehaviour.Instantiate(building);
                 spawnedBuilding.SetupData(buildingsData);
+                spawnedBuilding.SetAnimationTime(animationDuration);
                 spawnedBuilding.ActivateSpawnActionWithDelay();
                 return spawnedBuilding as T;
             }

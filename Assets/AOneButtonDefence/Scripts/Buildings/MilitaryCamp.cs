@@ -14,7 +14,7 @@ public class MilitaryCamp : Building
     public override void SetupData(BuildingsData buildingsData)
     {
         data = buildingsData.MilitaryCampData;
-        cost = data.Cost;
+        Cost = data.Cost;
     }
 
     protected override void ActivateEndMoveAction()
@@ -26,7 +26,7 @@ public class MilitaryCamp : Building
 
     private void AddWarriors(int amount)
     {
-        foodPerTurnAmount += amount;
+        FoodPerTurnAmount += amount;
         ResourcesCounter.Instance.Data.Warriors += amount;
         Instantiate(data.GnomeWarriorPrefab, transform.position + data.spawnOffset, Quaternion.Euler(data.spawnRotation));
     }

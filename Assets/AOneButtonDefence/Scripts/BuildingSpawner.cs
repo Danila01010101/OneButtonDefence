@@ -8,9 +8,9 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
 
     public Action<CellPlaceCoordinates> CellFilled { get; set; }
 
-    public void Initialize(CellsGrid grid, BuildingsData upgradeBuildings)
+    public void Initialize(CellsGrid grid, BuildingsData upgradeBuildings, float animationDuration)
     {
-        buildingFacrory = new BuildingFactory(upgradeBuildings);
+        buildingFacrory = new BuildingFactory(upgradeBuildings, animationDuration);
         this.grid = grid;
     }
 
@@ -56,7 +56,7 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
 
     private void SetupBuildingPosition(Building building, CellPlaceCoordinates placePosition) 
     {
-        building.transform.position = grid.GetWorldPositionByCoordinates(placePosition.X, placePosition.Z) + building.Offset;
+        building.transform.position = grid.GetWorldPositionByCoordinates(placePosition.X, placePosition.Z) + building.BuildingOffset;
         grid.Place(placePosition);
         CellFilled?.Invoke(placePosition);
     }

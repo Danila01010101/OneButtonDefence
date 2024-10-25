@@ -13,8 +13,8 @@ public class SpiritBuilding : Building
     public override void SetupData(BuildingsData buildingsData)
     {
         data = buildingsData.SpiritBuildingData;
-        cost = data.Cost;
-        foodPerTurnAmount = data.FoodPerTurnAmount;
+        Cost = data.Cost;
+        FoodPerTurnAmount = data.FoodPerTurnAmount;
     }
 
     protected override void ActivateEndMoveAction()

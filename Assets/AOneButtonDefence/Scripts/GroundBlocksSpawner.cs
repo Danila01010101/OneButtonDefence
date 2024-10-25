@@ -33,7 +33,6 @@ public class GroundBlocksSpawner : MonoBehaviour
         }
 
         SpawnStartCamp();
-        cellsChanger.Initialize(grid, data.Buildings);
     }
 
     private void SpawnStartCamp()

@@ -18,6 +18,7 @@ public class GameInitializer : MonoBehaviour
     {
         SpawnResourceCounter();
         SpawnWorldGrid();
+        InitializeBuildingSpawner();
         SpawnUpgradeCanvas();
         SetupStateMachine();
     }
@@ -29,6 +30,8 @@ public class GameInitializer : MonoBehaviour
         buildingsGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
         worldCreator.SetupGrid(buildingsGrid, buildingSpawner);
     }
+
+    private void InitializeBuildingSpawner() => buildingSpawner.Initialize(buildingsGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration);
 
     private void SpawnUpgradeCanvas()
     {
@@ -45,6 +48,6 @@ public class GameInitializer : MonoBehaviour
             worldCreator,
             buildingsGrid
         );
-        gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset);
+        gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset, gameData.UpgradeStateDuration);
     }
 }

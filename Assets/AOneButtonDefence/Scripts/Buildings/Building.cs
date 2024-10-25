@@ -3,10 +3,11 @@ using UnityEngine;
 
 public abstract class Building : MonoBehaviour
 {
-    [field : SerializeField] public Vector3 Offset { get; private set; }
+    [field : SerializeField] public Vector3 BuildingOffset { get; private set; }
 
-    protected int foodPerTurnAmount;
-    protected int cost;
+    protected int FoodPerTurnAmount;
+    protected int Cost;
+    protected float AnimationDuration { get; private set; }
 
     private ResourcesCounter.ResourcesData resources;
 
@@ -26,23 +27,28 @@ public abstract class Building : MonoBehaviour
 
     protected virtual void ActivateSpawnAction()
     {
-        ResourcesCounter.Instance.Data.Materials -= cost;
+        ResourcesCounter.Instance.Data.Materials -= Cost;
     }
 
     public abstract void SetupData(BuildingsData buildingsData);
 
+    public void SetAnimationTime(float animationDuration)
+    {
+        AnimationDuration = animationDuration;
+    }
+
     protected virtual void ActivateEndMoveAction()
     {
-        resources.FoodAmount -= foodPerTurnAmount;
+        resources.FoodAmount -= FoodPerTurnAmount;
     }
 
     private void OnEnable()
     {
-        UpgradeButton.TurnEnded += ActivateEndMoveAction;
+        UpgradeButton.UpgradeChoosen += ActivateEndMoveAction;
     }
 
     private void OnDisable()
     {
-        UpgradeButton.TurnEnded -= ActivateEndMoveAction;
+        UpgradeButton.UpgradeChoosen -= ActivateEndMoveAction;
     }
 }

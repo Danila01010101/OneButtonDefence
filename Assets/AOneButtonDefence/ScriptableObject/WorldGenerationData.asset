@@ -15,7 +15,7 @@ MonoBehaviour:
   <GridSize>k__BackingField: 100
   <CellSize>k__BackingField: 6.4
   <startButtonsAmount>k__BackingField: 4
-  <Buildings>k__BackingField: {fileID: 11400000, guid: 6dd5925a9be5abb4a974feb6937caa99, type: 2}
+  <BuildingsData>k__BackingField: {fileID: 11400000, guid: 6dd5925a9be5abb4a974feb6937caa99, type: 2}
   <CentralBlock>k__BackingField: {fileID: 3221724995994378359, guid: 6cb43c6ee1bd9d74aa86f45effcd7636, type: 3}
   <EmptyBlock>k__BackingField: {fileID: 4089697000895748911, guid: 1ad2c5d2b76b53a49b6c388fb738ccff, type: 3}
   <EarthBlocks>k__BackingField:
