@@ -1,18 +1,22 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(IAnimatable))]
 public abstract class Building : MonoBehaviour
 {
     [field : SerializeField] public Vector3 BuildingOffset { get; private set; }
 
-    protected int FoodPerTurnAmount;
-    protected int Cost;
     protected float AnimationDuration { get; private set; }
 
+    protected int FoodPerTurnAmount;
+    protected int Cost;
+
     private ResourcesCounter.ResourcesData resources;
+    private IAnimatable animator;
 
     private void Start()
     {
+        animator = GetComponent<IAnimatable>();
         resources = ResourcesCounter.Instance.Data;
     }
 
@@ -44,11 +48,15 @@ public abstract class Building : MonoBehaviour
 
     private void OnEnable()
     {
-        UpgradeButton.UpgradeChoosen += ActivateEndMoveAction;
+        UpgradeState.UpgradeStateStarted += animator.StartAnimation;
+        UpgradeState.UpgradeStateEnded += animator.InteruptAnimation;
+        UpgradeState.UpgradeStateEnded += ActivateEndMoveAction;
     }
 
     private void OnDisable()
     {
-        UpgradeButton.UpgradeChoosen -= ActivateEndMoveAction;
+        UpgradeState.UpgradeStateStarted -= animator.StartAnimation;
+        UpgradeState.UpgradeStateEnded -= animator.InteruptAnimation;
+        UpgradeState.UpgradeStateEnded -= ActivateEndMoveAction;
     }
 }
