@@ -8,7 +8,7 @@ public class UpgradeState : IState
     private bool isUpgradeChoosen = false;
     private float upgradeFaseDuration;
     private float upgradeFaseStartTime;
-    private bool canEndTurn => upgradeFaseStartTime + upgradeFaseDuration > Time.time && isUpgradeChoosen;
+    private bool canEndTurn => upgradeFaseStartTime + upgradeFaseDuration < Time.time && isUpgradeChoosen;
 
     public static Action UpgradeStateStarted;
     public static Action UpgradeStateEnded;

@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -28,7 +29,11 @@ public class DOTweenAnimationMillitary : MonoBehaviour, IAnimatable
 
     public void StartAnimation() => currentAnimation = StartCoroutine(SpawnGnomes());
 
-    public void InteruptAnimation() => StopCoroutine(currentAnimation);
+    public void InteruptAnimation() 
+    {
+        if (currentAnimation != null) 
+            StopCoroutine(currentAnimation);
+    }
 
     private IEnumerator SpawnGnomes()
     {

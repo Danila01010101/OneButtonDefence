@@ -23,6 +23,14 @@ public class GameInitializer : MonoBehaviour
         SetupStateMachine();
     }
 
+    private void Update()
+    {
+        gameStateMachine.Update();
+        gameStateMachine.HandleInput();
+    }
+
+    private void FixedUpdate() => gameStateMachine.PhysicsUpdate();
+
     private void SpawnResourceCounter() => new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
 
     private void SpawnWorldGrid()

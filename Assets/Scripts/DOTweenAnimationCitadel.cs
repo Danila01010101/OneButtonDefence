@@ -39,7 +39,11 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
 
     public void StartAnimation() => currentAnimation = StartCoroutine(StartSpawnGnomes());
 
-    public void InteruptAnimation() => StopCoroutine(currentAnimation);
+    public void InteruptAnimation()
+    {
+        if (currentAnimation != null)
+            StopCoroutine(currentAnimation);
+    }
 
     private IEnumerator StartSpawnGnomes()
     {

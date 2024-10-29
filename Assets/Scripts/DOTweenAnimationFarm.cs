@@ -23,7 +23,11 @@ public class DOTweenAnimationFarm : MonoBehaviour, IAnimatable
 
     public void StartAnimation() => currentAnimation = StartCoroutine(WorkerRoutine());
 
-    public void InteruptAnimation() => StopCoroutine(currentAnimation);
+    public void InteruptAnimation()
+    {
+        if (currentAnimation != null)
+            StopCoroutine(currentAnimation);
+    }
 
     private IEnumerator WorkerRoutine()
     {

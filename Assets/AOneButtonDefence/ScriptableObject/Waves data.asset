@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Waves data
   m_EditorClassIdentifier: 
   <waves>k__BackingField:
-  - amountOfEnemySpawns: 2
-    enemiesAmountPerSpawn: 1
+  - amountOfEnemySpawns: 1
+    enemiesAmountPerSpawn: 2
     spawnInterval: 1
   - amountOfEnemySpawns: 8
     enemiesAmountPerSpawn: 2

@@ -28,7 +28,11 @@ public class DOTweenAnimationFabric : MonoBehaviour, IAnimatable
 
     public void StartAnimation() => currentAnimation = StartCoroutine(SpawnWorkers());
 
-    public void InteruptAnimation() => StopCoroutine(currentAnimation);
+    public void InteruptAnimation()
+    {
+        if (currentAnimation != null)
+            StopCoroutine(currentAnimation);
+    }
 
     private IEnumerator SpawnWorkers()
     {
