@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6966691814370804575}
   m_Layer: 8
   m_Name: KnightUnit
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

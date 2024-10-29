@@ -19,3 +19,4 @@ MonoBehaviour:
   <EnemiesSpawnSpread>k__BackingField: 2
   <EnemiesSpawnOffset>k__BackingField: {x: 1.792, y: 0.72, z: 1.958}
   <UpgradeStateDuration>k__BackingField: 4
+  <EnemyTag>k__BackingField: Enemy

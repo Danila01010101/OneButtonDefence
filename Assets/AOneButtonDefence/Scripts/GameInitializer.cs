@@ -54,7 +54,8 @@ public class GameInitializer : MonoBehaviour
             upgradeCanvas,
             gameData,
             worldCreator,
-            buildingsGrid
+            buildingsGrid,
+            gameData.EnemyTag
         );
         gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset, gameData.UpgradeStateDuration);
     }

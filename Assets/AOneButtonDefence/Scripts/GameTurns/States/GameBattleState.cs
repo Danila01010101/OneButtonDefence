@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameBattleState : IState
 {
-    private IStateChanger stateMachine;
+    private IStringStateChanger stateMachine;
     private MonoBehaviour coroutineStarter;
     private BattleWavesParameters wavesParameters;
     private EnemieFactory enemieFactory;
@@ -13,6 +15,7 @@ public class GameBattleState : IState
     private Vector3 enemiesSpawnOffset;
     private int spawnSpread = 2;
     private int currentWaveIndex = 0;
+    private string enemyTag;
 
     public GameBattleState(GameBattleStateData data)
     {
@@ -20,6 +23,7 @@ public class GameBattleState : IState
         this.coroutineStarter = data.CoroutineStarter;
         this.wavesParameters = data.WavesParameters;
         this.enemiesSpawnOffset = data.EnemiesSpawnOffset;
+        enemyTag = data.EnemyTag;
         grid = data.CellsGrid;
         enemieFactory = new EnemieFactory(data.EnemiesData);
     }
@@ -68,6 +72,27 @@ public class GameBattleState : IState
             }
         }
 
+        coroutineStarter.StartCoroutine(EndStateChecking());
         currentWaveIndex++;
+    }
+
+    private IEnumerator EndStateChecking()
+    {
+        List<GameObject> units = GameObject.FindGameObjectsWithTag(enemyTag).ToList();
+
+        while (units.Count > 0)
+        {
+            yield return new WaitForEndOfFrame();
+
+            for (int i = 0; i < units.Count; i++)
+            {
+                if (units[i] == null)
+                {
+                    units.Remove(units[i]);
+                }
+            }
+        }
+
+        stateMachine.ChangeStateWithString(GameStateNames.Upgrade);
     }
 }
