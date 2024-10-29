@@ -29,7 +29,7 @@ MonoBehaviour:
     <GnomeWarriorPrefab>k__BackingField: {fileID: 1063882897230435733, guid: f4f495098b5f5c3449dc8000417df478, type: 3}
     <StartWarriorsAmount>k__BackingField: 0
     <EveryTurnWarriorsAmount>k__BackingField: 0
-    <spawnOffset>k__BackingField: {x: 1.792, y: 1.207, z: 1.958}
+    <spawnOffset>k__BackingField: {x: 1.792, y: 1.6, z: 1.958}
     <spawnRotation>k__BackingField: {x: 0, y: 180, z: 0}
   <FactoryData>k__BackingField:
     <FoodPerTurnAmount>k__BackingField: 0

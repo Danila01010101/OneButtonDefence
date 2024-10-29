@@ -14,7 +14,7 @@ public abstract class Building : MonoBehaviour
     private ResourcesCounter.ResourcesData resources;
     private IAnimatable animator;
 
-    private void Start()
+    private void Awake()
     {
         animator = GetComponent<IAnimatable>();
         resources = ResourcesCounter.Instance.Data;
