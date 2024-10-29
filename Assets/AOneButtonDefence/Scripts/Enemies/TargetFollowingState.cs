@@ -75,6 +75,7 @@ public class TargetFollowingState : IState, ITargetFollower
         }
 
         characterController.Move(GetDirection());
+        transform.LookAt(target.position);
     }
 
     public void SetTarget(Transform transform) => target = transform;
