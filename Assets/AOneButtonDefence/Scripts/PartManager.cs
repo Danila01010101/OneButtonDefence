@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PartManager : MonoBehaviour
 {
     [SerializeField] private Button partPrefab;
-    [SerializeField] private GameObject CanvasObject;
+    [SerializeField] private GameObject CellsSpawnParent;
     [SerializeField] private UpgradeButton upgradeButton;
 
     private int partPlacingInterval = 0;
@@ -29,11 +29,11 @@ public class PartManager : MonoBehaviour
 
             for (int i = 0; i < startButtonsAmount; i++)
             {
-                var spa = Instantiate(partPrefab, CanvasObject.transform.position + new Vector3(partPlacingInterval, 0, 0), Quaternion.identity);
-                spa.transform.SetParent(CanvasObject.transform);
+                var spa = Instantiate(partPrefab, CellsSpawnParent.transform.position + new Vector3(partPlacingInterval, 0, 0), Quaternion.identity);
+                spa.transform.SetParent(CellsSpawnParent.transform);
                 parts.Add(spa);
-                var sp = Instantiate(partPrefab, CanvasObject.transform.position + new Vector3(-partPlacingInterval, 0, 0), Quaternion.identity);
-                sp.transform.SetParent(CanvasObject.transform);
+                var sp = Instantiate(partPrefab, CellsSpawnParent.transform.position + new Vector3(-partPlacingInterval, 0, 0), Quaternion.identity);
+                sp.transform.SetParent(CellsSpawnParent.transform);
                 parts.Add(sp);
                 partPlacingInterval = partPlacingInterval + 100;
             }
@@ -44,14 +44,14 @@ public class PartManager : MonoBehaviour
 
             for (int i = 0; i < startButtonsAmount; i++)
             {
-                var spawn = Instantiate(partPrefab, CanvasObject.transform.position + new Vector3(partPlacingInterval, 0, 0), Quaternion.identity);
-                spawn.transform.SetParent(CanvasObject.transform);
+                var spawn = Instantiate(partPrefab, CellsSpawnParent.transform.position + new Vector3(partPlacingInterval, 0, 0), Quaternion.identity);
+                spawn.transform.SetParent(CellsSpawnParent.transform);
                 parts.Add(spawn);
 
                 if (partPlacingInterval != 0)
                 {
-                    var spaw = Instantiate(partPrefab, CanvasObject.transform.position + new Vector3(-partPlacingInterval, 0, 0), Quaternion.identity);
-                    spaw.transform.SetParent(CanvasObject.transform);
+                    var spaw = Instantiate(partPrefab, CellsSpawnParent.transform.position + new Vector3(-partPlacingInterval, 0, 0), Quaternion.identity);
+                    spaw.transform.SetParent(CellsSpawnParent.transform);
                     parts.Add(spaw);
                 }
 
