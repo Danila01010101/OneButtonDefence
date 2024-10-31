@@ -16,7 +16,7 @@ public class DialogNPCSpawner : MonoBehaviour
         mainCamera = Camera.main;
         Vector3 spawnPosition = new Vector3(viewportPosition.x, viewportPosition.y, distanceFromCamera);
         Vector3 worldPosition = mainCamera.ViewportToWorldPoint(spawnPosition);
-        spawnedNPC = Instantiate(DialogueNPCPrefab, worldPosition, Quaternion.Euler(rotation));
+        spawnedNPC = Instantiate(DialogueNPCPrefab, worldPosition, Quaternion.Euler(rotation), mainCamera.transform);
     }
 
     public void DeleteNPC()
