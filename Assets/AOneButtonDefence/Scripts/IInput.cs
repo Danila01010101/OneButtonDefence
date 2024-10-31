@@ -3,6 +3,8 @@ using UnityEngine;
 
 public interface IInput
 {
-    Action<Vector3> CameraMoved { get; }
-    Action<float> Scroll { get; }
+    Action<Vector3> Moved { get; set; }
+    Action<Vector2> Rotated { get; set; }
+    Action<float> Scroll { get; set; }
+    void LateUpdate();
 }
