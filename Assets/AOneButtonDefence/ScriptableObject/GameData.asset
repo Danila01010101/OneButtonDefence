@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0129c6bf1935c2940bc5ef0299ba3a30, type: 3}
+  m_Name: GameData
+  m_EditorClassIdentifier: 
+  <StartDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
+  <EndTurnDialogCanvas>k__BackingField: {fileID: 0}
+  <TurnAmountBeforeEvent>k__BackingField: 4
+  <BattleWavesParameters>k__BackingField: {fileID: 11400000, guid: d46257c332a947b4bb775c648410080f, type: 2}
+  <EnemiesSpawnSpread>k__BackingField: 2
+  <EnemiesSpawnOffset>k__BackingField: {x: 1.792, y: 0.72, z: 1.958}
+  <UpgradeStateDuration>k__BackingField: 4
+  <EnemyTag>k__BackingField: Enemy

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e29a42f798d344d9f217f399003c69, type: 3}
+  m_Name: UpgradesData
+  m_EditorClassIdentifier: 
+  <buildingsList>k__BackingField:
+  - {fileID: -2995029103410726618, guid: 3c0e672a8585b634a8f15da8d9c62fca, type: 3}
+  - {fileID: 6436280707306985982, guid: f64888de816ba6044b8012c0621bbfa2, type: 3}
+  - {fileID: 5664484394317920810, guid: 034bcc6654a56b64781c5e9e13ee617d, type: 3}
+  - {fileID: -8881658859567159356, guid: e63a3734f632f9a4e84bcbbcf8c68ff1, type: 3}
+  <FarmData>k__BackingField:
+    <FoodPerTurnAmount>k__BackingField: 0
+    <Cost>k__BackingField: 0
+    <SpawnBonus>k__BackingField: 15
+    <EveryTurnBonus>k__BackingField: 5
+    <StartHumanAmount>k__BackingField: 0
+  <MilitaryCampData>k__BackingField:
+    <FoodPerTurnAmount>k__BackingField: 0
+    <Cost>k__BackingField: 0
+    <GnomeWarriorPrefab>k__BackingField: {fileID: 1063882897230435733, guid: f4f495098b5f5c3449dc8000417df478, type: 3}
+    <StartWarriorsAmount>k__BackingField: 0
+    <EveryTurnWarriorsAmount>k__BackingField: 0
+    <spawnOffset>k__BackingField: {x: 1.792, y: 1.6, z: 1.958}
+    <spawnRotation>k__BackingField: {x: 0, y: 180, z: 0}
+  <FactoryData>k__BackingField:
+    <FoodPerTurnAmount>k__BackingField: 0
+    <Cost>k__BackingField: 0
+    <SpawnBonus>k__BackingField: 5
+    <EveryTurnBonus>k__BackingField: 15
+    <StartHumanAmount>k__BackingField: 0
+  <SpiritBuildingData>k__BackingField:
+    <FoodPerTurnAmount>k__BackingField: 0
+    <Cost>k__BackingField: 0
+    <SpawnBonus>k__BackingField: 5
+    <EveryTurnBonus>k__BackingField: 15
+    <StartHumanAmount>k__BackingField: 0
