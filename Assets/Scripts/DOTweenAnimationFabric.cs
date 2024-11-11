@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,12 +27,18 @@ public class DOTweenAnimationFabric : MonoBehaviour, IAnimatable
         WorkersCount = WorkerSpawnPoints.Count;
     }
 
-    public void StartAnimation() => currentAnimation = StartCoroutine(SpawnWorkers());
+    public void StartAnimation() => currentAnimation = StartCoroutine(RestartAnimation());
 
     public void InteruptAnimation()
     {
         if (currentAnimation != null)
+        {
             StopCoroutine(currentAnimation);
+            foreach(GameObject gnome in gnomes)
+            {
+                StartCoroutine(StopAnimation(gnome));
+            }
+        }
     }
 
     private IEnumerator SpawnWorkers()
@@ -53,13 +60,13 @@ public class DOTweenAnimationFabric : MonoBehaviour, IAnimatable
         int index = gnomes.IndexOf(gnome);
         Vector3 workposition = WorkPoints[index].position;
         Vector3 spawnposition = WorkerSpawnPoints[index].position;
-         GameObject[] test = GameObject.FindGameObjectsWithTag(Blocktag);
+        GameObject[] test = GameObject.FindGameObjectsWithTag(Blocktag);
         var example = gnome.transform.GetChild(Blockindex);
         GameObject Block = null;
 
         foreach (GameObject block in test)
         {
-            if(block.transform == example)
+            if (block.transform == example)
             {
                 Block = block;
                 break;
@@ -84,6 +91,46 @@ public class DOTweenAnimationFabric : MonoBehaviour, IAnimatable
             gnome.transform.DOMove(spawnposition, WalkDuration);
 
             yield return new WaitForSeconds(WalkDuration);
+            Block.SetActive(false);
+        }
+    }
+
+    private IEnumerator RestartAnimation()
+    {
+        for (int i = 0; i < gnomes.Count; i++)
+        {
+            GameObject gnome = gnomes[i];
+            currentAnimation = StartCoroutine(WorkersAnimation(gnome));
+            yield return new WaitForSeconds(SpawnDelay);
+        }
+    }
+
+    private IEnumerator StopAnimation(GameObject gnome)
+    {
+        int index = gnomes.IndexOf(gnome);
+        Vector3 spawnposition = WorkerSpawnPoints[index].position;
+        GameObject[] test = GameObject.FindGameObjectsWithTag(Blocktag);
+        var example = gnome.transform.GetChild(Blockindex);
+        GameObject Block = null;
+
+        foreach (GameObject block in test)
+        {
+            if (block.transform == example)
+            {
+                Block = block;
+                break;
+            }
+        }
+        yield return null;
+
+        gnome.transform.DOLookAt(spawnposition, LookAtDuration);
+        gnome.transform.DOShakeRotation(WalkDuration, ShakeStrenght, ShakeVibrato);
+        gnome.transform.DOMove(spawnposition, WalkDuration);
+
+        yield return new WaitForSeconds(WalkDuration);
+
+        if (Block.activeInHierarchy)
+        {
             Block.SetActive(false);
         }
     }

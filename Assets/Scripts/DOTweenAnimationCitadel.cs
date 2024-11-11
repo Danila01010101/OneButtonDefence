@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
@@ -30,6 +31,7 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
     private ChangeMaterial changeMaterial;
     private Vector3 startBothCorePosition;
     private float journeyProgress = 0f;
+    private List<GameObject> gnomes = new List<GameObject>();
 
     private void Start()
     {
@@ -42,7 +44,13 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
     public void InteruptAnimation()
     {
         if (currentAnimation != null)
+        {
             StopCoroutine(currentAnimation);
+            foreach (GameObject gnome in gnomes)
+            {
+                StartCoroutine(StopWorking(gnome));
+            }
+        }
     }
 
     private IEnumerator StartSpawnGnomes()
@@ -50,6 +58,7 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
         for (int i = 0; i < SpawnPositions.Count; i++)
         {
             GameObject gnome = Instantiate(Gnome, SpawnPositions[i].position, Quaternion.identity);
+            gnomes.Add(gnome);
             gnome.transform.GetChild(1).gameObject.SetActive(false);
             Material material = gnome.transform.GetChild(ModelChildIndex).GetChild(ModelChildIndex).gameObject.GetComponent<Renderer>().material;
             material.color = startvalue;
@@ -58,7 +67,7 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
             yield return new WaitForSeconds(FadeDuration);
             changeMaterial.SetOpaque(material);
             yield return new WaitForSeconds(SpawnDelay);
-            StartCoroutine(AnimationGnomes(gnome, SpawnPositions[i], EndPositions[i]));
+            currentAnimation = StartCoroutine(AnimationGnomes(gnome, SpawnPositions[i], EndPositions[i]));
         }
     }
 
@@ -79,16 +88,21 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
         });
 
         yield return new WaitForSeconds(PoklonTime * 2 + Wait);
-        Vector3 directionToStart = (startposition.position - gnome.transform.position).normalized;
-        float returnYRotation = Quaternion.LookRotation(directionToStart).eulerAngles.y;
-        gnome.transform.DORotate(new Vector3(0, returnYRotation, 0), 0.5f);
-        gnome.transform.DOMove(startposition.position, WalkDuration);
-        yield return new WaitForSeconds(WalkDuration);
-        changeMaterial.SetTransparent(material);
-        material.DOColor(startvalue, FadeDuration);
-        yield return new WaitForSeconds(FadeDuration);
-        Destroy(gnome);
-        StartCoroutine(SpawnGnome(startposition, endposition));
+        
+        if (gnome != null)
+        {
+            Vector3 directionToStart = (startposition.position - gnome.transform.position).normalized;
+            float returnYRotation = Quaternion.LookRotation(directionToStart).eulerAngles.y;
+            gnome.transform.DORotate(new Vector3(0, returnYRotation, 0), 0.5f);
+            gnome.transform.DOMove(startposition.position, WalkDuration);
+            yield return new WaitForSeconds(WalkDuration);
+            changeMaterial.SetTransparent(material);
+            material.DOColor(startvalue, FadeDuration);
+            yield return new WaitForSeconds(FadeDuration);
+            gnomes.Remove(gnome);
+            Destroy(gnome);
+            currentAnimation = StartCoroutine(SpawnGnome(startposition, endposition));
+        }
     }
 
     private void StartGnomeMovementAnimation(GameObject gnome, Transform endPosition) => gnome.transform.DOMove(endPosition.position, WalkDuration);
@@ -96,6 +110,7 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
     private IEnumerator SpawnGnome(Transform startposition, Transform endposition)
     {
         GameObject gnome = Instantiate(Gnome, startposition.position, Quaternion.identity);
+        gnomes.Add(gnome);
         gnome.transform.GetChild(1).gameObject.SetActive(false);
         Material material = gnome.transform.GetChild(ModelChildIndex).GetChild(ModelChildIndex).gameObject.GetComponent<Renderer>().material;
         material.color = startvalue;
@@ -103,7 +118,7 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
         material.DOColor(endvalue, FadeDuration);
         yield return new WaitForSeconds(FadeDuration);
         changeMaterial.SetOpaque(material);
-        StartCoroutine(AnimationGnomes(gnome, startposition, endposition));
+        currentAnimation = StartCoroutine(AnimationGnomes(gnome, startposition, endposition));
     }
 
     private void Update()
@@ -122,5 +137,23 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
         float smoothY = Mathf.SmoothStep(-MovingDistance, MovingDistance, (t + MovingDistance) / (MovingDistance * 2));
 
         BothCore.transform.position = new Vector3(BothCore.transform.position.x, startBothCorePosition.y + smoothY, BothCore.transform.position.z);
+    }
+
+    private IEnumerator StopWorking(GameObject gnome)
+    {
+        yield return null;
+        int index = gnomes.IndexOf(gnome);
+        Transform startposition = SpawnPositions[index];
+        Material material = gnome.transform.GetChild(ModelChildIndex).GetChild(ModelChildIndex).gameObject.GetComponent<Renderer>().material;
+        Vector3 directionToStart = (startposition.position - gnome.transform.position).normalized;
+        float returnYRotation = Quaternion.LookRotation(directionToStart).eulerAngles.y;
+        gnome.transform.DORotate(new Vector3(0, returnYRotation, 0), 0.5f);
+        gnome.transform.DOMove(startposition.position, WalkDuration);
+        yield return new WaitForSeconds(WalkDuration);
+        changeMaterial.SetTransparent(material);
+        material.DOColor(startvalue, FadeDuration);
+        yield return new WaitForSeconds(FadeDuration);
+        gnomes.Remove(gnome);
+        Destroy(gnome);
     }
 }

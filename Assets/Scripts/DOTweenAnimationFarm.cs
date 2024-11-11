@@ -5,20 +5,22 @@ using UnityEngine;
 
 public class DOTweenAnimationFarm : MonoBehaviour, IAnimatable
 {
-    [SerializeField] private GameObject Human;
-    [SerializeField] private Transform SpawnPoint;
-    [SerializeField] private List<GameObject> DoneHarvestPoints = new List<GameObject>();
-    [SerializeField] private List<GameObject> GrowingPlants = new List<GameObject>();
-    [SerializeField] private float WalkDuration;
-    [SerializeField] private float HarvestTime;
-    [SerializeField] private float GrowTime;
+    [SerializeField] private GameObject human;
+    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private List<GameObject> doneHarvestPoints = new List<GameObject>();
+    [SerializeField] private List<GameObject> growingPlants = new List<GameObject>();
+    [SerializeField] private float walkDuration;
+    [SerializeField] private float harvestTime;
+    [SerializeField] private float growTime;
+    [SerializeField] private Vector3 endPlantScale = new Vector3(0.1f, 0.1f, 0.1f);
+    [SerializeField] private int harvestCount;
 
     private Coroutine currentAnimation;
     private GameObject worker;
 
     private void Start()
     {
-        worker = Instantiate(Human, SpawnPoint.transform.position, Quaternion.identity);
+        worker = Instantiate(human, spawnPoint.transform.position, Quaternion.identity);
     }
 
     public void StartAnimation() => currentAnimation = StartCoroutine(WorkerRoutine());
@@ -26,54 +28,65 @@ public class DOTweenAnimationFarm : MonoBehaviour, IAnimatable
     public void InteruptAnimation()
     {
         if (currentAnimation != null)
+        {
             StopCoroutine(currentAnimation);
+            StartCoroutine(StopWorking());
+        }
     }
 
     private IEnumerator WorkerRoutine()
     {
         while (true)
         {
-            if (DoneHarvestPoints.Count == 0)
+            if (doneHarvestPoints.Count < harvestCount)
             {
                 yield return new WaitForSeconds(1f);
                 continue;
             }
 
-            int randpoint = Random.Range(0, DoneHarvestPoints.Count);
-            var point = DoneHarvestPoints[randpoint];
-            worker.transform.DOMove(point.transform.position, WalkDuration);
-            worker.transform.DOShakeRotation(WalkDuration);
-            yield return new WaitForSeconds(WalkDuration);
-            yield return new WaitForSeconds(HarvestTime);
-            point.transform.localScale = Vector3.zero;
-
-            if (!GrowingPlants.Contains(point))
+            for (int i = 0; i < harvestCount; i++)
             {
-                GrowingPlants.Add(point);
+                int randpoint = Random.Range(0, doneHarvestPoints.Count);
+                var point = doneHarvestPoints[randpoint];
+                worker.transform.DOMove(point.transform.position, walkDuration);
+                worker.transform.DOShakeRotation(walkDuration);
+                yield return new WaitForSeconds(walkDuration);
+                yield return new WaitForSeconds(harvestTime);
+                point.transform.localScale = Vector3.zero;
+
+                if (!growingPlants.Contains(point))
+                {
+                    growingPlants.Add(point);
+                }
+
+                doneHarvestPoints.Remove(point);
+                StartCoroutine(Growing(point));
             }
 
-            DoneHarvestPoints.Remove(point);
-            StartCoroutine(Growing());
-            worker.transform.DOMove(SpawnPoint.position, WalkDuration);
-            worker.transform.DOShakeRotation(WalkDuration);
-            yield return new WaitForSeconds(WalkDuration);
+            worker.transform.DOMove(spawnPoint.position, walkDuration);
+            worker.transform.DOShakeRotation(walkDuration);
+            yield return new WaitForSeconds(walkDuration);
         }
     }
 
-    private IEnumerator Growing()
+    private IEnumerator Growing(GameObject plant)
     {
-        for (int i = GrowingPlants.Count - 1; i >= 0; i--)
+        plant.transform.DOScale(endPlantScale, growTime);
+        yield return new WaitForSeconds(growTime);
+
+        if (!doneHarvestPoints.Contains(plant))
         {
-            var plants = GrowingPlants[i];
-            plants.transform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), GrowTime);
-            yield return new WaitForSeconds(GrowTime);
-
-            if (!DoneHarvestPoints.Contains(plants))
-            {
-                DoneHarvestPoints.Add(plants);
-            }
-
-            GrowingPlants.RemoveAt(i);
+            doneHarvestPoints.Add(plant);
         }
+
+        growingPlants.Remove(plant);
+    }
+
+    private IEnumerator StopWorking()
+    {
+        worker.transform.DOMove(spawnPoint.position, walkDuration);
+        worker.transform.DOShakeRotation(walkDuration);
+
+        yield return new WaitForSeconds(walkDuration);
     }
 }

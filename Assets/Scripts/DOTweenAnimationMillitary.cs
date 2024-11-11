@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -27,12 +28,18 @@ public class DOTweenAnimationMillitary : MonoBehaviour, IAnimatable
     private List<GameObject> gnomes = new List<GameObject>();
     private Coroutine currentAnimation;
 
-    public void StartAnimation() => currentAnimation = StartCoroutine(SpawnGnomes());
+    public void StartAnimation() => currentAnimation = StartCoroutine(RestartAnimation());
 
     public void InteruptAnimation() 
     {
-        if (currentAnimation != null) 
+        if (currentAnimation != null)
+        {
             StopCoroutine(currentAnimation);
+            foreach (GameObject gnome in gnomes)
+            {
+                StartCoroutine(StopWorking(gnome));
+            }
+        }
     }
 
     private IEnumerator SpawnGnomes()
@@ -79,6 +86,29 @@ public class DOTweenAnimationMillitary : MonoBehaviour, IAnimatable
             }
 
             yield return new WaitForSeconds(SleepTime);
+        }
+    }
+
+    private IEnumerator StopWorking(GameObject gnome)
+    {
+        int index = gnomes.IndexOf(gnome);
+        for (int i = Path[index].Path.Count - 1; i >= 0; i--)
+        {
+            gnome.transform.DOLookAt(Path[index].Path[i].position, RotateDuration);
+            yield return new WaitForSeconds(RotateDuration);
+            gnome.transform.DOMove(Path[index].Path[i].position, WalkDelay);
+            gnome.transform.DOShakeRotation(WalkDelay);
+            yield return new WaitForSeconds(WalkDelay);
+        }
+    }
+
+    private IEnumerator RestartAnimation() 
+    {
+        for (int i = 0; i < gnomes.Count; i++)
+        {
+            GameObject gnome = gnomes[i];
+            currentAnimation = StartCoroutine(AnimationWarriors(gnome));
+            yield return new WaitForSeconds(SpawnDelay);
         }
     }
 }
