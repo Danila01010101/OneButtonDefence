@@ -1,23 +1,29 @@
+using Cinemachine;
 using UnityEngine;
 using static GameStateMachine;
 
 public class GameInitializer : MonoBehaviour
 {
     [SerializeField] private GameData gameData;
+    [SerializeField] private CameraData cameraData;
     [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
     [SerializeField] private GroundBlocksSpawner worldCreator;
     [SerializeField] private BuildingSpawner buildingSpawner;
     [SerializeField] private PartManager partManagerPrefab;
+    [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
 
     private GameStateMachine gameStateMachine;
     private PartManager upgradeCanvas;
     private CellsGrid buildingsGrid;
+    private IInput input;
 
     private void Awake()
     {
-        SpawnResourceCounter();
+        InitializeInput();
+        InitializeCameraMovementComponent();
         SpawnWorldGrid();
+        SpawnResourceCounter();
         InitializeBuildingSpawner();
         SpawnUpgradeCanvas();
         SetupStateMachine();
@@ -27,11 +33,31 @@ public class GameInitializer : MonoBehaviour
     {
         gameStateMachine.Update();
         gameStateMachine.HandleInput();
+        input.LateUpdate();
     }
 
     private void FixedUpdate() => gameStateMachine.PhysicsUpdate();
 
+    private void InitializeInput()
+    {
+        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            throw new System.NotImplementedException();
+        }
+        else
+        {
+            input = new DesctopInput(gameData.SwipeDeadZone);
+        }
+    }
+
     private void SpawnResourceCounter() => new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
+
+    private void InitializeCameraMovementComponent()
+    {
+        CameraMovement cameraMovement = Instantiate(virtualCameraPrefab).gameObject.AddComponent<CameraMovement>();
+        cameraMovement.gameObject.name = "CameraMovement";
+        cameraMovement.Initialize(input, cameraData);
+    }
 
     private void SpawnWorldGrid()
     {

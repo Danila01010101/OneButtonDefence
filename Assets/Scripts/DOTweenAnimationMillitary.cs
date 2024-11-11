@@ -12,7 +12,7 @@ public class Paths
 }
 
 public class DOTweenAnimationMillitary : MonoBehaviour, IAnimatable
-{
+{ 
     [SerializeField] private GameObject WarriorPrefab;
     [SerializeField] private List<Paths> Path;
     [SerializeField] private float SpawnDelay;

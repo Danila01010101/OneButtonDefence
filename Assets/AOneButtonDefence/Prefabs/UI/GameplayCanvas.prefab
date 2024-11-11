@@ -370,7 +370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partPrefab: {fileID: 7422801006826303249, guid: 43e65ab3302d4f641a1535259ebffca6, type: 3}
-  CanvasObject: {fileID: 8152792308850777953}
+  CellsSpawnParent: {fileID: 8992444948825409741}
   upgradeButton: {fileID: 5885229899465172706}
 --- !u!1 &3163910295321915891
 GameObject:
@@ -2268,8 +2268,8 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2974073621546798638, guid: 045c55b8e8deff846b692780cf064306, type: 3}
   m_PrefabInstance: {fileID: 5289016613373025014}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8152792308850777953 stripped
+--- !u!1 &8992444948825409741 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 4054037904633841047, guid: 045c55b8e8deff846b692780cf064306, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3867969340116800059, guid: 045c55b8e8deff846b692780cf064306, type: 3}
   m_PrefabInstance: {fileID: 5289016613373025014}
   m_PrefabAsset: {fileID: 0}
