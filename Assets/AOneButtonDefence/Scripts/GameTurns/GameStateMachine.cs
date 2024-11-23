@@ -25,12 +25,12 @@ public class GameStateMachine : StateMachine, IStringStateChanger
     public class GameStateMachineData
     {
         public PartManager UpgradeUIGameobject { get; private set; }
-        public GameData GameTurnsData { get; private set; }
+        public GameStartData GameTurnsData { get; private set; }
         public MonoBehaviour CoroutineStarter { get; private set; }
         public CellsGrid CellsGrid { get; private set; }
         public string EnemyTag { get; private set; }
 
-        public GameStateMachineData(PartManager upgradeUIGameobject, GameData gameTurnsData, MonoBehaviour coroutineStarter, CellsGrid buildingsGrid, string enemyTag)
+        public GameStateMachineData(PartManager upgradeUIGameobject, GameStartData gameTurnsData, MonoBehaviour coroutineStarter, CellsGrid buildingsGrid, string enemyTag)
         {
             this.UpgradeUIGameobject = upgradeUIGameobject;
             this.GameTurnsData = gameTurnsData;

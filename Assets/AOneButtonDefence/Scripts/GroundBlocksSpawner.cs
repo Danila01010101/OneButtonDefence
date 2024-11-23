@@ -6,6 +6,7 @@ public class GroundBlocksSpawner : MonoBehaviour
     [SerializeField] private WorldGenerationData data;
 
     private List<List<Ground>> groundBlocks = new List<List<Ground>>();
+    private GroundBlocksFactory groundBlocksFactory;
     private BuildingSpawner buildingSpawner;
     private Transform blocksParent;
     private CellsGrid grid;
@@ -15,10 +16,9 @@ public class GroundBlocksSpawner : MonoBehaviour
         this.grid = grid;
         this.buildingSpawner = buildingSpawner;
         buildingSpawner.CellFilled += ReplaceBlockWithDefaultBlock;
-        GenerateWorld(buildingSpawner);
     }
 
-    private void GenerateWorld(BuildingSpawner cellsChanger)
+    public void GenerateNewWorld()
     {
         blocksParent = new GameObject("Earth blocks").transform;
 
@@ -28,19 +28,41 @@ public class GroundBlocksSpawner : MonoBehaviour
             for (int j = 0; j < grid.Size; j++)
             {
                 Ground spawnedBlock = SpawnBlock(GetRandomEarthBlock(), i, j);
+                spawnedBlock.Initialize();
                 groundBlocks[i].Add(spawnedBlock);
+                grid.SetGround(new CellPlaceCoordinates(i, j), spawnedBlock);
             }
         }
 
-        SpawnStartCamp();
+        SpawnMainBuilding();
     }
 
-    private void SpawnStartCamp()
+    public void GenerateExistingWorld()
+    {
+        blocksParent = new GameObject("Earth blocks").transform;
+
+        for (int i = 0; i < grid.Size; i++)
+        {
+            groundBlocks.Add(new List<Ground>());
+            for (int j = 0; j < grid.Size; j++)
+            {
+                Ground blockPrefab = groundBlocksFactory.GetBlockByType(grid.PlacementGrid[i][j].GroundBlock);
+                Ground spawnedBlock = SpawnBlock(blockPrefab, i, j);
+                spawnedBlock.Initialize();
+                groundBlocks[i].Add(spawnedBlock);
+                grid.SetGround(new CellPlaceCoordinates(i, j), spawnedBlock);
+            }
+        }
+
+        SpawnMainBuilding();
+    }
+
+    private void SpawnMainBuilding()
     {
         CellPlaceCoordinates placePosition = grid.GetBestCellCoordinates();
         Destroy(groundBlocks[placePosition.X][placePosition.Z].gameObject);
-        SpawnBlock(data.CentralBlock, placePosition.X, placePosition.Z);
-        grid.Place(placePosition);
+        Ground block = SpawnBlock(data.CentralBlock, placePosition.X, placePosition.Z);
+        grid.SetGround(placePosition, block);
     }
 
     private Ground SpawnBlock(Ground block, int xCoordinate, int zCoordinate)

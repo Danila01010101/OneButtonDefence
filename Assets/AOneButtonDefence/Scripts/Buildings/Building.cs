@@ -6,6 +6,8 @@ public abstract class Building : MonoBehaviour
 {
     [field : SerializeField] public Vector3 BuildingOffset { get; private set; }
 
+    public enum BuildingType { Empty = 0, MainCastle = 1, Farm = 2, SpiritBuilding = 3, MilitaryCamp = 4, Factory = 5 }
+
     protected float AnimationDuration { get; private set; }
 
     protected int FoodPerTurnAmount;

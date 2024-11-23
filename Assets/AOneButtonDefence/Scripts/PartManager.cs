@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PartManager : MonoBehaviour
+public partial class PartManager : MonoBehaviour
 {
     [SerializeField] private Button partPrefab;
     [SerializeField] private GameObject CellsSpawnParent;
@@ -14,8 +12,8 @@ public class PartManager : MonoBehaviour
     private int partPlacingInterval = 0;
     private float startButtonsAmount;
     private List<Button> parts = new List<Button>();
-    private int lastKey = -1;
-    private int beforLastKey = -1;
+    private Building.BuildingType firstUpgrade = Building.BuildingType.Empty;
+    private Building.BuildingType secondUpgrade = Building.BuildingType.Empty;
     private int howManyChois = 0;
 
     public UpgradeButton UpgradeButton => upgradeButton;
@@ -63,8 +61,8 @@ public class PartManager : MonoBehaviour
         
         for (int i = 0; i < parts.Count; i++)
         {
-            int partIndex = i;
-            parts[i].onClick.AddListener(delegate { ChoosePart(partIndex); });
+            Building.BuildingType buildingType = ConvertIntToUpgrade(i);
+            parts[i].onClick.AddListener(delegate { ChoosePart(buildingType); });
         }
     }
 
@@ -73,57 +71,32 @@ public class PartManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && parts.Count >= 1)
         {
-            ChoosePart(0);
+            ChoosePart(Building.BuildingType.Factory);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2) && parts.Count >= 2)
         {
-            ChoosePart(1);
+            ChoosePart(Building.BuildingType.Farm);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3) && parts.Count >= 3)
         {
-            ChoosePart(2);
+            ChoosePart(Building.BuildingType.MilitaryCamp);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha4) && parts.Count >= 4)
         {
-            ChoosePart(3);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha5) && parts.Count >= 5)
-        {
-            ChoosePart(4);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha6) && parts.Count >= 6)
-        {
-            ChoosePart(5);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha7) && parts.Count >= 7)
-        {
-            ChoosePart(6);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha8) && parts.Count >= 8)
-        {
-            ChoosePart(7);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha9) && parts.Count >= 9)
-        {
-            ChoosePart(8);
+            ChoosePart(Building.BuildingType.SpiritBuilding);
         }
     }
 
-    private void ChoosePart(int index)
+    private void ChoosePart(Building.BuildingType type)
     {
         howManyChois++;
 
-        if(lastKey >= 0 && beforLastKey >= 0)
+        if(firstUpgrade != Building.BuildingType.Empty && secondUpgrade != Building.BuildingType.Empty)
         {
-            if (beforLastKey == index || lastKey == index)
+            if (secondUpgrade == type || firstUpgrade == type)
             {
                 Debug.Log("Part already chosen or value is incorrect");
                 return;
@@ -132,33 +105,33 @@ public class PartManager : MonoBehaviour
 
         if (howManyChois > 2)
         {
-            parts[index].transform.GetChild(0).gameObject.SetActive(true);
-            parts[beforLastKey].transform.GetChild(0).gameObject.SetActive(false);
-            beforLastKey = -1;
-            beforLastKey = lastKey;
-            lastKey = index;
+            parts[ConvertUpgradeToInt(type)].transform.GetChild(0).gameObject.SetActive(true);
+            parts[ConvertUpgradeToInt(secondUpgrade)].transform.GetChild(0).gameObject.SetActive(false);
+            secondUpgrade = Building.BuildingType.Empty;
+            secondUpgrade = firstUpgrade;
+            firstUpgrade = type;
         }
         else
         {
-            parts[index].transform.GetChild(0).gameObject.SetActive(true);
+            parts[ConvertUpgradeToInt(type)].transform.GetChild(0).gameObject.SetActive(true);
 
-            if (lastKey != -1)
+            if (firstUpgrade != Building.BuildingType.Empty)
             {
-                beforLastKey = lastKey;
+                secondUpgrade = firstUpgrade;
             }
 
-            lastKey = index;
+            firstUpgrade = type;
         }
     }
 
     public void WhenButtonClicked()
     {
-        if (lastKey == -1 || beforLastKey == -1)
+        if (firstUpgrade == Building.BuildingType.Empty || secondUpgrade == Building.BuildingType.Empty)
         {
             Debug.Log("No upgrades choosen");
             return;
         }
 
-        upgradeButton.UbgraidChoisenPart((UpgradeButton.Upgrades) lastKey, (UpgradeButton.Upgrades) beforLastKey);
+        upgradeButton.UbgraidChoisenPart(firstUpgrade, secondUpgrade);
     }
 }

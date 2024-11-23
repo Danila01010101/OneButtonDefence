@@ -8,7 +8,7 @@ public class WorldGenerationData : ScriptableObject
     [field : SerializeField] public float CellSize { get; private set; } = 3.2f;
     [field: SerializeField] public int startButtonsAmount { get; private set; } = 4;
     [field : SerializeField] public BuildingsData BuildingsData { get; private set; }
-    [field: SerializeField] public Ground CentralBlock { get; private set; }
+    [field: SerializeField] public MainBuildingGroundBlock CentralBlock { get; private set; }
     [field: SerializeField] public Ground EmptyBlock { get; private set; }
     [field : SerializeField] public List<Ground> EarthBlocks { get; private set; } = new List<Ground>();
 

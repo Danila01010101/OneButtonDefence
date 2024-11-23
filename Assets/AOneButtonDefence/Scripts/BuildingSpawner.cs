@@ -21,44 +21,41 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
 
     public void SetupStartBuildings()
     {
-        SpawnBuilding<Farm>();
-        SpawnBuilding<SpiritBuilding>();
-        SpawnBuilding<MilitaryCamp>();
-        SpawnBuilding<Factory>();
+        SpawnBuilding<MainBuilding>(Building.BuildingType.MainCastle);
+        SpawnBuilding<Factory>(Building.BuildingType.Factory);
+        SpawnBuilding<Farm>(Building.BuildingType.Farm);
+        SpawnBuilding<SpiritBuilding>(Building.BuildingType.SpiritBuilding);
+        SpawnBuilding<MilitaryCamp>(Building.BuildingType.MilitaryCamp);
     }
 
-    private void ActivateUpgrade(UpgradeButton.Upgrades upgrade)
+    private void ActivateUpgrade(Building.BuildingType upgrade)
     {
         switch (upgrade)
         {
-            case UpgradeButton.Upgrades.Farm:
-                SpawnBuilding<Farm>();
+            case Building.BuildingType.Farm:
+                SpawnBuilding<Farm>(upgrade);
                 break;
-            case UpgradeButton.Upgrades.SpiritBuilding:
-                SpawnBuilding<SpiritBuilding>();
+            case Building.BuildingType.SpiritBuilding:
+                SpawnBuilding<SpiritBuilding>(upgrade);
                 break;
-            case UpgradeButton.Upgrades.MilitaryCamp:
-                SpawnBuilding<MilitaryCamp>();
+            case Building.BuildingType.MilitaryCamp:
+                SpawnBuilding<MilitaryCamp>(upgrade);
                 break;
-            case UpgradeButton.Upgrades.ResourcesCenter:
-                SpawnBuilding<Factory>();
+            case Building.BuildingType.Factory:
+                SpawnBuilding<Factory>(upgrade);
                 break;
             default:
                 throw new NotImplementedException();
         }
     }
 
-    private void SpawnBuilding<T>() where T : Building
+    private void SpawnBuilding<T>(Building.BuildingType type) where T : Building
     {
         T building = buildingFacrory.SpawnBuilding<T>();
-        SetupBuildingPosition(building, grid.GetBestCellCoordinates());
-    }
-
-    private void SetupBuildingPosition(Building building, CellPlaceCoordinates placePosition) 
-    {
-        building.transform.position = grid.GetWorldPositionByCoordinates(placePosition.X, placePosition.Z) + building.BuildingOffset;
-        grid.Place(placePosition);
-        CellFilled?.Invoke(placePosition);
+        CellPlaceCoordinates cellPlaceCoordinates = grid.GetBestCellCoordinates();
+        building.transform.position = grid.GetWorldPositionByCoordinates(cellPlaceCoordinates.X, cellPlaceCoordinates.Z) + building.BuildingOffset;
+        grid.PlaceBuilding(cellPlaceCoordinates, type);
+        CellFilled?.Invoke(cellPlaceCoordinates);
     }
 
     private void OnEnable()

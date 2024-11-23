@@ -4,7 +4,7 @@ using static GameStateMachine;
 
 public class GameInitializer : MonoBehaviour
 {
-    [SerializeField] private GameData gameData;
+    [SerializeField] private GameStartData gameData;
     [SerializeField] private CameraData cameraData;
     [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
@@ -15,11 +15,14 @@ public class GameInitializer : MonoBehaviour
 
     private GameStateMachine gameStateMachine;
     private PartManager upgradeCanvas;
-    private CellsGrid buildingsGrid;
+    private CellsGrid cellsGrid;
+    private GameSaver gameSaver;
+    private Data data;
     private IInput input;
 
     private void Awake()
     {
+        InitializeGameSaver();
         InitializeInput();
         InitializeCameraMovementComponent();
         SpawnWorldGrid();
@@ -37,6 +40,12 @@ public class GameInitializer : MonoBehaviour
     }
 
     private void FixedUpdate() => gameStateMachine.PhysicsUpdate();
+
+    private void InitializeGameSaver()
+    {
+        gameSaver = new GameSaver();
+        gameSaver.Load();
+    }
 
     private void InitializeInput()
     {
@@ -61,11 +70,21 @@ public class GameInitializer : MonoBehaviour
 
     private void SpawnWorldGrid()
     {
-        buildingsGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
-        worldCreator.SetupGrid(buildingsGrid, buildingSpawner);
+        if (GameSaver.Instance.Data.CellsGrid == null)
+        {
+            cellsGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
+            GameSaver.Instance.Data.InitializeEmptyData(cellsGrid);
+            worldCreator.SetupGrid(cellsGrid, buildingSpawner);
+            worldCreator.GenerateNewWorld();
+        }
+        else
+        {
+            cellsGrid = GameSaver.Instance.Data.CellsGrid;
+            worldCreator.SetupGrid(cellsGrid, buildingSpawner);
+        }
     }
 
-    private void InitializeBuildingSpawner() => buildingSpawner.Initialize(buildingsGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration);
+    private void InitializeBuildingSpawner() => buildingSpawner.Initialize(cellsGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration);
 
     private void SpawnUpgradeCanvas()
     {
@@ -80,7 +99,7 @@ public class GameInitializer : MonoBehaviour
             upgradeCanvas,
             gameData,
             worldCreator,
-            buildingsGrid,
+            cellsGrid,
             gameData.EnemyTag
         );
         gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset, gameData.UpgradeStateDuration);

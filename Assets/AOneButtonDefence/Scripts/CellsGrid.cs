@@ -1,15 +1,16 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
-using UnityEngine.UIElements;
 
+[Serializable]
 public class CellsGrid
 {
     public int Size { get; private set; }
 
+    public List<List<CellBlockInfo>> PlacementGrid => placementGrid;
+
     private float cellsSpawnDistance;
-    private List<List<bool>> placementGrid = new List<List<bool>>();
+    private List<List<CellBlockInfo>> placementGrid = new List<List<CellBlockInfo>>();
     private CellPlaceCoordinates centerPosition = new CellPlaceCoordinates(49, 49);
 
     public CellsGrid(int gridSize, float cellsSpawnDistance)
@@ -19,22 +20,24 @@ public class CellsGrid
 
         for (int i = 0; i < gridSize; i++)
         {
-            var newRow = new List<bool>();
+            var newRow = new List<CellBlockInfo>();
 
             for (int j = 0; j < gridSize; j++)
             {
-                newRow.Add(false);
+                newRow.Add(new CellBlockInfo(new CellPlaceCoordinates(i, j)));
             }
 
             placementGrid.Add(newRow);
         }
     }
 
-    public void Place(CellPlaceCoordinates placePosition) 
+    public void PlaceBuilding(CellPlaceCoordinates placeCoordinates, Building.BuildingType type)
     {
-        if (IsPlaceBusy(placePosition) == false)
+        CellBlockInfo cellBlockInfo = placementGrid[placeCoordinates.X][placeCoordinates.Z];
+
+        if (IsBuildingInPlace(placeCoordinates) == false)
         {
-            placementGrid[placePosition.X][placePosition.Z] = true;
+            cellBlockInfo.SetBuildingBlock(type);
         }
         else
         {
@@ -42,11 +45,13 @@ public class CellsGrid
         }
     }
 
+    public void SetGround(CellPlaceCoordinates placeCoordinates, Ground block) => placementGrid[placeCoordinates.X][placeCoordinates.Z].SetGroundBlock(block.Type);
+
     public CellPlaceCoordinates GetBestCellCoordinates()
     {
         CellPlaceCoordinates newCellPlace = centerPosition;
 
-        while (IsPlaceBusy(newCellPlace))
+        while (IsBuildingInPlace(newCellPlace))
         {
             newCellPlace = GetFurtherCellPosition(newCellPlace, 0);
         }
@@ -63,17 +68,17 @@ public class CellsGrid
     public Vector3 GetWorldPositionByCoordinates(int xCoordinate, int zCoordinate) =>
         new Vector3(xCoordinate * cellsSpawnDistance, 0, zCoordinate * cellsSpawnDistance);
 
-    private bool IsPlaceBusy(CellPlaceCoordinates position) => placementGrid[position.X][position.Z];
+    private bool IsBuildingInPlace(CellPlaceCoordinates position) => placementGrid[position.X][position.Z].IsBuildingPlaced;
 
     private CellPlaceCoordinates GetFurtherCellPosition(CellPlaceCoordinates position, int spread)
     {
         int minCheckDistance = 1;
         List<CellPlaceCoordinates> cellsAround = GetSurroundingCells(position, minCheckDistance);
         List<CellPlaceCoordinates> checkedCells = new List<CellPlaceCoordinates>();
-        int randomIndex = Random.Range(0, cellsAround.Count);
+        int randomIndex = UnityEngine.Random.Range(0, cellsAround.Count);
         CellPlaceCoordinates furtherCellPosition = cellsAround[randomIndex];
 
-        while (IsPlaceBusy(furtherCellPosition))
+        while (IsBuildingInPlace(furtherCellPosition))
         {
             checkedCells.Add(furtherCellPosition);
 
@@ -83,7 +88,7 @@ public class CellsGrid
                 cellsAround = GetSurroundingCells(position, minCheckDistance);
             }
 
-            randomIndex = Random.Range(0, cellsAround.Count);
+            randomIndex = UnityEngine.Random.Range(0, cellsAround.Count);
             furtherCellPosition = cellsAround[randomIndex];
         }
 
@@ -97,7 +102,7 @@ public class CellsGrid
                 cellsAround.Remove(cell);
             }
 
-            randomIndex = Random.Range(0, cellsAround.Count);
+            randomIndex = UnityEngine.Random.Range(0, cellsAround.Count);
             return cellsAround[randomIndex];
         }
         else

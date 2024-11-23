@@ -1,13 +1,13 @@
-public class WaterBlock : Ground
+public class CampBlock : Ground
 {
     public override void Initialize()
     {
-        Type = GroundBlockType.WaterBlock;
+        Type = GroundBlockType.CampBlock;
     }
 
     public override void ActivateBonus()
     {
         base.ActivateBonus();
-        ResourcesCounter.Instance.Data.FoodAmount += 20;
+        //TODO: Spawn warrior
     }
 }

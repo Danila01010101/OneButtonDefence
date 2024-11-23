@@ -5,10 +5,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class UpgradeButton : MonoBehaviour
 {
-    public static Action<Upgrades> Upgrade;
+    public static Action<Building.BuildingType> Upgrade;
     public static Action UpgradeChoosen;
-
-    public enum Upgrades { Farm = 0, SpiritBuilding = 1, MilitaryCamp = 2, ResourcesCenter = 3 }
 
     private Button button;
 
@@ -17,11 +15,11 @@ public class UpgradeButton : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    public void UbgraidChoisenPart(Upgrades firstPart, Upgrades secondPart)
+    public void UbgraidChoisenPart(Building.BuildingType firstPart, Building.BuildingType secondPart)
     {
-        UpgradeChoosen?.Invoke();
         Upgrade(firstPart);
         Upgrade(secondPart);
+        UpgradeChoosen?.Invoke();
     }
 
     public void Activate() => button.interactable = true;
