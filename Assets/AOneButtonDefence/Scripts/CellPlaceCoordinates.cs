@@ -1,3 +1,6 @@
+using System;
+
+[Serializable]
 public struct CellPlaceCoordinates
 {
     public int X { get; private set; }

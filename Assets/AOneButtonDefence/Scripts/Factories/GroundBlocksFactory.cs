@@ -3,11 +3,26 @@ using System.Collections.Generic;
 
 public class GroundBlocksFactory
 {
+    private WorldGenerationData data;
     private List<Ground> blockPrefabs;
 
-    public void Initialize(List<Ground> blocks)
+    public GroundBlocksFactory(WorldGenerationData data)
     {
-        blockPrefabs = blocks;
+        this.data = data;
+        blockPrefabs = data.EarthBlocks;
+    }
+
+    public Ground GetDefaultBlock() => data.EmptyBlock;
+
+    public Ground GetCentralBlock() => data.CentralBlock;
+
+    public Ground GetEmptyBlock() => data.EmptyBlock;
+
+    public Ground GetRandomEarthBlock()
+    {
+        int blockIndex = UnityEngine.Random.Range(0, blockPrefabs.Count);
+
+        return blockPrefabs[blockIndex];
     }
 
     public Ground GetBlockByType(Ground.GroundBlockType type)
@@ -22,6 +37,8 @@ public class GroundBlocksFactory
                 return GetBlock<CampBlock>();
             case Ground.GroundBlockType.WaterBlock:
                 return GetBlock<WaterBlock>();
+            case Ground.GroundBlockType.Empty:
+                return GetEmptyBlock();
             default:
                 throw new NotImplementedException();
         }

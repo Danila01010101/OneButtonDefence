@@ -8,13 +8,14 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private CameraData cameraData;
     [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
-    [SerializeField] private GroundBlocksSpawner worldCreator;
     [SerializeField] private BuildingSpawner buildingSpawner;
     [SerializeField] private PartManager partManagerPrefab;
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
 
+    private GroundBlocksSpawner worldCreator;
     private GameStateMachine gameStateMachine;
     private PartManager upgradeCanvas;
+    private GroundBlocksFactory blocksFactory;
     private CellsGrid cellsGrid;
     private GameSaver gameSaver;
     private Data data;
@@ -25,6 +26,8 @@ public class GameInitializer : MonoBehaviour
         InitializeGameSaver();
         InitializeInput();
         InitializeCameraMovementComponent();
+        InitializeBlocksFactory();
+        InitializeGroundBlockSpawner();
         SpawnWorldGrid();
         SpawnResourceCounter();
         InitializeBuildingSpawner();
@@ -68,19 +71,24 @@ public class GameInitializer : MonoBehaviour
         cameraMovement.Initialize(input, cameraData);
     }
 
+    private void InitializeBlocksFactory() => blocksFactory = new GroundBlocksFactory(worldGenerationData);
+
+    private void InitializeGroundBlockSpawner() => worldCreator = new GroundBlocksSpawner();
+
     private void SpawnWorldGrid()
     {
         if (GameSaver.Instance.Data.CellsGrid == null)
         {
             cellsGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
             GameSaver.Instance.Data.InitializeEmptyData(cellsGrid);
-            worldCreator.SetupGrid(cellsGrid, buildingSpawner);
+            worldCreator.SetupGrid(cellsGrid, buildingSpawner, blocksFactory);
             worldCreator.GenerateNewWorld();
         }
         else
         {
             cellsGrid = GameSaver.Instance.Data.CellsGrid;
-            worldCreator.SetupGrid(cellsGrid, buildingSpawner);
+            worldCreator.SetupGrid(cellsGrid, buildingSpawner, blocksFactory);
+            worldCreator.GenerateExistingWorld();
         }
     }
 
@@ -98,7 +106,7 @@ public class GameInitializer : MonoBehaviour
         (
             upgradeCanvas,
             gameData,
-            worldCreator,
+            this,
             cellsGrid,
             gameData.EnemyTag
         );

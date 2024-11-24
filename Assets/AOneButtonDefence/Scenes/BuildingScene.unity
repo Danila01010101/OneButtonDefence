@@ -386,7 +386,6 @@ MonoBehaviour:
   cameraData: {fileID: 11400000, guid: dce509826f487264da42aadc045aa700, type: 2}
   enemiesData: {fileID: 11400000, guid: 38007ab0f6607404e8a58182076d6a0c, type: 2}
   worldGenerationData: {fileID: 11400000, guid: 0a5f9a6cff94cdd4e8ba60c38855587b, type: 2}
-  worldCreator: {fileID: 1053520090}
   buildingSpawner: {fileID: 11821304}
   partManagerPrefab: {fileID: 263800998971773282, guid: ecbdf0191c1061f4791cc69571515763, type: 3}
   virtualCameraPrefab: {fileID: 479869093838107416, guid: 80fdc9be4cb8de34396fa621b4f8490c, type: 3}
@@ -517,7 +516,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1053520089}
-  - component: {fileID: 1053520090}
   m_Layer: 0
   m_Name: WorldCreator
   m_TagString: Untagged
@@ -540,16 +538,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1053520090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1053520088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b02aca2d7d99ca6489734a27e5cedc83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 0a5f9a6cff94cdd4e8ba60c38855587b, type: 2}

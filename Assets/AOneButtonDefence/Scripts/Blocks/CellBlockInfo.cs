@@ -1,3 +1,6 @@
+using System;
+
+[Serializable]
 public class CellBlockInfo
 {
     public Ground.GroundBlockType GroundBlock { get; private set; } = Ground.GroundBlockType.Empty;

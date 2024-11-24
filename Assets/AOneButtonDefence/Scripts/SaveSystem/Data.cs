@@ -5,7 +5,6 @@ public class Data
 {
     public CellsGrid CellsGrid;
     public int CurrentLevel = 1;
-    public bool IsEmpty => CellsGrid == null;
 
     public void InitializeEmptyData(CellsGrid cellsGrid) 
     {

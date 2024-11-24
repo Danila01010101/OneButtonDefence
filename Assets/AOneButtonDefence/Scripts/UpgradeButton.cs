@@ -20,6 +20,7 @@ public class UpgradeButton : MonoBehaviour
         Upgrade(firstPart);
         Upgrade(secondPart);
         UpgradeChoosen?.Invoke();
+        GameSaver.Save();
     }
 
     public void Activate() => button.interactable = true;

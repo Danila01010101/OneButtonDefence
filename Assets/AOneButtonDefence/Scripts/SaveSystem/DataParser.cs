@@ -41,5 +41,38 @@ public class DataParser
 
         isSerializationCompleted = true;
         return new Data();
+
+        //TODO: Доработать скрипт на проверку изменения класса Data, выдавать ошибку и обнулять файл при ошибке
+        //isSerializationCompleted = false;
+        //string path = Application.persistentDataPath + fileName;
+
+        //if (File.Exists(path))
+        //{
+        //    Debug.Log(Application.persistentDataPath);
+        //    BinaryFormatter bf = new BinaryFormatter();
+        //    Data savedGame = new Data();
+        //    try
+        //    {
+        //        using (FileStream file = File.Open(path, FileMode.Open))
+        //        {
+        //            file.Position = 0;
+        //            savedGame = (Data)bf.Deserialize(file);
+        //            file.Close();
+        //        }
+        //    }
+        //    catch (SerializationException e)
+        //    {
+        //        Debug.LogError("SerializationException: " + e.Message);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Debug.LogError("Exception: " + e.Message);
+        //    }
+
+        //    return savedGame;
+        //}
+
+        //isSerializationCompleted = true;
+        //return new Data();
     }
 }

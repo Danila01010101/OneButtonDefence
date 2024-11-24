@@ -7,7 +7,6 @@ public class GameSaver
     public GameSaver()
     {
         Instance = this;
-        Data = new Data();
     }
 
     public static void Save() => DataParser.Save(GameStartData.SaveFileName, Instance.Data);
