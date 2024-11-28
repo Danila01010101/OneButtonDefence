@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Coal
   - Enemy
+  - Gnome
   layers:
   - Default
   - TransparentFX

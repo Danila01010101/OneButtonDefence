@@ -75,13 +75,14 @@ public class GameInitializer : MonoBehaviour
 
     private void SetupStateMachine()
     {
-        GameStateMachineData gameStateMachineData = new GameStateMachineData
+        GameStateMachineData gameStateMachineData = new GameStateMachineData 
         (
             upgradeCanvas,
             gameData,
             worldCreator,
             buildingsGrid,
-            gameData.EnemyTag
+            gameData.EnemyTag,
+            gameData.GnomeTag
         );
         gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset, gameData.UpgradeStateDuration);
     }

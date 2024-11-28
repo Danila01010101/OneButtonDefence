@@ -6,11 +6,13 @@ public class DialogState : IState
     private DialogueSystem startDialogPrefab;
     private DialogueSystem spawnedDialog;
     private Canvas gamePlayCanvas;
+    private string nextState;
 
-    public DialogState(IStringStateChanger stateMachine, DialogueSystem newDialog)
+    public DialogState(IStringStateChanger stateMachine, DialogueSystem newDialog, string nextState)
     {
         this.stateMachine = stateMachine;
         startDialogPrefab = newDialog;
+        this.nextState = nextState;
     }
 
     public void Enter()
@@ -50,6 +52,6 @@ public class DialogState : IState
     private void EndDialog()
     {
         spawnedDialog.DialogEnded -= EndDialog;
-        stateMachine.ChangeStateWithString(GameStateNames.Upgrade);
+        stateMachine.ChangeStateWithString(nextState);
     }
 }
