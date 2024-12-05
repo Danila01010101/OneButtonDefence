@@ -10,6 +10,7 @@ public class GameBattleState : IState
     private MonoBehaviour coroutineStarter;
     private BattleWavesParameters wavesParameters;
     private EnemieFactory enemieFactory;
+    private Coroutine endTurnCheckCoroutine;
     private Coroutine spawnCoroutine;
     private CellsGrid grid;
     private Vector3 enemiesSpawnOffset;
@@ -37,6 +38,11 @@ public class GameBattleState : IState
         if (spawnCoroutine != null)
         {
             coroutineStarter.StopCoroutine(spawnCoroutine);
+        }
+
+        if (endTurnCheckCoroutine != null)
+        {
+            coroutineStarter.StopCoroutine(endTurnCheckCoroutine);
         }
     }
 
@@ -74,7 +80,7 @@ public class GameBattleState : IState
             }
         }
 
-        coroutineStarter.StartCoroutine(EndStateChecking());
+        endTurnCheckCoroutine = coroutineStarter.StartCoroutine(EndStateChecking());
         currentWaveIndex++;
     }
 
@@ -83,7 +89,7 @@ public class GameBattleState : IState
         List<GameObject> knightUnits = GameObject.FindGameObjectsWithTag(enemyTag).ToList();
         List<GameObject> gnomeUnits = GameObject.FindGameObjectsWithTag(gnomeTag).ToList();
 
-        while (knightUnits.Count > 0 || knightUnits.Count > 0)
+        while (true)
         {
             yield return new WaitForEndOfFrame();
 

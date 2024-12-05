@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BasicGnome
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 100
-  <Damage>k__BackingField: 30
+  <Damage>k__BackingField: 60
   <Speed>k__BackingField: 0.01
   <DetectionRadius>k__BackingField: 100
   <AttackRange>k__BackingField: 1
