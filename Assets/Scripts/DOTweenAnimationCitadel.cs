@@ -54,7 +54,7 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
     }
 
     private IEnumerator StartSpawnGnomes()
-    {
+    {   
         for (int i = 0; i < SpawnPositions.Count; i++)
         {
             GameObject gnome = Instantiate(Gnome, SpawnPositions[i].position, Quaternion.identity);
@@ -143,6 +143,7 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
     {
         yield return null;
         int index = gnomes.IndexOf(gnome);
+        gnomes.Remove(gnome);
         Transform startposition = SpawnPositions[index];
         Material material = gnome.transform.GetChild(ModelChildIndex).GetChild(ModelChildIndex).gameObject.GetComponent<Renderer>().material;
         Vector3 directionToStart = (startposition.position - gnome.transform.position).normalized;
@@ -153,7 +154,6 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
         changeMaterial.SetTransparent(material);
         material.DOColor(startvalue, FadeDuration);
         yield return new WaitForSeconds(FadeDuration);
-        gnomes.Remove(gnome);
         Destroy(gnome);
     }
 }
