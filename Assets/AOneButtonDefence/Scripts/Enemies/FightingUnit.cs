@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(FightAnimation))]
 [RequireComponent(typeof(CharacterController))]
 public class FightingUnit : MonoBehaviour, IDamagable
 {
@@ -11,9 +12,11 @@ public class FightingUnit : MonoBehaviour, IDamagable
     private Health health;
     private CharacterController characterController;
     private EnemieStateMachine stateMachine;
+    private FightAnimation fightAnimation;
 
     private void Start()
     {
+        fightAnimation = GetComponent<FightAnimation>();
         health = new Health(characterStats.Health);
         health.Death += Die;
         characterController = GetComponent<CharacterController>();
