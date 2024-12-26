@@ -21,7 +21,7 @@ public class GoingAnimation : MonoBehaviour
 
     private void Update()
     {
-        if(model.transform.localPosition == endValue && isWalk == true)
+        if(model.transform.localPosition == endValue && IsWalk == true)
             going();
 
     }
