@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(GoingAnimation))]
 [RequireComponent(typeof(FightAnimation))]
 [RequireComponent(typeof(CharacterController))]
 public class FightingUnit : MonoBehaviour, IDamagable
