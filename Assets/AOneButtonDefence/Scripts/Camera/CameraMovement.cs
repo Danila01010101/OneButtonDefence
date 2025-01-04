@@ -1,6 +1,4 @@
 using Cinemachine;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(CinemachineVirtualCamera))]
@@ -10,7 +8,6 @@ public class CameraMovement : MonoBehaviour
     private Transform target;
     private CinemachineVirtualCamera virtualCamera;
     private IInput input;
-    private Vector3 offset;
     private float currentDistance;
     private float currentX = 0.0f;
     private float currentY = 0.0f;
@@ -26,10 +23,11 @@ public class CameraMovement : MonoBehaviour
         this.data = data;
         currentDistance = data.MaximumCameraDistance;
         target.position = data.StartCameraPosition;
-        offset = (transform.position - target.position).normalized * currentDistance;
+
         Vector3 angles = transform.eulerAngles;
         currentX = angles.x;
         currentY = angles.y;
+
         Subscribe();
         isInitialize = true;
     }
@@ -38,18 +36,20 @@ public class CameraMovement : MonoBehaviour
     {
         if (isInitialize)
         {
-            transform.position = target.position + offset;
-            UpdateCameraRotation();
+            UpdateCameraPositionAndRotation();
         }
     }
 
-    private void UpdateCameraRotation()
+    private void UpdateCameraPositionAndRotation()
     {
+        // Рассчитываем поворот камеры
         Quaternion rotation = Quaternion.Euler(currentX, currentY, 0);
+
+        // Позиция камеры относительно цели с учетом текущего поворота
         Vector3 position = target.position - (rotation * Vector3.forward * currentDistance);
 
         transform.position = position;
-        transform.LookAt(target);
+        transform.rotation = rotation;
     }
 
     private void RotateCamera(Vector2 direction)
@@ -62,19 +62,25 @@ public class CameraMovement : MonoBehaviour
 
     private void MoveCamera(Vector3 moveDirection)
     {
-        Vector3 newDirection = -moveDirection * data.CameraMovementSpeed;
-        target.position += newDirection;
+        // Рассчитываем движение относительно текущего поворота камеры
+        Vector3 forward = transform.forward; // Направление "вперед" камеры
+        Vector3 right = transform.right;    // Направление "вправо" камеры
+
+        // Убираем вертикальную составляющую, чтобы движение оставалось в плоскости
+        forward.y = 0;
+        right.y = 0;
+
+        forward.Normalize();
+        right.Normalize();
+
+        // Рассчитываем итоговое движение
+        Vector3 movement = (forward * moveDirection.z + right * moveDirection.x) * data.CameraMovementSpeed;
+        target.position += movement;
     }
 
     private void ChangeHeight(float heightAxis)
     {
-        if (transform.position.y >= data.MaximumCameraDistance && heightAxis > 0 ||
-            transform.position.y <= data.MinimumCameraDistance && heightAxis < 0)
-            return;
-
-
         currentDistance = Mathf.Clamp(currentDistance - heightAxis * data.CameraZoomSpeed, data.MinimumCameraDistance, data.MaximumCameraDistance);
-        offset = offset.normalized * currentDistance;
     }
 
     private void Subscribe()
