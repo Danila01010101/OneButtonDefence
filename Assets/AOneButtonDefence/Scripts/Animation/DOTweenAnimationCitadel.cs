@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(ChangeMaterial))]
 public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
 {
     [SerializeField] private GameObject Core;
@@ -46,6 +47,7 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
         if (currentAnimation != null)
         {
             StopCoroutine(currentAnimation);
+            StopAllCoroutines();
             foreach (GameObject gnome in gnomes)
             {
                 StartCoroutine(StopWorking(gnome));
