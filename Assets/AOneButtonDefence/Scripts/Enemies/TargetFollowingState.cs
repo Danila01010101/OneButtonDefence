@@ -1,23 +1,24 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class TargetFollowingState : IState, ITargetFollower
 {
     private IStateChanger stateMachine;
     private ITargetAttacker targetAttacker;
-    private CharacterController characterController;
+    private NavMeshAgent agent;
     private Transform transform;
     private Transform target;
     private float speed;
     private float attackRange;
     private bool IsTargetExists() => target == null;
 
-    public TargetFollowingState(IStateChanger stateMachine, CharacterController characterController, CharacterStats stats, ITargetAttacker targetAttacker)
+    public TargetFollowingState(IStateChanger stateMachine, NavMeshAgent agent, CharacterStats stats, ITargetAttacker targetAttacker)
     {
         this.stateMachine = stateMachine;
-        this.characterController = characterController;
+        this.agent = agent;
         this.speed = stats.Speed;
         this.attackRange = stats.AttackRange;
-        transform = characterController.transform;
+        transform = agent.transform;
         this.targetAttacker = targetAttacker;
     }
 
@@ -74,8 +75,7 @@ public class TargetFollowingState : IState, ITargetFollower
             return;
         }
 
-        characterController.Move(GetDirection());
-        //transform.LookAt(target.position);
+        agent.SetDestination(target.position);
     }
 
     public void SetTarget(Transform transform) => target = transform;

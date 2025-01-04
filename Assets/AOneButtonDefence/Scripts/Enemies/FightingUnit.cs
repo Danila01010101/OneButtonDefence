@@ -1,27 +1,29 @@
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(GoingAnimation))]
 [RequireComponent(typeof(FightAnimation))]
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class FightingUnit : MonoBehaviour, IDamagable
 {
     [SerializeField] private CharacterStats characterStats;
     [SerializeField] private Renderer render;
 
     private Health health;
-    private CharacterController characterController;
+    private NavMeshAgent navMeshComponent;
     private EnemieStateMachine stateMachine;
     private FightAnimation fightAnimation;
 
     private void Start()
     {
         fightAnimation = GetComponent<FightAnimation>();
+        navMeshComponent = GetComponent<NavMeshAgent>();
         health = new Health(characterStats.Health);
         health.Death += Die;
-        characterController = GetComponent<CharacterController>();
-        stateMachine = new EnemieStateMachine(transform, characterStats, characterController, this);
+        navMeshComponent = GetComponent<NavMeshAgent>();
+        stateMachine = new EnemieStateMachine(transform, characterStats, navMeshComponent, this);
         StartInvisibleColor(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration,characterStats.Delay);
     }
 

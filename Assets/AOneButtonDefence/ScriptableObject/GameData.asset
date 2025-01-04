@@ -18,7 +18,7 @@ MonoBehaviour:
   <TurnAmountBeforeEvent>k__BackingField: 4
   <BattleWavesParameters>k__BackingField: {fileID: 11400000, guid: d46257c332a947b4bb775c648410080f, type: 2}
   <EnemiesSpawnSpread>k__BackingField: 2
-  <EnemiesSpawnOffset>k__BackingField: {x: 1.792, y: 0.72, z: 1.958}
+  <EnemiesSpawnOffset>k__BackingField: {x: 1.792, y: 1.72, z: 1.958}
   <UpgradeStateDuration>k__BackingField: 4
   <EnemyTag>k__BackingField: Enemy
   <GnomeTag>k__BackingField: Gnome
