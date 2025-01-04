@@ -866,7 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82b567277a0c774e9c5a701db2b856d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialogueData: {fileID: 11400000, guid: b596dc0fb56ec6644a7fb2993833f1a2, type: 2}
+  DialogueData: {fileID: 11400000, guid: 31080a81c252b5e41a41e1ce707cbbc7, type: 2}
   Name: {fileID: 6271028155486610511}
   Text: {fileID: 6340014048093494301}
   AnswerPanel: {fileID: 1388120806628212703}
