@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class Health
 {
@@ -17,7 +18,7 @@ public class Health
 
         amount -= damage;
 
-        if (amount < 0)
+        if (amount <= 0)
             Death?.Invoke();
     }
 

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,18 +9,20 @@ public class TargetFollowingState : IState, ITargetFollower
     private NavMeshAgent agent;
     private Transform transform;
     private Transform target;
+    private LayerMask targetMask;
     private float speed;
     private float attackRange;
-    private bool IsTargetExists() => target == null;
+    private bool IsTargetGone() => target == null;
 
-    public TargetFollowingState(IStateChanger stateMachine, NavMeshAgent agent, CharacterStats stats, ITargetAttacker targetAttacker)
+    public TargetFollowingState(IStateChanger stateMachine, NavMeshAgent agent, CharacterStats stats, ITargetAttacker targetAttacker, LayerMask targetMask)
     {
         this.stateMachine = stateMachine;
         this.agent = agent;
-        this.speed = stats.Speed;
-        this.attackRange = stats.AttackRange;
+        speed = stats.Speed;
+        attackRange = stats.AttackRange;
         transform = agent.transform;
         this.targetAttacker = targetAttacker;
+        this.targetMask = targetMask;
     }
 
     public void Enter()
@@ -46,7 +49,7 @@ public class TargetFollowingState : IState, ITargetFollower
 
     public void PhysicsUpdate()
     {
-        if (IsTargetExists())
+        if (IsTargetGone())
         {
             stateMachine.ChangeState<TargetSearchState>();
             return;
@@ -56,7 +59,7 @@ public class TargetFollowingState : IState, ITargetFollower
 
         if (distanceToEnemy < attackRange)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, targetMask);
             IDamagable foundTarget = FindTarget(colliders);
 
             if (foundTarget != null)
@@ -69,7 +72,7 @@ public class TargetFollowingState : IState, ITargetFollower
 
     public void Update()
     {
-        if (IsTargetExists())
+        if (IsTargetGone())
         {
             stateMachine.ChangeState<TargetSearchState>();
             return;

@@ -27,7 +27,11 @@ public class FightingUnit : MonoBehaviour, IDamagable
         StartInvisibleColor(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration,characterStats.Delay);
     }
 
-    public void TakeDamage(int damage) => health.TakeDamage(damage);
+    public void TakeDamage(int damage)
+    {
+        health.TakeDamage(damage);
+        Debug.Log(gameObject.name + "taking damage! It has " + health.amount);
+    }
 
     public bool IsAlive() => health.amount > 0;
 
