@@ -15,6 +15,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
             { GameStateNames.StartDialog, new DialogState(this, data.GameTurnsData.StartDialogCanvas, GameStateNames.Upgrade) },
             { GameStateNames.WinDialogue, new DialogState(this, data.GameTurnsData.EndTurnWinDialogCanvas, GameStateNames.Upgrade) },
             { GameStateNames.LoseDialogue, new DialogState(this, data.GameTurnsData.EndTurnLoseDialogCanvas, GameStateNames.Reload) },
+            { GameStateNames.Reload, new ReloadingState() },
             //{ GameStateNames.DragonDialog, new DialogState(this, gameData.EndTurnDialogCanvas) },
             { GameStateNames.BattleState, new GameBattleState(battleStateData) },
             { GameStateNames.Upgrade, new UpgradeState(this, data.UpgradeUIGameobject, upgradeStateDuration) }
