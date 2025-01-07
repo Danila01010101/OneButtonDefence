@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +8,14 @@ public class StatisticsView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI spiritValueText;
     [SerializeField] private TextMeshProUGUI strenghtValueText;
     [SerializeField] private TextMeshProUGUI materialsValueText;
+
+    private void Start()
+    {
+        UpdateFoodValue(ResourcesCounter.Instance.Data.FoodAmount);
+        UpdateStrenghtValue(ResourcesCounter.Instance.Data.Warriors);
+        UpdateSpiritValue(ResourcesCounter.Instance.Data.SurvivorSpirit);
+        UpdateMaterialsValue(ResourcesCounter.Instance.Data.Materials);
+    }
 
     private void UpdateFoodValue(int newValue) => foodValueText.text = newValue.ToString();
 

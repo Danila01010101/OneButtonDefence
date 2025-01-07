@@ -18,5 +18,5 @@ MonoBehaviour:
   <CameraMovementSpeed>k__BackingField: 0.4
   <CameraRotateSpeed>k__BackingField: 60
   <MinimumXAngle>k__BackingField: 5
-  <MaximumXAngle>k__BackingField: 85
+  <MaximumXAngle>k__BackingField: 75
   <CameraZoomSpeed>k__BackingField: 10

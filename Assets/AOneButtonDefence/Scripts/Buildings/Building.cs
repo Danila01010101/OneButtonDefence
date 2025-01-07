@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -17,15 +18,15 @@ public abstract class Building : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<IAnimatable>();
-        resources = ResourcesCounter.Instance.Data;
     }
 
     public void ActivateSpawnActionWithDelay() => StartCoroutine(WaitFrameBeforeStartAction());
 
     private IEnumerator WaitFrameBeforeStartAction()
     {
-        //Delay needed to activate spawn action after building position setuped.
+        //Delay needed to activate spawn action after building position changed.
         yield return null;
+        resources = ResourcesCounter.Instance.Data;
         ActivateSpawnAction();
     }
 

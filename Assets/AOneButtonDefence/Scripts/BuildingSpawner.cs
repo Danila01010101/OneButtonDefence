@@ -12,10 +12,6 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
     {
         buildingFacrory = new BuildingFactory(upgradeBuildings, animationDuration);
         this.grid = grid;
-    }
-
-    private void Start()
-    {
         SetupStartBuildings();
     }
 

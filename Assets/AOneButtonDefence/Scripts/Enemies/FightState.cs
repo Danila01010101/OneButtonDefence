@@ -6,25 +6,27 @@ public class FightState : IState, ITargetAttacker
     private IStateChanger stateMachine;
     private IDamagable target;
     private MonoBehaviour coroutineStarter;
+    private bool isTargetSetted = false;
+    private float lastTimeAttacked;
     private float attackDelay;
     private int damage;
 
-    public FightState(IStateChanger stateChanger, MonoBehaviour coroutineStarter, float attackDelay, int damage)
+    public FightState(IStateChanger stateChanger, float attackDelay, int damage)
     {
         this.stateMachine = stateChanger;
-        this.coroutineStarter = coroutineStarter;
         this.attackDelay = attackDelay;
         this.damage = damage;
     }
 
     public void Enter()
     {
-        coroutineStarter.StartCoroutine(AtackProcess());
+        
     }
 
     public void Exit() 
     {
         target = null;
+        isTargetSetted = false;
     }
 
     public void HandleInput() { }
@@ -41,21 +43,27 @@ public class FightState : IState, ITargetAttacker
 
     public void PhysicsUpdate() { }
 
-    public void Update() { }
+    public void Update()
+    {
+        if (!isTargetSetted)
+            return;
+
+        if (target == null || !target.IsAlive())
+        {
+            stateMachine.ChangeState<TargetSearchState>();
+            return;
+        }
+
+        if (lastTimeAttacked + attackDelay >= Time.time)
+            return;
+
+        target.TakeDamage(damage);
+        lastTimeAttacked = Time.time;
+    }
 
     public void SetTarget(IDamagable target)
     {
+        isTargetSetted = true;
         this.target = target;
-    }
-
-    private IEnumerator AtackProcess()
-    {
-        while (target.IsAlive())
-        {
-            target.TakeDamage(damage);
-            yield return new WaitForSeconds(attackDelay);
-        }
-
-        stateMachine.ChangeState<TargetSearchState>();
     }
 }

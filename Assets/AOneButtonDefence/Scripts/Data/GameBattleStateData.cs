@@ -9,9 +9,10 @@ public class GameBattleStateData
     public CellsGrid CellsGrid { get; private set; }
     public Vector3 EnemiesSpawnOffset { get; private set; }
     public string EnemyTag { get; private set; }
+    public string GnomeTag { get; private set; }
 
     public GameBattleStateData(IStringStateChanger stateChanger, MonoBehaviour coroutineStarter, BattleWavesParameters wavesParameters, EnemiesData data, 
-        CellsGrid cellsGrid, Vector3 enemiesSpawnOffset, string enemyLayerMask)
+        CellsGrid cellsGrid, Vector3 enemiesSpawnOffset, string enemyLayerMask, string gnomeLayerMask)
     {
         this.StateChanger = stateChanger;
         this.CoroutineStarter = coroutineStarter;
@@ -20,5 +21,6 @@ public class GameBattleStateData
         this.CellsGrid = cellsGrid;
         this.EnemiesSpawnOffset = enemiesSpawnOffset;
         EnemyTag = enemyLayerMask;
+        GnomeTag = gnomeLayerMask;
     }
 }

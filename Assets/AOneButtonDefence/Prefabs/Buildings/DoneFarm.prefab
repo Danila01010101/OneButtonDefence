@@ -121310,6 +121310,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 75ce9992c4dd33542abee0e2598279e2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 75ce9992c4dd33542abee0e2598279e2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -121335,6 +121343,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 75ce9992c4dd33542abee0e2598279e2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6153973723000376745}
+    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 75ce9992c4dd33542abee0e2598279e2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1490885246684889885}
   m_SourcePrefab: {fileID: 100100000, guid: 75ce9992c4dd33542abee0e2598279e2, type: 3}
 --- !u!1 &1093939092808965423 stripped
 GameObject:
@@ -121363,6 +121374,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: 75ce9992c4dd33542abee0e2598279e2, type: 3}
+--- !u!208 &1490885246684889885
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093939092808965423}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.0500001, y: 0.85, z: 0.95000005}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.05, y: 2.45, z: 0.25}
+  m_TimeToStationary: 0.5
 --- !u!1 &8260648654892295670 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 75ce9992c4dd33542abee0e2598279e2, type: 3}
@@ -121380,25 +121407,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a044f46fbc771e947862ce821478079f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Human: {fileID: 473105357485592150, guid: 0104d762451861d4c873cf8fd1e99f8f, type: 3}
-  SpawnPoint: {fileID: 7204256030051754826}
-  DoneHarvestPoints:
-  - {fileID: 575599737072369716}
-  - {fileID: 4119238174413028902}
-  - {fileID: 8739832930316965099}
-  - {fileID: 5160164321435708153}
-  - {fileID: 3169410783058425073}
-  - {fileID: 1525185296816229091}
-  - {fileID: 6145985257124487214}
-  - {fileID: 7754183320600927804}
-  - {fileID: 2340816085613152244}
-  - {fileID: 2209779164253403622}
-  - {fileID: 6830501051048792875}
-  - {fileID: 6925508350887996729}
-  - {fileID: 4016354241538693369}
-  - {fileID: 678492433290372843}
-  - {fileID: 5263049561051499558}
-  - {fileID: 8636938792065577524}
+  human: {fileID: 473105357485592150, guid: 0104d762451861d4c873cf8fd1e99f8f, type: 3}
+  spawnPoint: {fileID: 7204256030051754826}
+  doneHarvestPoints:
   - {fileID: 1049390515985662464}
   - {fileID: 3478651103638289426}
   - {fileID: 8081358007926085343}
@@ -121423,10 +121434,68 @@ MonoBehaviour:
   - {fileID: 5719393930521941026}
   - {fileID: 1098659021798850287}
   - {fileID: 3596600588382830845}
-  GrowingPlants: []
-  WalkDuration: 1
-  HarvestTime: 1
-  GrowTime: 1
+  - {fileID: 575599737072369716}
+  - {fileID: 4119238174413028902}
+  - {fileID: 8739832930316965099}
+  - {fileID: 5160164321435708153}
+  - {fileID: 3169410783058425073}
+  - {fileID: 1525185296816229091}
+  - {fileID: 6145985257124487214}
+  - {fileID: 7754183320600927804}
+  - {fileID: 2340816085613152244}
+  - {fileID: 2209779164253403622}
+  - {fileID: 6830501051048792875}
+  - {fileID: 6925508350887996729}
+  - {fileID: 4016354241538693369}
+  - {fileID: 678492433290372843}
+  - {fileID: 5263049561051499558}
+  - {fileID: 8636938792065577524}
+  growingPlants:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  walkDuration: 6
+  harvestTime: 3
+  growTime: 6
+  endPlantScale: {x: 0.1, y: 0.1, z: 0.1}
+  harvestCount: 5
 --- !u!114 &5664484394317920810
 MonoBehaviour:
   m_ObjectHideFlags: 0

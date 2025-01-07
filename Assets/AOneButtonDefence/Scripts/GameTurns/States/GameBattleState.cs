@@ -10,12 +10,14 @@ public class GameBattleState : IState
     private MonoBehaviour coroutineStarter;
     private BattleWavesParameters wavesParameters;
     private EnemieFactory enemieFactory;
+    private Coroutine endTurnCheckCoroutine;
     private Coroutine spawnCoroutine;
     private CellsGrid grid;
     private Vector3 enemiesSpawnOffset;
     private int spawnSpread = 2;
     private int currentWaveIndex = 0;
     private string enemyTag;
+    private string gnomeTag;
 
     public GameBattleState(GameBattleStateData data)
     {
@@ -24,6 +26,7 @@ public class GameBattleState : IState
         this.wavesParameters = data.WavesParameters;
         this.enemiesSpawnOffset = data.EnemiesSpawnOffset;
         enemyTag = data.EnemyTag;
+        gnomeTag = data.GnomeTag;
         grid = data.CellsGrid;
         enemieFactory = new EnemieFactory(data.EnemiesData);
     }
@@ -35,6 +38,11 @@ public class GameBattleState : IState
         if (spawnCoroutine != null)
         {
             coroutineStarter.StopCoroutine(spawnCoroutine);
+        }
+
+        if (endTurnCheckCoroutine != null)
+        {
+            coroutineStarter.StopCoroutine(endTurnCheckCoroutine);
         }
     }
 
@@ -72,27 +80,47 @@ public class GameBattleState : IState
             }
         }
 
-        coroutineStarter.StartCoroutine(EndStateChecking());
+        endTurnCheckCoroutine = coroutineStarter.StartCoroutine(EndStateChecking());
         currentWaveIndex++;
     }
 
     private IEnumerator EndStateChecking()
     {
-        List<GameObject> units = GameObject.FindGameObjectsWithTag(enemyTag).ToList();
+        List<GameObject> knightUnits = GameObject.FindGameObjectsWithTag(enemyTag).ToList();
+        List<GameObject> gnomeUnits = GameObject.FindGameObjectsWithTag(gnomeTag).ToList();
 
-        while (units.Count > 0)
+        while (true)
         {
             yield return new WaitForEndOfFrame();
 
-            for (int i = 0; i < units.Count; i++)
+            if (knightUnits.Count > 0)
             {
-                if (units[i] == null)
-                {
-                    units.Remove(units[i]);
-                }
+                CheckAndClearUnits(knightUnits);
+            }
+            else
+            {
+                stateMachine.ChangeStateWithString(GameStateNames.WinDialogue);
+            }
+
+            if (gnomeUnits.Count > 0)
+            {
+                CheckAndClearUnits(gnomeUnits);
+            }
+            else
+            {
+                stateMachine.ChangeStateWithString(GameStateNames.LoseDialogue);
             }
         }
+    }
 
-        stateMachine.ChangeStateWithString(GameStateNames.Upgrade);
+    private void CheckAndClearUnits(List<GameObject> units)
+    {
+        for (int i = 0; i < units.Count; i++)
+        {
+            if (units[i] == null)
+            {
+                units.Remove(units[i]);
+            }
+        }
     }
 }
