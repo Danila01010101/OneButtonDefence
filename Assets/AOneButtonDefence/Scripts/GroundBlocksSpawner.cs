@@ -35,7 +35,8 @@ public class GroundBlocksSpawner : MonoBehaviour
                 groundBlocks[i].Add(spawnedBlock);
             }
             
-            yield return null;
+            if (i % 5 == 0)
+                yield return null;
         }
 
         SpawnStartCamp();
