@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using static GameStateMachine;
@@ -12,31 +14,57 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private BuildingSpawner buildingSpawner;
     [SerializeField] private PartManager partManagerPrefab;
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
+    [SerializeField] private Canvas loadingCanvas;
 
+    private bool isSerializationCompleted = false;
     private GameStateMachine gameStateMachine;
-    private PartManager upgradeCanvas;
-    private CellsGrid buildingsGrid;
     private IInput input;
 
     private void Awake()
     {
+        StartCoroutine(StartInitialization());
+    }
+
+    private IEnumerator StartInitialization()
+    {
+        SetupLoadingCanvas();
         InitializeInput();
-        InitializeCameraMovementComponent();
-        SpawnWorldGrid();
+        yield return null;
         SpawnResourceCounter();
-        InitializeBuildingSpawner();
-        SpawnUpgradeCanvas();
-        SetupStateMachine();
+        yield return null;
+        InitializeCameraMovementComponent();
+        yield return null;
+        var worldGrid = SpawnWorldGrid();
+        yield return new WaitUntil(() => worldCreator.IsWorldReady);
+        InitializeBuildingSpawner(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration);
+        yield return null;
+        PartManager upgradeCanvas = SpawnUpgradeCanvas();
+        yield return null;
+        SetupStateMachine(upgradeCanvas, worldCreator, worldGrid);
+        yield return null;
+        isSerializationCompleted = true;
+        Destroy(loadingCanvas.gameObject);
     }
 
     private void Update()
     {
+        if (isSerializationCompleted == false)
+            return;
+        
         gameStateMachine.Update();
         gameStateMachine.HandleInput();
         input.LateUpdate();
     }
 
-    private void FixedUpdate() => gameStateMachine.PhysicsUpdate();
+    private void FixedUpdate()
+    {
+        if (isSerializationCompleted == false)
+            return;
+            
+        gameStateMachine.PhysicsUpdate();
+    }
+
+    private void SetupLoadingCanvas() => loadingCanvas = Instantiate(loadingCanvas);
 
     private void InitializeInput()
     {
@@ -59,28 +87,32 @@ public class GameInitializer : MonoBehaviour
         cameraMovement.Initialize(input, cameraData);
     }
 
-    private void SpawnWorldGrid()
+    private CellsGrid SpawnWorldGrid()
     {
-        buildingsGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
-        worldCreator.SetupGrid(buildingsGrid, buildingSpawner);
+        var buildingsGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
+        worldCreator.SetupGrid(buildingsGrid, buildingSpawner, this);
+        return buildingsGrid;
     }
 
-    private void InitializeBuildingSpawner() => buildingSpawner.Initialize(buildingsGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration);
+    private void InitializeBuildingSpawner(CellsGrid grid, 
+        BuildingsData upgradeBuildings, 
+        float animationDuration) => buildingSpawner.Initialize(grid, upgradeBuildings, animationDuration);
 
-    private void SpawnUpgradeCanvas()
+    private PartManager SpawnUpgradeCanvas()
     {
-        upgradeCanvas = Instantiate(partManagerPrefab);
+        PartManager upgradeCanvas = Instantiate(partManagerPrefab);
         upgradeCanvas.Initialize(worldGenerationData.startButtonsAmount);
+        return upgradeCanvas;
     }
 
-    private void SetupStateMachine()
+    private void SetupStateMachine(PartManager canvas, GroundBlocksSpawner worldCreator, CellsGrid grid)
     {
         GameStateMachineData gameStateMachineData = new GameStateMachineData 
         (
-            upgradeCanvas,
+            canvas,
             gameData,
             worldCreator,
-            buildingsGrid,
+            grid,
             gameData.EnemyTag,
             gameData.GnomeTag
         );

@@ -1,8 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GroundBlocksSpawner : MonoBehaviour
 {
+    public bool IsWorldReady { get; private set; } = false;
+
     [SerializeField] private WorldGenerationData data;
 
     private List<List<Ground>> groundBlocks = new List<List<Ground>>();
@@ -10,29 +13,33 @@ public class GroundBlocksSpawner : MonoBehaviour
     private Transform blocksParent;
     private CellsGrid grid;
 
-    public void SetupGrid(CellsGrid grid, BuildingSpawner buildingSpawner)
+    public void SetupGrid(CellsGrid grid, BuildingSpawner buildingSpawner, MonoBehaviour coroutineRunner)
     {
         this.grid = grid;
         this.buildingSpawner = buildingSpawner;
         buildingSpawner.CellFilled += ReplaceBlockWithDefaultBlock;
-        GenerateWorld(buildingSpawner);
+        coroutineRunner.StartCoroutine(GenerateWorld(buildingSpawner));
     }
 
-    private void GenerateWorld(BuildingSpawner cellsChanger)
+    private IEnumerator GenerateWorld(BuildingSpawner cellsChanger)
     {
         blocksParent = new GameObject("Earth blocks").transform;
 
         for (int i = 0; i < grid.Size; i++)
         {
             groundBlocks.Add(new List<Ground>());
+            
             for (int j = 0; j < grid.Size; j++)
             {
                 Ground spawnedBlock = SpawnBlock(GetRandomEarthBlock(), i, j);
                 groundBlocks[i].Add(spawnedBlock);
             }
+            
+            yield return null;
         }
 
         SpawnStartCamp();
+        IsWorldReady = true;
     }
 
     private void SpawnStartCamp()
