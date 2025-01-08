@@ -18,6 +18,7 @@ public abstract class Building : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<IAnimatable>();
+        resources = ResourcesCounter.Instance.Data;
     }
 
     public void ActivateSpawnActionWithDelay() => StartCoroutine(WaitFrameBeforeStartAction());
@@ -26,7 +27,6 @@ public abstract class Building : MonoBehaviour
     {
         //Delay needed to activate spawn action after building position changed.
         yield return null;
-        resources = ResourcesCounter.Instance.Data;
         ActivateSpawnAction();
     }
 

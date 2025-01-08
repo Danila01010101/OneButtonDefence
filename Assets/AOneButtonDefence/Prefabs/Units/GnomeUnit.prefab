@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d16741ee84a41749b170c82ec998438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateTime: 0.25
 --- !u!195 &4974299518234971162
 NavMeshAgent:
   m_ObjectHideFlags: 0
