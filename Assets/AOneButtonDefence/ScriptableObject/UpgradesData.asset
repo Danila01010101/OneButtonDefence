@@ -22,13 +22,13 @@ MonoBehaviour:
     <Cost>k__BackingField: 0
     <SpawnBonus>k__BackingField: 15
     <EveryTurnBonus>k__BackingField: 5
-    <StartHumanAmount>k__BackingField: 0
+    <StartHumanAmount>k__BackingField: 1
   <MilitaryCampData>k__BackingField:
     <FoodPerTurnAmount>k__BackingField: 0
     <Cost>k__BackingField: 0
     <GnomeWarriorPrefab>k__BackingField: {fileID: 1063882897230435733, guid: f4f495098b5f5c3449dc8000417df478, type: 3}
-    <StartWarriorsAmount>k__BackingField: 0
-    <EveryTurnWarriorsAmount>k__BackingField: 0
+    <StartWarriorsAmount>k__BackingField: 1
+    <EveryTurnWarriorsAmount>k__BackingField: 2
     <spawnOffset>k__BackingField: {x: 1.792, y: 1.6, z: 1.958}
     <spawnRotation>k__BackingField: {x: 0, y: 180, z: 0}
   <FactoryData>k__BackingField:
