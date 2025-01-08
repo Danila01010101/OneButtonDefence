@@ -23,8 +23,12 @@ public class GoingAnimation : MonoBehaviour
     {
         if(model.transform.localPosition == endValue && IsWalk == true)
             going();
-
     }
+    
+    public void StartAnimation() => IsWalk = true; 
+    
+    public void StopAnimation() => IsWalk = false;
+    
     private void going()
     {
         model.transform.DOLocalJump(endValue, jumpPower, numJumps, duration)

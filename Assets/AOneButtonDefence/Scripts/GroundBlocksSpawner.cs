@@ -15,10 +15,10 @@ public class GroundBlocksSpawner : MonoBehaviour
     public void SetupGrid(WorldGenerationData data, CellsGrid grid, BuildingSpawner buildingSpawner, MonoBehaviour coroutineRunner)
     {
         this.grid = grid;
+        this.data = data;
         this.buildingSpawner = buildingSpawner;
         buildingSpawner.CellFilled += ReplaceBlockWithDefaultBlock;
         coroutineRunner.StartCoroutine(GenerateWorld(buildingSpawner));
-        this.data = data;
     }
 
     private IEnumerator GenerateWorld(BuildingSpawner cellsChanger)
