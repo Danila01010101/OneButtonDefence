@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 57145061}
   - component: {fileID: 57145060}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: NavMeshGenerationPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -659,7 +659,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b02aca2d7d99ca6489734a27e5cedc83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 0a5f9a6cff94cdd4e8ba60c38855587b, type: 2}
 --- !u!1 &1939200972
 GameObject:
   m_ObjectHideFlags: 0
