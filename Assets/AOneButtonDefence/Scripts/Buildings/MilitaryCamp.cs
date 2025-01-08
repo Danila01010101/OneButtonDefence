@@ -28,7 +28,11 @@ public class MilitaryCamp : Building
     {
         FoodPerTurnAmount += amount;
         ResourcesCounter.Instance.Data.Warriors += amount;
-        Instantiate(data.GnomeWarriorPrefab, transform.position + data.spawnOffset, Quaternion.Euler(data.spawnRotation));
+        
+        for (int i = 0; i < amount; i++)
+        {
+            Instantiate(data.GnomeWarriorPrefab, transform.position + data.spawnOffset, Quaternion.Euler(data.spawnRotation));
+        }
     }
 
     private IEnumerator SpawnWithDelay()
