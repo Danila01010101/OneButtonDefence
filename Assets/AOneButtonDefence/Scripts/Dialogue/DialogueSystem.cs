@@ -38,7 +38,7 @@ public class DialogueSystem : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         numReplic = 0;
-        Text.text = DialogueData.Label[numLabel].Replic[numReplic];
+        //Text.text = DialogueData.Label[numLabel].Replic[numReplic];
 
         Name.text = DialogueData.Name;
 
@@ -52,6 +52,7 @@ public class DialogueSystem : MonoBehaviour
 
         AnswerPanel.SetActive(false);
         gameObject.SetActive(true);
+        StartCoroutine(ShowReplic());
     }
 
     private void Update()

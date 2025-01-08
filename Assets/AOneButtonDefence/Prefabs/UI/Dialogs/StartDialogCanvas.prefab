@@ -960,7 +960,7 @@ MonoBehaviour:
   - {fileID: 3932576124423774362}
   - {fileID: 2479944433429059477}
   Answers: []
-  ReplicSpeed: 0.1
+  ReplicSpeed: 0.05
   spawner: {fileID: -4006017165292560979}
 --- !u!82 &8217856072385390231
 AudioSource:
