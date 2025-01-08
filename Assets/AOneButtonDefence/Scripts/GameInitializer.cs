@@ -90,7 +90,7 @@ public class GameInitializer : MonoBehaviour
     private CellsGrid SpawnWorldGrid()
     {
         var buildingsGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
-        worldCreator.SetupGrid(buildingsGrid, buildingSpawner, this);
+        worldCreator.SetupGrid(worldGenerationData, buildingsGrid, buildingSpawner, this);
         return buildingsGrid;
     }
 
