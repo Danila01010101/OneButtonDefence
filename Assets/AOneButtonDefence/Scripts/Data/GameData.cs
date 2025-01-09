@@ -7,10 +7,12 @@ public class GameData : ScriptableObject
     [field: SerializeField] public int StartFoodAmount { get; private set; }
     [field: SerializeField] public int StartMaterialsAmount { get; private set; }
     [field: SerializeField] public int StartSpiritAmount { get; private set; }
-    [field: Header("Canvases")]
+    [field: Header("Dialogs prefabs")]
     [field: SerializeField] public DialogueSystem StartDialogCanvas { get; private set; }
     [field: SerializeField] public DialogueSystem EndTurnWinDialogCanvas { get; private set; }
-    [field: SerializeField] public DialogueSystem EndTurnLoseDialogCanvas { get; private set; }
+    [field: SerializeField] public DialogueSystem BattleLoseDialogCanvas { get; private set; }
+    [field: SerializeField] public DialogueSystem ResourceLoseDialogCanvas { get; private set; }
+    [field: SerializeField] public DialogueSystem SpiritLoseDialogCanvas { get; private set; }
     
     //[field: SerializeField] public int TurnAmountBeforeEvent { get; private set; } = 4;
     [field: Header("Battle parameters")]

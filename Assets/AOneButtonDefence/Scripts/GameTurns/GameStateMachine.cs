@@ -14,7 +14,9 @@ public class GameStateMachine : StateMachine, IStringStateChanger
         {
             { GameStateNames.StartDialog, new DialogState(this, data.GameTurnsData.StartDialogCanvas, GameStateNames.Upgrade) },
             { GameStateNames.WinDialogue, new DialogState(this, data.GameTurnsData.EndTurnWinDialogCanvas, GameStateNames.Upgrade) },
-            { GameStateNames.LoseDialogue, new DialogState(this, data.GameTurnsData.EndTurnLoseDialogCanvas, GameStateNames.Reload) },
+            { GameStateNames.BattleLoseDialogue, new DialogState(this, data.GameTurnsData.BattleLoseDialogCanvas, GameStateNames.Reload) },
+            { GameStateNames.SpiritLoseDialogue, new DialogState(this, data.GameTurnsData.SpiritLoseDialogCanvas, GameStateNames.Reload) },
+            { GameStateNames.ResourcesLoseDialogue, new DialogState(this, data.GameTurnsData.ResourceLoseDialogCanvas, GameStateNames.Reload) },
             { GameStateNames.Reload, new ReloadingState() },
             //{ GameStateNames.DragonDialog, new DialogState(this, gameData.EndTurnDialogCanvas) },
             { GameStateNames.BattleState, new GameBattleState(battleStateData) },

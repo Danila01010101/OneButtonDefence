@@ -5,7 +5,7 @@ public class UpgradeState : IState
 {
     private PartManager upgradeUI;
     private IStringStateChanger stateMachine;
-    private bool isUpgradeChoosen = false;
+    private bool isUpgradeChoosen;
     private float upgradeFaseDuration;
     private float upgradeFaseStartTime;
     private bool canEndTurn => upgradeFaseStartTime + upgradeFaseDuration < Time.time && isUpgradeChoosen;
@@ -54,10 +54,21 @@ public class UpgradeState : IState
 
     public void Update()
     {
-        if (canEndTurn)
+        if (canEndTurn == false)
+            return;
+
+        if (ResourcesCounter.Instance.Data.Materials <= 0)
         {
-            stateMachine.ChangeStateWithString(GameStateNames.BattleState);
+            stateMachine.ChangeStateWithString(GameStateNames.ResourcesLoseDialogue);
+            return;
         }
+        
+        if (ResourcesCounter.Instance.Data.SurvivorSpirit <= 0)
+        {
+            stateMachine.ChangeStateWithString(GameStateNames.SpiritLoseDialogue);
+        }
+        
+        stateMachine.ChangeStateWithString(GameStateNames.BattleState);
     }
 
     private void DetectUpgradeChoosing() 

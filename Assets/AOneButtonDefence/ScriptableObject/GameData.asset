@@ -17,7 +17,9 @@ MonoBehaviour:
   <StartSpiritAmount>k__BackingField: 50
   <StartDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
   <EndTurnWinDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 74c79feccf7219947a413935ec7bbaae, type: 3}
-  <EndTurnLoseDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 5865bc8095bd9d548a1a9eb55e70d6b1, type: 3}
+  <BattleLoseDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 5865bc8095bd9d548a1a9eb55e70d6b1, type: 3}
+  <ResourceLoseDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: a1e0690fdfac01446956167e57663b91, type: 3}
+  <SpiritLoseDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 7d2b860d160963442b34d290028a8f67, type: 3}
   <BattleWavesParameters>k__BackingField: {fileID: 11400000, guid: d46257c332a947b4bb775c648410080f, type: 2}
   <EnemiesSpawnSpread>k__BackingField: 2
   <EnemiesSpawnOffset>k__BackingField: {x: 1.792, y: 1.72, z: 1.958}

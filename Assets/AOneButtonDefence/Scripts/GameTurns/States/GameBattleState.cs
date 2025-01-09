@@ -108,7 +108,7 @@ public class GameBattleState : IState
             }
             else
             {
-                stateMachine.ChangeStateWithString(GameStateNames.LoseDialogue);
+                stateMachine.ChangeStateWithString(GameStateNames.BattleLoseDialogue);
             }
         }
     }

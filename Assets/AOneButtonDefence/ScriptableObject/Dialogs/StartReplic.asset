@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53fa45db1e488f14d9024fe065a1cad6, type: 3}
-  m_Name: Replic
+  m_Name: StartReplic
   m_EditorClassIdentifier: 
   _label:
   - labelName: "\u0413\u043D\u043E\u043C \u0441\u043E\u0432\u0435\u0442\u043D\u0438\u043A"

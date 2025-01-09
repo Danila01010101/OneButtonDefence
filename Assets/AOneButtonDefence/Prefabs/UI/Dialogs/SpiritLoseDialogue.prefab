@@ -763,7 +763,7 @@ GameObject:
   - component: {fileID: 8217856072385390231}
   - component: {fileID: -4006017165292560979}
   m_Layer: 5
-  m_Name: LoseDialogue
+  m_Name: SpiritLoseDialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -866,7 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82b567277a0c774e9c5a701db2b856d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialogueData: {fileID: 11400000, guid: 31080a81c252b5e41a41e1ce707cbbc7, type: 2}
+  DialogueData: {fileID: 11400000, guid: 79692bcb39dbbe2499b20d03564a808f, type: 2}
   Name: {fileID: 6271028155486610511}
   Text: {fileID: 6340014048093494301}
   AnswerPanel: {fileID: 1388120806628212703}
