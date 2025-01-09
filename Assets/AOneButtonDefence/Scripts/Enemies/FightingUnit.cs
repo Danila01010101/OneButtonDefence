@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(GoingAnimation))]
+[RequireComponent(typeof(WalkingAnimation))]
 [RequireComponent(typeof(FightAnimation))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class FightingUnit : MonoBehaviour, IDamagable
@@ -13,7 +13,7 @@ public class FightingUnit : MonoBehaviour, IDamagable
     private NavMeshAgent navMeshComponent;
     private EnemyStateMachine stateMachine;
     private FightAnimation fightAnimation;
-    private GoingAnimation goingAnimation;
+    private WalkingAnimation walkingAnimation;
     private MaterialChanger materialChanger;
 
     private void Start()
@@ -42,14 +42,14 @@ public class FightingUnit : MonoBehaviour, IDamagable
     private void InitializeAnimationComponents()
     {
         fightAnimation = GetComponent<FightAnimation>();
-        goingAnimation = GetComponent<GoingAnimation>();
+        walkingAnimation = GetComponent<WalkingAnimation>();
     }
 
     private void InitializeStateMachine()
     {
         var data = new EnemyStateMachine.EnemyStateMachineData(
             transform, characterStats, navMeshComponent, this,
-            goingAnimation, fightAnimation);
+            walkingAnimation, fightAnimation);
         stateMachine = new EnemyStateMachine(data);
     }
 

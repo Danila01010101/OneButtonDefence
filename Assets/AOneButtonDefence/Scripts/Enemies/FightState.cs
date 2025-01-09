@@ -34,10 +34,11 @@ public class FightState : IState, ITargetAttacker
 
     public void Exit() 
     {
-        animation.CharacterAttacked -= Attack;
-        animation.CharacterAttackEnded -= CheckTarget;
         target = null;
         isTargetSetted = false;
+        animation.CharacterAttacked -= Attack;
+        animation.CharacterAttackEnded -= CheckTarget;
+        animation.InterruptAnimation();
     }
 
     public void HandleInput() { }

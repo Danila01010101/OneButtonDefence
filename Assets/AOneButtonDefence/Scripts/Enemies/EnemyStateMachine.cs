@@ -7,11 +7,14 @@ public class EnemyStateMachine : StateMachine
     public EnemyStateMachine(EnemyStateMachineData data)
     {
         var fightState = new FightState(this, data.CharacterStats.AttackDelay, data.CharacterStats.Damage, data.FightAnimation);
-        var targetFollowingState = new TargetFollowingState(this, data.Agent, data.CharacterStats, fightState, data.CharacterStats.EnemyLayerMask, data.GoingAnimation);
+        var targetFollowingState = new TargetFollowingState(this, data.Agent, data.CharacterStats, fightState, data.CharacterStats.EnemyLayerMask, data.WalkingAnimation);
+        var targetSearchStateData = new TargetSearchState.TargetSearchStateData(
+            this, data.Transform, data.CharacterStats.DetectionRadius, data.CharacterStats.EnemyLayerMask,
+            targetFollowingState, data.Agent, data.Transform.position, data.WalkingAnimation);
 
         states = new List<IState>()
         {
-            new TargetSearchState(this, data.Transform, data.CharacterStats.DetectionRadius, data.CharacterStats.EnemyLayerMask, targetFollowingState),
+            new TargetSearchState(targetSearchStateData),
             fightState,
             targetFollowingState
         };
@@ -25,17 +28,17 @@ public class EnemyStateMachine : StateMachine
         public CharacterStats CharacterStats { get; private set; }
         public NavMeshAgent Agent { get; private set; }
         public MonoBehaviour CoroutineStarter { get; private set; }
-        public GoingAnimation GoingAnimation { get; private set; }
+        public WalkingAnimation WalkingAnimation { get; private set; }
         public FightAnimation FightAnimation { get; private set; }
         
         public EnemyStateMachineData(Transform transform, CharacterStats characterStats, NavMeshAgent agent, 
-            MonoBehaviour coroutineStarter, GoingAnimation goingAnimation, FightAnimation fightAnimation)
+            MonoBehaviour coroutineStarter, WalkingAnimation walkingAnimation, FightAnimation fightAnimation)
         {
             Transform = transform;
             CharacterStats = characterStats;
             Agent = agent;
             CoroutineStarter = coroutineStarter;
-            GoingAnimation = goingAnimation;
+            WalkingAnimation = walkingAnimation;
             FightAnimation = fightAnimation;
         }
     }

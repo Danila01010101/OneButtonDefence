@@ -10,13 +10,13 @@ public class TargetFollowingState : IState, ITargetFollower
     private Transform transform;
     private Transform target;
     private LayerMask targetMask;
-    private GoingAnimation animation;
+    private WalkingAnimation animation;
     private float speed;
     private float attackRange;
     private bool IsTargetGone() => target == null;
 
     public TargetFollowingState(IStateChanger stateMachine, NavMeshAgent agent, CharacterStats stats, 
-        ITargetAttacker targetAttacker, LayerMask targetMask, GoingAnimation animation)
+        ITargetAttacker targetAttacker, LayerMask targetMask, WalkingAnimation animation)
     {
         this.stateMachine = stateMachine;
         this.agent = agent;

@@ -19,12 +19,17 @@ public class FightAnimation : MonoBehaviour
     }
     
     public void StartAnimation() => RotateAttack();
+    
+    public void InterruptAnimation()
+    {
+        ResetRotate();
+    }
 
     private void RotateAttack()
     {
-        childObject.transform.DOLocalRotate(startRotation + new Vector3(45, 45, 0), rotateTime)
+        childObject.transform.DOLocalRotate(startRotation + new Vector3(-45, -45, 0), rotateTime)
             .SetEase(Ease.OutQuad)
-            .OnComplete(()=>ResetRotate());
+            .OnComplete(() => ResetRotate());
     }
 
     private void ResetRotate()

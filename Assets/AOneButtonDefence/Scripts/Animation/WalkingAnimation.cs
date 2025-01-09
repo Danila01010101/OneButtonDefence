@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoingAnimation : MonoBehaviour
+public class WalkingAnimation : MonoBehaviour
 {
     [SerializeField] private float jumpPower = 0.2f;
     [SerializeField] private Vector3 endValue = new Vector3 (0,0,0);
