@@ -72,12 +72,12 @@ public class GameBattleState : IState
     {
         for (int i = 0; i < waveData.amountOfEnemySpawns; i++)
         {
-            yield return new WaitForSeconds(waveData.spawnInterval);
-
-            for (int enemiesAmount = 0; enemiesAmount < waveData.amountOfEnemySpawns; enemiesAmount++)
+            for (int enemiesAmount = 0; enemiesAmount < waveData.enemiesAmountPerSpawn; enemiesAmount++)
             {
                 enemieFactory.SpawnEnemy<FightingUnit>(grid.GetRandomEmptyCellPosition(spawnSpread) + enemiesSpawnOffset);
             }
+            
+            yield return new WaitForSeconds(waveData.spawnInterval);
         }
 
         endTurnCheckCoroutine = coroutineStarter.StartCoroutine(EndStateChecking());
