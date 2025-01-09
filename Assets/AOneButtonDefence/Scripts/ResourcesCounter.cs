@@ -18,6 +18,12 @@ public class ResourcesCounter : MonoBehaviour
         Instance = this;
     }
 
+    public void SetStartValues(int startFood, int startMaterials, int survivorSpirit)
+    {
+        Data.FoodAmount = startFood;
+        Data.Materials = startMaterials;
+        Data.SurvivorSpirit = survivorSpirit;
+    }
 
     public class ResourcesData
     {

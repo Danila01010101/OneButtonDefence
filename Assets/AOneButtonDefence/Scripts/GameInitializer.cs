@@ -78,7 +78,11 @@ public class GameInitializer : MonoBehaviour
         }
     }
 
-    private void SpawnResourceCounter() => new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
+    private void SpawnResourceCounter()
+    {
+        ResourcesCounter resourcesCounter = new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
+        resourcesCounter.SetStartValues(gameData.StartFoodAmount, gameData.StartMaterialsAmount, gameData.StartSpiritAmount);
+    }
 
     private void InitializeCameraMovementComponent()
     {
