@@ -9,9 +9,9 @@ public class CameraMovement : MonoBehaviour
     private CinemachineVirtualCamera virtualCamera;
     private IInput input;
     private float currentDistance;
-    private float currentX = 0.0f;
-    private float currentY = 0.0f;
-    private bool isInitialize = false;
+    private float currentX;
+    private float currentY;
+    private bool isInitialize;
 
     public void Initialize(IInput input, CameraData data)
     {
@@ -62,18 +62,15 @@ public class CameraMovement : MonoBehaviour
 
     private void MoveCamera(Vector3 moveDirection)
     {
-        // Рассчитываем движение относительно текущего поворота камеры
-        Vector3 forward = transform.forward; // Направление "вперед" камеры
-        Vector3 right = transform.right;    // Направление "вправо" камеры
+        Vector3 forward = transform.forward;
+        Vector3 right = transform.right;
 
-        // Убираем вертикальную составляющую, чтобы движение оставалось в плоскости
         forward.y = 0;
         right.y = 0;
 
         forward.Normalize();
         right.Normalize();
 
-        // Рассчитываем итоговое движение
         Vector3 movement = (forward * moveDirection.z + right * moveDirection.x) * data.CameraMovementSpeed;
         target.position += movement;
     }

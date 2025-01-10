@@ -12,11 +12,11 @@ public class GameStateMachine : StateMachine, IStringStateChanger
 
         stringStates = new Dictionary<string, IState>()
         {
-            { GameStateNames.StartDialog, new DialogState(this, data.GameTurnsData.StartDialogCanvas, GameStateNames.Upgrade) },
-            { GameStateNames.WinDialogue, new DialogState(this, data.GameTurnsData.EndTurnWinDialogCanvas, GameStateNames.Upgrade) },
-            { GameStateNames.BattleLoseDialogue, new DialogState(this, data.GameTurnsData.BattleLoseDialogCanvas, GameStateNames.Reload) },
-            { GameStateNames.SpiritLoseDialogue, new DialogState(this, data.GameTurnsData.SpiritLoseDialogCanvas, GameStateNames.Reload) },
-            { GameStateNames.ResourcesLoseDialogue, new DialogState(this, data.GameTurnsData.ResourceLoseDialogCanvas, GameStateNames.Reload) },
+            { GameStateNames.StartDialog, new DialogState(this, data.GameTurnsData.StartDialogCanvas, GameStateNames.Upgrade, data.Input) },
+            { GameStateNames.WinDialogue, new DialogState(this, data.GameTurnsData.EndTurnWinDialogCanvas, GameStateNames.Upgrade, data.Input) },
+            { GameStateNames.BattleLoseDialogue, new DialogState(this, data.GameTurnsData.BattleLoseDialogCanvas, GameStateNames.Reload, data.Input) },
+            { GameStateNames.SpiritLoseDialogue, new DialogState(this, data.GameTurnsData.SpiritLoseDialogCanvas, GameStateNames.Reload, data.Input) },
+            { GameStateNames.ResourcesLoseDialogue, new DialogState(this, data.GameTurnsData.ResourceLoseDialogCanvas, GameStateNames.Reload, data.Input) },
             { GameStateNames.Reload, new ReloadingState() },
             //{ GameStateNames.DragonDialog, new DialogState(this, gameData.EndTurnDialogCanvas) },
             { GameStateNames.BattleState, new GameBattleState(battleStateData) },
@@ -36,8 +36,9 @@ public class GameStateMachine : StateMachine, IStringStateChanger
         public CellsGrid CellsGrid { get; private set; }
         public string EnemyTag { get; private set; }
         public string GnomeTag { get; private set; }
+        public IDisableableInput Input { get; private set; }
 
-        public GameStateMachineData(PartManager upgradeUIGameobject, GameData gameTurnsData, MonoBehaviour coroutineStarter, CellsGrid buildingsGrid, string enemyTag, string gnomeTag)
+        public GameStateMachineData(PartManager upgradeUIGameobject, GameData gameTurnsData, MonoBehaviour coroutineStarter, CellsGrid buildingsGrid, string enemyTag, string gnomeTag, IDisableableInput input)
         {
             this.UpgradeUIGameobject = upgradeUIGameobject;
             this.GameTurnsData = gameTurnsData;
@@ -45,6 +46,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
             this.CellsGrid = buildingsGrid;
             this.EnemyTag = enemyTag;
             this.GnomeTag = gnomeTag;
+            this.Input = input;
         }
     }
 }

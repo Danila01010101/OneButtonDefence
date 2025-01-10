@@ -6,22 +6,26 @@ public class DialogState : IState
     private DialogueSystem startDialogPrefab;
     private DialogueSystem spawnedDialog;
     private Canvas gamePlayCanvas;
+    private IDisableableInput input;
     private string nextState;
 
-    public DialogState(IStringStateChanger stateMachine, DialogueSystem newDialog, string nextState)
+    public DialogState(IStringStateChanger stateMachine, DialogueSystem newDialog, string nextState, IDisableableInput input)
     {
         this.stateMachine = stateMachine;
         startDialogPrefab = newDialog;
         this.nextState = nextState;
+        this.input = input;
     }
 
     public void Enter()
     {
+        input.Disable();
         SpawnDialogCanvas();
     }
 
     public void Exit()
     {
+        input.Enable();
         RemoveStartCanvas();
     }
 

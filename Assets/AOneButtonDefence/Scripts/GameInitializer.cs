@@ -16,9 +16,10 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
     [SerializeField] private Canvas loadingCanvas;
 
-    private bool isSerializationCompleted = false;
+    private bool isSerializationCompleted;
     private GameStateMachine gameStateMachine;
     private IInput input;
+    private IDisableableInput disableableInput;
 
     private void Awake()
     {
@@ -40,7 +41,7 @@ public class GameInitializer : MonoBehaviour
         yield return null;
         PartManager upgradeCanvas = SpawnUpgradeCanvas();
         yield return null;
-        SetupStateMachine(upgradeCanvas, worldCreator, worldGrid);
+        SetupStateMachine(upgradeCanvas, worldCreator, worldGrid, disableableInput);
         yield return null;
         isSerializationCompleted = true;
         Destroy(loadingCanvas.gameObject);
@@ -74,7 +75,9 @@ public class GameInitializer : MonoBehaviour
         }
         else
         {
-            input = new DesctopInput(gameData.SwipeDeadZone);
+            var initializedInput = new DesctopInput(gameData.SwipeDeadZone);
+            input = initializedInput;
+            disableableInput = initializedInput;
         }
     }
 
@@ -109,7 +112,7 @@ public class GameInitializer : MonoBehaviour
         return upgradeCanvas;
     }
 
-    private void SetupStateMachine(PartManager gameplayCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid)
+    private void SetupStateMachine(PartManager gameplayCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput inputForDialogueState)
     {
         GameStateMachineData gameStateMachineData = new GameStateMachineData 
         (
@@ -118,7 +121,8 @@ public class GameInitializer : MonoBehaviour
             worldCreator,
             grid,
             gameData.EnemyTag,
-            gameData.GnomeTag
+            gameData.GnomeTag,
+            inputForDialogueState
         );
         gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset, gameData.UpgradeStateDuration);
     }

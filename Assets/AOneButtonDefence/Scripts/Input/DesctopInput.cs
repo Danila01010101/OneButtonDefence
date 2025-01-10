@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class DesctopInput : IInput
+public class DesctopInput : IInput, IDisableableInput
 {
     public Action<Vector3> Moved { get; set; }
     public Action<Vector2> Rotated { get; set; }
@@ -9,6 +9,7 @@ public class DesctopInput : IInput
 
     private float deadZone = 0.1f;
     private Vector3 lastMousePosition;
+    private bool enabled;
 
     private readonly string xMoveAxis = "Mouse X";
     private readonly string yMoveAxis = "Mouse Y";
@@ -23,10 +24,17 @@ public class DesctopInput : IInput
 
     public void LateUpdate()
     {
+        if (enabled == false)
+            return;
+        
         HandleMoveInput();
         HandleRotateInput();
         HandleScrollInput();
     }
+    
+    public void Enable() => enabled = true;
+    
+    public void Disable() => enabled = false;
 
     private void HandleMoveInput()
     {
