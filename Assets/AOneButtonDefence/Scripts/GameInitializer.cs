@@ -109,11 +109,11 @@ public class GameInitializer : MonoBehaviour
         return upgradeCanvas;
     }
 
-    private void SetupStateMachine(PartManager canvas, GroundBlocksSpawner worldCreator, CellsGrid grid)
+    private void SetupStateMachine(PartManager gameplayCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid)
     {
         GameStateMachineData gameStateMachineData = new GameStateMachineData 
         (
-            canvas,
+            gameplayCanvas,
             gameData,
             worldCreator,
             grid,
