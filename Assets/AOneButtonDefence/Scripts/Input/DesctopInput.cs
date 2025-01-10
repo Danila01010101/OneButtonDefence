@@ -6,6 +6,8 @@ public class DesctopInput : IInput, IDisableableInput
     public Action<Vector3> Moved { get; set; }
     public Action<Vector2> Rotated { get; set; }
     public Action<float> Scroll { get; set; }
+    public Action MovementEnabled { get; set; }
+    public Action MovementDisabled { get; set; }
 
     private float deadZone = 0.1f;
     private Vector3 lastMousePosition;
@@ -32,9 +34,18 @@ public class DesctopInput : IInput, IDisableableInput
         HandleScrollInput();
     }
     
-    public void Enable() => enabled = true;
-    
-    public void Disable() => enabled = false;
+    public void Enable()
+    {
+        lastMousePosition = Input.mousePosition;
+        enabled = true;
+        MovementEnabled?.Invoke();
+    }
+
+    public void Disable()
+    {
+        enabled = false;
+        MovementDisabled?.Invoke();
+    }
 
     private void HandleMoveInput()
     {

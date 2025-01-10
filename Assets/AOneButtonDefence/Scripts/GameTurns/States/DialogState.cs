@@ -26,7 +26,7 @@ public class DialogState : IState
     public void Exit()
     {
         input.Enable();
-        RemoveStartCanvas();
+        RemoveDialogCanvas();
     }
 
     public void HandleInput() { }
@@ -51,7 +51,7 @@ public class DialogState : IState
         spawnedDialog.DialogEnded += EndDialog;
     }
 
-    private void RemoveStartCanvas() => MonoBehaviour.Destroy(spawnedDialog.gameObject);
+    private void RemoveDialogCanvas() => MonoBehaviour.Destroy(spawnedDialog.gameObject);
 
     private void EndDialog()
     {

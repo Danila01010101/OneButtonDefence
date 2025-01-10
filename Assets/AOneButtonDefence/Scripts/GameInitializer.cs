@@ -33,6 +33,7 @@ public class GameInitializer : MonoBehaviour
         yield return null;
         SpawnResourceCounter();
         yield return null;
+        InitializeDialogCamera();
         InitializeCameraMovementComponent();
         yield return null;
         var worldGrid = SpawnWorldGrid();
@@ -85,6 +86,13 @@ public class GameInitializer : MonoBehaviour
     {
         ResourcesCounter resourcesCounter = new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
         resourcesCounter.SetStartValues(gameData.StartFoodAmount, gameData.StartMaterialsAmount, gameData.StartSpiritAmount);
+    }
+
+    private void InitializeDialogCamera()
+    {
+        var dialogCamera = Instantiate(cameraData.DialogCameraPrefab);
+        dialogCamera.transform.position = cameraData.DialogCameraPosition;
+        dialogCamera.transform.eulerAngles = cameraData.DialogCameraEulerAngles;
     }
 
     private void InitializeCameraMovementComponent()

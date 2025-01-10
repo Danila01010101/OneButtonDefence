@@ -22,12 +22,13 @@ public class CameraMovement : MonoBehaviour
         this.input = input;
         this.data = data;
         currentDistance = data.MaximumCameraDistance;
-        target.position = data.StartCameraPosition;
+        target.position = data.StartCameraTargetPosition;
 
         Vector3 angles = transform.eulerAngles;
         currentX = angles.x;
         currentY = angles.y;
-
+        
+        UpdateCameraPositionAndRotation();
         Subscribe();
         isInitialize = true;
     }
@@ -79,12 +80,18 @@ public class CameraMovement : MonoBehaviour
     {
         currentDistance = Mathf.Clamp(currentDistance - heightAxis * data.CameraZoomSpeed, data.MinimumCameraDistance, data.MaximumCameraDistance);
     }
+    
+    private void EnableCamera() => virtualCamera.enabled = true;
+    
+    private void DisableCamera() => virtualCamera.enabled = false;
 
     private void Subscribe()
     {
         input.Moved += MoveCamera;
         input.Rotated += RotateCamera;
         input.Scroll += ChangeHeight;
+        input.MovementEnabled += EnableCamera;
+        input.MovementDisabled += DisableCamera;
     }
 
     private void Unsubscribe()
@@ -92,6 +99,8 @@ public class CameraMovement : MonoBehaviour
         input.Moved -= MoveCamera;
         input.Rotated -= RotateCamera;
         input.Scroll -= ChangeHeight;
+        input.MovementEnabled -= EnableCamera;
+        input.MovementDisabled -= DisableCamera;
     }
 
     private void OnEnable()

@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8839f9aa92ee6e44db41b619c60b7d2b, type: 3}
   m_Name: CameraData
   m_EditorClassIdentifier: 
-  <StartCameraPosition>k__BackingField: {x: 156.8807, y: 1.71, z: 157.59}
+  <StartCameraTargetPosition>k__BackingField: {x: 156.8828, y: 0, z: 155.74223}
+  <DialogCameraPrefab>k__BackingField: {fileID: 4628187216870136747, guid: 9d5b8bbf672665043a78c246f712a482, type: 3}
+  <DialogCameraPosition>k__BackingField: {x: 151.57, y: 10.02, z: 162.89}
+  <DialogCameraEulerAngles>k__BackingField: {x: 49.99998, y: 144.81525, z: -0.0000013282353}
   <MinimumCameraDistance>k__BackingField: 3
   <MaximumCameraDistance>k__BackingField: 10
   <CameraMovementSpeed>k__BackingField: 0.4
