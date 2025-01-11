@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4531914806673186311}
   m_Layer: 0
-  m_Name: Gnome
+  m_Name: Gnome 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

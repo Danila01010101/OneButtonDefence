@@ -61,7 +61,6 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
         {
             GameObject gnome = Instantiate(Gnome, SpawnPositions[i].position, Quaternion.identity);
             gnomes.Add(gnome);
-            gnome.transform.GetChild(1).gameObject.SetActive(false);
             Material material = gnome.transform.GetChild(ModelChildIndex).GetChild(ModelChildIndex).gameObject.GetComponent<Renderer>().material;
             material.color = startvalue;
             changeMaterial.SetTransparent(material);
@@ -113,7 +112,6 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
     {
         GameObject gnome = Instantiate(Gnome, startposition.position, Quaternion.identity);
         gnomes.Add(gnome);
-        gnome.transform.GetChild(1).gameObject.SetActive(false);
         Material material = gnome.transform.GetChild(ModelChildIndex).GetChild(ModelChildIndex).gameObject.GetComponent<Renderer>().material;
         material.color = startvalue;
         changeMaterial.SetTransparent(material);

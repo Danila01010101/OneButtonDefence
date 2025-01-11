@@ -121407,7 +121407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a044f46fbc771e947862ce821478079f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  human: {fileID: 473105357485592150, guid: 0104d762451861d4c873cf8fd1e99f8f, type: 3}
+  human: {fileID: 473105357485592150, guid: bd259f47868fba04cb5c97615c555fea, type: 3}
   spawnPoint: {fileID: 7204256030051754826}
   doneHarvestPoints:
   - {fileID: 1049390515985662464}

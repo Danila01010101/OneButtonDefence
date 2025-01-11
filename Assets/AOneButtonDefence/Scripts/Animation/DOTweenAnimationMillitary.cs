@@ -30,6 +30,11 @@ public class DOTweenAnimationMillitary : MonoBehaviour, IAnimatable
 
     public void StartAnimation() => currentAnimation = StartCoroutine(RestartAnimation());
 
+    private void Start()
+    {
+        currentAnimation = StartCoroutine(SpawnGnomes());
+    }
+
     public void InteruptAnimation() 
     {
         if (currentAnimation != null)
@@ -48,7 +53,7 @@ public class DOTweenAnimationMillitary : MonoBehaviour, IAnimatable
         {
             GameObject gnome = Instantiate(WarriorPrefab, new Vector3(Path[i].Path[0].position.x, Path[i].Path[0].position.y, Path[i].Path[0].position.z + Z), Quaternion.identity);
             gnomes.Add(gnome);
-            StartCoroutine(AnimationWarriors(gnome));
+            currentAnimation = StartCoroutine(AnimationWarriors(gnome));
             yield return new WaitForSeconds(SpawnDelay);
         }
     }
