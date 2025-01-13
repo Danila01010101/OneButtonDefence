@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -8,6 +9,7 @@ public class GameInitializer : MonoBehaviour
 {
     [SerializeField] private GameData gameData;
     [SerializeField] private CameraData cameraData;
+    [SerializeField] private MusicData musicData;
     [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
     [SerializeField] private GroundBlocksSpawner worldCreator;
@@ -30,6 +32,10 @@ public class GameInitializer : MonoBehaviour
     {
         SetupLoadingCanvas();
         InitializeInput();
+        Tuple<IBackgroundMusicPlayer, IUpgradeEffectPlayer> players = InitializeMusicPlayer();
+        IBackgroundMusicPlayer backgroundMusicPlayer = players.Item1;
+        IUpgradeEffectPlayer upgradeEffectPlayer = players.Item2;
+        InitializeMusicMediator(backgroundMusicPlayer, upgradeEffectPlayer);
         yield return null;
         SpawnResourceCounter();
         yield return null;
@@ -67,6 +73,22 @@ public class GameInitializer : MonoBehaviour
     }
 
     private void SetupLoadingCanvas() => loadingCanvas = Instantiate(loadingCanvas);
+
+    private Tuple<IBackgroundMusicPlayer, IUpgradeEffectPlayer> InitializeMusicPlayer()
+    {
+        var musicPlayerGameObject = new GameObject("MusicPlayer");
+        var backgroundPlayer = musicPlayerGameObject.AddComponent<AudioSource>();
+        var firstUpgradePlayer = musicPlayerGameObject.AddComponent<AudioSource>();
+        var secondUpgradePlayer = musicPlayerGameObject.AddComponent<AudioSource>();
+        var musicPlayer = new GameMusicPlayer(musicData, backgroundPlayer, firstUpgradePlayer, secondUpgradePlayer);
+        var allMusicPlayers = new Tuple<IBackgroundMusicPlayer, IUpgradeEffectPlayer>(musicPlayer, musicPlayer);
+        return allMusicPlayers;
+    }
+
+    private void InitializeMusicMediator(IBackgroundMusicPlayer backgroundMusicPlayer, IUpgradeEffectPlayer upgradeEffectPlayer)
+    {
+        var musicMediator = new MusicPlayerMediator(backgroundMusicPlayer, upgradeEffectPlayer);
+    }
 
     private void InitializeInput()
     {
