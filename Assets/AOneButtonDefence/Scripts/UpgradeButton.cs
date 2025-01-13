@@ -17,7 +17,7 @@ public class UpgradeButton : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    public void UpgraidChoisenPart(Upgrades firstPart, Upgrades secondPart)
+    public void UpgradeChosenPart(Upgrades firstPart, Upgrades secondPart)
     {
         UpgradeChoosen?.Invoke();
         Upgrade(firstPart);
