@@ -1,32 +1,44 @@
+using System;
 using UnityEngine;
 
 public class DialogState : IState
 {
-    private IStringStateChanger stateMachine;
-    private DialogueSystem startDialogPrefab;
+    private readonly IStringStateChanger stateMachine;
+    private readonly DialogueSystem startDialogPrefab;
+    private readonly IDisableableInput input;
+    private readonly string nextState;
+    private readonly bool isDialogAnimatable;
     private DialogueSystem spawnedDialog;
     private Canvas gamePlayCanvas;
-    private IDisableableInput input;
-    private string nextState;
 
-    public DialogState(IStringStateChanger stateMachine, DialogueSystem newDialog, string nextState, IDisableableInput input)
+    public static Action AnimatableDialogueStarted;
+    public static Action AnimatableDialogueEnded;
+
+    public DialogState(IStringStateChanger stateMachine, DialogueSystem newDialog, string nextState, IDisableableInput input, bool isDialogAnimatable = false)
     {
         this.stateMachine = stateMachine;
         startDialogPrefab = newDialog;
         this.nextState = nextState;
         this.input = input;
+        this.isDialogAnimatable = isDialogAnimatable;
     }
 
     public void Enter()
     {
         input.Disable();
         SpawnDialogCanvas();
+        
+        if (isDialogAnimatable)
+            AnimatableDialogueStarted.Invoke();
     }
 
     public void Exit()
     {
         input.Enable();
         RemoveDialogCanvas();
+        
+        if (isDialogAnimatable)
+            AnimatableDialogueEnded.Invoke();
     }
 
     public void HandleInput() { }

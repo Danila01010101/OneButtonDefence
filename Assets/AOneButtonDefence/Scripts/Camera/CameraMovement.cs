@@ -90,8 +90,8 @@ public class CameraMovement : MonoBehaviour
         input.Moved += MoveCamera;
         input.Rotated += RotateCamera;
         input.Scroll += ChangeHeight;
-        input.MovementEnabled += EnableCamera;
-        input.MovementDisabled += DisableCamera;
+        DialogState.AnimatableDialogueStarted += EnableCamera;
+        DialogState.AnimatableDialogueEnded += DisableCamera;
     }
 
     private void Unsubscribe()
@@ -99,8 +99,8 @@ public class CameraMovement : MonoBehaviour
         input.Moved -= MoveCamera;
         input.Rotated -= RotateCamera;
         input.Scroll -= ChangeHeight;
-        input.MovementEnabled -= EnableCamera;
-        input.MovementDisabled -= DisableCamera;
+        DialogState.AnimatableDialogueStarted -= EnableCamera;
+        DialogState.AnimatableDialogueEnded -= DisableCamera;
     }
 
     private void OnEnable()

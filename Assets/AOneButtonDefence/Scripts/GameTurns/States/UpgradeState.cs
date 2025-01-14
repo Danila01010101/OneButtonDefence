@@ -28,14 +28,14 @@ public class UpgradeState : IState
         upgradeUI.gameObject.SetActive(true);
         UpgradeStateStarted?.Invoke();
         upgradeUI.UpgradeButton.Activate();
-        UpgradeButton.UpgradeChoosen += DetectUpgradeChoosing;
+        UpgradeButton.UpgradesChoosen += DetectUpgradeChoosing;
     }
 
     public void Exit()
     {
         upgradeUI.gameObject.SetActive(false);
         UpgradeStateEnded?.Invoke();
-        UpgradeButton.UpgradeChoosen -= DetectUpgradeChoosing;
+        UpgradeButton.UpgradesChoosen -= DetectUpgradeChoosing;
     }
 
     public void HandleInput() { }
@@ -62,10 +62,17 @@ public class UpgradeState : IState
             stateMachine.ChangeStateWithString(GameStateNames.ResourcesLoseDialogue);
             return;
         }
+
+        if (ResourcesCounter.Instance.Data.FoodAmount <= 0)
+        {
+            stateMachine.ChangeStateWithString(GameStateNames.FoodLoseDialogue);
+            return;
+        }
         
         if (ResourcesCounter.Instance.Data.SurvivorSpirit <= 0)
         {
             stateMachine.ChangeStateWithString(GameStateNames.SpiritLoseDialogue);
+            return;
         }
         
         stateMachine.ChangeStateWithString(GameStateNames.BattleState);

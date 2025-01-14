@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using static GameStateMachine;
 
@@ -22,6 +23,9 @@ public class GameInitializer : MonoBehaviour
     private GameStateMachine gameStateMachine;
     private IInput input;
     private IDisableableInput disableableInput;
+    private MusicPlayerMediator musicMediator;
+    
+    public static Action GameInitialized;
 
     private void Awake()
     {
@@ -35,6 +39,7 @@ public class GameInitializer : MonoBehaviour
         Tuple<IBackgroundMusicPlayer, IUpgradeEffectPlayer> players = InitializeMusicPlayer();
         IBackgroundMusicPlayer backgroundMusicPlayer = players.Item1;
         IUpgradeEffectPlayer upgradeEffectPlayer = players.Item2;
+        backgroundMusicPlayer.StartLoadingMusic();
         InitializeMusicMediator(backgroundMusicPlayer, upgradeEffectPlayer);
         yield return null;
         SpawnResourceCounter();
@@ -50,6 +55,7 @@ public class GameInitializer : MonoBehaviour
         yield return null;
         SetupStateMachine(upgradeCanvas, worldCreator, worldGrid, disableableInput);
         yield return null;
+        GameInitialized?.Invoke();
         isSerializationCompleted = true;
         Destroy(loadingCanvas.gameObject);
     }
@@ -87,7 +93,8 @@ public class GameInitializer : MonoBehaviour
 
     private void InitializeMusicMediator(IBackgroundMusicPlayer backgroundMusicPlayer, IUpgradeEffectPlayer upgradeEffectPlayer)
     {
-        var musicMediator = new MusicPlayerMediator(backgroundMusicPlayer, upgradeEffectPlayer);
+        musicMediator = new MusicPlayerMediator(backgroundMusicPlayer, upgradeEffectPlayer);
+        musicMediator.Subscribe();
     }
 
     private void InitializeInput()
@@ -155,5 +162,10 @@ public class GameInitializer : MonoBehaviour
             inputForDialogueState
         );
         gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset, gameData.UpgradeStateDuration);
+    }
+
+    private void OnDestroy()
+    {
+        musicMediator.Unsubscribe();
     }
 }

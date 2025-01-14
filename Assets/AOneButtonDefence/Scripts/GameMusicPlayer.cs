@@ -18,18 +18,22 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer
         firstUpgradeAudioSource.loop = false;
         secondUpgradeAudioSource.loop = false;
     }
+    
+    public void StopMusic() => backgroundAudioSource.Stop();
 
     public void StartLoadingMusic() => PlayMusic(backgroundAudioSource, data.LoadingSound);
 
     public void StartDialogueMusic() => PlayMusic(backgroundAudioSource, data.StartDialogueMusic);
 
-    public void PlayBattleMusic() => PlayMusic(backgroundAudioSource, data.BattleMusic);
+    public void StartUpgradeStateMusic() => PlayMusic(backgroundAudioSource, data.UpgradeMusic);
 
-    public void PlayDefeatMusic() => PlayMusic(backgroundAudioSource, data.BattleLostSoundEffect);
+    public void StartBattleMusic() => PlayMusic(backgroundAudioSource, data.BattleMusic);
 
-    public void PlayBattleWinMusic() => PlayMusic(backgroundAudioSource, data.BattleWinSoundEffect);
+    public void PlayDefeatEffect() => PlayMusic(backgroundAudioSource, data.BattleLostSoundEffect);
 
-    public void PlayUpgradeSoundEffect(UpgradeButton.Upgrades firstType, UpgradeButton.Upgrades secondType)
+    public void PlayBattleWinEffect() => PlayMusic(backgroundAudioSource, data.BattleWinSoundEffect);
+
+    public void PlayUpgradesSoundEffect(UpgradeButton.Upgrades firstType, UpgradeButton.Upgrades secondType)
     {
         PlayMusic(firstUpgradeAudioSource, GetSoundByType(firstType));
         PlayMusic(secondUpgradeAudioSource, GetSoundByType(secondType));

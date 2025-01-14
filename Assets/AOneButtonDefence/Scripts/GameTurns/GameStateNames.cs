@@ -8,6 +8,7 @@ public static class GameStateNames
     public const string WinDialogue = "WinBattle";
     public const string SpiritLoseDialogue = "SpiritLose";
     public const string ResourcesLoseDialogue = "ResourcesLose";
+    public const string FoodLoseDialogue = "FoodLose";
     public const string BattleLoseDialogue = "LoseBattle";
     public const string Reload = "Reload";
 }
