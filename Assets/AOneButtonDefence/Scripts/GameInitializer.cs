@@ -11,17 +11,17 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private MusicData musicData;
     [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
-    [SerializeField] private GroundBlocksSpawner worldCreator;
-    [SerializeField] private BuildingSpawner buildingSpawner;
     [SerializeField] private PartManager partManagerPrefab;
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
     [SerializeField] private Canvas loadingCanvas;
 
-    private bool isSerializationCompleted;
+    private BuildingSpawner buildingSpawner;
+    private GroundBlocksSpawner worldCreator;
     private GameStateMachine gameStateMachine;
+    private MusicPlayerMediator musicMediator;
     private IInput input;
     private IDisableableInput disableableInput;
-    private MusicPlayerMediator musicMediator;
+    private bool isSerializationCompleted;
     
     public static Action GameInitialized;
 
@@ -46,6 +46,7 @@ public class GameInitializer : MonoBehaviour
         InitializeDialogCamera();
         InitializeCameraMovementComponent();
         yield return null;
+        CreateBuildingSpawner();
         var worldGrid = SpawnWorldGrid();
         yield return new WaitUntil(() => worldCreator.IsWorldReady);
         InitializeBuildingSpawner(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration);
@@ -131,17 +132,21 @@ public class GameInitializer : MonoBehaviour
         cameraMovement.gameObject.name = "CameraMovement";
         cameraMovement.Initialize(input, cameraData);
     }
+    
+    private void CreateBuildingSpawner() => buildingSpawner = new GameObject("BuildingSpawner").AddComponent<BuildingSpawner>();
 
     private CellsGrid SpawnWorldGrid()
     {
+        worldCreator = new GameObject("WorldCreator").AddComponent<GroundBlocksSpawner>();
         var buildingsGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
         worldCreator.SetupGrid(worldGenerationData, buildingsGrid, buildingSpawner, this);
         return buildingsGrid;
     }
 
-    private void InitializeBuildingSpawner(CellsGrid grid, 
-        BuildingsData upgradeBuildings, 
-        float animationDuration) => buildingSpawner.Initialize(grid, upgradeBuildings, animationDuration);
+    private void InitializeBuildingSpawner(CellsGrid grid,  BuildingsData upgradeBuildings, float animationDuration)
+    {
+        buildingSpawner.Initialize(grid, upgradeBuildings, animationDuration);
+    }
 
     private PartManager SpawnUpgradeCanvas()
     {
