@@ -34,6 +34,7 @@ public class GameInitializer : MonoBehaviour
     {
         SetupLoadingCanvas();
         InitializeInput();
+        SetupCoroutineStarter();
         Tuple<IBackgroundMusicPlayer, IUpgradeEffectPlayer> players = InitializeMusicPlayer();
         IBackgroundMusicPlayer backgroundMusicPlayer = players.Item1;
         IUpgradeEffectPlayer upgradeEffectPlayer = players.Item2;
@@ -77,6 +78,8 @@ public class GameInitializer : MonoBehaviour
     }
 
     private void SetupLoadingCanvas() => loadingCanvas = Instantiate(loadingCanvas);
+
+    private void SetupCoroutineStarter() => new GameObject("CoroutineStarter").AddComponent<CoroutineStarter>();
 
     private Tuple<IBackgroundMusicPlayer, IUpgradeEffectPlayer> InitializeMusicPlayer()
     {
@@ -157,9 +160,11 @@ public class GameInitializer : MonoBehaviour
             grid,
             gameData.EnemyTag,
             gameData.GnomeTag,
-            inputForDialogueState
+            inputForDialogueState,
+            gameData.UpgradeStateDuration,
+            gameData.UpgradeStateCompletionDelay
         );
-        gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset, gameData.UpgradeStateDuration);
+        gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset);
     }
 
     private void OnDestroy()

@@ -6,7 +6,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
 {
     private Dictionary<string, IState> stringStates;
 
-    public GameStateMachine(GameStateMachineData data, EnemiesData enemies, Vector3 enemySpawnOffset, float upgradeStateDuration)
+    public GameStateMachine(GameStateMachineData data, EnemiesData enemies, Vector3 enemySpawnOffset)
     {
         GameBattleStateData battleStateData = new GameBattleStateData(
             this, data.CoroutineStarter, data.GameTurnsData.BattleWavesParameters, enemies, data.CellsGrid, enemySpawnOffset, data.EnemyTag, data.GnomeTag);
@@ -22,7 +22,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
             { GameStateNames.Reload, new ReloadingState() },
             //{ GameStateNames.DragonDialog, new DialogState(this, gameData.EndTurnDialogCanvas) },
             { GameStateNames.BattleState, new GameBattleState(battleStateData) },
-            { GameStateNames.Upgrade, new UpgradeState(this, data.UpgradeUIGameobject, upgradeStateDuration) }
+            { GameStateNames.Upgrade, new UpgradeState(this, data.UpgradeUIGameObject, data.UpgradeStateDuration, data.UpgradeStateCompletionDelay) }
         };
 
         ChangeStateWithString(GameStateNames.StartDialog);
@@ -32,23 +32,28 @@ public class GameStateMachine : StateMachine, IStringStateChanger
 
     public class GameStateMachineData
     {
-        public PartManager UpgradeUIGameobject { get; private set; }
-        public GameData GameTurnsData { get; private set; }
-        public MonoBehaviour CoroutineStarter { get; private set; }
-        public CellsGrid CellsGrid { get; private set; }
-        public string EnemyTag { get; private set; }
-        public string GnomeTag { get; private set; }
-        public IDisableableInput Input { get; private set; }
+        public readonly PartManager UpgradeUIGameObject;
+        public readonly GameData GameTurnsData;
+        public readonly MonoBehaviour CoroutineStarter;
+        public readonly CellsGrid CellsGrid;
+        public readonly float UpgradeStateCompletionDelay;
+        public readonly float UpgradeStateDuration;
+        public readonly string EnemyTag;
+        public readonly string GnomeTag;
+        public readonly IDisableableInput Input;
 
-        public GameStateMachineData(PartManager upgradeUIGameobject, GameData gameTurnsData, MonoBehaviour coroutineStarter, CellsGrid buildingsGrid, string enemyTag, string gnomeTag, IDisableableInput input)
+        public GameStateMachineData(PartManager upgradeUIGameObject, GameData gameTurnsData, MonoBehaviour coroutineStarter, CellsGrid buildingsGrid,
+            string enemyTag, string gnomeTag, IDisableableInput input, float upgradeStateDuration, float upgradeStateCompletionDelay)
         {
-            this.UpgradeUIGameobject = upgradeUIGameobject;
-            this.GameTurnsData = gameTurnsData;
-            this.CoroutineStarter = coroutineStarter;
-            this.CellsGrid = buildingsGrid;
-            this.EnemyTag = enemyTag;
-            this.GnomeTag = gnomeTag;
-            this.Input = input;
+            UpgradeUIGameObject = upgradeUIGameObject;
+            GameTurnsData = gameTurnsData;
+            CoroutineStarter = coroutineStarter;
+            CellsGrid = buildingsGrid;
+            EnemyTag = enemyTag;
+            GnomeTag = gnomeTag;
+            Input = input;
+            UpgradeStateDuration = upgradeStateDuration;
+            UpgradeStateCompletionDelay = upgradeStateCompletionDelay;
         }
     }
 }
