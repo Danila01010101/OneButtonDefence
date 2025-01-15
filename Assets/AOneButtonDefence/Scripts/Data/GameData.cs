@@ -11,6 +11,7 @@ public class GameData : ScriptableObject
     [field: SerializeField] public DialogueSystem StartDialogCanvas { get; private set; }
     [field: SerializeField] public DialogueSystem EndTurnWinDialogCanvas { get; private set; }
     [field: SerializeField] public DialogueSystem BattleLoseDialogCanvas { get; private set; }
+    [field: SerializeField] public DialogueSystem FoodLoseDialogCanvas { get; private set; }
     [field: SerializeField] public DialogueSystem ResourceLoseDialogCanvas { get; private set; }
     [field: SerializeField] public DialogueSystem SpiritLoseDialogCanvas { get; private set; }
     
