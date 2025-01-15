@@ -5,18 +5,18 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer
 {
     private MusicData data;
     private AudioSource backgroundAudioSource;
-    private AudioSource firstUpgradeAudioSource;
-    private AudioSource secondUpgradeAudioSource;
+    private AudioSource firstAudioSource;
+    private AudioSource secondAudioSource;
 
-    public GameMusicPlayer(MusicData data, AudioSource backgroundAudioSource, AudioSource firstUpgradeAudioSource, AudioSource secondUpgradeAudioSource)
+    public GameMusicPlayer(MusicData data, AudioSource backgroundAudioSource, AudioSource firstAudioSource, AudioSource secondAudioSource)
     {
         this.data = data;
         this.backgroundAudioSource = backgroundAudioSource;
-        this.firstUpgradeAudioSource = firstUpgradeAudioSource;
-        this.secondUpgradeAudioSource = secondUpgradeAudioSource;
+        this.firstAudioSource = firstAudioSource;
+        this.secondAudioSource = secondAudioSource;
         backgroundAudioSource.loop = true;
-        firstUpgradeAudioSource.loop = false;
-        secondUpgradeAudioSource.loop = false;
+        firstAudioSource.loop = false;
+        secondAudioSource.loop = false;
     }
     
     public void StopMusic() => backgroundAudioSource.Stop();
@@ -29,14 +29,14 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer
 
     public void StartBattleMusic() => PlayMusic(backgroundAudioSource, data.BattleMusic);
 
-    public void PlayDefeatEffect() => PlayMusic(backgroundAudioSource, data.BattleLostSoundEffect);
+    public void PlayDefeatEffect() => PlayMusic(firstAudioSource, data.BattleLostSoundEffect);
 
-    public void PlayBattleWinEffect() => PlayMusic(backgroundAudioSource, data.BattleWinSoundEffect);
+    public void PlayBattleWinEffect() => PlayMusic(firstAudioSource, data.BattleWinSoundEffect);
 
     public void PlayUpgradesSoundEffect(UpgradeButton.Upgrades firstType, UpgradeButton.Upgrades secondType)
     {
-        PlayMusic(firstUpgradeAudioSource, GetSoundByType(firstType));
-        PlayMusic(secondUpgradeAudioSource, GetSoundByType(secondType));
+        PlayMusic(firstAudioSource, GetSoundByType(firstType));
+        PlayMusic(secondAudioSource, GetSoundByType(secondType));
     }
 
     private void PlayMusic(AudioSource audioSource, AudioClip clip)
