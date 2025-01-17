@@ -9,9 +9,9 @@ public class CameraMovement : MonoBehaviour
     private CinemachineVirtualCamera virtualCamera;
     private IInput input;
     private float currentDistance;
-    private float currentX = 0.0f;
-    private float currentY = 0.0f;
-    private bool isInitialize = false;
+    private float currentX;
+    private float currentY;
+    private bool isInitialize;
 
     public void Initialize(IInput input, CameraData data)
     {
@@ -22,12 +22,13 @@ public class CameraMovement : MonoBehaviour
         this.input = input;
         this.data = data;
         currentDistance = data.MaximumCameraDistance;
-        target.position = data.StartCameraPosition;
+        target.position = data.StartCameraTargetPosition;
 
         Vector3 angles = transform.eulerAngles;
         currentX = angles.x;
         currentY = angles.y;
-
+        
+        UpdateCameraPositionAndRotation();
         Subscribe();
         isInitialize = true;
     }
@@ -62,18 +63,15 @@ public class CameraMovement : MonoBehaviour
 
     private void MoveCamera(Vector3 moveDirection)
     {
-        // Рассчитываем движение относительно текущего поворота камеры
-        Vector3 forward = transform.forward; // Направление "вперед" камеры
-        Vector3 right = transform.right;    // Направление "вправо" камеры
+        Vector3 forward = transform.forward;
+        Vector3 right = transform.right;
 
-        // Убираем вертикальную составляющую, чтобы движение оставалось в плоскости
         forward.y = 0;
         right.y = 0;
 
         forward.Normalize();
         right.Normalize();
 
-        // Рассчитываем итоговое движение
         Vector3 movement = (forward * moveDirection.z + right * moveDirection.x) * data.CameraMovementSpeed;
         target.position += movement;
     }
@@ -82,12 +80,18 @@ public class CameraMovement : MonoBehaviour
     {
         currentDistance = Mathf.Clamp(currentDistance - heightAxis * data.CameraZoomSpeed, data.MinimumCameraDistance, data.MaximumCameraDistance);
     }
+    
+    private void EnableCamera() => virtualCamera.enabled = true;
+    
+    private void DisableCamera() => virtualCamera.enabled = false;
 
     private void Subscribe()
     {
         input.Moved += MoveCamera;
         input.Rotated += RotateCamera;
         input.Scroll += ChangeHeight;
+        DialogState.AnimatableDialogueStarted += DisableCamera;
+        DialogState.AnimatableDialogueEnded += EnableCamera;
     }
 
     private void Unsubscribe()
@@ -95,6 +99,8 @@ public class CameraMovement : MonoBehaviour
         input.Moved -= MoveCamera;
         input.Rotated -= RotateCamera;
         input.Scroll -= ChangeHeight;
+        DialogState.AnimatableDialogueStarted -= DisableCamera;
+        DialogState.AnimatableDialogueEnded -= EnableCamera;
     }
 
     private void OnEnable()

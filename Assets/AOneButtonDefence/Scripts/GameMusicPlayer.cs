@@ -1,0 +1,64 @@
+using System;
+using UnityEngine;
+
+public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer
+{
+    private MusicData data;
+    private AudioSource backgroundAudioSource;
+    private AudioSource firstAudioSource;
+    private AudioSource secondAudioSource;
+
+    public GameMusicPlayer(MusicData data, AudioSource backgroundAudioSource, AudioSource firstAudioSource, AudioSource secondAudioSource)
+    {
+        this.data = data;
+        this.backgroundAudioSource = backgroundAudioSource;
+        this.firstAudioSource = firstAudioSource;
+        this.secondAudioSource = secondAudioSource;
+        backgroundAudioSource.loop = true;
+        firstAudioSource.loop = false;
+        secondAudioSource.loop = false;
+    }
+    
+    public void StopMusic() => backgroundAudioSource.Stop();
+
+    public void StartLoadingMusic() => PlayMusic(backgroundAudioSource, data.LoadingSound);
+
+    public void StartDialogueMusic() => PlayMusic(backgroundAudioSource, data.StartDialogueMusic);
+
+    public void StartUpgradeStateMusic() => PlayMusic(backgroundAudioSource, data.UpgradeMusic);
+
+    public void StartBattleMusic() => PlayMusic(backgroundAudioSource, data.BattleMusic);
+
+    public void PlayDefeatEffect() => PlayMusic(firstAudioSource, data.BattleLostSoundEffect);
+
+    public void PlayBattleWinEffect() => PlayMusic(firstAudioSource, data.BattleWinSoundEffect);
+
+    public void PlayUpgradesSoundEffect(UpgradeButton.Upgrades firstType, UpgradeButton.Upgrades secondType)
+    {
+        PlayMusic(firstAudioSource, GetSoundByType(firstType));
+        PlayMusic(secondAudioSource, GetSoundByType(secondType));
+    }
+
+    private void PlayMusic(AudioSource audioSource, AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
+
+    private AudioClip GetSoundByType(UpgradeButton.Upgrades type)
+    {
+        switch (type)
+        {
+            case UpgradeButton.Upgrades.Farm:
+                return data.UpgradeFarmSoundEffect;
+            case UpgradeButton.Upgrades.SpiritBuilding:
+                return data.UpgradeFarmSoundEffect;
+            case UpgradeButton.Upgrades.MilitaryCamp:
+                return data.UpgradeFarmSoundEffect;
+            case UpgradeButton.Upgrades.ResourcesCenter:
+                return data.UpgradeFarmSoundEffect;
+            default:
+                throw new NotImplementedException();
+        }
+    }
+}

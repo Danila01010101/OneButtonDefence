@@ -719,7 +719,7 @@ MonoBehaviour:
   Core: {fileID: 3850767285301413140}
   CenterCore: {fileID: 4623539311899641430}
   BothCore: {fileID: 5036381058526697998}
-  Gnome: {fileID: 473105357485592150, guid: 0104d762451861d4c873cf8fd1e99f8f, type: 3}
+  Gnome: {fileID: 473105357485592150, guid: bd259f47868fba04cb5c97615c555fea, type: 3}
   SpawnPositions:
   - {fileID: 8278973797033501111}
   - {fileID: 7525332914359335727}

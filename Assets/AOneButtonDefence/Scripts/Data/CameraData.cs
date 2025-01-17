@@ -1,9 +1,13 @@
+using Cinemachine;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CameraData", menuName = "ScriptableObjects/New Camera Data")]
 public class CameraData : ScriptableObject
 {
-    [field : SerializeField] public Vector3 StartCameraPosition { get; private set; }
+    [field : SerializeField] public Vector3 StartCameraTargetPosition { get; private set; }
+    [field : SerializeField] public CinemachineVirtualCamera DialogCameraPrefab { get; private set; }
+    [field : SerializeField] public Vector3 DialogCameraPosition { get; private set; }
+    [field : SerializeField] public Vector3 DialogCameraEulerAngles { get; private set; }
     [field : SerializeField] public float MinimumCameraDistance { get; private set; }
     [field : SerializeField] public float MaximumCameraDistance { get; private set; }
     [field : SerializeField] public float CameraMovementSpeed { get; private set; }

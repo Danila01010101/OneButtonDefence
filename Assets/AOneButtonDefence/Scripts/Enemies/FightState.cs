@@ -6,27 +6,39 @@ public class FightState : IState, ITargetAttacker
     private IStateChanger stateMachine;
     private IDamagable target;
     private MonoBehaviour coroutineStarter;
-    private bool isTargetSetted = false;
+    private FightAnimation animation;
+    private bool isTargetSetted;
     private float lastTimeAttacked;
     private float attackDelay;
     private int damage;
 
-    public FightState(IStateChanger stateChanger, float attackDelay, int damage)
+    public FightState(IStateChanger stateChanger, float attackDelay, int damage, FightAnimation animation)
     {
-        this.stateMachine = stateChanger;
+        stateMachine = stateChanger;
         this.attackDelay = attackDelay;
         this.damage = damage;
+        this.animation = animation;
+    }
+
+    public void SetTarget(IDamagable target)
+    {
+        isTargetSetted = true;
+        this.target = target;
     }
 
     public void Enter()
     {
-        
+        animation.CharacterAttacked += Attack;
+        animation.CharacterAttackEnded += CheckTarget;
     }
 
     public void Exit() 
     {
         target = null;
         isTargetSetted = false;
+        animation.CharacterAttacked -= Attack;
+        animation.CharacterAttackEnded -= CheckTarget;
+        animation.InterruptAnimation();
     }
 
     public void HandleInput() { }
@@ -48,22 +60,24 @@ public class FightState : IState, ITargetAttacker
         if (!isTargetSetted)
             return;
 
-        if (target == null || !target.IsAlive())
-        {
-            stateMachine.ChangeState<TargetSearchState>();
-            return;
-        }
-
         if (lastTimeAttacked + attackDelay >= Time.time)
             return;
 
-        target.TakeDamage(damage);
         lastTimeAttacked = Time.time;
+        animation.StartAnimation();
     }
 
-    public void SetTarget(IDamagable target)
+    private void Attack()
     {
-        isTargetSetted = true;
-        this.target = target;
+        if (isTargetSetted)
+            target.TakeDamage(damage);
+    }
+
+    private void CheckTarget()
+    {
+        if (target == null || !target.IsAlive())
+        {
+            stateMachine.ChangeState<TargetSearchState>();
+        }
     }
 }

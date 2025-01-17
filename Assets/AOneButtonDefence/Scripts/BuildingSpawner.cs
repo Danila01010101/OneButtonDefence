@@ -23,6 +23,12 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
         SpawnBuilding<Factory>();
     }
 
+    private void ActivateUpgrades(UpgradeButton.Upgrades firstUpgrade, UpgradeButton.Upgrades secondUpgrade)
+    {
+        ActivateUpgrade(firstUpgrade);
+        ActivateUpgrade(secondUpgrade);
+    }
+
     private void ActivateUpgrade(UpgradeButton.Upgrades upgrade)
     {
         switch (upgrade)
@@ -59,11 +65,11 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
 
     private void OnEnable()
     {
-        UpgradeButton.Upgrade += ActivateUpgrade;
+        UpgradeButton.UpgradeTypesChoosen += ActivateUpgrades;
     }
 
     private void OnDisable()
     {
-        UpgradeButton.Upgrade -= ActivateUpgrade;
+        UpgradeButton.UpgradeTypesChoosen -= ActivateUpgrades;
     }
 }

@@ -1,41 +1,44 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class UpgradeState : IState
 {
     private PartManager upgradeUI;
     private IStringStateChanger stateMachine;
-    private bool isUpgradeChoosen = false;
-    private float upgradeFaseDuration;
-    private float upgradeFaseStartTime;
-    private bool canEndTurn => upgradeFaseStartTime + upgradeFaseDuration < Time.time && isUpgradeChoosen;
+    private bool isUpgradeChosen;
+    private float upgradePhaseStartTime;
+    private bool CanCompleteTurn => upgradePhaseStartTime + upgradePhaseDuration < Time.time && isUpgradeChosen;
+    
+    private readonly float upgradePhaseDuration;
+    private readonly float upgradePhaseCompletionDelay;
 
     public static Action UpgradeStateStarted;
     public static Action UpgradeStateEnded;
 
-    public UpgradeState(IStringStateChanger stateMachine, PartManager upgradeUI, float upgradeFaseDuration)
+    public UpgradeState(IStringStateChanger stateMachine, PartManager upgradeUI, float upgradePhaseDuration, float upgradePhaseCompletionDelay)
     {
         this.stateMachine = stateMachine;
         this.upgradeUI = upgradeUI;
-        this.upgradeFaseDuration = upgradeFaseDuration;
+        this.upgradePhaseDuration = upgradePhaseDuration;
         upgradeUI.gameObject.SetActive(false);
     }
 
     public void Enter()
     {
-        isUpgradeChoosen = false;
-        upgradeFaseStartTime = Time.time;
+        isUpgradeChosen = false;
+        upgradePhaseStartTime = Time.time;
         upgradeUI.gameObject.SetActive(true);
         UpgradeStateStarted?.Invoke();
         upgradeUI.UpgradeButton.Activate();
-        UpgradeButton.UpgradeChoosen += DetectUpgradeChoosing;
+        UpgradeButton.UpgradesChoosen += DetectUpgradeChoosing;
     }
 
     public void Exit()
     {
         upgradeUI.gameObject.SetActive(false);
         UpgradeStateEnded?.Invoke();
-        UpgradeButton.UpgradeChoosen -= DetectUpgradeChoosing;
+        UpgradeButton.UpgradesChoosen -= DetectUpgradeChoosing;
     }
 
     public void HandleInput() { }
@@ -54,15 +57,40 @@ public class UpgradeState : IState
 
     public void Update()
     {
-        if (canEndTurn)
-        {
-            stateMachine.ChangeStateWithString(GameStateNames.BattleState);
-        }
+        if (CanCompleteTurn == false)
+            return;
+
+        CoroutineStarter.Instance.StartCoroutine(CompleteUpgradeState());
     }
 
     private void DetectUpgradeChoosing() 
     {
         upgradeUI.UpgradeButton.Deactivate();
-        isUpgradeChoosen = true;
+        isUpgradeChosen = true;
+    }
+
+    private IEnumerator CompleteUpgradeState()
+    {
+        yield return new WaitForSeconds(upgradePhaseCompletionDelay);
+        
+        if (ResourcesCounter.Instance.Data.Materials <= 0)
+        {
+            stateMachine.ChangeStateWithString(GameStateNames.ResourcesLoseDialogue);
+            yield break;
+        }
+
+        if (ResourcesCounter.Instance.Data.FoodAmount <= 0)
+        {
+            stateMachine.ChangeStateWithString(GameStateNames.FoodLoseDialogue);
+            yield break;
+        }
+        
+        if (ResourcesCounter.Instance.Data.SurvivorSpirit <= 0)
+        {
+            stateMachine.ChangeStateWithString(GameStateNames.SpiritLoseDialogue);
+            yield break;
+        }
+        
+        stateMachine.ChangeStateWithString(GameStateNames.BattleState);
     }
 }

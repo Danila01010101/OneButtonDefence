@@ -27,6 +27,7 @@ public class DialogueSystem : MonoBehaviour
 
     private string showReplic;
     private int countReplic;
+    private Coroutine replicaCoroutine;
 
     private bool activeChangeReplic = true;
 
@@ -38,7 +39,7 @@ public class DialogueSystem : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         numReplic = 0;
-        Text.text = DialogueData.Label[numLabel].Replic[numReplic];
+        //Text.text = DialogueData.Label[numLabel].Replic[numReplic];
 
         Name.text = DialogueData.Name;
 
@@ -52,23 +53,24 @@ public class DialogueSystem : MonoBehaviour
 
         AnswerPanel.SetActive(false);
         gameObject.SetActive(true);
+        replicaCoroutine = StartCoroutine(ShowReplica());
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            ChangeReplic();
+            ChangeReplica();
         }
     }
 
     public void StartDialog()
     {
         gameObject.SetActive(true);
-        StartCoroutine(ShowReplic());
+        replicaCoroutine = StartCoroutine(ShowReplica());
     }
 
-    private void ChangeReplic() 
+    private void ChangeReplica() 
     {
         if (activeChangeReplic == false)
         {
@@ -82,18 +84,32 @@ public class DialogueSystem : MonoBehaviour
 
             if (DialogueData.Label[numLabel].Replic[numReplic] == DialogueCommands.Debug)
             {
-                ChangeReplic();
+                ChangeReplica();
                 return;
             }
 
             showReplic = "";
-            StartCoroutine(ShowReplic());
+            DetectReplicaSkip();
             return;
         }
         else
         {
             Destroy(gameObject);
             DialogEnded?.Invoke();
+        }
+    }
+
+    private void DetectReplicaSkip()
+    {
+        if (replicaCoroutine != null)
+        {
+            StopCoroutine(replicaCoroutine);
+            replicaCoroutine = null;
+            Text.text = DialogueData.Label[numLabel].Replic[numReplic - 1];
+        }
+        else
+        {
+            replicaCoroutine = StartCoroutine(ShowReplica());
         }
     }
 
@@ -114,7 +130,7 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    public void ChoiseReplic(int num)
+    public void ChooseReplica(int num)
     {
         foreach (Button button in Buttons)
         {
@@ -131,22 +147,23 @@ public class DialogueSystem : MonoBehaviour
         showReplic = "";
 
         StopAllCoroutines();
-        StartCoroutine(ShowReplic());
+        replicaCoroutine = StartCoroutine(ShowReplica());
     }
 
-    private IEnumerator ShowReplic()
+    private IEnumerator ShowReplica()
     {
-        foreach (var replic in DialogueData.Label[numLabel].Replic[numReplic])
+        foreach (var replica in DialogueData.Label[numLabel].Replic[numReplic])
         {
             yield return new WaitForSeconds(ReplicSpeed);
-            showReplic += replic;
+            showReplic += replica;
             if(audioSource.isPlaying == false)
             {
                 audioSource.Play();
             }
             Text.text = showReplic;
         }
-        yield break;
+        
+        replicaCoroutine = null;
     }
 
     private void OnDestroy()

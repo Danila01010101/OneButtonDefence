@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameBattleState : IState
@@ -19,6 +19,10 @@ public class GameBattleState : IState
     private string enemyTag;
     private string gnomeTag;
 
+    public static Action BattleStarted;
+    public static Action BattleWon;
+    public static Action BattleLost;
+
     public GameBattleState(GameBattleStateData data)
     {
         this.stateMachine = data.StateChanger;
@@ -31,7 +35,11 @@ public class GameBattleState : IState
         enemieFactory = new EnemieFactory(data.EnemiesData);
     }
 
-    public void Enter() => StartWave();
+    public void Enter() 
+    {
+        BattleStarted?.Invoke();
+        StartWave();
+    }
 
     public void Exit()
     {
@@ -72,12 +80,12 @@ public class GameBattleState : IState
     {
         for (int i = 0; i < waveData.amountOfEnemySpawns; i++)
         {
-            yield return new WaitForSeconds(waveData.spawnInterval);
-
-            for (int enemiesAmount = 0; enemiesAmount < waveData.amountOfEnemySpawns; enemiesAmount++)
+            for (int enemiesAmount = 0; enemiesAmount < waveData.enemiesAmountPerSpawn; enemiesAmount++)
             {
                 enemieFactory.SpawnEnemy<FightingUnit>(grid.GetRandomEmptyCellPosition(spawnSpread) + enemiesSpawnOffset);
             }
+            
+            yield return new WaitForSeconds(waveData.spawnInterval);
         }
 
         endTurnCheckCoroutine = coroutineStarter.StartCoroutine(EndStateChecking());
@@ -99,6 +107,7 @@ public class GameBattleState : IState
             }
             else
             {
+                BattleWon.Invoke();
                 stateMachine.ChangeStateWithString(GameStateNames.WinDialogue);
             }
 
@@ -108,7 +117,8 @@ public class GameBattleState : IState
             }
             else
             {
-                stateMachine.ChangeStateWithString(GameStateNames.LoseDialogue);
+                BattleLost?.Invoke();
+                stateMachine.ChangeStateWithString(GameStateNames.BattleLoseDialogue);
             }
         }
     }

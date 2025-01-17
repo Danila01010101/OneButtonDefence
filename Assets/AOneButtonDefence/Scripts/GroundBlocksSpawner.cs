@@ -6,16 +6,16 @@ public class GroundBlocksSpawner : MonoBehaviour
 {
     public bool IsWorldReady { get; private set; } = false;
 
-    [SerializeField] private WorldGenerationData data;
-
+    private WorldGenerationData data;
     private List<List<Ground>> groundBlocks = new List<List<Ground>>();
     private BuildingSpawner buildingSpawner;
     private Transform blocksParent;
     private CellsGrid grid;
 
-    public void SetupGrid(CellsGrid grid, BuildingSpawner buildingSpawner, MonoBehaviour coroutineRunner)
+    public void SetupGrid(WorldGenerationData data, CellsGrid grid, BuildingSpawner buildingSpawner, MonoBehaviour coroutineRunner)
     {
         this.grid = grid;
+        this.data = data;
         this.buildingSpawner = buildingSpawner;
         buildingSpawner.CellFilled += ReplaceBlockWithDefaultBlock;
         coroutineRunner.StartCoroutine(GenerateWorld(buildingSpawner));

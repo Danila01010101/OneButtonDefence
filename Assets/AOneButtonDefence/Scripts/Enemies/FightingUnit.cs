@@ -1,9 +1,7 @@
-using DG.Tweening;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(GoingAnimation))]
+[RequireComponent(typeof(WalkingAnimation))]
 [RequireComponent(typeof(FightAnimation))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class FightingUnit : MonoBehaviour, IDamagable
@@ -13,48 +11,51 @@ public class FightingUnit : MonoBehaviour, IDamagable
 
     private Health health;
     private NavMeshAgent navMeshComponent;
-    private EnemieStateMachine stateMachine;
+    private EnemyStateMachine stateMachine;
     private FightAnimation fightAnimation;
+    private WalkingAnimation walkingAnimation;
+    private MaterialChanger materialChanger;
 
     private void Start()
     {
-        fightAnimation = GetComponent<FightAnimation>();
+        InitializeAnimationComponents();
         navMeshComponent = GetComponent<NavMeshAgent>();
         health = new Health(characterStats.Health);
         health.Death += Die;
-        navMeshComponent = GetComponent<NavMeshAgent>();
-        stateMachine = new EnemieStateMachine(transform, characterStats, navMeshComponent, this);
-        StartInvisibleColor(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration,characterStats.Delay);
+        InitializeStateMachine();
+        materialChanger = new MaterialChanger(this);
+        materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration,characterStats.Delay);
     }
-
-    public void TakeDamage(int damage)
-    {
-        health.TakeDamage(damage);
-        Debug.Log(gameObject.name + "taking damage! It has " + health.amount);
-    }
-
-    public bool IsAlive() => health.amount > 0;
 
     private void Update() => stateMachine.Update();
 
     private void FixedUpdate() => stateMachine.PhysicsUpdate();
 
-    private void StartInvisibleColor(Renderer renderer, Color startcolor, Color endcolor, float duration, float startfordisinvis)
+    public void TakeDamage(int damage)
     {
-        Material material = renderer.material;
-        material.color = startcolor;
-        StartCoroutine(Fade(material, endcolor, duration, startfordisinvis));
+        health.TakeDamage(damage);
+        Debug.Log(gameObject.name + "is taking damage! Health is  " + health.amount);
     }
 
-    private IEnumerator Fade(Material material, Color endcolor, float duration, float delay)
+    public bool IsAlive() => health.amount > 0;
+
+    private void InitializeAnimationComponents()
     {
-        yield return new WaitForSeconds(delay);
-        material.DOColor(endcolor, duration);
-        yield return new WaitForSeconds(duration);
+        fightAnimation = GetComponent<FightAnimation>();
+        walkingAnimation = GetComponent<WalkingAnimation>();
+    }
+
+    private void InitializeStateMachine()
+    {
+        var data = new EnemyStateMachine.EnemyStateMachineData(
+            transform, characterStats, navMeshComponent, this,
+            walkingAnimation, fightAnimation);
+        stateMachine = new EnemyStateMachine(data);
     }
 
     private void Die()
     {
-        Destroy(gameObject);
+        materialChanger.ChangeMaterialColour(render, characterStats.EndColor, characterStats.StartColor, 0.1f,characterStats.Delay);
+        Destroy(gameObject, 0.11f);
     }
 }
