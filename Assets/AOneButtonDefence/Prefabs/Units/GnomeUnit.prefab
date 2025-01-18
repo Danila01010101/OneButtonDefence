@@ -90,7 +90,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3234184783409877958}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.3
+  m_Radius: 0.06
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -99,7 +99,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.8
+  m_Height: 0.2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -122,10 +122,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.35227048
-  m_Height: 1.056962
+  m_Radius: 0.047651645
+  m_Height: 0.16930273
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5068433, z: -0.14772952}
+  m_Center: {x: 0.0060625374, y: 0.07964218, z: 0.015504558}
 --- !u!1001 &2111948216501133751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -139,6 +139,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cf377a3a526eb9642a9a2f58453da07e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cf377a3a526eb9642a9a2f58453da07e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cf377a3a526eb9642a9a2f58453da07e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cf377a3a526eb9642a9a2f58453da07e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
@@ -148,7 +160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cf377a3a526eb9642a9a2f58453da07e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.035
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cf377a3a526eb9642a9a2f58453da07e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -177,6 +189,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: cf377a3a526eb9642a9a2f58453da07e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cf377a3a526eb9642a9a2f58453da07e, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cf377a3a526eb9642a9a2f58453da07e, type: 3}
       propertyPath: m_Name
