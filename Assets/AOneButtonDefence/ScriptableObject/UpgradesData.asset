@@ -18,12 +18,14 @@ MonoBehaviour:
   - {fileID: 5664484394317920810, guid: 034bcc6654a56b64781c5e9e13ee617d, type: 3}
   - {fileID: -8881658859567159356, guid: e63a3734f632f9a4e84bcbbcf8c68ff1, type: 3}
   <FarmData>k__BackingField:
+    <Icon>k__BackingField: {fileID: 21300000, guid: 14c782e61bd14864bb6c82b224a366f5, type: 3}
     <FoodPerTurnAmount>k__BackingField: 0
     <Cost>k__BackingField: 0
     <SpawnBonus>k__BackingField: 15
     <EveryTurnBonus>k__BackingField: 5
     <StartHumanAmount>k__BackingField: 1
   <MilitaryCampData>k__BackingField:
+    <Icon>k__BackingField: {fileID: 21300000, guid: a90237373c4c2d64eab932edc6efd63f, type: 3}
     <FoodPerTurnAmount>k__BackingField: 0
     <Cost>k__BackingField: 0
     <GnomeWarriorPrefab>k__BackingField: {fileID: 1063882897230435733, guid: f4f495098b5f5c3449dc8000417df478, type: 3}
@@ -32,12 +34,14 @@ MonoBehaviour:
     <spawnOffset>k__BackingField: {x: 1.792, y: 1.6, z: 1.958}
     <spawnRotation>k__BackingField: {x: 0, y: 180, z: 0}
   <FactoryData>k__BackingField:
+    <Icon>k__BackingField: {fileID: 21300000, guid: 752c0a0045f973b46a998ed0e3ffd52d, type: 3}
     <FoodPerTurnAmount>k__BackingField: 0
     <Cost>k__BackingField: 0
     <SpawnBonus>k__BackingField: 5
     <EveryTurnBonus>k__BackingField: 15
     <StartHumanAmount>k__BackingField: 0
   <SpiritBuildingData>k__BackingField:
+    <Icon>k__BackingField: {fileID: 21300000, guid: ce9e6b844fffa1548945f5f53848e607, type: 3}
     <FoodPerTurnAmount>k__BackingField: 0
     <Cost>k__BackingField: 0
     <SpawnBonus>k__BackingField: 5

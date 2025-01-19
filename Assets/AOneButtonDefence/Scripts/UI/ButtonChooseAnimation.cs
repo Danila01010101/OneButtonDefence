@@ -3,8 +3,14 @@ using UnityEngine.UI;
 
 public class ButtonChooseAnimation : MonoBehaviour
 {
+    [SerializeField] private Image icon;
     [SerializeField] private Image onImage;
     [SerializeField] private Image offImage;
+
+    public void SetIcon(Sprite sprite)
+    {
+        icon.sprite = sprite;
+    }
     
     public void SwapSprites()
     {
