@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using static GameStateMachine;
@@ -151,7 +152,12 @@ public class GameInitializer : MonoBehaviour
     private PartManager SpawnUpgradeCanvas()
     {
         PartManager upgradeCanvas = Instantiate(partManagerPrefab);
-        upgradeCanvas.Initialize(worldGenerationData.startButtonsAmount);
+        upgradeCanvas.Initialize(4, 
+            worldGenerationData.BuildingsData.FarmData.Icon,
+            worldGenerationData.BuildingsData.SpiritBuildingData.Icon,
+            worldGenerationData.BuildingsData.MilitaryCampData.Icon,
+            worldGenerationData.BuildingsData.FactoryData.Icon
+            );
         return upgradeCanvas;
     }
 
