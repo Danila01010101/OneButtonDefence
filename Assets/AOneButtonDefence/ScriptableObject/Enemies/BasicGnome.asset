@@ -16,7 +16,7 @@ MonoBehaviour:
   <Damage>k__BackingField: 25
   <Speed>k__BackingField: 0.01
   <DetectionRadius>k__BackingField: 100
-  <AttackRange>k__BackingField: 2
+  <AttackRange>k__BackingField: 0.2
   <AttackDelay>k__BackingField: 0.5
   <EnemyLayerMask>k__BackingField:
     serializedVersion: 2
