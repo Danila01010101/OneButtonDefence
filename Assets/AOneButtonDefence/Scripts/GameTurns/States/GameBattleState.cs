@@ -82,7 +82,7 @@ public class GameBattleState : IState
         {
             for (int enemiesAmount = 0; enemiesAmount < waveData.enemiesAmountPerSpawn; enemiesAmount++)
             {
-                enemieFactory.SpawnEnemy<FightingUnit>(grid.GetRandomEmptyCellPosition(spawnSpread) + enemiesSpawnOffset);
+                enemieFactory.SpawnEnemy<Knight>(grid.GetRandomEmptyCellPosition(spawnSpread) + enemiesSpawnOffset);
             }
             
             yield return new WaitForSeconds(waveData.spawnInterval);

@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyStateMachine : StateMachine
+public class WarriorStateMachine : StateMachine
 {
-    public EnemyStateMachine(EnemyStateMachineData data)
+    public WarriorStateMachine(WarriorStateMachineData data)
     {
         var fightState = new FightState(this, data.CharacterStats.AttackDelay, data.CharacterStats.Damage, data.FightAnimation);
         var targetFollowingState = new TargetFollowingState(this, data.Agent, data.CharacterStats, fightState, data.CharacterStats.EnemyLayerMask, data.WalkingAnimation);
@@ -22,7 +22,7 @@ public class EnemyStateMachine : StateMachine
         ChangeState<TargetSearchState>();
     }
 
-    public class EnemyStateMachineData
+    public class WarriorStateMachineData
     {
         public Transform Transform { get; private set; }
         public CharacterStats CharacterStats { get; private set; }
@@ -31,7 +31,7 @@ public class EnemyStateMachine : StateMachine
         public WalkingAnimation WalkingAnimation { get; private set; }
         public FightAnimation FightAnimation { get; private set; }
         
-        public EnemyStateMachineData(Transform transform, CharacterStats characterStats, NavMeshAgent agent, 
+        public WarriorStateMachineData(Transform transform, CharacterStats characterStats, NavMeshAgent agent, 
             MonoBehaviour coroutineStarter, WalkingAnimation walkingAnimation, FightAnimation fightAnimation)
         {
             Transform = transform;

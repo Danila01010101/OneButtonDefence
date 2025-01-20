@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemieFactory
 {
     private EnemiesData data;
-    private List<FightingUnit> enemies = new List<FightingUnit>();
+    private List<Knight> enemies = new List<Knight>();
 
     public EnemieFactory(EnemiesData data)
     {
@@ -12,15 +12,15 @@ public class EnemieFactory
         enemies = data.enemies;
     }
 
-    public T SpawnEnemy<T>(Vector3 position) where T : FightingUnit
+    public T SpawnEnemy<T>(Vector3 position) where T : Knight
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            FightingUnit enemy = enemies[i];
+            Knight enemy = enemies[i];
 
             if (enemy is T)
             {
-                FightingUnit spawnedEnemy = MonoBehaviour.Instantiate(enemy, position, Quaternion.identity);
+                Knight spawnedEnemy = MonoBehaviour.Instantiate(enemy, position, Quaternion.identity);
                 return spawnedEnemy as T;
             }
         }
