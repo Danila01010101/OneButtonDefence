@@ -68,14 +68,27 @@ public class ResourcesCounter : MonoBehaviour
             }
         }
 
+        public int GemsAmount
+        {
+            get => gemsAmount;
+
+            set
+            {
+                GemsAmountChanged?.Invoke(value);
+                gemsAmount = value;
+            }
+        }
+
         private int foodAmount;
         private int warriors;
         private int materials;
         private int survivorSpirit;
+        private int gemsAmount;
 
         public Action<int> FoodAmountChanged;
         public Action<int> WarriorsAmountChanged;
         public Action<int> MaterialsAmountChanged;
         public Action<int> SpiritAmountChanged;
+        public Action<int> GemsAmountChanged;
     }
 }

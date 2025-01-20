@@ -14,12 +14,14 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private WorldGenerationData worldGenerationData;
     [SerializeField] private PartManager partManagerPrefab;
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
+    [SerializeField] private RewardSpawner rewardSpawnerPrefab;
     [SerializeField] private Canvas loadingCanvas;
-
+    
     private BuildingSpawner buildingSpawner;
     private GroundBlocksSpawner worldCreator;
     private GameStateMachine gameStateMachine;
     private MusicPlayerMediator musicMediator;
+    private RewardSpawner rewardSpawner;
     private IInput input;
     private IDisableableInput disableableInput;
     private bool isSerializationCompleted;
@@ -55,6 +57,7 @@ public class GameInitializer : MonoBehaviour
         PartManager upgradeCanvas = SpawnUpgradeCanvas();
         yield return null;
         SetupStateMachine(upgradeCanvas, worldCreator, worldGrid, disableableInput);
+        SetupRewardSpawner(GemsView.Instance.GemsTextTransform, GemsView.Instance.Canvas, Camera.main);
         yield return null;
         GameInitialized?.Invoke();
         isSerializationCompleted = true;
@@ -176,6 +179,12 @@ public class GameInitializer : MonoBehaviour
             gameData.UpgradeStateCompletionDelay
         );
         gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset);
+    }
+
+    private void SetupRewardSpawner(RectTransform uiTarget, Canvas canvas, Camera mainCamera)
+    {
+        rewardSpawner = new GameObject("RewardSpawner").AddComponent<RewardSpawner>();
+        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, canvas, mainCamera);
     }
 
     private void OnDestroy()
