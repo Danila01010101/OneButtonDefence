@@ -27,6 +27,10 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
     private void OnDestroy()
     {
         EnemyDeathManager.Instance.UnregisterListener(this);
+        if (Application.loadedLevelName == UnityEngine.SceneManagement.SceneManager.GetActiveScene().name)
+        {
+            EnemyDeathManager.Instance.UnregisterListener(this);
+        }
     }
     
     private void DetectUpgradeStateStart() => isUpgradeStarted = true;
