@@ -9,7 +9,7 @@ public class EnemyDeathManager : MonoBehaviour
     {
         get
         {
-            if (_instance == null)
+            if (_instance == null && Application.loadedLevelName == UnityEngine.SceneManagement.SceneManager.GetActiveScene().name)
             {
                 GameObject obj = new GameObject("EnemyDeathManager");
                 _instance = obj.AddComponent<EnemyDeathManager>();
