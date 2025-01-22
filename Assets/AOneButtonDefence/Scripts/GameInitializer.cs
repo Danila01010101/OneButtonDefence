@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using static GameStateMachine;
@@ -14,8 +13,8 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private WorldGenerationData worldGenerationData;
     [SerializeField] private PartManager partManagerPrefab;
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
-    [SerializeField] private RewardSpawner rewardSpawnerPrefab;
     [SerializeField] private Canvas loadingCanvas;
+    [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
     
     private BuildingSpawner buildingSpawner;
     private GroundBlocksSpawner worldCreator;
@@ -83,6 +82,8 @@ public class GameInitializer : MonoBehaviour
     }
 
     private void SetupLoadingCanvas() => loadingCanvas = Instantiate(loadingCanvas);
+    
+    private void SetupUIObjectShower() => Instantiate(uiGameObjectShowerPrefab, Vector3.up * 100, Quaternion.identity);
 
     private void SetupCoroutineStarter() => new GameObject("CoroutineStarter").AddComponent<CoroutineStarter>();
 

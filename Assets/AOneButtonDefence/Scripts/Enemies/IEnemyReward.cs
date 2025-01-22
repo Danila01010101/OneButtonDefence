@@ -2,8 +2,9 @@ using UnityEngine;
 
 public interface IEnemyReward
 {
-    FlyToUI UIAnimator { get; }
     GameObject GameObject { get; }
-    void PlayEffect();
+    void FlyToUI(Vector3 startWorldPosition, RectTransform uiTarget, Canvas canvas, System.Action onComplete);
+    void BounceAside(System.Action onComplete);
+    void PlayAppearEffect();
     void Destroy();
 }

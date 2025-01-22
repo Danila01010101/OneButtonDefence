@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -8478916999206495534}
   - component: {fileID: 114000010769974528}
   - component: {fileID: 7568649751501426607}
+  - component: {fileID: 1535838493301138924}
   m_Layer: 0
   m_Name: Diamondo5side
   m_TagString: Untagged
@@ -30,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 1000013656696560}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 6.3499994, y: 5.12, z: -0.17014043}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4686201388114361340}
   m_Father: {fileID: 0}
@@ -120,8 +121,8 @@ MonoBehaviour:
   rotationSpeed: 8
   floatSpeed: 0.001
   floatRate: 0.8
-  startScale: {x: 0.1, y: 0.1, z: 0.1}
-  endScale: {x: 0.14, y: 0.14, z: 0.14}
+  startScale: {x: 0.05, y: 0.05, z: 0.05}
+  endScale: {x: 0.07, y: 0.07, z: 0.07}
   scaleSpeed: 1
   scaleRate: 0.5
 --- !u!114 &7568649751501426607
@@ -136,9 +137,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1459e93db3bc4556aee816def229585d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.2
-  scaleSpeed: 0.5
-  endScale: 0.1
+  endScale: 5
+  duration: 1.5
+--- !u!114 &1535838493301138924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013656696560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e30116eb096e4688b8e4d3010716dffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceHeight: 0.5
+  bounceCount: 3
+  bounceDuration: 2
+  horizontalRange: 1
+  rotationSpeed: 360
+  bounceEase: 6
 --- !u!1 &8760370585571069008
 GameObject:
   m_ObjectHideFlags: 0

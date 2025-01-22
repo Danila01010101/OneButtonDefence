@@ -26,7 +26,6 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
 
     private void OnDestroy()
     {
-        EnemyDeathManager.Instance.UnregisterListener(this);
         if (Application.loadedLevelName == UnityEngine.SceneManagement.SceneManager.GetActiveScene().name)
         {
             EnemyDeathManager.Instance.UnregisterListener(this);
@@ -45,25 +44,25 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
 
     private void SpawnReward(Vector3 position)
     {
-        IEnemyReward currencyObject = Instantiate(rewardObjectPrefab, position, Quaternion.identity);
+        isUpgradeStarted = false;
+        IEnemyReward currencyObject = Instantiate(rewardObjectPrefab, position, rewardObjectPrefab.transform.rotation);
         Vector3 newPosition = currencyObject.GameObject.transform.position + 
-                              new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
-        currencyObject.GameObject.transform.DOJump(newPosition, 2.5f, 3, .25f, true).SetLoops(-1, LoopType.Yoyo)
+                              new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f));
+        currencyObject.GameObject.transform.DOJump(newPosition, 0.2f, 3, 2f, true).SetLoops(1, LoopType.Yoyo)
             .OnComplete(() => StartCoroutine(StartAnimation(currencyObject)));
     }
 
-    private IEnumerator StartAnimation(IEnemyReward currencyObject)
+    private IEnumerator StartAnimation(IEnemyReward collectableObject)
     {
         while (isUpgradeStarted == false)
         {
             yield return null;
         }
         
-        FlyToUI flyScript = currencyObject.UIAnimator;
-        flyScript.Initialize(currencyObject.GameObject.transform.position, uiTarget, mainCamera, canvas, () =>
+        collectableObject.FlyToUI(collectableObject.GameObject.transform.position, uiTarget, canvas, () =>
         {
             ResourcesCounter.Instance.Data.GemsAmount++;
-            currencyObject.Destroy();
+            collectableObject.Destroy();
         });
     }
 
