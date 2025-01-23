@@ -33,6 +33,7 @@ public class GameBattleState : IState
         gnomeTag = data.GnomeTag;
         grid = data.CellsGrid;
         enemieFactory = new EnemieFactory(data.EnemiesData);
+        //TODO: Добавить генерацию от 10 до 100 уровня
     }
 
     public void Enter()
