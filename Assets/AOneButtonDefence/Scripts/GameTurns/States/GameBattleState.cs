@@ -35,7 +35,7 @@ public class GameBattleState : IState
         enemieFactory = new EnemieFactory(data.EnemiesData);
     }
 
-    public void Enter() 
+    public void Enter()
     {
         BattleStarted?.Invoke();
         StartWave();

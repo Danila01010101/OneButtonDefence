@@ -8,6 +8,8 @@ public class UpgradeState : IState
     private IStringStateChanger stateMachine;
     private bool isUpgradeChosen;
     private float upgradePhaseStartTime;
+    private bool isCompletingTurn;
+    
     private bool CanCompleteTurn => upgradePhaseStartTime + upgradePhaseDuration < Time.time && isUpgradeChosen;
     
     private readonly float upgradePhaseDuration;
@@ -57,7 +59,7 @@ public class UpgradeState : IState
 
     public void Update()
     {
-        if (CanCompleteTurn == false)
+        if (CanCompleteTurn == false || isCompletingTurn)
             return;
 
         CoroutineStarter.Instance.StartCoroutine(CompleteUpgradeState());
@@ -71,6 +73,8 @@ public class UpgradeState : IState
 
     private IEnumerator CompleteUpgradeState()
     {
+        isCompletingTurn = true;
+        
         yield return new WaitForSeconds(upgradePhaseCompletionDelay);
         
         if (ResourcesCounter.Instance.Data.Materials <= 0)
@@ -92,5 +96,6 @@ public class UpgradeState : IState
         }
         
         stateMachine.ChangeStateWithString(GameStateNames.BattleState);
+        isCompletingTurn = false;
     }
 }
