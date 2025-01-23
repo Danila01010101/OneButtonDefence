@@ -34,7 +34,7 @@ public class GameBattleState : IState
         grid = data.CellsGrid;
         enemieFactory = new EnemieFactory(data.EnemiesData);
         //TODO: Добавить генерацию от 10 до 100 уровня
-        //this.wavesParameters = newParameters;
+        //CoroutineStarter.StartCoroutine(LevelGenerationClass.GenerateNewLevels(data.WavesParameters, 100, out newParameters));
     }
 
     public void Enter()
