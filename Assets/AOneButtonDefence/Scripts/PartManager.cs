@@ -76,8 +76,6 @@ public class PartManager : MonoBehaviour
 
     private void ChoosePart(UpgradeButton.Upgrades index)
     {
-        Debug.Log(index + " chosen");
-        
         if (beforLastKey == (int)index)
         {
             partsAnimators[beforLastKey].SwapSprites();
