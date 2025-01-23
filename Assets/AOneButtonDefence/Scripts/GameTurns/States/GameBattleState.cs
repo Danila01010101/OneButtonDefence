@@ -25,15 +25,16 @@ public class GameBattleState : IState
 
     public GameBattleState(GameBattleStateData data)
     {
-        this.stateMachine = data.StateChanger;
-        this.coroutineStarter = data.CoroutineStarter;
-        this.wavesParameters = data.WavesParameters;
-        this.enemiesSpawnOffset = data.EnemiesSpawnOffset;
+        stateMachine = data.StateChanger;
+        coroutineStarter = data.CoroutineStarter;
+        wavesParameters = data.WavesParameters;
+        enemiesSpawnOffset = data.EnemiesSpawnOffset;
         enemyTag = data.EnemyTag;
         gnomeTag = data.GnomeTag;
         grid = data.CellsGrid;
         enemieFactory = new EnemieFactory(data.EnemiesData);
         //TODO: Добавить генерацию от 10 до 100 уровня
+        //this.wavesParameters = newParameters;
     }
 
     public void Enter()
