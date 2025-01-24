@@ -25,3 +25,5 @@ MonoBehaviour:
   <Delay>k__BackingField: 0
   <StartColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   <EndColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
+  <MinGemSpawn>k__BackingField: 0
+  <MaxGemSpawn>k__BackingField: 0
