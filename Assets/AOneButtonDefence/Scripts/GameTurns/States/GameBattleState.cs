@@ -109,6 +109,7 @@ public class GameBattleState : IState
             }
             else
             {
+                WaveCounter.Instance.EndWave();
                 BattleWon.Invoke();
                 stateMachine.ChangeStateWithString(GameStateNames.WinDialogue);
             }
