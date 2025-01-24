@@ -33,8 +33,8 @@ public class GameBattleState : IState
         gnomeTag = data.GnomeTag;
         grid = data.CellsGrid;
         enemieFactory = new EnemieFactory(data.EnemiesData);
-        //TODO: Добавить генерацию от 10 до 100 уровня
-        //CoroutineStarter.StartCoroutine(LevelGenerationClass.GenerateNewLevels(data.WavesParameters, 100, out newParameters));
+        
+        AsyncHelper.Instance.RunAsyncWithResult<BattleWavesParameters>(() => WaveGenerator.GenerateWaves(data.WavesParameters, 100), result => wavesParameters = result);
     }
 
     public void Enter()

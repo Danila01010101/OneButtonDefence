@@ -15,13 +15,31 @@ MonoBehaviour:
   <waves>k__BackingField:
   - amountOfEnemySpawns: 1
     enemiesAmountPerSpawn: 1
-    spawnInterval: 1
-  - amountOfEnemySpawns: 8
+    spawnInterval: 0.8
+  - amountOfEnemySpawns: 2
+    enemiesAmountPerSpawn: 1
+    spawnInterval: 0.8
+  - amountOfEnemySpawns: 3
+    enemiesAmountPerSpawn: 1
+    spawnInterval: 0.8
+  - amountOfEnemySpawns: 2
     enemiesAmountPerSpawn: 2
-    spawnInterval: 1
-  - amountOfEnemySpawns: 12
+    spawnInterval: 0.8
+  - amountOfEnemySpawns: 2
     enemiesAmountPerSpawn: 3
-    spawnInterval: 1
-  - amountOfEnemySpawns: 8
+    spawnInterval: 0.8
+  - amountOfEnemySpawns: 3
+    enemiesAmountPerSpawn: 3
+    spawnInterval: 0.8
+  - amountOfEnemySpawns: 2
     enemiesAmountPerSpawn: 4
-    spawnInterval: 1
+    spawnInterval: 0.8
+  - amountOfEnemySpawns: 3
+    enemiesAmountPerSpawn: 4
+    spawnInterval: 0.8
+  - amountOfEnemySpawns: 5
+    enemiesAmountPerSpawn: 3
+    spawnInterval: 0.8
+  - amountOfEnemySpawns: 3
+    enemiesAmountPerSpawn: 7
+    spawnInterval: 0.8
