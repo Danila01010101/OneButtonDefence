@@ -20,27 +20,29 @@ public class SkinPanel : MonoBehaviour
     public Image PrevSkinSprite;
     public Image BuySkin;
 
-    private Mesh _mesh;
-    private Material _material;
+    private MeshFilter _meshFilter;
+    private Renderer _renderer;
 
     private void Start()
     {
-        _mesh = ChangeGameObject.GetComponent<MeshFilter>().mesh;
-        _material = ChangeGameObject.GetComponent<Renderer>().material;
+        _meshFilter = ChangeGameObject.GetComponent<MeshFilter>();
+        _renderer = ChangeGameObject.GetComponent<Renderer>();
 
         ChangeCurrentChose(0);
     }
-
-    private void Update()
-    {
-        ChangeCurrentChose(0);
-    }
-
-
 
     public void ChangeCurrentChose(int num)
     {
         CurrentChose += num;
+
+        if (CurrentChose < 0) 
+        {
+            CurrentChose = SkinList.Count - 1;
+        }
+        if (CurrentChose == SkinList.Count)
+        {
+            CurrentChose = 0;
+        }
 
         CurrentSkinSprite.sprite = SkinList[CurrentChose].Icon;
 
@@ -53,18 +55,18 @@ public class SkinPanel : MonoBehaviour
             NextSkinSprite.sprite = SkinList[0].Icon;
         }
 
-        //if (CurrentChose - 1 > 0)
-        //{
-        //    PrevSkinSprite.sprite = SkinList[SkinList.Count - 1].Icon;
-        //}
-        //else 
-        //{
-        //    NextSkinSprite.sprite = SkinList[CurrentChose - 1].Icon;
-        //}
+        if (CurrentChose == 0)
+        {
+            PrevSkinSprite.sprite = SkinList[SkinList.Count - 1].Icon;
+        }
+        else
+        {
+            NextSkinSprite.sprite = SkinList[CurrentChose - 1].Icon;
+        }
 
         SkinName.text = SkinList[CurrentChose].SkinName;
         SkinLore.text = SkinList[CurrentChose].SkinLore;
-        _mesh = SkinList[CurrentChose].Mesh;
-        _material = SkinList[CurrentChose].Material;
+        _meshFilter.mesh = SkinList[CurrentChose].Mesh;
+        _renderer.material = SkinList[CurrentChose].Material;
     }
 }
