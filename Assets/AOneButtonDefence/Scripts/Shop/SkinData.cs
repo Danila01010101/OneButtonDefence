@@ -14,5 +14,7 @@ public class SkinData : ScriptableObject
     public int Cost; 
     public string SkinName;
     [TextArea(3, 10)]
-    public string SkinLore; 
+    public string SkinLore;
+    [Header("Скин разблокирован")]
+    public bool Unlocked;
 }
