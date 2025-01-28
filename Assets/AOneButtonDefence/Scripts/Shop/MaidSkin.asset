@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0ec7ec97224fa4284c6644fe1e2569, type: 3}
   m_Name: MaidSkin
   m_EditorClassIdentifier: 
-  Mesh: {fileID: 0}
-  Material: {fileID: 0}
-  Icon: {fileID: 0}
-  Cost: 0
-  SkinName: 
-  SkinLore: 
+  Mesh: {fileID: -2432090755550338912, guid: caa99472022b61f4ab91f459aaaac148, type: 3}
+  Material: {fileID: 2100000, guid: 69a342d2231d0ec4bb8c032e00180359, type: 2}
+  Icon: {fileID: -947875918, guid: a43c5763c9da56f4481b820c8643766e, type: 3}
+  Cost: 20
+  SkinName: "\u0413\u043D\u043E\u043C \u0433\u043E\u0440\u043D\u0438\u0447\u043D\u0430\u044F"
+  SkinLore: "\u0412\u0438\u0442\u0430\u043B\u044F... \u0417\u0430\u0447\u0435\u043C
+    \u0442\u044B \u043D\u0430\u0447\u0430\u043B \u0430\u043D\u0438\u043C\u0435 \u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C?..."
+  Unlocked: 0
