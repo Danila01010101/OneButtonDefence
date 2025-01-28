@@ -36,8 +36,8 @@ public class SkinPanel : MonoBehaviour
     {
         _meshFilter = ChangeGameObject.GetComponent<MeshFilter>();
         _renderer = ChangeGameObject.GetComponent<Renderer>();
-        //ÍÀÊĞÓÒÊÀ!
-        ResourcesCounter.Instance.Data.GemsAmount += 1000;
+        ////ÍÀÊĞÓÒÊÀ!
+        //ResourcesCounter.Instance.Data.GemsAmount += 1000;
 
         ChangeCurrentChose(0);
         SelectSkin(0);
@@ -72,6 +72,10 @@ public class SkinPanel : MonoBehaviour
         else
         {
             BuyButtonText.text = "Êóïèòü";
+        }
+        if (CurrentChose == ChosenSkin)
+        {
+            BuyButtonText.text = "Âûáğàí";
         }
 
         _meshFilter.mesh = SkinList[CurrentChose].Mesh;
