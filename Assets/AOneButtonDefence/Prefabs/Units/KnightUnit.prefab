@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4476221856891448256}
-  - component: {fileID: 6966691814370804575}
+  - component: {fileID: -4759624641507810172}
   - component: {fileID: 4863027340435082543}
   - component: {fileID: 6771491872746926952}
   - component: {fileID: 4865333950528513204}
@@ -37,7 +37,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6966691814370804575
+--- !u!114 &-4759624641507810172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,11 +46,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8726996086308873578}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c19941eee7c64d41940717a26fdc925, type: 3}
+  m_Script: {fileID: 11500000, guid: f4ba63b53fdd4bd898ee337a65eb315b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   characterStats: {fileID: 11400000, guid: 4a1071477bb356043ad0a2f933ba70b5, type: 2}
   render: {fileID: 75334691795800208}
+  gemPrefab: {fileID: 0}
 --- !u!114 &4863027340435082543
 MonoBehaviour:
   m_ObjectHideFlags: 0

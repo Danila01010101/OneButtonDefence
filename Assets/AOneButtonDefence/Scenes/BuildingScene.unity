@@ -452,6 +452,7 @@ MonoBehaviour:
   partManagerPrefab: {fileID: 263800998971773282, guid: ecbdf0191c1061f4791cc69571515763, type: 3}
   virtualCameraPrefab: {fileID: 479869093838107416, guid: 80fdc9be4cb8de34396fa621b4f8490c, type: 3}
   loadingCanvas: {fileID: 3805665588448524472, guid: 252ebb6cfaf8c1648aeb1b1665ab8615, type: 3}
+  uiGameObjectShowerPrefab: {fileID: 984342067642433287, guid: 98921ad4e4588964288ac94ed545b226, type: 3}
 --- !u!1 &1050227744
 GameObject:
   m_ObjectHideFlags: 0
