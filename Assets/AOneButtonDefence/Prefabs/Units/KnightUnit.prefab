@@ -51,7 +51,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterStats: {fileID: 11400000, guid: 4a1071477bb356043ad0a2f933ba70b5, type: 2}
   render: {fileID: 75334691795800208}
-  gemPrefab: {fileID: 0}
 --- !u!114 &4863027340435082543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +194,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: f2c1b8aedb9f4d24685109e19485b4b0, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: f2c1b8aedb9f4d24685109e19485b4b0, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4047374137969bd4bb11a8a56c776b6d, type: 2}
     - target: {fileID: 919132149155446097, guid: f2c1b8aedb9f4d24685109e19485b4b0, type: 3}
       propertyPath: m_Name
       value: KnightWarriorDetailedBlend
