@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "Waves data", menuName = "ScriptableObjects/NewWaveData")]
 public class BattleWavesParameters : ScriptableObject
@@ -10,8 +11,7 @@ public class BattleWavesParameters : ScriptableObject
     [Serializable]
     public class WaveData
     {
-        [field: SerializeField] public int amountOfEnemySpawns = 3;
-        [field: SerializeField] public int enemiesAmountPerSpawn = 2;
+        [field: SerializeField] public int enemiesAmount = 2;
         [field: SerializeField] public float spawnInterval = 3;
     }
 }
