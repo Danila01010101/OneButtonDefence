@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class DesctopInput : IInput, IDisableableInput
 {
+    public Action<Vector2> Clicked { get; set; }
     public Action<Vector3> Moved { get; set; }
     public Action<Vector2> Rotated { get; set; }
     public Action<float> Scroll { get; set; }
@@ -16,12 +17,19 @@ public class DesctopInput : IInput, IDisableableInput
     private readonly string xMoveAxis = "Mouse X";
     private readonly string yMoveAxis = "Mouse Y";
     private readonly string scrollWeelName = "Mouse ScrollWheel";
+    private readonly int spellCastButton = 0;
     private readonly int moveMouseButton = 0;
     private readonly int rotateMouseButton = 1;
 
     public DesctopInput(float deadZone)
     {
         this.deadZone = deadZone;
+    }
+
+    public void Update()
+    {
+        if (Input.GetMouseButtonUp(spellCastButton))
+            Clicked?.Invoke(Input.mousePosition);
     }
 
     public void LateUpdate()

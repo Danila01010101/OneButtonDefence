@@ -70,6 +70,11 @@ public class GameInitializer : MonoBehaviour
         
         gameStateMachine.Update();
         gameStateMachine.HandleInput();
+        input.Update();
+    }
+
+    private void LateUpdate()
+    {
         input.LateUpdate();
     }
 
@@ -136,6 +141,11 @@ public class GameInitializer : MonoBehaviour
         CameraMovement cameraMovement = Instantiate(virtualCameraPrefab).gameObject.AddComponent<CameraMovement>();
         cameraMovement.gameObject.name = "CameraMovement";
         cameraMovement.Initialize(input, cameraData);
+    }
+
+    private void InitializeSpellCastSystem()
+    {
+        //TODO: Прописать инициализацию скрипта спелов 
     }
     
     private void CreateBuildingSpawner() => buildingSpawner = new GameObject("BuildingSpawner").AddComponent<BuildingSpawner>();
