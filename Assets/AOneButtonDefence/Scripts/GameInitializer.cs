@@ -47,6 +47,8 @@ public class GameInitializer : MonoBehaviour
         yield return null;
         InitializeDialogCamera();
         InitializeCameraMovementComponent();
+        InitializeSpellRandomiser();
+        InitializeSpellCastSystem();
         yield return null;
         CreateBuildingSpawner();
         var worldGrid = SpawnWorldGrid();
@@ -143,8 +145,19 @@ public class GameInitializer : MonoBehaviour
         cameraMovement.Initialize(input, cameraData);
     }
 
+    private void InitializeSpellRandomiser()
+    {
+        //spellRandomiser = new SpellRandomiser(spellsData);
+        //TODO: Прописать инициализацию скрипта выдачи спелов 
+    }
+
     private void InitializeSpellCastSystem()
     {
+        //new SpellCastSystem(spellsRandomiser, input);
+        
+        //var spellCast = new Gameobject("NameOfGameObject").AddComponent<SpellCastSystem>();
+        //spellCast.Initialize(spellsRandomiser, input);
+        //input.Clicked += CastNewSpell;
         //TODO: Прописать инициализацию скрипта спелов 
     }
     
