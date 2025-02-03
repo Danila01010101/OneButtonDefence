@@ -45,6 +45,7 @@ public class GameInitializer : MonoBehaviour
         yield return null;
         SpawnResourceCounter();
         yield return null;
+        SetupUIObjectShower();
         InitializeDialogCamera();
         InitializeCameraMovementComponent();
         yield return null;
@@ -56,7 +57,7 @@ public class GameInitializer : MonoBehaviour
         PartManager upgradeCanvas = SpawnUpgradeCanvas();
         yield return null;
         SetupStateMachine(upgradeCanvas, worldCreator, worldGrid, disableableInput);
-        SetupRewardSpawner(GemsView.Instance.GemsTextTransform, GemsView.Instance.Canvas, Camera.main);
+        SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
         yield return null;
         GameInitialized?.Invoke();
         isSerializationCompleted = true;
@@ -182,10 +183,10 @@ public class GameInitializer : MonoBehaviour
         gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset);
     }
 
-    private void SetupRewardSpawner(RectTransform uiTarget, Canvas canvas, Camera mainCamera)
+    private void SetupRewardSpawner(RectTransform uiTarget)
     {
         rewardSpawner = new GameObject("RewardSpawner").AddComponent<RewardSpawner>();
-        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, canvas, mainCamera);
+        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, new RewardSpawner.RewardAnimationSettings(1, 1));
     }
 
     private void OnDestroy()
