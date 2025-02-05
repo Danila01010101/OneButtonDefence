@@ -35,12 +35,6 @@ public class GemsView : MonoBehaviour
         UpdateGemsValue(ResourcesCounter.Instance.Data.GemsAmount);
     }
 
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.A))
-            AnimateText(bounceValue, duration);
-    }
-
     private void UpdateGemsValue(int value)
     {
         AnimateText(bounceValue, duration);
