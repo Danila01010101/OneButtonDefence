@@ -46,6 +46,7 @@ public class GameInitializer : MonoBehaviour
         SpawnResourceCounter();
         yield return null;
         SetupUIObjectShower();
+        SetupEnemyDeathManager();
         InitializeDialogCamera();
         InitializeCameraMovementComponent();
         yield return null;
@@ -103,6 +104,12 @@ public class GameInitializer : MonoBehaviour
     {
         musicMediator = new MusicPlayerMediator(backgroundMusicPlayer, upgradeEffectPlayer);
         musicMediator.Subscribe();
+    }
+
+    private void SetupEnemyDeathManager()
+    {
+        var enemyDeathManager = new GameObject("EnemyDeathManager").AddComponent<EnemyDeathManager>();
+        enemyDeathManager.Initialize();
     }
 
     private void InitializeInput()
