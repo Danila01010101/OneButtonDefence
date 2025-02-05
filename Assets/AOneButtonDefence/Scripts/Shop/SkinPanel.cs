@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class SkinPanel : MonoBehaviour
 {
-    [Header("Объект для которого меняется скин")]
+    [Header("?????? ??? ???????? ???????? ????")]
     public GameObject ChangeGameObject;
-    [Header("Лист скинов")]
+    [Header("???? ??????")]
     public List<SkinData> SkinList;
     public int CurrentChose;
     public int ChosenSkin = 0;
@@ -17,17 +17,14 @@ public class SkinPanel : MonoBehaviour
     public TMP_Text SkinLore;
     public TMP_Text SkinCost;
     public TMP_Text BuyButtonText;
-
     public Image CurrentSkinSprite;
     public Image NextSkinSprite;
     public Image PrevSkinSprite;
     public Image SelectSkinSprite;
-
     public Image BuySkin;
 
     [HideInInspector]
     public static Action<Mesh, Material> SkinChanged;
-
 
     private MeshFilter _meshFilter;
     private Renderer _renderer;
@@ -36,8 +33,8 @@ public class SkinPanel : MonoBehaviour
     {
         _meshFilter = ChangeGameObject.GetComponent<MeshFilter>();
         _renderer = ChangeGameObject.GetComponent<Renderer>();
-        ////НАКРУТКА!
-        //ResourcesCounter.Instance.Data.GemsAmount += 1000;
+        ////????????!
+        ResourcesCounter.Instance.Data.GemsAmount += 1000;
 
         ChangeCurrentChose(0);
         SelectSkin(0);
@@ -66,16 +63,16 @@ public class SkinPanel : MonoBehaviour
 
         if (SkinList[CurrentChose].Unlocked)
         {
-            BuyButtonText.text = "Выбрать скин";
-            SkinCost.text = "Куплено";
+            BuyButtonText.text = "??????? ????";
+            SkinCost.text = "???????";
         }
         else
         {
-            BuyButtonText.text = "Купить";
+            BuyButtonText.text = "??????";
         }
         if (CurrentChose == ChosenSkin)
         {
-            BuyButtonText.text = "Выбран";
+            BuyButtonText.text = "??????";
         }
 
         _meshFilter.mesh = SkinList[CurrentChose].Mesh;
@@ -92,7 +89,7 @@ public class SkinPanel : MonoBehaviour
         {
             if (SkinList[CurrentChose].Cost > ResourcesCounter.Instance.Data.GemsAmount)
             {
-                Debug.Log("Нет денег, бомж");
+                Debug.Log("??? ?????, ????");
                 return;
             }
             ResourcesCounter.Instance.Data.GemsAmount -= SkinList[CurrentChose].Cost;
@@ -105,20 +102,23 @@ public class SkinPanel : MonoBehaviour
     private void SelectSkin(int index)
     {
         SkinChanged?.Invoke(SkinList[index].Mesh, SkinList[index].Material);
-        BuyButtonText.text = "Выбран";
-        SkinCost.text = "Куплено";
+        BuyButtonText.text = "??????";
+        SkinCost.text = "???????";
         SelectSkinSprite.sprite = SkinList[index].Icon;
     }
+    
     public int MaxMinIndex<T>(int index, List<T> list)
     {
         if (index == list.Count)
         {
             index = 0;
         }
+        
         if (index == -1)
         {
             index = list.Count - 1;
         }
+        
         return index;
     }
 }
