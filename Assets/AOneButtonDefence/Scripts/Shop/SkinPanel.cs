@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class SkinPanel : MonoBehaviour
 {
-    [Header("?????? ??? ???????? ???????? ????")]
-    public GameObject ChangeGameObject;
+    [SerializeField] private ShopSkinShower exampleSkinShowerPrefab;
+    [SerializeField] private Vector3 exampleSkinChangerPosition;
+    [SerializeField] private Vector3 exampleSkinChangerEulerAngles;
     [Header("???? ??????")]
     public List<SkinData> SkinList;
     public int CurrentChose;
@@ -25,21 +26,19 @@ public class SkinPanel : MonoBehaviour
 
     [HideInInspector]
     public static Action<Mesh, Material> SkinChanged;
+    public static Action<GameObject> ShopInitialized;
 
-    private MeshFilter _meshFilter;
-    private Renderer _renderer;
+    private ShopSkinShower spawnedShopSkinShower;
 
-    private void Start()
+    public void Initialize(IInput input)
     {
-        _meshFilter = ChangeGameObject.GetComponent<MeshFilter>();
-        _renderer = ChangeGameObject.GetComponent<Renderer>();
-        ////????????!
-        ResourcesCounter.Instance.Data.GemsAmount += 1000;
-
+        spawnedShopSkinShower = UIGameObjectShower.Instance.RenderPrefab(exampleSkinShowerPrefab, exampleSkinChangerPosition, Quaternion.Euler(exampleSkinChangerEulerAngles));
+        spawnedShopSkinShower.Initialize(input);
         ChangeCurrentChose(0);
         SelectSkin(0);
+        ShopInitialized?.Invoke(gameObject);
+        gameObject.SetActive(false);
     }
-
 
     public void ChangeCurrentChose(int num)
     {
@@ -70,13 +69,13 @@ public class SkinPanel : MonoBehaviour
         {
             BuyButtonText.text = "??????";
         }
+        
         if (CurrentChose == ChosenSkin)
         {
             BuyButtonText.text = "??????";
         }
 
-        _meshFilter.mesh = SkinList[CurrentChose].Mesh;
-        _renderer.material = SkinList[CurrentChose].Material;
+        spawnedShopSkinShower.ExampleSkinChanger.ChangeSkin(SkinList[CurrentChose].Mesh, SkinList[CurrentChose].Material);
     }
 
     public void SetSkin()
@@ -121,4 +120,8 @@ public class SkinPanel : MonoBehaviour
         
         return index;
     }
+
+    private void OnEnable() => spawnedShopSkinShower?.ShowExampleSkin();
+
+    private void OnDisable() => spawnedShopSkinShower?.HideExampleSkin();
 }

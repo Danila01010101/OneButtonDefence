@@ -32,7 +32,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
 
     public class GameStateMachineData
     {
-        public readonly PartManager UpgradeUIGameObject;
+        public readonly GameplayCanvas UpgradeUIGameObject;
         public readonly GameData GameTurnsData;
         public readonly MonoBehaviour CoroutineStarter;
         public readonly CellsGrid CellsGrid;
@@ -42,7 +42,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
         public readonly string GnomeTag;
         public readonly IDisableableInput Input;
 
-        public GameStateMachineData(PartManager upgradeUIGameObject, GameData gameTurnsData, MonoBehaviour coroutineStarter, CellsGrid buildingsGrid,
+        public GameStateMachineData(GameplayCanvas upgradeUIGameObject, GameData gameTurnsData, MonoBehaviour coroutineStarter, CellsGrid buildingsGrid,
             string enemyTag, string gnomeTag, IDisableableInput input, float upgradeStateDuration, float upgradeStateCompletionDelay)
         {
             UpgradeUIGameObject = upgradeUIGameObject;

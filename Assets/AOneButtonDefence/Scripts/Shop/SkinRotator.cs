@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class SkinRotator : MonoBehaviour
@@ -11,10 +10,12 @@ public class SkinRotator : MonoBehaviour
     private float targetRotationZ;
     private float rotationVelocity; 
     private IInput input;
+    private bool isInitialized;
 
     public void Initialize(IInput input)
     {
         this.input = input;
+        isInitialized = true;
     }
 
     private void Update()
@@ -34,11 +35,13 @@ public class SkinRotator : MonoBehaviour
 
     private void OnEnable()
     {
-        input.Moved += Rotate;
+        if (isInitialized) 
+            input.Moved += Rotate;
     }
 
     private void OnDisable()
     {
-        input.Moved -= Rotate;
+        if (isInitialized) 
+            input.Moved -= Rotate;
     }
 }

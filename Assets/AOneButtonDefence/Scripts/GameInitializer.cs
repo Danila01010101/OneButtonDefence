@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 using static GameStateMachine;
 
 public class GameInitializer : MonoBehaviour
@@ -11,9 +12,10 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private MusicData musicData;
     [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
-    [SerializeField] private PartManager partManagerPrefab;
+    [FormerlySerializedAs("partManagerPrefab")] [SerializeField] private GameplayCanvas gameplayCanvasPrefab;
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
     [SerializeField] private Canvas loadingCanvas;
+    [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
 
     private Transform initializedObjectsParent;
@@ -57,8 +59,9 @@ public class GameInitializer : MonoBehaviour
         yield return new WaitUntil(() => worldCreator.IsWorldReady);
         InitializeBuildingSpawner(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration);
         yield return null;
-        PartManager upgradeCanvas = SpawnUpgradeCanvas();
+        GameplayCanvas upgradeCanvas = SpawnUpgradeCanvas();
         yield return null;
+        SetupShopSkinWindow(upgradeCanvas.transform);
         SetupStateMachine(upgradeCanvas, worldCreator, worldGrid, disableableInput);
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
         yield return null;
@@ -182,9 +185,9 @@ public class GameInitializer : MonoBehaviour
         buildingSpawner.Initialize(grid, upgradeBuildings, animationDuration);
     }
 
-    private PartManager SpawnUpgradeCanvas()
+    private GameplayCanvas SpawnUpgradeCanvas()
     {
-        PartManager upgradeCanvas = Instantiate(partManagerPrefab);
+        GameplayCanvas upgradeCanvas = Instantiate(gameplayCanvasPrefab);
         upgradeCanvas.Initialize(4, 
             worldGenerationData.BuildingsData.FarmData.Icon,
             worldGenerationData.BuildingsData.SpiritBuildingData.Icon,
@@ -193,8 +196,15 @@ public class GameInitializer : MonoBehaviour
             );
         return upgradeCanvas;
     }
+    
+    private SkinPanel SetupShopSkinWindow(Transform canvasTransform)
+    {
+        var shopWindow = Instantiate(shopSkinWindow, canvasTransform);
+        shopWindow.Initialize(input);
+        return shopWindow;
+    }
 
-    private void SetupStateMachine(PartManager gameplayCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput inputForDialogueState)
+    private void SetupStateMachine(GameplayCanvas gameplayCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput inputForDialogueState)
     {
         GameStateMachineData gameStateMachineData = new GameStateMachineData 
         (

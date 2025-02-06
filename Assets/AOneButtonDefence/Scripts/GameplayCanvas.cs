@@ -4,13 +4,15 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PartManager : MonoBehaviour
+public class GameplayCanvas : MonoBehaviour
 {
     [SerializeField] private Button partPrefab;
     [SerializeField] private GameObject cellsSpawnParent;
     [SerializeField] private UpgradeButton upgradeButton;
     [SerializeField] private int buttonsDistance = 100;
+    [SerializeField] private Button shopButton;
 
+    private GameObject spawnedShopWindow;
     private int partPlacingInterval = 0;
     private float startButtonsAmount;
     private List<Button> parts = new List<Button>();
@@ -18,6 +20,7 @@ public class PartManager : MonoBehaviour
     private int lastKey = -1;
     private int beforLastKey = -1;
     private int howManyChois = 0;
+    private bool isShopWindowSetted = false;
 
     public UpgradeButton UpgradeButton => upgradeButton;
 
@@ -72,6 +75,17 @@ public class PartManager : MonoBehaviour
             parts[i].onClick.AddListener(delegate { ChoosePart((UpgradeButton.Upgrades)partIndex); });
             partsAnimators[i].SetIcon(sprites[i]);
         }
+        
+        shopButton.onClick.RemoveAllListeners();
+        shopButton.onClick.AddListener(ShowShopWindow);
+    }
+
+    private void DetectShopWindow(GameObject window) => spawnedShopWindow = window;
+    
+    private void ShowShopWindow()
+    {
+        if (spawnedShopWindow != null)
+            spawnedShopWindow.gameObject.SetActive(true);
     }
 
     private void ChoosePart(UpgradeButton.Upgrades index)
@@ -128,5 +142,15 @@ public class PartManager : MonoBehaviour
         }
 
         upgradeButton.UpgradeChosenPart((UpgradeButton.Upgrades) lastKey, (UpgradeButton.Upgrades) beforLastKey);
+    }
+
+    private void OnEnable()
+    {
+        SkinPanel.ShopInitialized += DetectShopWindow;
+    }
+
+    private void OnDisable()
+    {
+        SkinPanel.ShopInitialized -= DetectShopWindow;
     }
 }

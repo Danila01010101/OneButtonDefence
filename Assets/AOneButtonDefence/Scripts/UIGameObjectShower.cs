@@ -24,18 +24,20 @@ public class UIGameObjectShower : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void RenderPrefab(GameObject modelPrefab, Vector3 position, Quaternion? rotation = null)
+    public T RenderPrefab<T>(T modelPrefab, Vector3 position, Quaternion? rotation = null) where T : MonoBehaviour
     {
         foreach (Transform child in modelContainer)
         {
             Destroy(child.gameObject);
         }
 
-        GameObject modelInstance = Instantiate(modelPrefab, modelContainer);
+        T modelInstance = Instantiate(modelPrefab, modelContainer);
         modelInstance.transform.localPosition = position;
         modelInstance.transform.localRotation = rotation ?? Quaternion.identity;
 
-        SetLayerRecursively(modelInstance, uiCamera.cullingMask);
+        SetLayerRecursively(modelInstance.gameObject, uiCamera.cullingMask);
+
+        return modelInstance;
     }
     
     
