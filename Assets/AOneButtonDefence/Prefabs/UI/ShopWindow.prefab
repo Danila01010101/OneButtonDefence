@@ -679,7 +679,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5975019631008922812}
         m_TargetAssemblyTypeName: SkinPanel, Assembly-CSharp
         m_MethodName: SetSkin
         m_Mode: 1
@@ -1110,7 +1110,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5975019631008922812}
         m_TargetAssemblyTypeName: SkinPanel, Assembly-CSharp
         m_MethodName: ChangeCurrentChose
         m_Mode: 3
@@ -2373,7 +2373,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5975019631008922812}
         m_TargetAssemblyTypeName: SkinPanel, Assembly-CSharp
         m_MethodName: ChangeCurrentChose
         m_Mode: 3
