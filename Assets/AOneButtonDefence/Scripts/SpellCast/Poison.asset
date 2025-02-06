@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd5889ea615b9ec4fae436a7b9ca102e, type: 3}
+  m_Name: Poison
+  m_EditorClassIdentifier: 
+  time: 0
+  timePerDamage: 0
+  damage: 0
+  baseMagicCircle: {fileID: 0}
+  iconForUI: {fileID: 0}
+  mainColor: {r: 0, g: 0, b: 0, a: 1}
+  secondaryColor: {r: 0, g: 0, b: 0, a: 1}
+  effectParticles: {fileID: 0}
+  fineTuning: 0
+  circleColor: {r: 0, g: 0, b: 0, a: 1}
+  sidesColor: {r: 0, g: 0, b: 0, a: 1}
+  lightColor: {r: 0, g: 0, b: 0, a: 1}
+  sparksColor: {r: 0, g: 0, b: 0, a: 1}
+  flakesColor: {r: 0, g: 0, b: 0, a: 1}
