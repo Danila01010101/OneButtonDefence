@@ -43,12 +43,8 @@ public class CameraMovement : MonoBehaviour
 
     private void UpdateCameraPositionAndRotation()
     {
-        // Рассчитываем поворот камеры
         Quaternion rotation = Quaternion.Euler(currentX, currentY, 0);
-
-        // Позиция камеры относительно цели с учетом текущего поворота
         Vector3 position = target.position - (rotation * Vector3.forward * currentDistance);
-
         transform.position = position;
         transform.rotation = rotation;
     }
@@ -92,6 +88,8 @@ public class CameraMovement : MonoBehaviour
         input.Scroll += ChangeHeight;
         DialogState.AnimatableDialogueStarted += DisableCamera;
         DialogState.AnimatableDialogueEnded += EnableCamera;
+        SkinPanel.ShopEnabled += DisableCamera;
+        SkinPanel.ShopDisabled += EnableCamera;
     }
 
     private void Unsubscribe()
@@ -101,6 +99,8 @@ public class CameraMovement : MonoBehaviour
         input.Scroll -= ChangeHeight;
         DialogState.AnimatableDialogueStarted -= DisableCamera;
         DialogState.AnimatableDialogueEnded -= EnableCamera;
+        SkinPanel.ShopEnabled -= DisableCamera;
+        SkinPanel.ShopDisabled -= EnableCamera;
     }
 
     private void OnEnable()

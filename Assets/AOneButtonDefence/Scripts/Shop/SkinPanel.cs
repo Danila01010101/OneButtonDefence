@@ -27,6 +27,8 @@ public class SkinPanel : MonoBehaviour
     [HideInInspector]
     public static Action<Mesh, Material> SkinChanged;
     public static Action<GameObject> ShopInitialized;
+    public static Action ShopEnabled;
+    public static Action ShopDisabled;
 
     private ShopSkinShower spawnedShopSkinShower;
 
@@ -121,7 +123,23 @@ public class SkinPanel : MonoBehaviour
         return index;
     }
 
-    private void OnEnable() => spawnedShopSkinShower?.ShowExampleSkin();
+    private void EnablePanel()
+    {
+        if (spawnedShopSkinShower != null) 
+            spawnedShopSkinShower.ShowExampleSkin();
+        
+        ShopEnabled?.Invoke();
+    }
 
-    private void OnDisable() => spawnedShopSkinShower?.HideExampleSkin();
+    private void DisablePanel()
+    {
+        if (spawnedShopSkinShower != null) 
+            spawnedShopSkinShower.ShowExampleSkin();
+        
+        ShopDisabled?.Invoke();
+    }
+
+    private void OnEnable() => EnablePanel();
+
+    private void OnDisable() => DisablePanel();
 }
