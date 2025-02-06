@@ -134,7 +134,7 @@ public class SkinPanel : MonoBehaviour
     private void DisablePanel()
     {
         if (spawnedShopSkinShower != null) 
-            spawnedShopSkinShower.ShowExampleSkin();
+            spawnedShopSkinShower.HideExampleSkin();
         
         ShopDisabled?.Invoke();
     }
