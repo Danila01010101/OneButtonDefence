@@ -13,33 +13,23 @@ MonoBehaviour:
   m_Name: Waves data
   m_EditorClassIdentifier: 
   <waves>k__BackingField:
-  - amountOfEnemySpawns: 1
-    enemiesAmountPerSpawn: 1
+  - enemiesAmount: 2
     spawnInterval: 0.8
-  - amountOfEnemySpawns: 2
-    enemiesAmountPerSpawn: 1
+  - enemiesAmount: 4
     spawnInterval: 0.8
-  - amountOfEnemySpawns: 3
-    enemiesAmountPerSpawn: 1
+  - enemiesAmount: 5
     spawnInterval: 0.8
-  - amountOfEnemySpawns: 2
-    enemiesAmountPerSpawn: 2
+  - enemiesAmount: 7
     spawnInterval: 0.8
-  - amountOfEnemySpawns: 2
-    enemiesAmountPerSpawn: 3
+  - enemiesAmount: 10
     spawnInterval: 0.8
-  - amountOfEnemySpawns: 3
-    enemiesAmountPerSpawn: 3
+  - enemiesAmount: 12
     spawnInterval: 0.8
-  - amountOfEnemySpawns: 2
-    enemiesAmountPerSpawn: 4
+  - enemiesAmount: 13
     spawnInterval: 0.8
-  - amountOfEnemySpawns: 3
-    enemiesAmountPerSpawn: 4
+  - enemiesAmount: 10
     spawnInterval: 0.8
-  - amountOfEnemySpawns: 5
-    enemiesAmountPerSpawn: 3
+  - enemiesAmount: 14
     spawnInterval: 0.8
-  - amountOfEnemySpawns: 3
-    enemiesAmountPerSpawn: 7
+  - enemiesAmount: 15
     spawnInterval: 0.8
