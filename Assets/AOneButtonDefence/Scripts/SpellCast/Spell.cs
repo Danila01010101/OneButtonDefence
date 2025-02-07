@@ -11,18 +11,27 @@ public class Spell : MonoBehaviour
     private ParticleSystem _sparks;
     private ParticleSystem _flakes;
 
+    private ParticleSystem.MainModule _circleMain;
+    private ParticleSystem.MainModule _sidesMain;
+    private ParticleSystem.MainModule _lightMain;
+    private ParticleSystem.MainModule _sparksMain;
+    private ParticleSystem.MainModule _flakesMain;
+
     private float leftTime;
     private SpellData spell;
     private HashSet<IDamagable> targets = new HashSet<IDamagable>();
+
     public void Initialize(SpellData spellData)
     {
         spell = spellData;
         GetPrivateComponents();
         ChangeColor(spellData);
         ChangeParticles(spellData);
+        ChangeLifeTime(spellData.Time);
         StartParticlesSystem();
-        Invoke("Destroy", spell.Time);
+        Invoke(nameof(Destroy), spell.Time);
     }
+
     private void Update()
     {
         Timer();
@@ -36,7 +45,6 @@ public class Spell : MonoBehaviour
         }
 
     }
-
     private void OnTriggerExit(Collider other)
     {
         if (other.GetComponent<IDamagable>() != null)
@@ -44,6 +52,7 @@ public class Spell : MonoBehaviour
             targets.Remove(other.GetComponent<IDamagable>());
         }
     }
+
     private void GetPrivateComponents()
     {
         _circle = GetComponent<ParticleSystem>();
@@ -51,31 +60,31 @@ public class Spell : MonoBehaviour
         _light = transform.GetChild(1).GetComponent<ParticleSystem>();
         _sparks = transform.GetChild(2).GetComponent<ParticleSystem>();
         _flakes = transform.GetChild(3).GetComponent<ParticleSystem>();
+
+        _circleMain = _circle.main;
+        _sidesMain = _sides.main;
+        _lightMain = _light.main;
+        _sparksMain = _sparks.main;
+        _flakesMain = _flakes.main;
     }
 
     private void ChangeColor(SpellData spellData)
     {
-        var mainModuleCircle = _circle.main;
-        var mainModuleSides = _sides.main;
-        var mainModuleLight = _light.main;
-        var mainModuleSpark = _sparks.main;
-        var mainModuleFlakes = _flakes.main;
-
         if (spellData.FineTuning == true)
         {
-            mainModuleCircle.startColor = spellData.CircleColor;
-            mainModuleSides.startColor = spellData.SidesColor;
-            mainModuleLight.startColor = spellData.LightColor;
-            mainModuleSpark.startColor = spellData.SparksColor;
-            mainModuleFlakes.startColor = spellData.FlakesColor;
+            _circleMain.startColor = spellData.CircleColor;
+            _sidesMain.startColor = spellData.SidesColor;
+            _lightMain.startColor = spellData.LightColor;
+            _sparksMain.startColor = spellData.SparksColor;
+            _flakesMain.startColor = spellData.FlakesColor;
         }
         else
         {
-            mainModuleCircle.startColor = spellData.MainColor;
-            mainModuleSides.startColor = spellData.SidesColor;
-            mainModuleLight.startColor = spellData.MainColor;
-            mainModuleSpark.startColor = spellData.SidesColor;
-            mainModuleFlakes.startColor = spellData.MainColor;
+            _circleMain.startColor = spellData.MainColor;
+            _sidesMain.startColor = spellData.SidesColor;
+            _lightMain.startColor = spellData.MainColor;
+            _sparksMain.startColor = spellData.SidesColor;
+            _flakesMain.startColor = spellData.MainColor;
         }
 
     }
@@ -84,6 +93,22 @@ public class Spell : MonoBehaviour
     {
         ParticleSystemRenderer mainModuleFlakes = _flakes.GetComponent<ParticleSystemRenderer>();
         mainModuleFlakes.material.SetTexture("_baseMap", spellData.EffectParticles);
+    }
+
+    private void ChangeLifeTime(float time)
+
+    {
+        _circleMain.startLifetime = time;
+        _sidesMain.startLifetime = time;
+        _lightMain.startLifetime = time;
+        _sparksMain.startLifetime = time;
+        _flakesMain.startLifetime = time;
+
+        _circleMain.duration = time;
+        _sidesMain.duration = time;
+        _lightMain.duration = time;
+        _sparksMain.duration = time;
+        _flakesMain.duration = time;
     }
 
     private void StartParticlesSystem()
