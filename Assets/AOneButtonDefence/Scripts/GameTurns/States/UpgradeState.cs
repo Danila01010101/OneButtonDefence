@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UpgradeState : IState
 {
-    private PartManager upgradeUI;
+    private GameplayCanvas upgradeUI;
     private IStringStateChanger stateMachine;
     private bool isUpgradeChosen;
     private float upgradePhaseStartTime;
@@ -18,7 +18,7 @@ public class UpgradeState : IState
     public static Action UpgradeStateStarted;
     public static Action UpgradeStateEnded;
 
-    public UpgradeState(IStringStateChanger stateMachine, PartManager upgradeUI, float upgradePhaseDuration, float upgradePhaseCompletionDelay)
+    public UpgradeState(IStringStateChanger stateMachine, GameplayCanvas upgradeUI, float upgradePhaseDuration, float upgradePhaseCompletionDelay)
     {
         this.stateMachine = stateMachine;
         this.upgradeUI = upgradeUI;

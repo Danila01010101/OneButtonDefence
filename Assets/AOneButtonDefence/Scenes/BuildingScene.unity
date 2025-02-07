@@ -449,9 +449,10 @@ MonoBehaviour:
   musicData: {fileID: 11400000, guid: 92dee7b0de6425245be4d000ff3186ac, type: 2}
   enemiesData: {fileID: 11400000, guid: 38007ab0f6607404e8a58182076d6a0c, type: 2}
   worldGenerationData: {fileID: 11400000, guid: 0a5f9a6cff94cdd4e8ba60c38855587b, type: 2}
-  partManagerPrefab: {fileID: 263800998971773282, guid: ecbdf0191c1061f4791cc69571515763, type: 3}
+  gameplayCanvasPrefab: {fileID: 263800998971773282, guid: ecbdf0191c1061f4791cc69571515763, type: 3}
   virtualCameraPrefab: {fileID: 479869093838107416, guid: 80fdc9be4cb8de34396fa621b4f8490c, type: 3}
   loadingCanvas: {fileID: 3805665588448524472, guid: 252ebb6cfaf8c1648aeb1b1665ab8615, type: 3}
+  shopSkinWindow: {fileID: 5975019631008922812, guid: ae70cd48a5edb0b49b0f9f6fe427f824, type: 3}
   uiGameObjectShowerPrefab: {fileID: 984342067642433287, guid: 98921ad4e4588964288ac94ed545b226, type: 3}
 --- !u!1 &897670876
 GameObject:

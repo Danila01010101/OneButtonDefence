@@ -9,7 +9,7 @@ public class GameBattleState : IState
     private IStringStateChanger stateMachine;
     private MonoBehaviour coroutineStarter;
     private BattleWavesParameters wavesParameters;
-    private EnemieFactory enemieFactory;
+    private UnitsFactory unitsFactory;
     private Coroutine endTurnCheckCoroutine;
     private Coroutine spawnCoroutine;
     private CellsGrid grid;
@@ -32,9 +32,10 @@ public class GameBattleState : IState
         enemyTag = data.EnemyTag;
         gnomeTag = data.GnomeTag;
         grid = data.CellsGrid;
-        enemieFactory = new EnemieFactory(data.EnemiesData);
-        
+        unitsFactory = new UnitsFactory(data.EnemiesData.enemies);
+
         AsyncHelper.Instance.RunAsyncWithResult<BattleWavesParameters>(() => WaveGenerator.GenerateWaves(data.WavesParameters, 100), result => wavesParameters = result);
+        CoroutineStarter.StartCoroutine(LevelGenerationClass.GenerateNewLevels(data.WavesParameters, 100, out newParameters));
     }
 
     public void Enter()
@@ -82,6 +83,11 @@ public class GameBattleState : IState
     {
         for (int enemiesAmount = 0; enemiesAmount < waveData.enemiesAmount; enemiesAmount++)
         {
+            for (int enemiesAmount = 0; enemiesAmount < waveData.enemiesAmountPerSpawn; enemiesAmount++)
+            {
+                unitsFactory.SpawnUnit<Knight>(grid.GetRandomEmptyCellPosition(spawnSpread) + enemiesSpawnOffset);
+            }
+
             yield return new WaitForSeconds(waveData.spawnInterval);
             enemieFactory.SpawnEnemy<Knight>(grid.GetRandomEmptyCellPosition(spawnSpread) + enemiesSpawnOffset);
         }

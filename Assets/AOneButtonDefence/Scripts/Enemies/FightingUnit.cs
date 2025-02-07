@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class FightingUnit : MonoBehaviour, IDamagable
 {
     [SerializeField] protected CharacterStats characterStats;
-    [SerializeField] private Renderer render;
+    [SerializeField] protected Renderer render;
 
     private Health health;
     private NavMeshAgent navMeshComponent;
@@ -26,6 +26,8 @@ public class FightingUnit : MonoBehaviour, IDamagable
         materialChanger = new MaterialChanger(this);
         materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration,characterStats.Delay);
     }
+
+    public virtual void Initialize() { }
 
     protected virtual void Update() => stateMachine.Update();
 

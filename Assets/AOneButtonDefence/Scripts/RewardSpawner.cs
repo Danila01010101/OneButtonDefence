@@ -7,16 +7,14 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
 {
     private Gem rewardObjectPrefab;
     private RectTransform uiTarget;
-    private Canvas canvas;
-    private Camera mainCamera;
     private bool isUpgradeStarted = false;
+    private RewardAnimationSettings animationSettings;
 
-    public void Initialize(Gem rewardObjectPrefab, RectTransform uiTarget, Canvas canvas, Camera mainCamera)
+    public void Initialize(Gem rewardObjectPrefab, RectTransform uiTarget, RewardAnimationSettings rewardAnimationSettings)
     {
         this.rewardObjectPrefab = rewardObjectPrefab;
         this.uiTarget = uiTarget;
-        this.canvas = canvas;
-        this.mainCamera = mainCamera;
+        animationSettings = rewardAnimationSettings;
     }
 
     private void Start()
@@ -59,7 +57,7 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
             yield return null;
         }
         
-        collectableObject.FlyToUI(collectableObject.GameObject.transform.position, uiTarget, canvas, () =>
+        collectableObject.FlyToUI(UIGameObjectShower.Instance.UICamera, uiTarget, animationSettings.Duration, animationSettings.endScale, () =>
         {
             ResourcesCounter.Instance.Data.GemsAmount++;
             collectableObject.Destroy();
@@ -74,5 +72,17 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
     private void OnDisable()
     {
         UpgradeState.UpgradeStateStarted -= DetectUpgradeStateStart;
+    }
+
+    public struct RewardAnimationSettings
+    {
+        public readonly float Duration;
+        public readonly float endScale;
+
+        public RewardAnimationSettings(float duration, float endScale)
+        {
+            this.Duration = duration;
+            this.endScale = endScale;
+        }
     }
 }

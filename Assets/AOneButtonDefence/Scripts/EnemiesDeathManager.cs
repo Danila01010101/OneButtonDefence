@@ -1,24 +1,26 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyDeathManager : MonoBehaviour
 {
-    private static EnemyDeathManager _instance;
+    private static EnemyDeathManager instance;
 
-    public static EnemyDeathManager Instance
-    {
-        get
-        {
-            if (_instance == null && Application.loadedLevelName == UnityEngine.SceneManagement.SceneManager.GetActiveScene().name)
-            {
-                GameObject obj = new GameObject("EnemyDeathManager");
-                _instance = obj.AddComponent<EnemyDeathManager>();
-            }
-            return _instance;
-        }
-    }
+    public static EnemyDeathManager Instance => instance;
 
     private List<IEnemyDeathListener> listeners = new List<IEnemyDeathListener>();
+
+    public void Initialize()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public void RegisterListener(IEnemyDeathListener listener)
     {
