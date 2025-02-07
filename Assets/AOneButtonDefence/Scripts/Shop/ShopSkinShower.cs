@@ -7,11 +7,11 @@ public class ShopSkinShower : MonoBehaviour
     [SerializeField] private MeshFilter meshFilter;
     [SerializeField] private Renderer skinRenderer;
     
-    public ExampleSkinChanger ExampleSkinChanger { get; private set; }
+    public SkinChanger SkinChanger { get; private set; }
 
     public void Initialize(IInput input)
     {
-        ExampleSkinChanger = new ExampleSkinChanger(meshFilter, skinRenderer);
+        SkinChanger = new SkinChanger(meshFilter, skinRenderer);
         SkinRotator.Initialize(input);
     }
 

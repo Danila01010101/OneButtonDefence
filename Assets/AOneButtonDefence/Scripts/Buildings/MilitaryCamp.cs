@@ -1,9 +1,10 @@
 using System.Collections;
-using UnityEngine;
+using System.Collections.Generic;
 
 public class MilitaryCamp : Building
 {
     private MilitaryCampData data;
+    private UnitsFactory unitsFactory;
     
     protected override void ActivateSpawnAction()
     {
@@ -15,6 +16,7 @@ public class MilitaryCamp : Building
     {
         data = buildingsData.MilitaryCampData;
         Cost = data.Cost;
+        unitsFactory = new UnitsFactory(new List<FightingUnit>() { data.GnomeWarriorPrefab });
     }
 
     protected override void ActivateEndMoveAction()
@@ -31,7 +33,10 @@ public class MilitaryCamp : Building
         
         for (int i = 0; i < amount; i++)
         {
-            Instantiate(data.GnomeWarriorPrefab, transform.position + data.spawnOffset, Quaternion.Euler(data.spawnRotation));
+            var spawnedWarrior = unitsFactory.SpawnUnit<GnomeFightingUnit>(transform.position + data.spawnOffset);
+            
+            if (SkinChangeDetector.Instance.IsSkinChanged)
+                spawnedWarrior.ChangeSkin(SkinChangeDetector.Instance.CurrentSkinMesh, SkinChangeDetector.Instance.CurrentSkinMaterial);
         }
     }
 

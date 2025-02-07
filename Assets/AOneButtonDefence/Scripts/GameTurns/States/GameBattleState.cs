@@ -9,7 +9,7 @@ public class GameBattleState : IState
     private IStringStateChanger stateMachine;
     private MonoBehaviour coroutineStarter;
     private BattleWavesParameters wavesParameters;
-    private EnemieFactory enemieFactory;
+    private UnitsFactory unitsFactory;
     private Coroutine endTurnCheckCoroutine;
     private Coroutine spawnCoroutine;
     private CellsGrid grid;
@@ -32,7 +32,7 @@ public class GameBattleState : IState
         enemyTag = data.EnemyTag;
         gnomeTag = data.GnomeTag;
         grid = data.CellsGrid;
-        enemieFactory = new EnemieFactory(data.EnemiesData);
+        unitsFactory = new UnitsFactory(data.EnemiesData.enemies);
         //TODO: Добавить генерацию от 10 до 100 уровня
         //CoroutineStarter.StartCoroutine(LevelGenerationClass.GenerateNewLevels(data.WavesParameters, 100, out newParameters));
     }
@@ -84,7 +84,7 @@ public class GameBattleState : IState
         {
             for (int enemiesAmount = 0; enemiesAmount < waveData.enemiesAmountPerSpawn; enemiesAmount++)
             {
-                enemieFactory.SpawnEnemy<Knight>(grid.GetRandomEmptyCellPosition(spawnSpread) + enemiesSpawnOffset);
+                unitsFactory.SpawnUnit<Knight>(grid.GetRandomEmptyCellPosition(spawnSpread) + enemiesSpawnOffset);
             }
             
             yield return new WaitForSeconds(waveData.spawnInterval);

@@ -1,14 +1,15 @@
 using UnityEngine;
 
-public class ExampleSkinChanger
+public class SkinChanger
 {
     private readonly MeshFilter meshFilter;
     private readonly Renderer renderer;
 
-    public ExampleSkinChanger(MeshFilter meshFilter, Renderer renderer)
+    public SkinChanger(MeshFilter meshFilter, Renderer renderer)
     {
         this.meshFilter = meshFilter;
         this.renderer = renderer;
+        SkinPanel.SkinChanged += ChangeSkin;
     }
 
     public void ChangeSkin(Mesh newMesh, Material newMaterial)

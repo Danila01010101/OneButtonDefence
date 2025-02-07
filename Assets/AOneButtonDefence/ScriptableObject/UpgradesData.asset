@@ -28,7 +28,7 @@ MonoBehaviour:
     <Icon>k__BackingField: {fileID: 21300000, guid: a90237373c4c2d64eab932edc6efd63f, type: 3}
     <FoodPerTurnAmount>k__BackingField: 0
     <Cost>k__BackingField: 0
-    <GnomeWarriorPrefab>k__BackingField: {fileID: 1063882897230435733, guid: f4f495098b5f5c3449dc8000417df478, type: 3}
+    <GnomeWarriorPrefab>k__BackingField: {fileID: 2094672045661467839, guid: f4f495098b5f5c3449dc8000417df478, type: 3}
     <StartWarriorsAmount>k__BackingField: 1
     <EveryTurnWarriorsAmount>k__BackingField: 2
     <spawnOffset>k__BackingField: {x: 1.792, y: 1.6, z: 1.958}

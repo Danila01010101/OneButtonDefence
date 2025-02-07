@@ -32,6 +32,11 @@ public class SkinPanel : MonoBehaviour
 
     private ShopSkinShower spawnedShopSkinShower;
 
+    private void Awake()
+    {
+        ResourcesCounter.Instance.Data.GemsAmount += 1000;
+    }
+
     public void Initialize(IInput input)
     {
         spawnedShopSkinShower = UIGameObjectShower.Instance.RenderPrefab(exampleSkinShowerPrefab, exampleSkinChangerPosition, Quaternion.Euler(exampleSkinChangerEulerAngles));
@@ -64,20 +69,18 @@ public class SkinPanel : MonoBehaviour
 
         if (SkinList[CurrentChose].Unlocked)
         {
-            BuyButtonText.text = "??????? ????";
-            SkinCost.text = "???????";
+            BuyButtonText.text = "купить";
+            SkinCost.text = "стоит " + SkinList[CurrentChose] + " алмазов";
         }
         else
         {
-            BuyButtonText.text = "??????";
+            BuyButtonText.text = "купить";
         }
         
         if (CurrentChose == ChosenSkin)
         {
-            BuyButtonText.text = "??????";
+            //BuyButtonText.text = "??????";
         }
-
-        spawnedShopSkinShower.ExampleSkinChanger.ChangeSkin(SkinList[CurrentChose].Mesh, SkinList[CurrentChose].Material);
     }
 
     public void SetSkin()
@@ -90,7 +93,7 @@ public class SkinPanel : MonoBehaviour
         {
             if (SkinList[CurrentChose].Cost > ResourcesCounter.Instance.Data.GemsAmount)
             {
-                Debug.Log("??? ?????, ????");
+                Debug.Log("Недостаточно алмазов");
                 return;
             }
             ResourcesCounter.Instance.Data.GemsAmount -= SkinList[CurrentChose].Cost;
@@ -103,8 +106,8 @@ public class SkinPanel : MonoBehaviour
     private void SelectSkin(int index)
     {
         SkinChanged?.Invoke(SkinList[index].Mesh, SkinList[index].Material);
-        BuyButtonText.text = "??????";
-        SkinCost.text = "???????";
+        BuyButtonText.text = "купить";
+        SkinCost.text = "стоит " + SkinList[index] + " алмазов";
         SelectSkinSprite.sprite = SkinList[index].Icon;
     }
     

@@ -41,6 +41,7 @@ public class GameInitializer : MonoBehaviour
         SetupLoadingCanvas();
         InitializeInput();
         SetupCoroutineStarter();
+        InitializeSkinDetector();
         Tuple<IBackgroundMusicPlayer, IUpgradeEffectPlayer> players = InitializeMusicPlayer();
         IBackgroundMusicPlayer backgroundMusicPlayer = players.Item1;
         IUpgradeEffectPlayer upgradeEffectPlayer = players.Item2;
@@ -93,6 +94,8 @@ public class GameInitializer : MonoBehaviour
         initializedObjectsParent = new GameObject("InitializedObjects").transform;
         initializedObjectsParent.SetParent(transform);
     }
+
+    private void InitializeSkinDetector() => new SkinChangeDetector();
 
     private void SetupLoadingCanvas() => loadingCanvas = Instantiate(loadingCanvas);
     
