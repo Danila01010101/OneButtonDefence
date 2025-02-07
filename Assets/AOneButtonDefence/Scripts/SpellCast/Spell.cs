@@ -25,6 +25,7 @@ public class Spell : MonoBehaviour
     {
         spell = spellData;
         GetPrivateComponents();
+        StopParticleSystem();
         ChangeColor(spellData);
         ChangeParticles(spellData);
         ChangeLifeTime(spellData.Time);
@@ -111,6 +112,14 @@ public class Spell : MonoBehaviour
         _flakesMain.duration = time;
     }
 
+    private void StopParticleSystem()
+    {
+        _circle.Stop();
+        _sides.Stop();
+        _light.Stop();
+        _sparks.Stop();
+        _flakes.Stop();
+    }
     private void StartParticlesSystem()
     {
         _circle.Play();
