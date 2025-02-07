@@ -31,9 +31,4 @@ public class FlyToUI : MonoBehaviour
             Destroy(gameObject);
         });
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawSphere(transform.position, 3);
-    }
 }
