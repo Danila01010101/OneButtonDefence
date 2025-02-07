@@ -32,11 +32,6 @@ public class SkinPanel : MonoBehaviour
 
     private ShopSkinShower spawnedShopSkinShower;
 
-    private void Awake()
-    {
-        ResourcesCounter.Instance.Data.GemsAmount += 1000;
-    }
-
     public void Initialize(IInput input)
     {
         spawnedShopSkinShower = UIGameObjectShower.Instance.RenderPrefab(exampleSkinShowerPrefab, exampleSkinChangerPosition, Quaternion.Euler(exampleSkinChangerEulerAngles));
