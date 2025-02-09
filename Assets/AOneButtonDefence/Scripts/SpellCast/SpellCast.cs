@@ -1,48 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 // Скрипт выдает спелы
 //Скрипт кастует 
-public class SpellCast : MonoBehaviour
+public class SpellCast
 {
-    public bool RandomSpellMode;
-    public bool Active;
+    private bool randomSpellMode = true;
+    private bool active;
 
-    public List<SpellStorage> SpellStorage;
-    public int CurrentChose;
+    private List<SpellStorage> spellStorage;
+    private int currentChose;
     [Header("Graphic")]
-    public Image CurrentSpell;
-    public Image NextSpell;
+    private SpellCanvas spellCanvas;
 
     private IInput input = new DesctopInput(0);
     private List<SpellData> randomSpell = new List<SpellData>();
 
-    public void Initialize(IInput input)
+    public SpellCast(IInput input, SpellCanvas spellCanvas, SpellCastData spellCastData)
     {
-        GameBattleState.BattleWon += AddNextSpell;
+        this.spellCanvas = spellCanvas;
+        this.spellStorage = spellCastData.SpellStorage;
         this.input = input;
-        if (RandomSpellMode == true)
+
+        GameBattleState.BattleWon += () => spellCanvas.Active(false);
+        GameBattleState.BattleLost += () => spellCanvas.Active(false);
+        GameBattleState.BattleStarted += () => spellCanvas.Active(true);
+        if (randomSpellMode == true)
         {
             input.Clicked += RandomModeCast;
+            GameBattleState.BattleWon += AddNextSpell;
             InitilizeRandomMode();
         }
         else
         {
             input.Clicked += Cast;
         }
+        spellCanvas.CurrentSpellButton.onClick.AddListener(onClick);
         Physics.queriesHitTriggers = false;
     }
 
     private void InitilizeRandomMode()
     {
-        randomSpell.Add(SpellStorage[Random.Range(0, SpellStorage.Count)].Spell);
-        randomSpell.Add(SpellStorage[Random.Range(0, SpellStorage.Count)].Spell);
-    }
-
-    private void Update()
-    {
-        input.Update();
+        randomSpell.Add(spellStorage[Random.Range(0, spellStorage.Count)].Spell);
+        randomSpell.Add(spellStorage[Random.Range(0, spellStorage.Count)].Spell);
+        spellCanvas.ChangeUI(randomSpell[0].IconForUI, randomSpell[1].IconForUI);
+        Debug.Log(randomSpell[0]);
+        Debug.Log(randomSpell[1]);
     }
 
     private void Cast(Vector2 position)
@@ -50,16 +55,16 @@ public class SpellCast : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(position);
         RaycastHit hit;
 
-        if (Active == true && SpellStorage[CurrentChose].Count > 0 && Physics.Raycast(ray, out hit)) 
+        if (active == true && spellStorage[currentChose].Count > 0 && Physics.Raycast(ray, out hit)) 
         {
-            SpellStorage[CurrentChose].Count--;
-            GameObject spell = Instantiate(SpellStorage[CurrentChose].Spell.BaseMagicCircle, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.identity);
-            spell.GetComponent<Spell>().Initialize(SpellStorage[CurrentChose].Spell);
-            Active = false;
+            spellStorage[currentChose].Count--;
+            GameObject spell = GameObject.Instantiate(spellStorage[currentChose].Spell.BaseMagicCircle, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.identity);
+            spell.GetComponent<Spell>().Initialize(spellStorage[currentChose].Spell);
+            active = false;
         }
         else 
         {
-            Active = false;
+            active = false;
         }
     }
 
@@ -70,24 +75,30 @@ public class SpellCast : MonoBehaviour
         if (randomSpell[0] == null) 
         {
             Debug.Log("Заклинание отсутсвует в первом слоте!");
+            active = false;
             return;
         }
-        if (Active == true && Physics.Raycast(ray, out hit)) 
+        if (active == true && Physics.Raycast(ray, out hit)) 
         {
-            GameObject spell = Instantiate(randomSpell[0].BaseMagicCircle, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.identity);
+            Debug.Log("Волшебство мутится");
+            GameObject spell = GameObject.Instantiate(randomSpell[0].BaseMagicCircle, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.identity);
             spell.GetComponent<Spell>().Initialize(randomSpell[0]);
             randomSpell[0] = null;
+            spellCanvas.CurrentSpell.enabled = false;
         }
     }
 
     public void AddNextSpell()
     {
         randomSpell[0] = randomSpell[1];
-        randomSpell[1] = SpellStorage[Random.Range(0, SpellStorage.Count)].Spell;
+        randomSpell[1] = spellStorage[Random.Range(0, spellStorage.Count)].Spell;
+        spellCanvas.CurrentSpell.enabled = true;
+        spellCanvas.ChangeUI(randomSpell[0].IconForUI, randomSpell[1].IconForUI);
     }
 
-    private void OnDestroy()
+    public void onClick()
     {
-        input.Clicked -= Cast;
+        active = true;
+        Debug.Log("ТЫК");
     }
 }

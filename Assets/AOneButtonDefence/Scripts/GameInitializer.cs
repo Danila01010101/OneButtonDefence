@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using static GameStateMachine;
@@ -12,9 +13,11 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private MusicData musicData;
     [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
+    [SerializeField] private SpellCastData spellCastData;
     [FormerlySerializedAs("partManagerPrefab")] [SerializeField] private GameplayCanvas gameplayCanvasPrefab;
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
     [SerializeField] private Canvas loadingCanvas;
+    [SerializeField] private SpellCanvas spellCanvas;
     [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
 
@@ -54,8 +57,6 @@ public class GameInitializer : MonoBehaviour
         SetupEnemyDeathManager();
         InitializeDialogCamera();
         InitializeCameraMovementComponent();
-        InitializeSpellRandomiser();
-        InitializeSpellCastSystem();
         yield return null;
         CreateBuildingSpawner();
         var worldGrid = SpawnWorldGrid();
@@ -64,6 +65,7 @@ public class GameInitializer : MonoBehaviour
         yield return null;
         GameplayCanvas upgradeCanvas = SpawnUpgradeCanvas();
         yield return null;
+        SetupSpellCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
         SetupStateMachine(upgradeCanvas, worldCreator, worldGrid, disableableInput);
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
@@ -175,22 +177,6 @@ public class GameInitializer : MonoBehaviour
         cameraMovement.Initialize(input, cameraData);
     }
 
-    private void InitializeSpellRandomiser()
-    {
-        //spellRandomiser = new SpellRandomiser(spellsData);
-        //TODO: Прописать инициализацию скрипта выдачи спелов 
-    }
-
-    private void InitializeSpellCastSystem()
-    {
-        //new SpellCastSystem(spellsRandomiser, input);
-        
-        //var spellCast = new Gameobject("NameOfGameObject").AddComponent<SpellCastSystem>();
-        //spellCast.Initialize(spellsRandomiser, input);
-        //input.Clicked += CastNewSpell;
-        //TODO: Прописать инициализацию скрипта спелов 
-    }
-    
     private void CreateBuildingSpawner()
     {
         buildingSpawner = new GameObject("BuildingSpawner").AddComponent<BuildingSpawner>();
@@ -228,6 +214,12 @@ public class GameInitializer : MonoBehaviour
         var shopWindow = Instantiate(shopSkinWindow, canvasTransform);
         shopWindow.Initialize(input);
         return shopWindow;
+    }
+
+    private void SetupSpellCanvas()
+    {
+        var spellCanvasWindow = Instantiate(spellCanvas);
+        var spellCastScript = new SpellCast(input, spellCanvasWindow, spellCastData);
     }
 
     private void SetupStateMachine(GameplayCanvas gameplayCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput inputForDialogueState)
