@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd5889ea615b9ec4fae436a7b9ca102e, type: 3}
-  m_Name: SnowyZone
+  m_Name: Snow
   m_EditorClassIdentifier: 
   time: 5
   timePerDamage: 2
   damage: 1
   baseMagicCircle: {fileID: 544068497971431647, guid: 77a593e24f4d2e440bf31c2ee3b5b88d, type: 3}
-  iconForUI: {fileID: 0}
+  iconForUI: {fileID: -899585829, guid: b03dc1658a9192d449fbd853e0eff459, type: 3}
   mainColor: {r: 0.21343175, g: 0.18823528, b: 0.972549, a: 1}
   secondaryColor: {r: 0.43755633, g: 0.39999998, b: 1, a: 1}
   effectParticles: {fileID: 2800000, guid: 0e1a6a9f47773b7478bea4aee1a1b64e, type: 3}

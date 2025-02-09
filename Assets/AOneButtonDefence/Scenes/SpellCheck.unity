@@ -589,6 +589,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34166872f5a83e14d89cdcc0b1eb939c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RandomSpellMode: 0
+  Active: 0
   SpellStorage:
   - Name: Snow
     Spell: {fileID: 11400000, guid: df33e47204b0494458073e413a7ffa34, type: 2}
@@ -597,7 +599,8 @@ MonoBehaviour:
     Spell: {fileID: 11400000, guid: 18fec9b99c3be5442a67670f5d626e78, type: 2}
     Count: 2
   CurrentChose: 0
-  Active: 0
+  CurrentSpell: {fileID: 0}
+  NextSpell: {fileID: 0}
 --- !u!4 &1712000892
 Transform:
   m_ObjectHideFlags: 0
