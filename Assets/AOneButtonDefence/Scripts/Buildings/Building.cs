@@ -47,14 +47,14 @@ public abstract class Building : MonoBehaviour
         resources.FoodAmount -= FoodPerTurnAmount;
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         UpgradeState.UpgradeStateStarted += animator.StartAnimation;
         UpgradeState.UpgradeStateEnded += animator.InteruptAnimation;
         UpgradeState.UpgradeStateEnded += ActivateEndMoveAction;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         UpgradeState.UpgradeStateStarted -= animator.StartAnimation;
         UpgradeState.UpgradeStateEnded -= animator.InteruptAnimation;

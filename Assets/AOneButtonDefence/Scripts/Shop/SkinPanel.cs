@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class SkinPanel : MonoBehaviour
 {
-    [Header("Объект для которого меняется скин")]
-    public GameObject ChangeGameObject;
-    [Header("Лист скинов")]
+    [SerializeField] private ShopSkinShower exampleSkinShowerPrefab;
+    [SerializeField] private Vector3 exampleSkinChangerPosition;
+    [SerializeField] private Vector3 exampleSkinChangerEulerAngles;
+    [Header("???? ??????")]
     public List<SkinData> SkinList;
     public int CurrentChose;
     public int ChosenSkin = 0;
@@ -17,32 +18,29 @@ public class SkinPanel : MonoBehaviour
     public TMP_Text SkinLore;
     public TMP_Text SkinCost;
     public TMP_Text BuyButtonText;
-
     public Image CurrentSkinSprite;
     public Image NextSkinSprite;
     public Image PrevSkinSprite;
     public Image SelectSkinSprite;
-
     public Image BuySkin;
 
     [HideInInspector]
     public static Action<Mesh, Material> SkinChanged;
+    public static Action<GameObject> ShopInitialized;
+    public static Action ShopEnabled;
+    public static Action ShopDisabled;
 
+    private ShopSkinShower spawnedShopSkinShower;
 
-    private MeshFilter _meshFilter;
-    private Renderer _renderer;
-
-    private void Start()
+    public void Initialize(IInput input)
     {
-        _meshFilter = ChangeGameObject.GetComponent<MeshFilter>();
-        _renderer = ChangeGameObject.GetComponent<Renderer>();
-        ////НАКРУТКА!
-        //ResourcesCounter.Instance.Data.GemsAmount += 1000;
-
+        spawnedShopSkinShower = UIGameObjectShower.Instance.RenderPrefab(exampleSkinShowerPrefab, exampleSkinChangerPosition, Quaternion.Euler(exampleSkinChangerEulerAngles));
+        spawnedShopSkinShower.Initialize(input);
         ChangeCurrentChose(0);
         SelectSkin(0);
+        ShopInitialized?.Invoke(gameObject);
+        gameObject.SetActive(false);
     }
-
 
     public void ChangeCurrentChose(int num)
     {
@@ -66,20 +64,18 @@ public class SkinPanel : MonoBehaviour
 
         if (SkinList[CurrentChose].Unlocked)
         {
-            BuyButtonText.text = "Выбрать скин";
-            SkinCost.text = "Куплено";
+            BuyButtonText.text = "РєСѓРїРёС‚СЊ";
+            SkinCost.text = "СЃС‚РѕРёС‚ " + SkinList[CurrentChose] + " Р°Р»РјР°Р·РѕРІ";
         }
         else
         {
-            BuyButtonText.text = "Купить";
+            BuyButtonText.text = "РєСѓРїРёС‚СЊ";
         }
+        
         if (CurrentChose == ChosenSkin)
         {
-            BuyButtonText.text = "Выбран";
+            //BuyButtonText.text = "??????";
         }
-
-        _meshFilter.mesh = SkinList[CurrentChose].Mesh;
-        _renderer.material = SkinList[CurrentChose].Material;
     }
 
     public void SetSkin()
@@ -92,7 +88,7 @@ public class SkinPanel : MonoBehaviour
         {
             if (SkinList[CurrentChose].Cost > ResourcesCounter.Instance.Data.GemsAmount)
             {
-                Debug.Log("Нет денег, бомж");
+                Debug.Log("РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ Р°Р»РјР°Р·РѕРІ");
                 return;
             }
             ResourcesCounter.Instance.Data.GemsAmount -= SkinList[CurrentChose].Cost;
@@ -105,20 +101,43 @@ public class SkinPanel : MonoBehaviour
     private void SelectSkin(int index)
     {
         SkinChanged?.Invoke(SkinList[index].Mesh, SkinList[index].Material);
-        BuyButtonText.text = "Выбран";
-        SkinCost.text = "Куплено";
+        BuyButtonText.text = "РєСѓРїРёС‚СЊ";
+        SkinCost.text = "СЃС‚РѕРёС‚ " + SkinList[index] + " Р°Р»РјР°Р·РѕРІ";
         SelectSkinSprite.sprite = SkinList[index].Icon;
     }
+    
     public int MaxMinIndex<T>(int index, List<T> list)
     {
         if (index == list.Count)
         {
             index = 0;
         }
+        
         if (index == -1)
         {
             index = list.Count - 1;
         }
+        
         return index;
     }
+
+    private void EnablePanel()
+    {
+        if (spawnedShopSkinShower != null) 
+            spawnedShopSkinShower.ShowExampleSkin();
+        
+        ShopEnabled?.Invoke();
+    }
+
+    private void DisablePanel()
+    {
+        if (spawnedShopSkinShower != null) 
+            spawnedShopSkinShower.HideExampleSkin();
+        
+        ShopDisabled?.Invoke();
+    }
+
+    private void OnEnable() => EnablePanel();
+
+    private void OnDisable() => DisablePanel();
 }

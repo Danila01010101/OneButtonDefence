@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6849624719310134805}
-  - component: {fileID: 1063882897230435733}
+  - component: {fileID: 2094672045661467839}
   - component: {fileID: 4655879932873558771}
   - component: {fileID: 1317444358471681175}
   - component: {fileID: 4974299518234971162}
@@ -37,7 +37,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1063882897230435733
+--- !u!114 &2094672045661467839
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,11 +46,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3234184783409877958}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c19941eee7c64d41940717a26fdc925, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d489f0452dcb24409fcdcdfa8d41a24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   characterStats: {fileID: 11400000, guid: a9d4b4363715bd642b1d2938e8ac3ff2, type: 2}
   render: {fileID: 812685895330212570}
+  meshFilter: {fileID: 4207074144917098062}
 --- !u!114 &4655879932873558771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,5 +220,10 @@ MeshRenderer:
 --- !u!4 &1929120414884988508 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cf377a3a526eb9642a9a2f58453da07e, type: 3}
+  m_PrefabInstance: {fileID: 2111948216501133751}
+  m_PrefabAsset: {fileID: 0}
+--- !u!33 &4207074144917098062 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -6400281290468069383, guid: cf377a3a526eb9642a9a2f58453da07e, type: 3}
   m_PrefabInstance: {fileID: 2111948216501133751}
   m_PrefabAsset: {fileID: 0}

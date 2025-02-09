@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 using static GameStateMachine;
 
 public class GameInitializer : MonoBehaviour
@@ -11,11 +12,13 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private MusicData musicData;
     [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
-    [SerializeField] private PartManager partManagerPrefab;
+    [FormerlySerializedAs("partManagerPrefab")] [SerializeField] private GameplayCanvas gameplayCanvasPrefab;
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
     [SerializeField] private Canvas loadingCanvas;
+    [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
-    
+
+    private Transform initializedObjectsParent;
     private BuildingSpawner buildingSpawner;
     private GroundBlocksSpawner worldCreator;
     private GameStateMachine gameStateMachine;
@@ -34,9 +37,11 @@ public class GameInitializer : MonoBehaviour
 
     private IEnumerator StartInitialization()
     {
+        SetupInitializedPartParent();
         SetupLoadingCanvas();
         InitializeInput();
         SetupCoroutineStarter();
+        InitializeSkinDetector();
         Tuple<IBackgroundMusicPlayer, IUpgradeEffectPlayer> players = InitializeMusicPlayer();
         IBackgroundMusicPlayer backgroundMusicPlayer = players.Item1;
         IUpgradeEffectPlayer upgradeEffectPlayer = players.Item2;
@@ -45,6 +50,8 @@ public class GameInitializer : MonoBehaviour
         yield return null;
         SpawnResourceCounter();
         yield return null;
+        SetupUIObjectShower();
+        SetupEnemyDeathManager();
         InitializeDialogCamera();
         InitializeCameraMovementComponent();
         InitializeSpellRandomiser();
@@ -55,10 +62,11 @@ public class GameInitializer : MonoBehaviour
         yield return new WaitUntil(() => worldCreator.IsWorldReady);
         InitializeBuildingSpawner(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration);
         yield return null;
-        PartManager upgradeCanvas = SpawnUpgradeCanvas();
+        GameplayCanvas upgradeCanvas = SpawnUpgradeCanvas();
         yield return null;
+        SetupShopSkinWindow(upgradeCanvas.transform);
         SetupStateMachine(upgradeCanvas, worldCreator, worldGrid, disableableInput);
-        SetupRewardSpawner(GemsView.Instance.GemsTextTransform, GemsView.Instance.Canvas, Camera.main);
+        SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
         yield return null;
         GameInitialized?.Invoke();
         isSerializationCompleted = true;
@@ -88,15 +96,28 @@ public class GameInitializer : MonoBehaviour
         gameStateMachine.PhysicsUpdate();
     }
 
+    private void SetupInitializedPartParent()
+    {
+        initializedObjectsParent = new GameObject("InitializedObjects").transform;
+        initializedObjectsParent.SetParent(transform);
+    }
+
+    private void InitializeSkinDetector() => new SkinChangeDetector();
+
     private void SetupLoadingCanvas() => loadingCanvas = Instantiate(loadingCanvas);
     
     private void SetupUIObjectShower() => Instantiate(uiGameObjectShowerPrefab, Vector3.up * 100, Quaternion.identity);
 
-    private void SetupCoroutineStarter() => new GameObject("CoroutineStarter").AddComponent<CoroutineStarter>();
+    private void SetupCoroutineStarter()
+    {
+        var coroutineStarterTransform = new GameObject("CoroutineStarter").AddComponent<CoroutineStarter>().transform;
+        coroutineStarterTransform.SetParent(initializedObjectsParent);
+    }
 
     private Tuple<IBackgroundMusicPlayer, IUpgradeEffectPlayer> InitializeMusicPlayer()
     {
         var musicPlayerGameObject = new GameObject("MusicPlayer");
+        musicPlayerGameObject.transform.SetParent(initializedObjectsParent);
         var backgroundPlayer = musicPlayerGameObject.AddComponent<AudioSource>();
         var firstUpgradePlayer = musicPlayerGameObject.AddComponent<AudioSource>();
         var secondUpgradePlayer = musicPlayerGameObject.AddComponent<AudioSource>();
@@ -109,6 +130,13 @@ public class GameInitializer : MonoBehaviour
     {
         musicMediator = new MusicPlayerMediator(backgroundMusicPlayer, upgradeEffectPlayer);
         musicMediator.Subscribe();
+    }
+
+    private void SetupEnemyDeathManager()
+    {
+        var enemyDeathManager = new GameObject("EnemyDeathManager").AddComponent<EnemyDeathManager>();
+        enemyDeathManager.Initialize();
+        enemyDeathManager.transform.SetParent(initializedObjectsParent);
     }
 
     private void InitializeInput()
@@ -128,6 +156,7 @@ public class GameInitializer : MonoBehaviour
     private void SpawnResourceCounter()
     {
         ResourcesCounter resourcesCounter = new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
+        resourcesCounter.transform.SetParent(initializedObjectsParent);
         resourcesCounter.SetStartValues(gameData.StartFoodAmount, gameData.StartMaterialsAmount, gameData.StartSpiritAmount);
     }
 
@@ -141,6 +170,7 @@ public class GameInitializer : MonoBehaviour
     private void InitializeCameraMovementComponent()
     {
         CameraMovement cameraMovement = Instantiate(virtualCameraPrefab).gameObject.AddComponent<CameraMovement>();
+        cameraMovement.transform.SetParent(initializedObjectsParent);
         cameraMovement.gameObject.name = "CameraMovement";
         cameraMovement.Initialize(input, cameraData);
     }
@@ -161,11 +191,16 @@ public class GameInitializer : MonoBehaviour
         //TODO: Прописать инициализацию скрипта спелов 
     }
     
-    private void CreateBuildingSpawner() => buildingSpawner = new GameObject("BuildingSpawner").AddComponent<BuildingSpawner>();
+    private void CreateBuildingSpawner()
+    {
+        buildingSpawner = new GameObject("BuildingSpawner").AddComponent<BuildingSpawner>();
+        buildingSpawner.transform.SetParent(initializedObjectsParent);
+    }
 
     private CellsGrid SpawnWorldGrid()
     {
         worldCreator = new GameObject("WorldCreator").AddComponent<GroundBlocksSpawner>();
+        worldCreator.transform.SetParent(initializedObjectsParent);
         var buildingsGrid = new CellsGrid(worldGenerationData.GridSize, worldGenerationData.CellsInterval);
         worldCreator.SetupGrid(worldGenerationData, buildingsGrid, buildingSpawner, this);
         return buildingsGrid;
@@ -176,9 +211,9 @@ public class GameInitializer : MonoBehaviour
         buildingSpawner.Initialize(grid, upgradeBuildings, animationDuration);
     }
 
-    private PartManager SpawnUpgradeCanvas()
+    private GameplayCanvas SpawnUpgradeCanvas()
     {
-        PartManager upgradeCanvas = Instantiate(partManagerPrefab);
+        GameplayCanvas upgradeCanvas = Instantiate(gameplayCanvasPrefab);
         upgradeCanvas.Initialize(4, 
             worldGenerationData.BuildingsData.FarmData.Icon,
             worldGenerationData.BuildingsData.SpiritBuildingData.Icon,
@@ -187,8 +222,15 @@ public class GameInitializer : MonoBehaviour
             );
         return upgradeCanvas;
     }
+    
+    private SkinPanel SetupShopSkinWindow(Transform canvasTransform)
+    {
+        var shopWindow = Instantiate(shopSkinWindow, canvasTransform);
+        shopWindow.Initialize(input);
+        return shopWindow;
+    }
 
-    private void SetupStateMachine(PartManager gameplayCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput inputForDialogueState)
+    private void SetupStateMachine(GameplayCanvas gameplayCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput inputForDialogueState)
     {
         GameStateMachineData gameStateMachineData = new GameStateMachineData 
         (
@@ -205,10 +247,11 @@ public class GameInitializer : MonoBehaviour
         gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset);
     }
 
-    private void SetupRewardSpawner(RectTransform uiTarget, Canvas canvas, Camera mainCamera)
+    private void SetupRewardSpawner(RectTransform uiTarget)
     {
         rewardSpawner = new GameObject("RewardSpawner").AddComponent<RewardSpawner>();
-        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, canvas, mainCamera);
+        rewardSpawner.transform.SetParent(initializedObjectsParent);
+        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, new RewardSpawner.RewardAnimationSettings(1, 1));
     }
 
     private void OnDestroy()

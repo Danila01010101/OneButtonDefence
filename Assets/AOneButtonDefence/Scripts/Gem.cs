@@ -22,16 +22,9 @@ public class Gem : MonoBehaviour, IEnemyReward
         EnableIdleAnimation();
     }
 
-    public void FlyToUI(Vector3 startWorldPosition, RectTransform uiTarget, Canvas canvas, Action onComplete)
-    {
-        // idleAnimation.enabled = true;
-        // uiAnimator.Fly(startWorldPosition, uiTarget, () =>
-        // {
-        //     DisableIdleAnimation();
-        //     onComplete.Invoke();
-        // });
-    } 
-    
+    public void FlyToUI(Camera uICamera, RectTransform uITarget, float duration, float endScale, Action onComplete = null) =>
+        uiAnimator.Fly(uITarget, uICamera, duration, endScale, onComplete);
+
     public void BounceAside(Action onComplete)
     {
         DisableIdleAnimation();

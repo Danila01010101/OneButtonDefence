@@ -9,7 +9,6 @@ public class ShopExample : MonoBehaviour
 
     private void Awake()
     {
-	    ResourcesCounter.Instance.Data.GemsAmount += 1000;
 	    var skin = new SkinData(gnome, 10);
     }
 
