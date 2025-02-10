@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-// Скрипт выдает спелы
-//Скрипт кастует 
+// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
 public class SpellCast
 {
     private bool randomSpellMode = true;
@@ -27,6 +27,7 @@ public class SpellCast
         GameBattleState.BattleWon += () => spellCanvas.Active(false);
         GameBattleState.BattleLost += () => spellCanvas.Active(false);
         GameBattleState.BattleStarted += () => spellCanvas.Active(true);
+        
         if (randomSpellMode == true)
         {
             input.Clicked += RandomModeCast;
@@ -37,6 +38,7 @@ public class SpellCast
         {
             input.Clicked += Cast;
         }
+        
         spellCanvas.CurrentSpellButton.onClick.AddListener(onClick);
         Physics.queriesHitTriggers = false;
     }
@@ -55,7 +57,7 @@ public class SpellCast
         Ray ray = Camera.main.ScreenPointToRay(position);
         RaycastHit hit;
 
-        if (active == true && spellStorage[currentChose].Count > 0 && Physics.Raycast(ray, out hit)) 
+        if (active && spellStorage[currentChose].Count > 0 && Physics.Raycast(ray, out hit)) 
         {
             spellStorage[currentChose].Count--;
             GameObject spell = GameObject.Instantiate(spellStorage[currentChose].Spell.BaseMagicCircle, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.identity);
@@ -72,15 +74,17 @@ public class SpellCast
     {
         Ray ray = Camera.main.ScreenPointToRay(position);
         RaycastHit hit;
+        
         if (randomSpell[0] == null) 
         {
-            Debug.Log("Заклинание отсутсвует в первом слоте!");
+            Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!");
             active = false;
             return;
         }
-        if (active == true && Physics.Raycast(ray, out hit)) 
+        
+        if (active && Physics.Raycast(ray, out hit)) 
         {
-            Debug.Log("Волшебство мутится");
+            Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
             GameObject spell = GameObject.Instantiate(randomSpell[0].BaseMagicCircle, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.identity);
             spell.GetComponent<Spell>().Initialize(randomSpell[0]);
             randomSpell[0] = null;
@@ -99,6 +103,6 @@ public class SpellCast
     public void onClick()
     {
         active = true;
-        Debug.Log("ТЫК");
+        Debug.Log("пїЅпїЅпїЅ");
     }
 }
