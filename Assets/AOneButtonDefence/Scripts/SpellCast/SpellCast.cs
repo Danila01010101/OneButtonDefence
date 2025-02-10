@@ -17,14 +17,10 @@ public class SpellCast
     public SpellCast(IInput input, SpellCanvas spellCanvas, SpellCastData spellCastData)
     {
         this.spellCanvas = spellCanvas;
-        this.spellStorage = spellCastData.SpellStorage;
         this.input = input;
-
-        GameBattleState.BattleWon += () => spellCanvas.Active(false);
-        GameBattleState.BattleLost += () => spellCanvas.Active(false);
-        GameBattleState.BattleStarted += () => spellCanvas.Active(true);
+        spellStorage = spellCastData.SpellStorage;
         
-        if (randomSpellMode == true)
+        if (randomSpellMode)
         {
             input.Clicked += RandomModeCast;
             GameBattleState.BattleWon += AddNextSpell;
@@ -73,14 +69,12 @@ public class SpellCast
         
         if (randomSpell[0] == null) 
         {
-            Debug.Log("���������� ���������� � ������ �����!");
             active = false;
             return;
         }
         
         if (active && Physics.Raycast(ray, out hit)) 
         {
-            Debug.Log("���������� �������");
             GameObject spell = GameObject.Instantiate(randomSpell[0].BaseMagicCircle, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.identity);
             spell.GetComponent<Spell>().Initialize(randomSpell[0]);
             randomSpell[0] = null;
