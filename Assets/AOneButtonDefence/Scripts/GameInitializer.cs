@@ -65,9 +65,9 @@ public class GameInitializer : MonoBehaviour
         yield return null;
         GameplayCanvas upgradeCanvas = SpawnUpgradeCanvas();
         yield return null;
-        SetupSpellCanvas();
+        var spellCanvas = SetupSpellCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
-        SetupStateMachine(upgradeCanvas, worldCreator, worldGrid, disableableInput);
+        SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput);
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
         yield return null;
         GameInitialized?.Invoke();
@@ -216,13 +216,15 @@ public class GameInitializer : MonoBehaviour
         return shopWindow;
     }
 
-    private void SetupSpellCanvas()
+    private GameObject SetupSpellCanvas()
     {
         var spellCanvasWindow = Instantiate(spellCanvas);
         var spellCastScript = new SpellCast(input, spellCanvasWindow, spellCastData);
+        spellCanvasWindow.gameObject.SetActive(false);
+        return spellCanvasWindow.gameObject;
     }
 
-    private void SetupStateMachine(GameplayCanvas gameplayCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput inputForDialogueState)
+    private void SetupStateMachine(GameplayCanvas gameplayCanvas, GameObject battleStateCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput inputForDialogueState)
     {
         GameStateMachineData gameStateMachineData = new GameStateMachineData 
         (
@@ -230,6 +232,7 @@ public class GameInitializer : MonoBehaviour
             gameData,
             worldCreator,
             grid,
+            battleStateCanvas,
             gameData.EnemyTag,
             gameData.GnomeTag,
             inputForDialogueState,
