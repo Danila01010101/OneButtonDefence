@@ -57,8 +57,16 @@ PrefabInstance:
       value: Overworld_Land_02 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ad068fa01eb61f146bef15e3f49861f2, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ad068fa01eb61f146bef15e3f49861f2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: ad068fa01eb61f146bef15e3f49861f2, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: ad068fa01eb61f146bef15e3f49861f2, type: 3}
       propertyPath: m_StaticEditorFlags

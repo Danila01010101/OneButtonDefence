@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class SpellCanvas : MonoBehaviour
 {
-    public Image CurrentSpell;
-    public Image NextSpell;
-    public Button CurrentSpellButton;
+    [FormerlySerializedAs("currrentSpell")] [FormerlySerializedAs("CurrentSpell")] [SerializeField] private Image currentSpell;
+    [FormerlySerializedAs("NextSpell")] [SerializeField] private Image nextSpell;
     
-    public void ChangeUI(Sprite currentSpell, Sprite nextSpell)
+    public void ChangeUI(Sprite currentSpell, Sprite nextSpell, float duration)
     {
-        CurrentSpell.sprite = currentSpell;
-        NextSpell.sprite = nextSpell;
+        this.currentSpell.sprite = currentSpell;
+        this.nextSpell.sprite = nextSpell;
+        this.currentSpell.fillAmount = 0f;
+        this.currentSpell.DOFillAmount(1f, duration).SetEase(Ease.Linear);
     }
 }

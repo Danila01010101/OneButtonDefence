@@ -35,7 +35,7 @@ RectTransform:
   - {fileID: 4274520830016814489}
   - {fileID: 4239330517027771150}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -54,9 +54,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92502005f56e154ea03ff842b138641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentSpell: {fileID: 5950334657161776826}
-  NextSpell: {fileID: 3310165127011668377}
-  CurrentSpellButton: {fileID: 6434584622137260478}
+  currentSpell: {fileID: 5950334657161776826}
+  nextSpell: {fileID: 3310165127011668377}
 --- !u!223 &6676415862268788062
 Canvas:
   m_ObjectHideFlags: 0
@@ -256,7 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -264,7 +263,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 1552578911, guid: fc746076b82fe2348941c2263d5408b1, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
@@ -340,7 +339,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: -1019100004, guid: 42d0bd423fc50354e84d64ac783a4cd1, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
