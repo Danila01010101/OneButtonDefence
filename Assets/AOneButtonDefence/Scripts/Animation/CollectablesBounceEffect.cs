@@ -28,13 +28,13 @@ public class DropBounceEffect : MonoBehaviour
         for (int i = 0; i < bounceCount; i++)
         {
             float height = bounceHeight / (i + 1);
-            Vector3 jumpTarget = startPosition + randomHorizontalOffset;
+            Vector3 jumpTarget = startPosition + randomHorizontalOffset / (3 - i);
 
             bounceSequence.Append(transform.DOJump(jumpTarget, height, 1, bounceDuration / bounceCount)
                 .SetEase(bounceEase));
         }
 
-        bounceSequence.Join(transform.DORotate(new Vector3(0, 360, 0), bounceDuration, RotateMode.FastBeyond360)
-            .SetEase(Ease.Linear)).OnComplete(() => onComplete?.Invoke());
+        transform.DORotate(new Vector3(-90, 360, 0), bounceDuration, RotateMode.FastBeyond360)
+            .SetEase(Ease.Linear).OnComplete(() => onComplete?.Invoke());
     }
 }

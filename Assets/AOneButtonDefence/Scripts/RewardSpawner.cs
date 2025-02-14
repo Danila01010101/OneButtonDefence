@@ -36,7 +36,7 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
     {
         for (int i = 0; i < currencyAmount; i++)
         {
-            SpawnReward(position);
+            SpawnReward(position + Vector3.up * 0.2f);
         }
     }
 
@@ -44,10 +44,11 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
     {
         isUpgradeStarted = false;
         IEnemyReward currencyObject = Instantiate(rewardObjectPrefab, position, rewardObjectPrefab.transform.rotation);
-        Vector3 newPosition = currencyObject.GameObject.transform.position + 
-                              new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f));
-        currencyObject.GameObject.transform.DOJump(newPosition, 0.2f, 3, 2f, true).SetLoops(1, LoopType.Yoyo)
-            .OnComplete(() => StartCoroutine(StartAnimation(currencyObject)));
+        currencyObject.BounceAside(delegate { StartCoroutine(StartAnimation(currencyObject)); });
+        //Vector3 newPosition = currencyObject.GameObject.transform.position + 
+        //                           new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f));
+        //currencyObject.GameObject.transform.DOJump(newPosition, 0.2f, 3, 2f, true).SetLoops(1, LoopType.Yoyo)
+        //    .OnComplete(() => StartCoroutine(StartAnimation(currencyObject)));
     }
 
     private IEnumerator StartAnimation(IEnemyReward collectableObject)
