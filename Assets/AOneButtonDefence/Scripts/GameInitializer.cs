@@ -145,7 +145,9 @@ public class GameInitializer : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
         {
-            throw new System.NotImplementedException();
+            var mobileInput = new MobileInput(gameData.SwipeDeadZone, gameData.ClickMaxTime);
+            input = mobileInput;
+            disableableInput = mobileInput;
         }
         else
         {
