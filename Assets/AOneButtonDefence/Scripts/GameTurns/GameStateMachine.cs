@@ -8,8 +8,8 @@ public class GameStateMachine : StateMachine, IStringStateChanger
 
     public GameStateMachine(GameStateMachineData data, EnemiesData enemies, Vector3 enemySpawnOffset)
     {
-        GameBattleStateData battleStateData = new GameBattleStateData(
-            this, data.CoroutineStarter, data.GameTurnsData.BattleWavesParameters, enemies, data.CellsGrid, enemySpawnOffset, data.EnemyTag, data.GnomeTag);
+        GameBattleStateData battleStateData = new GameBattleStateData( this, data.CoroutineStarter, data.GameTurnsData.BattleWavesParameters, 
+            enemies, data.CellsGrid, data.SpellCanvas, enemySpawnOffset, data.EnemyTag, data.GnomeTag);
 
         stringStates = new Dictionary<string, IState>()
         {
@@ -36,6 +36,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
         public readonly GameData GameTurnsData;
         public readonly MonoBehaviour CoroutineStarter;
         public readonly CellsGrid CellsGrid;
+        public readonly GameObject SpellCanvas;
         public readonly float UpgradeStateCompletionDelay;
         public readonly float UpgradeStateDuration;
         public readonly string EnemyTag;
@@ -43,12 +44,13 @@ public class GameStateMachine : StateMachine, IStringStateChanger
         public readonly IDisableableInput Input;
 
         public GameStateMachineData(GameplayCanvas upgradeUIGameObject, GameData gameTurnsData, MonoBehaviour coroutineStarter, CellsGrid buildingsGrid,
-            string enemyTag, string gnomeTag, IDisableableInput input, float upgradeStateDuration, float upgradeStateCompletionDelay)
+           GameObject spellCanvas, string enemyTag, string gnomeTag, IDisableableInput input, float upgradeStateDuration, float upgradeStateCompletionDelay)
         {
             UpgradeUIGameObject = upgradeUIGameObject;
             GameTurnsData = gameTurnsData;
             CoroutineStarter = coroutineStarter;
             CellsGrid = buildingsGrid;
+            SpellCanvas = spellCanvas;
             EnemyTag = enemyTag;
             GnomeTag = gnomeTag;
             Input = input;

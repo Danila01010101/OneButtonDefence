@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 9e2bed6a1b91bb948a59b3c8196371ca, type: 3}
       propertyPath: m_RootOrder
-      value: 31
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9e2bed6a1b91bb948a59b3c8196371ca, type: 3}
       propertyPath: m_LocalPosition.x
@@ -57,8 +57,16 @@ PrefabInstance:
       value: Overworld_Land_07 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9e2bed6a1b91bb948a59b3c8196371ca, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9e2bed6a1b91bb948a59b3c8196371ca, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 9e2bed6a1b91bb948a59b3c8196371ca, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 9e2bed6a1b91bb948a59b3c8196371ca, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -71,6 +79,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9e2bed6a1b91bb948a59b3c8196371ca, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5309966419499397055}
+    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 9e2bed6a1b91bb948a59b3c8196371ca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5549775848114929845}
   m_SourcePrefab: {fileID: 100100000, guid: 9e2bed6a1b91bb948a59b3c8196371ca, type: 3}
 --- !u!1 &3109915261805494623 stripped
 GameObject:
@@ -89,3 +100,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf01eedf573660498e24c49912d413e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6243511444702820742 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 9e2bed6a1b91bb948a59b3c8196371ca, type: 3}
+  m_PrefabInstance: {fileID: 2876052651256495118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &5549775848114929845
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6243511444702820742}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.2, y: 0.99481213, z: 3.2}
+  m_Center: {x: 0, y: 0.49740607, z: 0}

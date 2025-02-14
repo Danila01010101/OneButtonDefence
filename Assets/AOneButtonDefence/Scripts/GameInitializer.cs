@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using static GameStateMachine;
@@ -12,9 +13,11 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private MusicData musicData;
     [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
+    [SerializeField] private SpellCastData spellCastData;
     [FormerlySerializedAs("partManagerPrefab")] [SerializeField] private GameplayCanvas gameplayCanvasPrefab;
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
     [SerializeField] private Canvas loadingCanvas;
+    [SerializeField] private SpellCanvas spellCanvas;
     [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
 
@@ -62,8 +65,9 @@ public class GameInitializer : MonoBehaviour
         yield return null;
         GameplayCanvas upgradeCanvas = SpawnUpgradeCanvas();
         yield return null;
+        var spellCanvas = SetupSpellCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
-        SetupStateMachine(upgradeCanvas, worldCreator, worldGrid, disableableInput);
+        SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput);
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
         yield return null;
         GameInitialized?.Invoke();
@@ -78,6 +82,11 @@ public class GameInitializer : MonoBehaviour
         
         gameStateMachine.Update();
         gameStateMachine.HandleInput();
+        input.Update();
+    }
+
+    private void LateUpdate()
+    {
         input.LateUpdate();
     }
 
@@ -140,7 +149,7 @@ public class GameInitializer : MonoBehaviour
         }
         else
         {
-            var initializedInput = new DesctopInput(gameData.SwipeDeadZone);
+            var initializedInput = new DesctopInput(gameData.SwipeDeadZone, gameData.ClickMaxTime);
             input = initializedInput;
             disableableInput = initializedInput;
         }
@@ -167,7 +176,7 @@ public class GameInitializer : MonoBehaviour
         cameraMovement.gameObject.name = "CameraMovement";
         cameraMovement.Initialize(input, cameraData);
     }
-    
+
     private void CreateBuildingSpawner()
     {
         buildingSpawner = new GameObject("BuildingSpawner").AddComponent<BuildingSpawner>();
@@ -207,7 +216,15 @@ public class GameInitializer : MonoBehaviour
         return shopWindow;
     }
 
-    private void SetupStateMachine(GameplayCanvas gameplayCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput inputForDialogueState)
+    private GameObject SetupSpellCanvas()
+    {
+        var spellCanvasWindow = Instantiate(spellCanvas);
+        var spellCastScript = new SpellCast(input, spellCanvasWindow, spellCastData);
+        spellCanvasWindow.gameObject.SetActive(false);
+        return spellCanvasWindow.gameObject;
+    }
+
+    private void SetupStateMachine(GameplayCanvas gameplayCanvas, GameObject battleStateCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput inputForDialogueState)
     {
         GameStateMachineData gameStateMachineData = new GameStateMachineData 
         (
@@ -215,6 +232,7 @@ public class GameInitializer : MonoBehaviour
             gameData,
             worldCreator,
             grid,
+            battleStateCanvas,
             gameData.EnemyTag,
             gameData.GnomeTag,
             inputForDialogueState,
