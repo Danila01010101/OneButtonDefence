@@ -30,4 +30,4 @@ MonoBehaviour:
   <EnemyTag>k__BackingField: Enemy
   <GnomeTag>k__BackingField: Gnome
   <SwipeDeadZone>k__BackingField: 0.2
-  <ClickMaxTime>k__BackingField: 0.3
+  <ClickMaxTime>k__BackingField: 0.1
