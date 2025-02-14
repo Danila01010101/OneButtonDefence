@@ -29,7 +29,6 @@ public class FightState : IState, ITargetAttacker
     public void Enter()
     {
         animation.CharacterAttacked += Attack;
-        animation.CharacterAttackEnded += CheckTarget;
     }
 
     public void Exit() 
@@ -37,7 +36,6 @@ public class FightState : IState, ITargetAttacker
         target = null;
         isTargetSetted = false;
         animation.CharacterAttacked -= Attack;
-        animation.CharacterAttackEnded -= CheckTarget;
         animation.InterruptAnimation();
     }
 
@@ -62,7 +60,8 @@ public class FightState : IState, ITargetAttacker
 
         if (lastTimeAttacked + attackDelay >= Time.time)
             return;
-
+        
+        CheckTarget();
         lastTimeAttacked = Time.time;
         animation.StartAnimation();
     }
