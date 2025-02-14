@@ -29,4 +29,5 @@ MonoBehaviour:
   <UpgradeStateCompletionDelay>k__BackingField: 2
   <EnemyTag>k__BackingField: Enemy
   <GnomeTag>k__BackingField: Gnome
-  <SwipeDeadZone>k__BackingField: 0
+  <SwipeDeadZone>k__BackingField: 0.2
+  <ClickMaxTime>k__BackingField: 0.3

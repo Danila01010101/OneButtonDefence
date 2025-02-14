@@ -14,7 +14,7 @@ public class SpellCast
     [Header("Graphic")]
     private SpellCanvas spellCanvas;
 
-    private IInput input = new DesctopInput(0);
+    private IInput input;
     private List<SpellData> randomSpell = new List<SpellData>();
     
     private bool CanCastSpell => isBattleGoing && isReloading == false;

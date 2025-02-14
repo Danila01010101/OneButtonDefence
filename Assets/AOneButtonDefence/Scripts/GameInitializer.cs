@@ -149,7 +149,7 @@ public class GameInitializer : MonoBehaviour
         }
         else
         {
-            var initializedInput = new DesctopInput(gameData.SwipeDeadZone);
+            var initializedInput = new DesctopInput(gameData.SwipeDeadZone, gameData.ClickMaxTime);
             input = initializedInput;
             disableableInput = initializedInput;
         }

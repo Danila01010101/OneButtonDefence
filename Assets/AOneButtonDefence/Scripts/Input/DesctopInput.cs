@@ -11,7 +11,9 @@ public class DesctopInput : IInput, IDisableableInput
     public static Action MovementDisabled { get; set; }
 
     private float deadZone = 0.1f;
+    private float clickMaxTime = 0.5f;
     private Vector3 lastMousePosition;
+    private float mouseClickButtonTouchTime;
     private bool enabled;
 
     private readonly string xMoveAxis = "Mouse X";
@@ -21,14 +23,15 @@ public class DesctopInput : IInput, IDisableableInput
     private readonly int moveMouseButton = 0;
     private readonly int rotateMouseButton = 1;
 
-    public DesctopInput(float deadZone)
+    public DesctopInput(float deadZone, float clickMaxTime)
     {
         this.deadZone = deadZone;
+        this.clickMaxTime = clickMaxTime;
     }
 
     public void Update()
     {
-        if (Input.GetMouseButtonUp(spellCastButton))
+        if (Input.GetMouseButtonUp(spellCastButton) && Time.time - mouseClickButtonTouchTime < clickMaxTime)
             Clicked?.Invoke(Input.mousePosition);
     }
 
@@ -60,6 +63,7 @@ public class DesctopInput : IInput, IDisableableInput
         if (Input.GetMouseButtonDown(moveMouseButton))
         {
             lastMousePosition = Input.mousePosition;
+            mouseClickButtonTouchTime = Time.time;
         }
 
         if (Input.GetMouseButton(moveMouseButton))

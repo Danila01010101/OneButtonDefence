@@ -30,4 +30,6 @@ public class GameData : ScriptableObject
     [field: SerializeField] public string GnomeTag { get; private set; }
     [field: Header("Input parameters")]
     [field: SerializeField] public float SwipeDeadZone { get; private set; }
+
+    [field: SerializeField] public float ClickMaxTime { get; private set; } = 0.5f;
 }
