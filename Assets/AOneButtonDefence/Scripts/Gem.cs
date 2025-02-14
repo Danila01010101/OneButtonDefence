@@ -32,6 +32,7 @@ public class Gem : MonoBehaviour, IEnemyReward
         {
             EnableIdleAnimation();
             onComplete.Invoke();
+            EnableIdleAnimation();
         });
     }
     
@@ -39,7 +40,7 @@ public class Gem : MonoBehaviour, IEnemyReward
     
     public void Destroy() => Destroy(gameObject);
     
-    private void EnableIdleAnimation() => idleAnimation.enabled = true;
+    private void EnableIdleAnimation() => idleAnimation.isAnimated = true;
     
-    private void DisableIdleAnimation() => idleAnimation.enabled = false;
+    private void DisableIdleAnimation() => idleAnimation.isAnimated = false;
 }
