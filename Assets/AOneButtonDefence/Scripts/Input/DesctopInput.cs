@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class DesctopInput : IInput, IDisableableInput
 {
+    public Action<Vector2> Clicked { get; set; }
     public Action<Vector3> Moved { get; set; }
     public Action<Vector2> Rotated { get; set; }
     public Action<float> Scroll { get; set; }
@@ -10,18 +11,28 @@ public class DesctopInput : IInput, IDisableableInput
     public static Action MovementDisabled { get; set; }
 
     private float deadZone = 0.1f;
+    private float clickMaxTime = 0.5f;
     private Vector3 lastMousePosition;
+    private float mouseClickButtonTouchTime;
     private bool enabled;
 
     private readonly string xMoveAxis = "Mouse X";
     private readonly string yMoveAxis = "Mouse Y";
     private readonly string scrollWeelName = "Mouse ScrollWheel";
+    private readonly int spellCastButton = 0;
     private readonly int moveMouseButton = 0;
     private readonly int rotateMouseButton = 1;
 
-    public DesctopInput(float deadZone)
+    public DesctopInput(float deadZone, float clickMaxTime)
     {
         this.deadZone = deadZone;
+        this.clickMaxTime = clickMaxTime;
+    }
+
+    public void Update()
+    {
+        if (Input.GetMouseButtonUp(spellCastButton) && Time.time - mouseClickButtonTouchTime < clickMaxTime)
+            Clicked?.Invoke(Input.mousePosition);
     }
 
     public void LateUpdate()
@@ -52,6 +63,7 @@ public class DesctopInput : IInput, IDisableableInput
         if (Input.GetMouseButtonDown(moveMouseButton))
         {
             lastMousePosition = Input.mousePosition;
+            mouseClickButtonTouchTime = Time.time;
         }
 
         if (Input.GetMouseButton(moveMouseButton))

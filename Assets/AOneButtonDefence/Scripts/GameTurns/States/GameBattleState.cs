@@ -13,6 +13,7 @@ public class GameBattleState : IState
     private Coroutine endTurnCheckCoroutine;
     private Coroutine spawnCoroutine;
     private CellsGrid grid;
+    private GameObject spellCanvas;
     private Vector3 enemiesSpawnOffset;
     private int spawnSpread = 2;
     private int currentWaveIndex = 0;
@@ -33,7 +34,7 @@ public class GameBattleState : IState
         gnomeTag = data.GnomeTag;
         grid = data.CellsGrid;
         unitsFactory = new UnitsFactory(data.EnemiesData.enemies);
-
+        spellCanvas = data.SpellCanvas;
         AsyncHelper.Instance.RunAsyncWithResult<BattleWavesParameters>(() => WaveGenerator.GenerateWaves(data.WavesParameters, 100), result => wavesParameters = result);
         //CoroutineStarter.StartCoroutine(LevelGenerationClass.GenerateNewLevels(data.WavesParameters, 100, out newParameters));
     }
@@ -42,10 +43,13 @@ public class GameBattleState : IState
     {
         BattleStarted?.Invoke();
         StartWave();
+        spellCanvas.SetActive(true);
     }
 
     public void Exit()
     {
+        spellCanvas.SetActive(false);
+        
         if (spawnCoroutine != null)
         {
             coroutineStarter.StopCoroutine(spawnCoroutine);
