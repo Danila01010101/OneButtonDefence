@@ -36,7 +36,7 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
     {
         for (int i = 0; i < currencyAmount; i++)
         {
-            SpawnReward(position + Vector3.up * 0.2f);
+            SpawnReward(position + Vector3.up * 0.1f);
         }
     }
 
