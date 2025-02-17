@@ -13,8 +13,8 @@ public class MobileInput : IInput, IDisableableInput
     private float deadZone = 5f;
     private float clickMaxTime = 0.2f;
     private float lastTapTime;
-    private Vector2 lastTouchPosition;
     private bool enabled;
+    private bool isZoomingOrRotating;
 
     public MobileInput(float deadZone, float clickMaxTime)
     {
@@ -28,8 +28,19 @@ public class MobileInput : IInput, IDisableableInput
 
         HandleTapInput();
         HandleMoveInput();
-        HandleRotateInput();
-        HandleZoomInput();
+
+        if (Input.touchCount == 2)
+        {
+            if (!isZoomingOrRotating)
+            {
+                if (IsPinchGesture()) HandleZoomInput();
+                else HandleRotateInput();
+            }
+        }
+        else
+        {
+            isZoomingOrRotating = false;
+        }
     }
 
     public void LateUpdate() { }
@@ -75,35 +86,49 @@ public class MobileInput : IInput, IDisableableInput
 
     private void HandleRotateInput()
     {
-        if (Input.touchCount == 2)
-        {
-            Touch touch0 = Input.GetTouch(0);
-            Touch touch1 = Input.GetTouch(1);
+        if (isZoomingOrRotating) return;
 
-            Vector2 delta0 = touch0.deltaPosition;
-            Vector2 delta1 = touch1.deltaPosition;
+        isZoomingOrRotating = true;
 
-            Vector2 averageDelta = (delta0 + delta1) / 2f;
+        Touch touch0 = Input.GetTouch(0);
+        Touch touch1 = Input.GetTouch(1);
 
-            Rotated?.Invoke(averageDelta * Time.deltaTime);
-        }
+        Vector2 delta0 = touch0.deltaPosition;
+        Vector2 delta1 = touch1.deltaPosition;
+
+        Vector2 averageDelta = (delta0 + delta1) / 2f;
+
+        Rotated?.Invoke(averageDelta * Time.deltaTime);
     }
 
     private void HandleZoomInput()
     {
-        if (Input.touchCount == 2)
+        if (isZoomingOrRotating) return;
+
+        isZoomingOrRotating = true;
+
+        Touch touch0 = Input.GetTouch(0);
+        Touch touch1 = Input.GetTouch(1);
+
+        float prevDistance = (touch0.position - touch0.deltaPosition - (touch1.position - touch1.deltaPosition)).magnitude;
+        float currentDistance = (touch0.position - touch1.position).magnitude;
+        float zoomDelta = currentDistance - prevDistance;
+
+        if (Mathf.Abs(zoomDelta) > deadZone)
         {
-            Touch touch0 = Input.GetTouch(0);
-            Touch touch1 = Input.GetTouch(1);
-
-            float prevDistance = (touch0.position - touch0.deltaPosition - (touch1.position - touch1.deltaPosition)).magnitude;
-            float currentDistance = (touch0.position - touch1.position).magnitude;
-            float zoomDelta = currentDistance - prevDistance;
-
-            if (Mathf.Abs(zoomDelta) > deadZone)
-            {
-                Scroll?.Invoke(zoomDelta * 0.01f);
-            }
+            Scroll?.Invoke(zoomDelta * 0.01f);
         }
+    }
+
+    private bool IsPinchGesture()
+    {
+        if (Input.touchCount < 2) return false;
+
+        Touch touch0 = Input.GetTouch(0);
+        Touch touch1 = Input.GetTouch(1);
+
+        float prevDistance = (touch0.position - touch0.deltaPosition - (touch1.position - touch1.deltaPosition)).magnitude;
+        float currentDistance = (touch0.position - touch1.position).magnitude;
+        return Mathf.Abs(currentDistance - prevDistance) > deadZone;
     }
 }
