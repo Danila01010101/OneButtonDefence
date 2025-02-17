@@ -450,7 +450,7 @@ MonoBehaviour:
   enemiesData: {fileID: 11400000, guid: 38007ab0f6607404e8a58182076d6a0c, type: 2}
   worldGenerationData: {fileID: 11400000, guid: 0a5f9a6cff94cdd4e8ba60c38855587b, type: 2}
   spellCastData: {fileID: 11400000, guid: 3d3e1ce45036ce74d98b5aedcb82e232, type: 2}
-  gameplayCanvasPrefab: {fileID: 263800998971773282, guid: ecbdf0191c1061f4791cc69571515763, type: 3}
+  gameplayCanvasPrefab: {fileID: 5254249503310026437, guid: ecbdf0191c1061f4791cc69571515763, type: 3}
   virtualCameraPrefab: {fileID: 479869093838107416, guid: 80fdc9be4cb8de34396fa621b4f8490c, type: 3}
   loadingCanvas: {fileID: 3805665588448524472, guid: 252ebb6cfaf8c1648aeb1b1665ab8615, type: 3}
   spellCanvas: {fileID: 9139631081805866845, guid: 813fe02d1d1ce6c459b9cd9404c26104, type: 3}

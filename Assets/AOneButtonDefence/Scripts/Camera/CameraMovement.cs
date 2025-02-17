@@ -11,6 +11,7 @@ public class CameraMovement : MonoBehaviour
     private float currentDistance;
     private float currentX;
     private float currentY;
+    private Vector3 rotationVelocity;
     private bool isInitialize;
 
     public void Initialize(IInput input, CameraData data)
@@ -43,10 +44,11 @@ public class CameraMovement : MonoBehaviour
 
     private void UpdateCameraPositionAndRotation()
     {
-        Quaternion rotation = Quaternion.Euler(currentX, currentY, 0);
-        Vector3 position = target.position - (rotation * Vector3.forward * currentDistance);
+        Vector3 rotation = 
+            Vector3.SmoothDamp(transform.rotation.eulerAngles, new Vector3(currentX, currentY, 0), ref rotationVelocity, data.CameraRotationSmooth);
+        Vector3 position = target.position - (Quaternion.Euler(rotation)  * Vector3.forward * currentDistance);
         transform.position = position;
-        transform.rotation = rotation;
+        transform.eulerAngles = rotation;
     }
 
     private void RotateCamera(Vector2 direction)
