@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8839f9aa92ee6e44db41b619c60b7d2b, type: 3}
-  m_Name: CameraData
+  m_Name: CameraDataMobile
   m_EditorClassIdentifier: 
   <StartCameraTargetPosition>k__BackingField: {x: 156.8828, y: 1, z: 155.74223}
   <DialogCameraPrefab>k__BackingField: {fileID: 4628187216870136747, guid: 9d5b8bbf672665043a78c246f712a482, type: 3}
@@ -22,4 +22,4 @@ MonoBehaviour:
   <CameraRotateSpeed>k__BackingField: 60
   <MinimumXAngle>k__BackingField: 5
   <MaximumXAngle>k__BackingField: 75
-  <CameraZoomSpeed>k__BackingField: 10
+  <CameraZoomSpeed>k__BackingField: 1
