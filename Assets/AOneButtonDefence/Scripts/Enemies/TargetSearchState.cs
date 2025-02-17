@@ -13,17 +13,23 @@ public class TargetSearchState : IState
     private Vector3 startPosition;
     private WalkingAnimation walkingAnimation;
     private bool isOnTheWay;
+    private float enemyCheckInterval = 0.4f;
+    private float lastTimeEnemyChecked;
+    private bool isBattleGoing;
 
     public TargetSearchState(TargetSearchStateData data)
     {
-        this.stateMachine = data.StateMachine;
-        this.transform = data.Transform;
-        this.detectRange = data.DetectRange;
-        this.detectMask = data.DetectMask;
-        this.targetFollower = data.TargetFollower;
-        this.agent = data.Agent;
-        this.startPosition = data.StartPosition;
-        this.walkingAnimation = data.WalkingAnimation;
+        stateMachine = data.StateMachine;
+        transform = data.Transform;
+        detectRange = data.DetectRange;
+        detectMask = data.DetectMask;
+        targetFollower = data.TargetFollower;
+        agent = data.Agent;
+        startPosition = data.StartPosition;
+        walkingAnimation = data.WalkingAnimation;
+        GameBattleState.BattleWon += DetectBattleEnd;
+        GameBattleState.BattleLost += DetectBattleEnd;
+        GameBattleState.BattleStarted += DetectBattleStart;
     }
 
     public void Enter() { }
@@ -56,6 +62,9 @@ public class TargetSearchState : IState
             return;
         }
         
+        if (isBattleGoing && Time.time - lastTimeEnemyChecked < enemyCheckInterval)
+            return;
+        
         Transform detectedEnemy = ChooseEnemy(enemies);
 
         if (detectedEnemy != null)
@@ -81,6 +90,10 @@ public class TargetSearchState : IState
         walkingAnimation.StartAnimation();
         agent.SetDestination(startPosition);
     }
+    
+    private void DetectBattleEnd() => isBattleGoing = false;
+    
+    private void DetectBattleStart() => isBattleGoing = true;
 
     private bool IsEnemiesInRange() => FindEnemies().Count() > 0;
 
@@ -88,12 +101,16 @@ public class TargetSearchState : IState
 
     private Transform ChooseEnemy(Collider[] enemies)
     {
+        Debug.Log("Enemy checked");
+        lastTimeEnemyChecked = Time.time;
         float closestDistance = float.MaxValue;
         Transform closestTransform = null;
 
         foreach (Collider collider in enemies)
         {
-            if (collider.gameObject.GetComponent<IDamagable>() != null)
+            IDamagable foundEnemy;
+            
+            if (collider.gameObject.TryGetComponent<IDamagable>(out foundEnemy))
             {
                 float distanceToEnemy = Vector3.Distance(transform.position, collider.gameObject.transform.position);
 
