@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameData: {fileID: 11400000, guid: 1736fbe24c24d7e4c83db94aa59a4d30, type: 2}
-  cameraData: {fileID: 11400000, guid: dce509826f487264da42aadc045aa700, type: 2}
+  cameraData: {fileID: 11400000, guid: f472054e73fc9d3478a5c78574c7e0e3, type: 2}
   musicData: {fileID: 11400000, guid: 92dee7b0de6425245be4d000ff3186ac, type: 2}
   enemiesData: {fileID: 11400000, guid: 38007ab0f6607404e8a58182076d6a0c, type: 2}
   worldGenerationData: {fileID: 11400000, guid: 0a5f9a6cff94cdd4e8ba60c38855587b, type: 2}
