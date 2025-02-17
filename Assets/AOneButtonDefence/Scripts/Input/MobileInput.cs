@@ -14,7 +14,7 @@ public class MobileInput : IInput, IDisableableInput
     private float clickMaxTime = 0.2f;
     private float lastTapTime;
     private bool enabled;
-    private bool isZoomingOrRotating;
+    private bool isZooming;
 
     public MobileInput(float deadZone, float clickMaxTime)
     {
@@ -31,15 +31,20 @@ public class MobileInput : IInput, IDisableableInput
 
         if (Input.touchCount == 2)
         {
-            if (!isZoomingOrRotating)
+            isZooming = IsPinchGesture();
+            
+            if (isZooming)
             {
-                if (IsPinchGesture()) HandleZoomInput();
-                else HandleRotateInput();
+                HandleZoomInput();
+            }
+            else
+            {
+                HandleRotateInput();
             }
         }
         else
         {
-            isZoomingOrRotating = false;
+            isZooming = false;
         }
     }
 
@@ -86,10 +91,8 @@ public class MobileInput : IInput, IDisableableInput
 
     private void HandleRotateInput()
     {
-        if (isZoomingOrRotating) return;
-
-        isZoomingOrRotating = true;
-
+        isZooming = false;
+        
         Touch touch0 = Input.GetTouch(0);
         Touch touch1 = Input.GetTouch(1);
 
@@ -103,10 +106,8 @@ public class MobileInput : IInput, IDisableableInput
 
     private void HandleZoomInput()
     {
-        if (isZoomingOrRotating) return;
-
-        isZoomingOrRotating = true;
-
+        isZooming = true;
+        
         Touch touch0 = Input.GetTouch(0);
         Touch touch1 = Input.GetTouch(1);
 
@@ -129,6 +130,7 @@ public class MobileInput : IInput, IDisableableInput
 
         float prevDistance = (touch0.position - touch0.deltaPosition - (touch1.position - touch1.deltaPosition)).magnitude;
         float currentDistance = (touch0.position - touch1.position).magnitude;
+        
         return Mathf.Abs(currentDistance - prevDistance) > deadZone;
     }
 }
