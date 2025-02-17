@@ -15,7 +15,7 @@ public class TargetSearchState : IState
     private bool isOnTheWay;
     private float enemyCheckInterval = 0.4f;
     private float lastTimeEnemyChecked;
-    private bool isBattleGoing;
+    private bool isBattleGoing = true;
 
     public TargetSearchState(TargetSearchStateData data)
     {
@@ -62,7 +62,7 @@ public class TargetSearchState : IState
             return;
         }
         
-        if (isBattleGoing && Time.time - lastTimeEnemyChecked < enemyCheckInterval)
+        if (isBattleGoing == false || Time.time - lastTimeEnemyChecked < enemyCheckInterval)
             return;
         
         Transform detectedEnemy = ChooseEnemy(enemies);
