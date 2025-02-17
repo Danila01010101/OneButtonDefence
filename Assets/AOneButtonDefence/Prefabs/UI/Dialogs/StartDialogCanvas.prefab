@@ -960,7 +960,7 @@ MonoBehaviour:
   - {fileID: 3932576124423774362}
   - {fileID: 2479944433429059477}
   Answers: []
-  ReplicSpeed: 0.05
+  ReplicSpeed: 0.01
   spawner: {fileID: -4006017165292560979}
 --- !u!82 &8217856072385390231
 AudioSource:
@@ -972,9 +972,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 41af26ddc361322429891b077adbf071, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 2778d41a91cbf6a4baf8ceb036b549ee, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -121,8 +121,11 @@ public class GameInitializer : MonoBehaviour
         var musicPlayerGameObject = new GameObject("MusicPlayer");
         musicPlayerGameObject.transform.SetParent(initializedObjectsParent);
         var backgroundPlayer = musicPlayerGameObject.AddComponent<AudioSource>();
+        backgroundPlayer.volume = 0.6f;
         var firstUpgradePlayer = musicPlayerGameObject.AddComponent<AudioSource>();
+        firstUpgradePlayer.volume = 0.8f;
         var secondUpgradePlayer = musicPlayerGameObject.AddComponent<AudioSource>();
+        secondUpgradePlayer.volume = 0.8f;
         var musicPlayer = new GameMusicPlayer(musicData, backgroundPlayer, firstUpgradePlayer, secondUpgradePlayer);
         var allMusicPlayers = new Tuple<IBackgroundMusicPlayer, IUpgradeEffectPlayer>(musicPlayer, musicPlayer);
         return allMusicPlayers;
