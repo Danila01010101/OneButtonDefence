@@ -68,6 +68,7 @@ public class GameInitializer : MonoBehaviour
         var spellCanvas = SetupSpellCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput);
+        SetupBattleNotifier();
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
         yield return null;
         GameInitialized?.Invoke();
@@ -246,6 +247,8 @@ public class GameInitializer : MonoBehaviour
         );
         gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset);
     }
+
+    private void SetupBattleNotifier() => new BattleNotifier();
 
     private void SetupRewardSpawner(RectTransform uiTarget)
     {

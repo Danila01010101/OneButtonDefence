@@ -10,11 +10,12 @@ public class WarriorStateMachine : StateMachine
         var targetFollowingState = new TargetFollowingState(this, data.Agent, data.CharacterStats, fightState, data.CharacterStats.EnemyLayerMask, data.WalkingAnimation);
         var targetSearchStateData = new TargetSearchState.TargetSearchStateData(
             this, data.Transform, data.CharacterStats.DetectionRadius, data.CharacterStats.EnemyLayerMask,
-            targetFollowingState, data.Agent, data.Transform.position, data.WalkingAnimation);
+            targetFollowingState, data.Agent, data.WalkingAnimation);
 
         states = new List<IState>()
         {
             new TargetSearchState(targetSearchStateData),
+            new IdleWarriorState(this, data.Transform.position, data.WalkingAnimation, data.Agent),
             fightState,
             targetFollowingState
         };

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public abstract class StateMachine : IStateChanger
 {
+    public string CurrentStateName => currentState.GetType().Name.ToString();
+
     protected IState currentState;
     protected List<IState> states;
 

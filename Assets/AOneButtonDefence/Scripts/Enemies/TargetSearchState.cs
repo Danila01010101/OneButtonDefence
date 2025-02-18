@@ -1,16 +1,16 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class TargetSearchState : IState
 {
     private IStateChanger stateMachine;
+    private WalkingAnimation walkingAnimation;
     private Transform transform;
     private float detectRange;
     private LayerMask detectMask;
     private ITargetFollower targetFollower;
     private NavMeshAgent agent;
-    private bool isOnTheWay;
+	private bool isBattleGoing = false;
     private float enemyCheckInterval = 0.4f;
     private float lastTimeEnemyChecked;
 
@@ -25,11 +25,15 @@ public class TargetSearchState : IState
         walkingAnimation = data.WalkingAnimation;
     }
 
-    public void Enter() { }
+    public void Enter()
+    {
+        Debug.Log("TargetSearch entered");
+        lastTimeEnemyChecked = 0;
+        isBattleGoing = true;
+    }
 
     public void Exit()
     {
-        agent.ResetPath();
         walkingAnimation.StopAnimation();
     }
 
@@ -47,42 +51,37 @@ public class TargetSearchState : IState
 
     public void PhysicsUpdate()
     {
-        if (isOnTheWay)
+        if (Time.time - lastTimeEnemyChecked < enemyCheckInterval)
             return;
-        
+
         Collider[] enemies = FindEnemies();
         
-        if (enemies.Length == 0)
+        if (enemies.Length == 0 && isBattleGoing == false)
         {
-            GoToStartPosition();
+            stateMachine.ChangeState<IdleWarriorState>();
         }
-        
-        if (isBattleGoing == false || Time.time - lastTimeEnemyChecked < enemyCheckInterval)
-            return;
         
         Transform detectedEnemy = ChooseEnemy(enemies);
 
         if (detectedEnemy != null)
         {
             targetFollower.SetTarget(detectedEnemy);
-            isOnTheWay = false;
             stateMachine.ChangeState<TargetFollowingState>();
         }
     }
 
     public void Update()
     {
-        if (agent.remainingDistance <= agent.stoppingDistance && isOnTheWay)
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
             walkingAnimation.StopAnimation();
-            isOnTheWay = false;
         }
     }
+
     private Collider[] FindEnemies() => Physics.OverlapSphere(transform.position, detectRange, detectMask);
 
     private Transform ChooseEnemy(Collider[] enemies)
     {
-        Debug.Log("Enemy checked");
         lastTimeEnemyChecked = Time.time;
         float closestDistance = float.MaxValue;
         Transform closestTransform = null;
@@ -114,11 +113,10 @@ public class TargetSearchState : IState
         public LayerMask DetectMask { get; private set; }
         public ITargetFollower TargetFollower { get; private set; }
         public NavMeshAgent Agent { get; private set; }
-        public Vector3 StartPosition { get; private set; }
         public WalkingAnimation WalkingAnimation { get; private set; }
 
         public TargetSearchStateData(IStateChanger stateMachine, Transform transform, float detectRange, LayerMask detectMask,
-            ITargetFollower targetFollower, NavMeshAgent agent, Vector3 startPosition, WalkingAnimation walkingAnimation)
+            ITargetFollower targetFollower, NavMeshAgent agent, WalkingAnimation walkingAnimation)
         {
             StateMachine = stateMachine;
             Transform = transform;
@@ -126,7 +124,6 @@ public class TargetSearchState : IState
             DetectMask = detectMask;
             TargetFollower = targetFollower;
             Agent = agent;
-            StartPosition = startPosition;
             WalkingAnimation = walkingAnimation;
         }
     }

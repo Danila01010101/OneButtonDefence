@@ -55,12 +55,9 @@ public class FightState : IState, ITargetAttacker
 
     public void Update()
     {
-        if (!isTargetSetted)
-            return;
-
         if (lastTimeAttacked + attackDelay >= Time.time)
             return;
-        
+
         CheckTarget();
         lastTimeAttacked = Time.time;
         animation.StartAnimation();

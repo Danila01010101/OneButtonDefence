@@ -5,19 +5,24 @@ public class IdleWarriorState : IState
 {
 	private WalkingAnimation walkingAnimation;
 	private NavMeshAgent agent;
+	private IStateChanger stateMachine;
 	private Vector3 startPosition;
 	private bool isBattleGoing = true;
 
-	public IdleWarriorState()
+	public IdleWarriorState(IStateChanger stateChanger, Vector3 startPosition, WalkingAnimation walkingAnimation, NavMeshAgent agent)
 	{
-        startPosition = data.StartPosition;
-        walkingAnimation = data.WalkingAnimation;
-		GameBattleState.BattleWon += DetectBattleEnd;
-		GameBattleState.BattleLost += DetectBattleEnd;
-		GameBattleState.BattleStarted += DetectBattleStart;
+        stateMachine = stateChanger;
+		this.agent = agent;
+        this.startPosition = startPosition;
+        this.walkingAnimation = walkingAnimation;
 	}
 
-	public void Enter() { }
+	public void Enter()
+    {
+		Debug.Log("IdleState entered");
+		isBattleGoing = false;
+        GoToStartPosition();
+	}
 
 	public void Exit() { }
 
@@ -36,10 +41,6 @@ public class IdleWarriorState : IState
 	public void OnAnimationExitEvent() { }
 
 	public void OnAnimationTransitionEvent() { }
-    
-	private void DetectBattleEnd() => isBattleGoing = false;
-    
-	private void DetectBattleStart() => isBattleGoing = true;
 
 	private void GoToStartPosition()
 	{

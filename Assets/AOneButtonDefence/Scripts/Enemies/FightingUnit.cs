@@ -29,14 +29,20 @@ public class FightingUnit : MonoBehaviour, IDamagable
 
     public virtual void Initialize() { }
 
-    protected virtual void Update() => stateMachine.Update();
+    protected virtual void Update()
+    {
+        Debug.Log(gameObject.name + "is in " + stateMachine.CurrentStateName);
+        stateMachine.Update();
+    }
 
-    protected virtual void FixedUpdate() => stateMachine.PhysicsUpdate();
+    protected virtual void FixedUpdate() 
+    { 
+        stateMachine.PhysicsUpdate();
+    }
 
     public virtual void TakeDamage(int damage)
     {
         health.TakeDamage(damage);
-        Debug.Log(gameObject.name + "is taking damage! Health is  " + health.amount);
     }
 
     public bool IsAlive() => health.amount > 0;

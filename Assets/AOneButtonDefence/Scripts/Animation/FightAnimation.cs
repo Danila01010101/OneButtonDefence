@@ -35,7 +35,10 @@ public class FightAnimation : MonoBehaviour
     private void ResetRotate()
     {
         CharacterAttacked?.Invoke();
-        childObject.transform.DOLocalRotate(startRotation, rotateTime)
-            .SetEase(Ease.OutQuad).OnComplete(()=>CharacterAttackEnded?.Invoke());
+        if (childObject != null)
+        {
+            childObject.transform.DOLocalRotate(startRotation, rotateTime)
+                .SetEase(Ease.OutQuad).OnComplete(() => CharacterAttackEnded?.Invoke());
+        }
     }
 }
