@@ -10,12 +10,9 @@ public class TargetSearchState : IState
     private LayerMask detectMask;
     private ITargetFollower targetFollower;
     private NavMeshAgent agent;
-    private Vector3 startPosition;
-    private WalkingAnimation walkingAnimation;
     private bool isOnTheWay;
     private float enemyCheckInterval = 0.4f;
     private float lastTimeEnemyChecked;
-    private bool isBattleGoing = true;
 
     public TargetSearchState(TargetSearchStateData data)
     {
@@ -25,11 +22,7 @@ public class TargetSearchState : IState
         detectMask = data.DetectMask;
         targetFollower = data.TargetFollower;
         agent = data.Agent;
-        startPosition = data.StartPosition;
         walkingAnimation = data.WalkingAnimation;
-        GameBattleState.BattleWon += DetectBattleEnd;
-        GameBattleState.BattleLost += DetectBattleEnd;
-        GameBattleState.BattleStarted += DetectBattleStart;
     }
 
     public void Enter() { }
@@ -54,12 +47,14 @@ public class TargetSearchState : IState
 
     public void PhysicsUpdate()
     {
+        if (isOnTheWay)
+            return;
+        
         Collider[] enemies = FindEnemies();
-
-        if (enemies.Length == 0 && !isOnTheWay)
+        
+        if (enemies.Length == 0)
         {
             GoToStartPosition();
-            return;
         }
         
         if (isBattleGoing == false || Time.time - lastTimeEnemyChecked < enemyCheckInterval)
@@ -83,20 +78,6 @@ public class TargetSearchState : IState
             isOnTheWay = false;
         }
     }
-
-    private void GoToStartPosition()
-    {
-        isOnTheWay = true;
-        walkingAnimation.StartAnimation();
-        agent.SetDestination(startPosition);
-    }
-    
-    private void DetectBattleEnd() => isBattleGoing = false;
-    
-    private void DetectBattleStart() => isBattleGoing = true;
-
-    private bool IsEnemiesInRange() => FindEnemies().Count() > 0;
-
     private Collider[] FindEnemies() => Physics.OverlapSphere(transform.position, detectRange, detectMask);
 
     private Transform ChooseEnemy(Collider[] enemies)
