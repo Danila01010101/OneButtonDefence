@@ -16,7 +16,11 @@ public class MilitaryCamp : Building
     {
         data = buildingsData.MilitaryCampData;
         Cost = data.Cost;
-        unitsFactory = new UnitsFactory(new List<FightingUnit>() { data.GnomeWarriorPrefab });
+    }
+
+    public void SetupFactory(IEnemyDetector knightDetector)
+    {
+        unitsFactory = new UnitsFactory(new List<FightingUnit>() { data.GnomeWarriorPrefab }, knightDetector);
     }
 
     protected override void ActivateEndMoveAction()

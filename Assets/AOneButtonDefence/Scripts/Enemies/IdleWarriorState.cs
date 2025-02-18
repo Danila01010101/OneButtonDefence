@@ -19,8 +19,6 @@ public class IdleWarriorState : IState
 
 	public void Enter()
     {
-		Debug.Log("IdleState entered");
-		isBattleGoing = false;
         GoToStartPosition();
 	}
 
@@ -28,7 +26,13 @@ public class IdleWarriorState : IState
 
 	public void HandleInput() { }
 
-	public void Update() { }
+	public void Update()
+	{
+		if (BattleNotifier.Instance.IsBattleGoing())
+		{
+			stateMachine.ChangeState<TargetSearchState>();
+		}
+	}
 
 	public void PhysicsUpdate() { }
 

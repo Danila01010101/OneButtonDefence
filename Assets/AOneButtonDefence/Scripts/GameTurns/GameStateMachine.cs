@@ -9,7 +9,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
     public GameStateMachine(GameStateMachineData data, EnemiesData enemies, Vector3 enemySpawnOffset)
     {
         GameBattleStateData battleStateData = new GameBattleStateData( this, data.CoroutineStarter, data.GameTurnsData.BattleWavesParameters, 
-            enemies, data.CellsGrid, data.SpellCanvas, enemySpawnOffset, data.EnemyTag, data.GnomeTag);
+            enemies, data.CellsGrid, data.SpellCanvas, enemySpawnOffset, data.EnemyTag, data.GnomeTag, data.Detector);
 
         stringStates = new Dictionary<string, IState>()
         {
@@ -42,9 +42,10 @@ public class GameStateMachine : StateMachine, IStringStateChanger
         public readonly string EnemyTag;
         public readonly string GnomeTag;
         public readonly IDisableableInput Input;
+        public readonly IEnemyDetector Detector;
 
         public GameStateMachineData(GameplayCanvas upgradeUIGameObject, GameData gameTurnsData, MonoBehaviour coroutineStarter, CellsGrid buildingsGrid,
-           GameObject spellCanvas, string enemyTag, string gnomeTag, IDisableableInput input, float upgradeStateDuration, float upgradeStateCompletionDelay)
+           GameObject spellCanvas, string enemyTag, string gnomeTag, IDisableableInput input, float upgradeStateDuration, float upgradeStateCompletionDelay, IEnemyDetector detector)
         {
             UpgradeUIGameObject = upgradeUIGameObject;
             GameTurnsData = gameTurnsData;
@@ -56,6 +57,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
             Input = input;
             UpgradeStateDuration = upgradeStateDuration;
             UpgradeStateCompletionDelay = upgradeStateCompletionDelay;
+            Detector = detector;
         }
     }
 }

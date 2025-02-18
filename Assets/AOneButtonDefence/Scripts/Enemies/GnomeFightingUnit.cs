@@ -6,9 +6,9 @@ public class GnomeFightingUnit : FightingUnit
     
     private SkinChanger skinChanger;
 
-    public override void Initialize()
+    public override void Initialize(IEnemyDetector detector)
     {
-        base.Initialize();
+        base.Initialize(detector);
         skinChanger = new SkinChanger(meshFilter, render);
     }
 

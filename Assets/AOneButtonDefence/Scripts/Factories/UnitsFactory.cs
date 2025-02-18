@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class UnitsFactory
 {
+    private readonly IEnemyDetector detector;
     private List<FightingUnit> enemies;
 
-    public UnitsFactory(List<FightingUnit> enemies)
+    public UnitsFactory(List<FightingUnit> enemies, IEnemyDetector detector)
     {
+        this.detector = detector;
         this.enemies = enemies;
     }
 
@@ -28,7 +30,7 @@ public class UnitsFactory
         if (spawnedEnemy== null)
             throw new System.ArgumentException("Invalid type of enemy or enemy list is incorrect");
 
-        spawnedEnemy.Initialize();
+        spawnedEnemy.Initialize(detector);
         return spawnedEnemy as T;
     }
 }

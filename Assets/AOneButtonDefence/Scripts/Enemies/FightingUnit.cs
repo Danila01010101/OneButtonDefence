@@ -15,6 +15,8 @@ public class FightingUnit : MonoBehaviour, IDamagable
     private FightAnimation fightAnimation;
     private WalkingAnimation walkingAnimation;
     private MaterialChanger materialChanger;
+    
+    private IEnemyDetector detector;
 
     protected virtual void Start()
     {
@@ -27,11 +29,13 @@ public class FightingUnit : MonoBehaviour, IDamagable
         materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration,characterStats.Delay);
     }
 
-    public virtual void Initialize() { }
+    public virtual void Initialize(IEnemyDetector detector)
+    {
+        this.detector = detector;
+    }
 
     protected virtual void Update()
     {
-        Debug.Log(gameObject.name + "is in " + stateMachine.CurrentStateName);
         stateMachine.Update();
     }
 
@@ -56,8 +60,8 @@ public class FightingUnit : MonoBehaviour, IDamagable
     private void InitializeStateMachine()
     {
         var data = new WarriorStateMachine.WarriorStateMachineData(
-            transform, characterStats, navMeshComponent, this,
-            walkingAnimation, fightAnimation);
+            transform, characterStats, navMeshComponent,
+            walkingAnimation, fightAnimation, detector);
         stateMachine = new WarriorStateMachine(data);
     }
 

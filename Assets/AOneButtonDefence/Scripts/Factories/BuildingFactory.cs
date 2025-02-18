@@ -26,6 +26,7 @@ public class BuildingFactory
                 spawnedBuilding.SetupData(buildingsData);
                 spawnedBuilding.SetAnimationTime(animationDuration);
                 spawnedBuilding.ActivateSpawnActionWithDelay();
+                
                 return spawnedBuilding as T;
             }
         }

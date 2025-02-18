@@ -61,14 +61,16 @@ public class GameInitializer : MonoBehaviour
         CreateBuildingSpawner();
         var worldGrid = SpawnWorldGrid();
         yield return new WaitUntil(() => worldCreator.IsWorldReady);
-        InitializeBuildingSpawner(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration);
+        IEnemyDetector knightDetector = SeetupEnemyDetector(LayerMask.NameToLayer(gameData.EnemyTag));
+        InitializeBuildingSpawner(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration, knightDetector);
         yield return null;
         GameplayCanvas upgradeCanvas = SpawnUpgradeCanvas();
         yield return null;
         var spellCanvas = SetupSpellCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
-        SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput);
+        IEnemyDetector gnomeDetector = SeetupEnemyDetector(LayerMask.NameToLayer(gameData.GnomeTag));
         SetupBattleNotifier();
+        SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
         yield return null;
         GameInitialized?.Invoke();
@@ -198,9 +200,9 @@ public class GameInitializer : MonoBehaviour
         return buildingsGrid;
     }
 
-    private void InitializeBuildingSpawner(CellsGrid grid,  BuildingsData upgradeBuildings, float animationDuration)
+    private void InitializeBuildingSpawner(CellsGrid grid,  BuildingsData upgradeBuildings, float animationDuration, IEnemyDetector detector)
     {
-        buildingSpawner.Initialize(grid, upgradeBuildings, animationDuration);
+        buildingSpawner.Initialize(grid, upgradeBuildings, animationDuration, detector);
     }
 
     private GameplayCanvas SpawnUpgradeCanvas()
@@ -230,7 +232,8 @@ public class GameInitializer : MonoBehaviour
         return spellCanvasWindow.gameObject;
     }
 
-    private void SetupStateMachine(GameplayCanvas gameplayCanvas, GameObject battleStateCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput inputForDialogueState)
+    private void SetupStateMachine(GameplayCanvas gameplayCanvas, GameObject battleStateCanvas, GroundBlocksSpawner worldCreator, 
+        CellsGrid grid, IDisableableInput inputForDialogueState, IEnemyDetector detector)
     {
         GameStateMachineData gameStateMachineData = new GameStateMachineData 
         (
@@ -243,12 +246,16 @@ public class GameInitializer : MonoBehaviour
             gameData.GnomeTag,
             inputForDialogueState,
             gameData.UpgradeStateDuration,
-            gameData.UpgradeStateCompletionDelay
+            gameData.UpgradeStateCompletionDelay,
+            detector
         );
         gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset);
     }
 
     private void SetupBattleNotifier() => new BattleNotifier();
+
+    private IEnemyDetector SeetupEnemyDetector(LayerMask enemyMask) => 
+        new UnitDetector(gameData.WorldSize, enemyMask, 1f);
 
     private void SetupRewardSpawner(RectTransform uiTarget)
     {

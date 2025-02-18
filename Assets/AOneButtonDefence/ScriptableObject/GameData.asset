@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0129c6bf1935c2940bc5ef0299ba3a30, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
+  <WorldSize>k__BackingField: {x: 175, y: 3, z: 175}
   <StartFoodAmount>k__BackingField: 50
   <StartMaterialsAmount>k__BackingField: 50
   <StartSpiritAmount>k__BackingField: 50

@@ -1,42 +1,43 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class TargetFollowingState : IState, ITargetFollower
 {
-    private IStateChanger stateMachine;
-    private ITargetAttacker targetAttacker;
-    private NavMeshAgent agent;
-    private Transform transform;
     private Transform target;
-    private LayerMask targetMask;
-    private WalkingAnimation animation;
-    private float speed;
-    private float attackRange;
-    private bool IsTargetGone() => target == null;
+    private IEnemyDetector detector;
+    
+    private readonly IStateChanger stateMachine;
+    private readonly ITargetAttacker targetAttacker;
+    private readonly NavMeshAgent agent;
+    private readonly Transform transform;
+    private readonly LayerMask targetMask;
+    private readonly WalkingAnimation animation;
+    private readonly float attackRange;
 
     public TargetFollowingState(IStateChanger stateMachine, NavMeshAgent agent, CharacterStats stats, 
-        ITargetAttacker targetAttacker, LayerMask targetMask, WalkingAnimation animation)
+        ITargetAttacker targetAttacker, LayerMask targetMask, WalkingAnimation animation, IEnemyDetector detector)
     {
         this.stateMachine = stateMachine;
         this.agent = agent;
-        speed = stats.Speed;
         attackRange = stats.AttackRange;
         transform = agent.transform;
         this.targetAttacker = targetAttacker;
         this.targetMask = targetMask;
         this.animation = animation;
+        this.detector = detector;
     }
 
     public void Enter()
     {
         animation.StartAnimation();
+        detector.NewEnemiesDetected += CheckIfTargetChanged;
     }
 
     public void Exit()
     {
         animation.StopAnimation();
         target = null;
+        detector.NewEnemiesDetected -= CheckIfTargetChanged;
     }
 
     public void HandleInput() { }
@@ -86,8 +87,10 @@ public class TargetFollowingState : IState, ITargetFollower
     }
 
     public void SetTarget(Transform transform) => target = transform;
+    
+    private bool IsTargetGone() => target == null;
 
-    private Vector3 GetDirection() => (target.position - transform.position).normalized * speed;
+    private void CheckIfTargetChanged() => stateMachine.ChangeState<TargetSearchState>();
 
     private IDamagable FindTarget(Collider[] colliders)
     {
@@ -95,7 +98,7 @@ public class TargetFollowingState : IState, ITargetFollower
         {
             IDamagable foundTarget;
 
-            if (collider.transform != transform && collider.gameObject.TryGetComponent<IDamagable>(out foundTarget))
+            if (collider.transform != transform && collider.gameObject.TryGetComponent(out foundTarget))
             {
                 return foundTarget;
             }

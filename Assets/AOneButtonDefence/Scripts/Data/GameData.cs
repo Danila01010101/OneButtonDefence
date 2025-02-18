@@ -3,6 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameTurnsData", menuName = "ScriptableObjects/new GameData")]
 public class GameData : ScriptableObject
 {
+    [field: SerializeField] public Vector3 WorldSize { get; private set; }
+
     [field: Header("Start resources")]
     [field: SerializeField] public int StartFoodAmount { get; private set; }
     [field: SerializeField] public int StartMaterialsAmount { get; private set; }

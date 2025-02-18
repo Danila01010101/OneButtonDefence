@@ -7,10 +7,10 @@ public class WarriorStateMachine : StateMachine
     public WarriorStateMachine(WarriorStateMachineData data)
     {
         var fightState = new FightState(this, data.CharacterStats.AttackDelay, data.CharacterStats.Damage, data.FightAnimation);
-        var targetFollowingState = new TargetFollowingState(this, data.Agent, data.CharacterStats, fightState, data.CharacterStats.EnemyLayerMask, data.WalkingAnimation);
+        var targetFollowingState = new TargetFollowingState(this, data.Agent, data.CharacterStats, fightState, 
+            data.CharacterStats.EnemyLayerMask, data.WalkingAnimation, data.EnemyDetector);
         var targetSearchStateData = new TargetSearchState.TargetSearchStateData(
-            this, data.Transform, data.CharacterStats.DetectionRadius, data.CharacterStats.EnemyLayerMask,
-            targetFollowingState, data.Agent, data.WalkingAnimation);
+            this, data.Transform, targetFollowingState, data.Agent, data.WalkingAnimation, data.EnemyDetector);
 
         states = new List<IState>()
         {
@@ -25,22 +25,22 @@ public class WarriorStateMachine : StateMachine
 
     public class WarriorStateMachineData
     {
-        public Transform Transform { get; private set; }
-        public CharacterStats CharacterStats { get; private set; }
-        public NavMeshAgent Agent { get; private set; }
-        public MonoBehaviour CoroutineStarter { get; private set; }
-        public WalkingAnimation WalkingAnimation { get; private set; }
-        public FightAnimation FightAnimation { get; private set; }
+        public readonly Transform Transform;
+        public readonly CharacterStats CharacterStats;
+        public readonly NavMeshAgent Agent;
+        public readonly WalkingAnimation WalkingAnimation;
+        public readonly FightAnimation FightAnimation;
+        public readonly IEnemyDetector EnemyDetector;
         
         public WarriorStateMachineData(Transform transform, CharacterStats characterStats, NavMeshAgent agent, 
-            MonoBehaviour coroutineStarter, WalkingAnimation walkingAnimation, FightAnimation fightAnimation)
+            WalkingAnimation walkingAnimation, FightAnimation fightAnimation, IEnemyDetector detector)
         {
             Transform = transform;
             CharacterStats = characterStats;
             Agent = agent;
-            CoroutineStarter = coroutineStarter;
             WalkingAnimation = walkingAnimation;
             FightAnimation = fightAnimation;
+            EnemyDetector = detector;
         }
     }
 }

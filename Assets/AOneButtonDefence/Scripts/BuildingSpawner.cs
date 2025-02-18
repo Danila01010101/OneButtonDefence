@@ -5,13 +5,15 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
 {
     private CellsGrid grid;
     private BuildingFactory buildingFacrory;
+    private IEnemyDetector detector;
 
     public Action<CellPlaceCoordinates> CellFilled { get; set; }
 
-    public void Initialize(CellsGrid grid, BuildingsData upgradeBuildings, float animationDuration)
+    public void Initialize(CellsGrid grid, BuildingsData upgradeBuildings, float animationDuration, IEnemyDetector detector)
     {
         buildingFacrory = new BuildingFactory(upgradeBuildings, animationDuration);
         this.grid = grid;
+        this.detector = detector;
         SetupStartBuildings();
     }
 
@@ -19,8 +21,9 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
     {
         SpawnBuilding<Farm>();
         SpawnBuilding<SpiritBuilding>();
-        SpawnBuilding<MilitaryCamp>();
         SpawnBuilding<Factory>();
+        var camp = SpawnBuilding<MilitaryCamp>();
+        camp.SetupFactory(detector);
     }
 
     private void ActivateUpgrades(UpgradeButton.Upgrades firstUpgrade, UpgradeButton.Upgrades secondUpgrade)
@@ -40,7 +43,8 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
                 SpawnBuilding<SpiritBuilding>();
                 break;
             case UpgradeButton.Upgrades.MilitaryCamp:
-                SpawnBuilding<MilitaryCamp>();
+                var camp = SpawnBuilding<MilitaryCamp>();
+                camp.SetupFactory(detector);
                 break;
             case UpgradeButton.Upgrades.ResourcesCenter:
                 SpawnBuilding<Factory>();
@@ -50,10 +54,11 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
         }
     }
 
-    private void SpawnBuilding<T>() where T : Building
+    private T SpawnBuilding<T>() where T : Building
     {
         T building = buildingFacrory.SpawnBuilding<T>();
         SetupBuildingPosition(building, grid.GetBestCellCoordinates());
+        return building;
     }
 
     private void SetupBuildingPosition(Building building, CellPlaceCoordinates placePosition) 

@@ -11,9 +11,10 @@ public class GameBattleStateData
     public Vector3 EnemiesSpawnOffset { get; private set; }
     public string EnemyTag { get; private set; }
     public string GnomeTag { get; private set; }
+    public IEnemyDetector Detector { get; private set; }
 
     public GameBattleStateData(IStringStateChanger stateChanger, MonoBehaviour coroutineStarter, BattleWavesParameters wavesParameters, EnemiesData data, 
-        CellsGrid cellsGrid, GameObject spellCanvas, Vector3 enemiesSpawnOffset, string enemyLayerMask, string gnomeLayerMask)
+        CellsGrid cellsGrid, GameObject spellCanvas, Vector3 enemiesSpawnOffset, string enemyLayerMask, string gnomeLayerMask, IEnemyDetector gnomeDetector)
     {
         StateChanger = stateChanger;
         CoroutineStarter = coroutineStarter;
@@ -24,5 +25,6 @@ public class GameBattleStateData
         EnemiesSpawnOffset = enemiesSpawnOffset;
         EnemyTag = enemyLayerMask;
         GnomeTag = gnomeLayerMask;
+        Detector = gnomeDetector;
     }
 }
