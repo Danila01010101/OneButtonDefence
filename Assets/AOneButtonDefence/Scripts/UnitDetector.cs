@@ -31,6 +31,9 @@ public class UnitDetector : IEnemyDetector
 
         foreach (Transform enemy in detectedEnemies)
         {
+            if (enemy == null)
+                continue;
+            
             float distanceSqr = (searchCenter - enemy.position).sqrMagnitude;
 
             if (distanceSqr < closestDistanceSqr)

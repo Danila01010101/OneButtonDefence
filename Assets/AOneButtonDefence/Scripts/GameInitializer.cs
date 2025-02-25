@@ -61,14 +61,14 @@ public class GameInitializer : MonoBehaviour
         CreateBuildingSpawner();
         var worldGrid = SpawnWorldGrid();
         yield return new WaitUntil(() => worldCreator.IsWorldReady);
-        IEnemyDetector knightDetector = SeetupEnemyDetector(LayerMask.NameToLayer(gameData.EnemyTag));
+        IEnemyDetector knightDetector = SeetupEnemyDetector(LayerMask.NameToLayer(gameData.EnemyLayerName));
         InitializeBuildingSpawner(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration, knightDetector);
         yield return null;
         GameplayCanvas upgradeCanvas = SpawnUpgradeCanvas();
         yield return null;
         var spellCanvas = SetupSpellCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
-        IEnemyDetector gnomeDetector = SeetupEnemyDetector(LayerMask.NameToLayer(gameData.GnomeTag));
+        IEnemyDetector gnomeDetector = SeetupEnemyDetector(LayerMask.NameToLayer(gameData.GnomeLayerName));
         SetupBattleNotifier();
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
@@ -242,8 +242,8 @@ public class GameInitializer : MonoBehaviour
             worldCreator,
             grid,
             battleStateCanvas,
-            gameData.EnemyTag,
-            gameData.GnomeTag,
+            gameData.EnemyLayerName,
+            gameData.GnomeLayerName,
             inputForDialogueState,
             gameData.UpgradeStateDuration,
             gameData.UpgradeStateCompletionDelay,

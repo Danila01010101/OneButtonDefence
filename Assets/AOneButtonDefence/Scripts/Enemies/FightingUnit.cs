@@ -18,8 +18,9 @@ public class FightingUnit : MonoBehaviour, IDamagable
     
     private IEnemyDetector detector;
 
-    protected virtual void Start()
+    public virtual void Initialize(IEnemyDetector detector)
     {
+        this.detector = detector;
         InitializeAnimationComponents();
         navMeshComponent = GetComponent<NavMeshAgent>();
         health = new Health(characterStats.Health);
@@ -27,11 +28,6 @@ public class FightingUnit : MonoBehaviour, IDamagable
         InitializeStateMachine();
         materialChanger = new MaterialChanger(this);
         materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration,characterStats.Delay);
-    }
-
-    public virtual void Initialize(IEnemyDetector detector)
-    {
-        this.detector = detector;
     }
 
     protected virtual void Update()

@@ -28,8 +28,8 @@ public class GameData : ScriptableObject
     [field: SerializeField] public float UpgradeStateCompletionDelay { get; private set; } = 2;
     
     [field: Header("Tags")]
-    [field: SerializeField] public string EnemyTag { get; private set; }
-    [field: SerializeField] public string GnomeTag { get; private set; }
+    [field: SerializeField] public string EnemyLayerName { get; private set; }
+    [field: SerializeField] public string GnomeLayerName { get; private set; }
     [field: Header("Input parameters")]
     [field: SerializeField] public float SwipeDeadZone { get; private set; }
 

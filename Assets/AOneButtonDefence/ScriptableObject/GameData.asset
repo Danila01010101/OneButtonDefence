@@ -28,7 +28,7 @@ MonoBehaviour:
   <EnemiesSpawnOffset>k__BackingField: {x: 1.792, y: 1.72, z: 1.958}
   <UpgradeStateDuration>k__BackingField: 4
   <UpgradeStateCompletionDelay>k__BackingField: 2
-  <EnemyTag>k__BackingField: Enemy
-  <GnomeTag>k__BackingField: Gnome
+  <EnemyLayerName>k__BackingField: Knight
+  <GnomeLayerName>k__BackingField: Gnome
   <SwipeDeadZone>k__BackingField: 3
   <ClickMaxTime>k__BackingField: 0.1
