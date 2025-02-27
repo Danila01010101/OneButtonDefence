@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpellCastData : ScriptableObject
 {
     public LayerMask spellCastLayerSurface;
+    public LayerMask spellTargetLayer;
     public float reloadDuration = 3f;
     public List<SpellStorage> SpellStorage;
 }

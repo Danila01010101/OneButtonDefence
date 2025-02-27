@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpellCast
 {
     private List<SpellStorage> spellStorage;
     private LayerMask spellSurfaceLayer;
+    private LayerMask damagableTargetLayer;
     private bool isBattleGoing;
     private bool isReloading;
     private float reloadDuration;
@@ -21,6 +21,7 @@ public class SpellCast
 
     public SpellCast(IInput input, SpellCanvas spellCanvas, SpellCastData spellCastData)
     {
+        damagableTargetLayer = spellCastData.spellTargetLayer;
         this.spellCanvas = spellCanvas;
         this.input = input;
         spellSurfaceLayer = spellCastData.spellCastLayerSurface;
@@ -60,7 +61,7 @@ public class SpellCast
         {
             spellStorage[currentChose].Count--;
             GameObject spell = GameObject.Instantiate(spellStorage[currentChose].Spell.BaseMagicCircle, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.identity);
-            spell.GetComponent<Spell>().Initialize(spellStorage[currentChose].Spell);
+            spell.GetComponent<Spell>().Initialize(spellStorage[currentChose].Spell, damagableTargetLayer);
         }
     }
 
@@ -77,7 +78,7 @@ public class SpellCast
         if (Physics.Raycast(ray, out hit, spellSurfaceLayer)) 
         {
             GameObject spell = GameObject.Instantiate(randomSpell[0].BaseMagicCircle, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.identity);
-            spell.GetComponent<Spell>().Initialize(randomSpell[0]);
+            spell.GetComponent<Spell>().Initialize(randomSpell[0], damagableTargetLayer);
             randomSpell[0] = null;
             AddNextSpell();
             CoroutineStarter.Instance.StartCoroutine(Reload());

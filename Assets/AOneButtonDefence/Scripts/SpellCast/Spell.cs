@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,11 +16,13 @@ public class Spell : MonoBehaviour
     private ParticleSystem.MainModule _flakesMain;
 
     private float leftTime;
+    private LayerMask targetLayer;
     private SpellData spell;
     private HashSet<IDamagable> targets = new HashSet<IDamagable>();
 
-    public void Initialize(SpellData spellData)
+    public void Initialize(SpellData spellData, LayerMask damagableTargetLayer)
     {
+        targetLayer = damagableTargetLayer;
         spell = spellData;
         GetPrivateComponents();
         StopParticleSystem();
@@ -40,9 +40,10 @@ public class Spell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<IDamagable>() != null)
+        if (other.GetComponent<IDamagable>() != null && other.gameObject.layer == targetLayer)
         {
             targets.Add(other.GetComponent<IDamagable>());
+            Debug.Log($"{other.gameObject.name} gameobject added to spell damage");
         }
 
     }
