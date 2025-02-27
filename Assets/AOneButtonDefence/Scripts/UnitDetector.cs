@@ -9,7 +9,7 @@ public class UnitDetector : IEnemyDetector
     private readonly float detectionInterval;
     private readonly Vector3 detectRadius;
     private readonly LayerMask layerMask;
-    private readonly Vector3 worldCenter = Vector3.zero;
+    private readonly Vector3 worldCenter = new Vector3(155, -1, 155);
 
     private static readonly int MaxColliders = 1000;
     private readonly Collider[] colliderBuffer = new Collider[MaxColliders];
@@ -49,7 +49,7 @@ public class UnitDetector : IEnemyDetector
     private void FindEnemies()
     {
         int count = Physics.OverlapBoxNonAlloc(worldCenter, detectRadius, colliderBuffer, Quaternion.identity, layerMask);
-
+        
         if (count != detectedEnemies.Count || HasEnemiesChanged(count))
         {
             detectedEnemies.Clear();

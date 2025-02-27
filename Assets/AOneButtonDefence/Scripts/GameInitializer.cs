@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using static GameStateMachine;
@@ -61,14 +60,14 @@ public class GameInitializer : MonoBehaviour
         CreateBuildingSpawner();
         var worldGrid = SpawnWorldGrid();
         yield return new WaitUntil(() => worldCreator.IsWorldReady);
-        IEnemyDetector knightDetector = SeetupEnemyDetector(LayerMask.NameToLayer(gameData.EnemyLayerName));
+        IEnemyDetector knightDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.EnemyLayerName));
         InitializeBuildingSpawner(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration, knightDetector);
         yield return null;
         GameplayCanvas upgradeCanvas = SpawnUpgradeCanvas();
         yield return null;
         var spellCanvas = SetupSpellCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
-        IEnemyDetector gnomeDetector = SeetupEnemyDetector(LayerMask.NameToLayer(gameData.GnomeLayerName));
+        IEnemyDetector gnomeDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.GnomeLayerName));
         SetupBattleNotifier();
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
@@ -242,8 +241,8 @@ public class GameInitializer : MonoBehaviour
             worldCreator,
             grid,
             battleStateCanvas,
-            gameData.EnemyLayerName,
-            gameData.GnomeLayerName,
+            gameData.EnemyTag,
+            gameData.GnomeTag,
             inputForDialogueState,
             gameData.UpgradeStateDuration,
             gameData.UpgradeStateCompletionDelay,
@@ -254,7 +253,7 @@ public class GameInitializer : MonoBehaviour
 
     private void SetupBattleNotifier() => new BattleNotifier();
 
-    private IEnemyDetector SeetupEnemyDetector(LayerMask enemyMask) => 
+    private IEnemyDetector SetupEnemyDetector(LayerMask enemyMask) => 
         new UnitDetector(gameData.WorldSize, enemyMask, 1f);
 
     private void SetupRewardSpawner(RectTransform uiTarget)

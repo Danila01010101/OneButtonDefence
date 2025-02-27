@@ -61,7 +61,16 @@ public class TargetSearchState : IState
 
     private void LookForTarget()
     {
-        var detectedEnemy = detector.GetClosestEnemy(transform.position);
+        Transform detectedEnemy = null;
+        
+        if (transform != null)
+        {
+            detectedEnemy = detector.GetClosestEnemy(transform.position);
+        }
+        else
+        {
+            Exit();
+        }
         
         if (detectedEnemy == null)
             return;
@@ -80,8 +89,8 @@ public class TargetSearchState : IState
 
         public IEnemyDetector Detector { get; private set; }
 
-        public TargetSearchStateData(IStateChanger stateMachine, Transform transform,
-            ITargetFollower targetFollower, NavMeshAgent agent, WalkingAnimation walkingAnimation, IEnemyDetector detector)
+        public TargetSearchStateData(IStateChanger stateMachine, Transform transform, ITargetFollower targetFollower,
+            NavMeshAgent agent, WalkingAnimation walkingAnimation, IEnemyDetector detector)
         {
             StateMachine = stateMachine;
             Transform = transform;

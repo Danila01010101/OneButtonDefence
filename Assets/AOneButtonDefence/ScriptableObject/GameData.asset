@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0129c6bf1935c2940bc5ef0299ba3a30, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  <WorldSize>k__BackingField: {x: 175, y: 3, z: 175}
+  <WorldSize>k__BackingField: {x: 350, y: 20, z: 350}
   <StartFoodAmount>k__BackingField: 50
   <StartMaterialsAmount>k__BackingField: 50
   <StartSpiritAmount>k__BackingField: 50
@@ -28,7 +28,10 @@ MonoBehaviour:
   <EnemiesSpawnOffset>k__BackingField: {x: 1.792, y: 1.72, z: 1.958}
   <UpgradeStateDuration>k__BackingField: 4
   <UpgradeStateCompletionDelay>k__BackingField: 2
+  <EnemySearchUpdateInterval>k__BackingField: 0.5
   <EnemyLayerName>k__BackingField: Knight
   <GnomeLayerName>k__BackingField: Gnome
+  <EnemyTag>k__BackingField: Enemy
+  <GnomeTag>k__BackingField: Gnome
   <SwipeDeadZone>k__BackingField: 3
   <ClickMaxTime>k__BackingField: 0.1
