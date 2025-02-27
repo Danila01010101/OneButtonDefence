@@ -44,11 +44,11 @@ public class CameraMovement : MonoBehaviour
 
     private void UpdateCameraPositionAndRotation()
     {
-        Quaternion targetRotation = Quaternion.Euler(currentX, currentY, 0);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, data.CameraRotationSmooth * Time.deltaTime);
-
-        Vector3 position = target.position - (transform.rotation * Vector3.forward * currentDistance);
+        Vector3 rotation = 
+            Vector3.SmoothDamp(transform.rotation.eulerAngles, new Vector3(currentX, currentY, 0), ref rotationVelocity, data.CameraRotationSmooth);
+        Vector3 position = target.position - (Quaternion.Euler(rotation)  * Vector3.forward * currentDistance);
         transform.position = position;
+        transform.eulerAngles = rotation;
     }
 
     private void RotateCamera(Vector2 direction)
