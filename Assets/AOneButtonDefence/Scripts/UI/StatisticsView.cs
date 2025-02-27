@@ -12,6 +12,7 @@ public class StatisticsView : MonoBehaviour
 
     private void Start()
     {
+        SubscribeForValueChanging();
         UpdateFoodValue(ResourcesCounter.Instance.Data.FoodAmount);
         UpdateStrenghtValue(ResourcesCounter.Instance.Data.Warriors);
         UpdateSpiritValue(ResourcesCounter.Instance.Data.SurvivorSpirit);
@@ -42,12 +43,7 @@ public class StatisticsView : MonoBehaviour
         ResourcesCounter.Instance.Data.MaterialsAmountChanged -= UpdateMaterialsValue;
     }
 
-    private void OnEnable()
-    {
-        SubscribeForValueChanging();
-    }
-
-    private void OnDisable()
+    private void OnDestroy()
     {
         UnsubscribeForValueChanging();
     }
