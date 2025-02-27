@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SkinChanger
@@ -11,6 +12,8 @@ public class SkinChanger
         this.renderer = renderer;
         SkinPanel.SkinChanged += ChangeSkin;
     }
+
+    public void Unsubscribe() => SkinPanel.SkinChanged -= ChangeSkin;
 
     public void ChangeSkin(Mesh newMesh, Material newMaterial)
     {

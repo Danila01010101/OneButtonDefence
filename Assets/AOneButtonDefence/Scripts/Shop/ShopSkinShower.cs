@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ShopSkinShower : MonoBehaviour
@@ -18,4 +19,9 @@ public class ShopSkinShower : MonoBehaviour
     public void ShowExampleSkin() => gameObject.SetActive(true);
     
     public void HideExampleSkin() => gameObject.SetActive(false);
+
+    private void OnDestroy()
+    {
+        SkinChanger.Unsubscribe();
+    }
 }
