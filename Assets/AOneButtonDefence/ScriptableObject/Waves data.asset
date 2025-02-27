@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Waves data
   m_EditorClassIdentifier: 
   <waves>k__BackingField:
-  - enemiesAmount: 2
+  - enemiesAmount: 1
     spawnInterval: 0.8
-  - enemiesAmount: 4
+  - enemiesAmount: 2
     spawnInterval: 0.8
   - enemiesAmount: 5
     spawnInterval: 0.8
@@ -32,4 +32,184 @@ MonoBehaviour:
   - enemiesAmount: 14
     spawnInterval: 0.8
   - enemiesAmount: 15
+    spawnInterval: 0.8
+  - enemiesAmount: 15
+    spawnInterval: 0.8
+  - enemiesAmount: 16
+    spawnInterval: 0.8
+  - enemiesAmount: 18
+    spawnInterval: 0.8
+  - enemiesAmount: 19
+    spawnInterval: 0.8
+  - enemiesAmount: 20
+    spawnInterval: 0.8
+  - enemiesAmount: 21
+    spawnInterval: 0.8
+  - enemiesAmount: 23
+    spawnInterval: 0.8
+  - enemiesAmount: 24
+    spawnInterval: 0.8
+  - enemiesAmount: 25
+    spawnInterval: 0.8
+  - enemiesAmount: 26
+    spawnInterval: 0.8
+  - enemiesAmount: 28
+    spawnInterval: 0.8
+  - enemiesAmount: 29
+    spawnInterval: 0.8
+  - enemiesAmount: 30
+    spawnInterval: 0.8
+  - enemiesAmount: 32
+    spawnInterval: 0.8
+  - enemiesAmount: 33
+    spawnInterval: 0.8
+  - enemiesAmount: 34
+    spawnInterval: 0.8
+  - enemiesAmount: 35
+    spawnInterval: 0.8
+  - enemiesAmount: 37
+    spawnInterval: 0.8
+  - enemiesAmount: 38
+    spawnInterval: 0.8
+  - enemiesAmount: 39
+    spawnInterval: 0.8
+  - enemiesAmount: 41
+    spawnInterval: 0.8
+  - enemiesAmount: 42
+    spawnInterval: 0.8
+  - enemiesAmount: 43
+    spawnInterval: 0.8
+  - enemiesAmount: 44
+    spawnInterval: 0.8
+  - enemiesAmount: 46
+    spawnInterval: 0.8
+  - enemiesAmount: 47
+    spawnInterval: 0.8
+  - enemiesAmount: 48
+    spawnInterval: 0.8
+  - enemiesAmount: 50
+    spawnInterval: 0.8
+  - enemiesAmount: 51
+    spawnInterval: 0.8
+  - enemiesAmount: 52
+    spawnInterval: 0.8
+  - enemiesAmount: 53
+    spawnInterval: 0.8
+  - enemiesAmount: 55
+    spawnInterval: 0.8
+  - enemiesAmount: 56
+    spawnInterval: 0.8
+  - enemiesAmount: 57
+    spawnInterval: 0.8
+  - enemiesAmount: 58
+    spawnInterval: 0.8
+  - enemiesAmount: 60
+    spawnInterval: 0.8
+  - enemiesAmount: 61
+    spawnInterval: 0.8
+  - enemiesAmount: 62
+    spawnInterval: 0.8
+  - enemiesAmount: 64
+    spawnInterval: 0.8
+  - enemiesAmount: 65
+    spawnInterval: 0.8
+  - enemiesAmount: 66
+    spawnInterval: 0.8
+  - enemiesAmount: 67
+    spawnInterval: 0.8
+  - enemiesAmount: 69
+    spawnInterval: 0.8
+  - enemiesAmount: 70
+    spawnInterval: 0.8
+  - enemiesAmount: 71
+    spawnInterval: 0.8
+  - enemiesAmount: 72
+    spawnInterval: 0.8
+  - enemiesAmount: 74
+    spawnInterval: 0.8
+  - enemiesAmount: 75
+    spawnInterval: 0.8
+  - enemiesAmount: 76
+    spawnInterval: 0.8
+  - enemiesAmount: 78
+    spawnInterval: 0.8
+  - enemiesAmount: 79
+    spawnInterval: 0.8
+  - enemiesAmount: 80
+    spawnInterval: 0.8
+  - enemiesAmount: 81
+    spawnInterval: 0.8
+  - enemiesAmount: 83
+    spawnInterval: 0.8
+  - enemiesAmount: 84
+    spawnInterval: 0.8
+  - enemiesAmount: 85
+    spawnInterval: 0.8
+  - enemiesAmount: 87
+    spawnInterval: 0.8
+  - enemiesAmount: 88
+    spawnInterval: 0.8
+  - enemiesAmount: 89
+    spawnInterval: 0.8
+  - enemiesAmount: 90
+    spawnInterval: 0.8
+  - enemiesAmount: 92
+    spawnInterval: 0.8
+  - enemiesAmount: 93
+    spawnInterval: 0.8
+  - enemiesAmount: 94
+    spawnInterval: 0.8
+  - enemiesAmount: 96
+    spawnInterval: 0.8
+  - enemiesAmount: 97
+    spawnInterval: 0.8
+  - enemiesAmount: 98
+    spawnInterval: 0.8
+  - enemiesAmount: 99
+    spawnInterval: 0.8
+  - enemiesAmount: 101
+    spawnInterval: 0.8
+  - enemiesAmount: 102
+    spawnInterval: 0.8
+  - enemiesAmount: 103
+    spawnInterval: 0.8
+  - enemiesAmount: 104
+    spawnInterval: 0.8
+  - enemiesAmount: 106
+    spawnInterval: 0.8
+  - enemiesAmount: 107
+    spawnInterval: 0.8
+  - enemiesAmount: 108
+    spawnInterval: 0.8
+  - enemiesAmount: 110
+    spawnInterval: 0.8
+  - enemiesAmount: 111
+    spawnInterval: 0.8
+  - enemiesAmount: 112
+    spawnInterval: 0.8
+  - enemiesAmount: 113
+    spawnInterval: 0.8
+  - enemiesAmount: 115
+    spawnInterval: 0.8
+  - enemiesAmount: 116
+    spawnInterval: 0.8
+  - enemiesAmount: 117
+    spawnInterval: 0.8
+  - enemiesAmount: 118
+    spawnInterval: 0.8
+  - enemiesAmount: 120
+    spawnInterval: 0.8
+  - enemiesAmount: 121
+    spawnInterval: 0.8
+  - enemiesAmount: 122
+    spawnInterval: 0.8
+  - enemiesAmount: 124
+    spawnInterval: 0.8
+  - enemiesAmount: 125
+    spawnInterval: 0.8
+  - enemiesAmount: 126
+    spawnInterval: 0.8
+  - enemiesAmount: 127
+    spawnInterval: 0.8
+  - enemiesAmount: 129
     spawnInterval: 0.8
