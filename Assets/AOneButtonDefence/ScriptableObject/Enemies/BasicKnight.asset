@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8167d118a9f3d2e43bafd2c6b82d995f, type: 3}
   m_Name: BasicKnight
   m_EditorClassIdentifier: 
-  <Health>k__BackingField: 175
-  <Damage>k__BackingField: 100
+  <Health>k__BackingField: 125
+  <Damage>k__BackingField: 55
   <Speed>k__BackingField: 0.01
   <DetectionRadius>k__BackingField: 100
   <AttackRange>k__BackingField: 0.35
-  <AttackDelay>k__BackingField: 1.5
+  <AttackDelay>k__BackingField: 1.2
   <EnemyLayerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 128
