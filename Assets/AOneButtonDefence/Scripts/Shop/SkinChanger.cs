@@ -17,8 +17,6 @@ public class SkinChanger
 
     public void ChangeSkin(Mesh newMesh, Material newMaterial)
     {
-        Debug.Log("SkinChaged");
-        
         if (meshFilter != null)
             meshFilter.mesh = newMesh;
         
