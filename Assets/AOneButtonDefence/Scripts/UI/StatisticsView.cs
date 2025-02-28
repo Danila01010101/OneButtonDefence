@@ -9,6 +9,7 @@ public class StatisticsView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI strenghtValueText;
     [SerializeField] private TextMeshProUGUI materialsValueText;
     [SerializeField] private TextMeshProUGUI gemsValueText;
+    [SerializeField] private TextMeshProUGUI winsValueText;
 
     private void Start()
     {
@@ -27,12 +28,15 @@ public class StatisticsView : MonoBehaviour
 
     private void UpdateMaterialsValue(int newValue) => materialsValueText.text = newValue.ToString();
 
+    private void UpdateWinsValue(int newValue) => winsValueText.text = newValue.ToString();
+
     private void SubscribeForValueChanging()
     {
         ResourcesCounter.Instance.Data.FoodAmountChanged += UpdateFoodValue;
         ResourcesCounter.Instance.Data.SpiritAmountChanged += UpdateSpiritValue;
         ResourcesCounter.Instance.Data.WarriorsAmountChanged += UpdateStrenghtValue;
         ResourcesCounter.Instance.Data.MaterialsAmountChanged += UpdateMaterialsValue;
+        WaveCounter.Instance.OnWaveChanged += UpdateWinsValue;
     }
 
     private void UnsubscribeForValueChanging()
@@ -41,6 +45,7 @@ public class StatisticsView : MonoBehaviour
         ResourcesCounter.Instance.Data.SpiritAmountChanged -= UpdateSpiritValue;
         ResourcesCounter.Instance.Data.WarriorsAmountChanged -= UpdateStrenghtValue;
         ResourcesCounter.Instance.Data.MaterialsAmountChanged -= UpdateMaterialsValue;
+        WaveCounter.Instance.OnWaveChanged -= UpdateWinsValue;
     }
 
     private void OnDestroy()
