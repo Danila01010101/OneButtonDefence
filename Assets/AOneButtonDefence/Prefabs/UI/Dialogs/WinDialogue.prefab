@@ -876,7 +876,7 @@ MonoBehaviour:
   AnswerPanel: {fileID: 1388120806628212703}
   Buttons: []
   Answers: []
-  ReplicSpeed: 0.1
+  ReplicSpeed: 0.02
   spawner: {fileID: 0}
 --- !u!82 &8217856072385390231
 AudioSource:
