@@ -25,6 +25,7 @@ public class GameInitializer : MonoBehaviour
     private GroundBlocksSpawner worldCreator;
     private GameStateMachine gameStateMachine;
     private MusicPlayerMediator musicMediator;
+    private SkinChangeDetector skinChangeDetector;
     private RewardSpawner rewardSpawner;
     private IInput input;
     private IDisableableInput disableableInput;
@@ -106,7 +107,7 @@ public class GameInitializer : MonoBehaviour
         initializedObjectsParent.SetParent(transform);
     }
 
-    private void InitializeSkinDetector() => new SkinChangeDetector();
+    private void InitializeSkinDetector() => skinChangeDetector = new SkinChangeDetector();
 
     private void SetupLoadingCanvas() => loadingCanvas = Instantiate(loadingCanvas);
     
@@ -265,6 +266,7 @@ public class GameInitializer : MonoBehaviour
 
     private void OnDestroy()
     {
+        skinChangeDetector.Unsubscribe();
         musicMediator.Unsubscribe();
     }
 }

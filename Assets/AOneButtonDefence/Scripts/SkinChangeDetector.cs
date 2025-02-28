@@ -17,6 +17,8 @@ public class SkinChangeDetector
         Instance = this;
         SkinPanel.SkinChanged += DetectSkinChanged;
     }
+    
+    public void Unsubscribe() => SkinPanel.SkinChanged -= DetectSkinChanged;
 
     private void DetectSkinChanged(Mesh mesh, Material material)
     {

@@ -23,5 +23,6 @@ public class ShopSkinShower : MonoBehaviour
     private void OnDestroy()
     {
         SkinChanger.Unsubscribe();
+        SkinChanger = null;
     }
 }

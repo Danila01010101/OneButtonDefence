@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GnomeFightingUnit : FightingUnit
@@ -15,6 +16,11 @@ public class GnomeFightingUnit : FightingUnit
     protected override void Die()
     {
         base.Die();
+        skinChanger = null;
+    }
+
+    private void OnDestroy()
+    {
         skinChanger.Unsubscribe();
     }
 
