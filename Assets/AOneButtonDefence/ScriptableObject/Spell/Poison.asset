@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 20
   timePerDamage: 1
-  damage: 10
+  damage: 20
   baseMagicCircle: {fileID: 544068497971431647, guid: 77a593e24f4d2e440bf31c2ee3b5b88d, type: 3}
   iconForUI: {fileID: -1019100004, guid: 42d0bd423fc50354e84d64ac783a4cd1, type: 3}
   mainColor: {r: 0.43720308, g: 0.18045564, b: 0.6981132, a: 1}

@@ -3,7 +3,7 @@ using UnityEngine;
 public class WaveCounter : MonoBehaviour
 {
     private static WaveCounter instance;
-    private int currentWave = 1;
+    private int currentWave = 0;
     
     public event System.Action<int> OnWaveChanged;
     public static WaveCounter Instance
@@ -39,7 +39,7 @@ public class WaveCounter : MonoBehaviour
     {
         currentWave++;
         OnWaveChanged?.Invoke(currentWave);
-        Debug.Log($"Wave num: {currentWave}");
     }
+    
     public int GetCurrentWave() => currentWave;
 }

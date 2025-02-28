@@ -17,7 +17,10 @@ public class SkinChanger
 
     public void ChangeSkin(Mesh newMesh, Material newMaterial)
     {
-        meshFilter.mesh = newMesh;
-        renderer.material = newMaterial;
+        if (meshFilter != null)
+            meshFilter.mesh = newMesh;
+        
+        if (renderer != null)
+            renderer.material = newMaterial;
     }
 }

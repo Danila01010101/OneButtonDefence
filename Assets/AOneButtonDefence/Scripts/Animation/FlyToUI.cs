@@ -20,7 +20,6 @@ public class FlyToUI : MonoBehaviour
             new Vector3(targetScreenPosition.x, targetScreenPosition.y, uiCamera.nearClipPlane + 100f)
         );
         
-        Debug.Log(targetScreenPosition);
         Sequence flySequence = DOTween.Sequence();
         flySequence.Append(transform.DOMove(targetWorldPosition, duration).SetEase(Ease.OutQuad));
         flySequence.Join(transform.DOScale(Vector3.one * endScale, duration).SetEase(Ease.OutQuad));

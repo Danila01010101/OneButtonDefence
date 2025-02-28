@@ -40,12 +40,10 @@ public class Spell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<IDamagable>() != null && other.gameObject.layer == targetLayer)
+        if (other.GetComponent<IDamagable>() != null && (targetLayer & (1 << other.gameObject.layer)) != 0)
         {
             targets.Add(other.GetComponent<IDamagable>());
-            Debug.Log($"{other.gameObject.name} gameobject added to spell damage");
         }
-
     }
     private void OnTriggerExit(Collider other)
     {
@@ -137,9 +135,10 @@ public class Spell : MonoBehaviour
         {
             leftTime -= spell.TimePerDamage;
             List<IDamagable> list = new List<IDamagable>(targets);
+            
             foreach (IDamagable target in list) 
             {
-                if (target.IsAlive())
+                if (target != null && target.IsAlive())
                 {
                     target.TakeDamage(spell.Damage);
                 }

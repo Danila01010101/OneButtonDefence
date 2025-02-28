@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GnomeFightingUnit : FightingUnit
@@ -12,10 +13,10 @@ public class GnomeFightingUnit : FightingUnit
         skinChanger = new SkinChanger(meshFilter, render);
     }
 
-    protected override void Die()
+    private void OnDestroy()
     {
-        base.Die();
         skinChanger.Unsubscribe();
+        skinChanger = null;
     }
 
     public void ChangeSkin(Mesh newMesh, Material newMaterial) => skinChanger.ChangeSkin(newMesh, newMaterial);

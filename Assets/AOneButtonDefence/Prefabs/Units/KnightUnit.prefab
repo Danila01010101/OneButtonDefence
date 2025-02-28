@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1008508427813017186}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -0.037, z: -0.005}
+  m_LocalPosition: {x: -0, y: -0.05, z: -0.005}
   m_LocalScale: {x: 1.1, y: 1.022, z: 1.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -282,9 +282,13 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7635826562936255635, guid: f2c1b8aedb9f4d24685109e19485b4b0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3b3dce4604ce01c49acac6d3c96e3c51, type: 2}
+    - target: {fileID: -7635826562936255635, guid: f2c1b8aedb9f4d24685109e19485b4b0, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2100000, guid: 4047374137969bd4bb11a8a56c776b6d, type: 2}
     - target: {fileID: 919132149155446097, guid: f2c1b8aedb9f4d24685109e19485b4b0, type: 3}
       propertyPath: m_Name
       value: KnightWarriorDetailedBlend
