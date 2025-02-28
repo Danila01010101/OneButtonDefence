@@ -40,7 +40,7 @@ public class Spell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<IDamagable>() != null && (targetLayer & (1 << other.gameObject.layer)) != 0);
+        if (other.GetComponent<IDamagable>() != null && (targetLayer & (1 << other.gameObject.layer)) != 0)
         {
             targets.Add(other.GetComponent<IDamagable>());
         }
