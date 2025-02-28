@@ -43,9 +43,7 @@ public class Spell : MonoBehaviour
         if (other.GetComponent<IDamagable>() != null && (targetLayer & (1 << other.gameObject.layer)) != 0);
         {
             targets.Add(other.GetComponent<IDamagable>());
-            Debug.Log($"{other.gameObject.name} gameobject added to spell damage");
         }
-
     }
     private void OnTriggerExit(Collider other)
     {
