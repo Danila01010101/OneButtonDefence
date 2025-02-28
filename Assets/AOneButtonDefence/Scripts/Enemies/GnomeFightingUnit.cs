@@ -7,10 +7,18 @@ public class GnomeFightingUnit : FightingUnit
     
     private SkinChanger skinChanger;
 
+    public static Action GnomeDied;
+
     public override void Initialize(IEnemyDetector detector)
     {
         base.Initialize(detector);
         skinChanger = new SkinChanger(meshFilter, render);
+    }
+
+    protected override void Die()
+    {
+        GnomeDied?.Invoke();
+        base.Die();
     }
 
     private void OnDestroy()

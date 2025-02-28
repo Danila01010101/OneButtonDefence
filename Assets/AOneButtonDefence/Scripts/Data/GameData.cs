@@ -9,6 +9,7 @@ public class GameData : ScriptableObject
     [field: SerializeField] public int StartFoodAmount { get; private set; }
     [field: SerializeField] public int StartMaterialsAmount { get; private set; }
     [field: SerializeField] public int StartSpiritAmount { get; private set; }
+    [field: SerializeField] public int GnomeDeathSpiritFine { get; private set; }
     [field: Header("Enemy reward")]
     [field: SerializeField] public Gem EnemyRewardPrefab { get; private set; }
     [field: Header("Dialogs prefabs")]

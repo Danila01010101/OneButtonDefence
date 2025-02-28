@@ -168,6 +168,7 @@ public class GameInitializer : MonoBehaviour
         ResourcesCounter resourcesCounter = new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
         resourcesCounter.transform.SetParent(initializedObjectsParent);
         resourcesCounter.SetStartValues(gameData.StartFoodAmount, gameData.StartMaterialsAmount, gameData.StartSpiritAmount);
+        resourcesCounter.SetGnomeDeathFine(gameData.GnomeDeathSpiritFine);
     }
 
     private void InitializeDialogCamera()

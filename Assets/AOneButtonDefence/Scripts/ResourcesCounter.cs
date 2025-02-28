@@ -7,6 +7,8 @@ public class ResourcesCounter : MonoBehaviour
 
     public ResourcesData Data { get; private set; }
 
+    private int gnomeDeathFine;
+
     private void Awake()
     {
         if (Instance != this)
@@ -18,12 +20,20 @@ public class ResourcesCounter : MonoBehaviour
         Instance = this;
     }
 
+    private void DetectGnomeDeath() => Data.SurvivorSpirit -= gnomeDeathFine;
+
+    private void OnEnable() => GnomeFightingUnit.GnomeDied += DetectGnomeDeath;
+
+    private void OnDisable() => GnomeFightingUnit.GnomeDied -= DetectGnomeDeath;
+
     public void SetStartValues(int startFood, int startMaterials, int survivorSpirit)
     {
         Data.FoodAmount = startFood;
         Data.Materials = startMaterials;
         Data.SurvivorSpirit = survivorSpirit;
     }
+    
+    public void SetGnomeDeathFine(int fine) => gnomeDeathFine = fine;
 
     public class ResourcesData
     {
@@ -47,6 +57,7 @@ public class ResourcesCounter : MonoBehaviour
                 warriors = value;
             }
         }
+        
         public int Materials
         {
             get => materials;

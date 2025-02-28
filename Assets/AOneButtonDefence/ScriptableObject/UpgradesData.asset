@@ -19,15 +19,15 @@ MonoBehaviour:
   - {fileID: -8881658859567159356, guid: e63a3734f632f9a4e84bcbbcf8c68ff1, type: 3}
   <FarmData>k__BackingField:
     <Icon>k__BackingField: {fileID: -1602776285, guid: 84da4a3cda9f80d4baf868ecb3acb383, type: 3}
-    <FoodPerTurnAmount>k__BackingField: 0
-    <Cost>k__BackingField: 0
-    <SpawnBonus>k__BackingField: 15
-    <EveryTurnBonus>k__BackingField: 5
+    <FoodPerTurnAmount>k__BackingField: 2
+    <Cost>k__BackingField: 5
+    <SpawnBonus>k__BackingField: 30
+    <EveryTurnBonus>k__BackingField: 8
     <StartHumanAmount>k__BackingField: 1
   <MilitaryCampData>k__BackingField:
     <Icon>k__BackingField: {fileID: -1810445969, guid: a3fb97838cdae574092ddda37acb00d3, type: 3}
-    <FoodPerTurnAmount>k__BackingField: 0
-    <Cost>k__BackingField: 0
+    <FoodPerTurnAmount>k__BackingField: 4
+    <Cost>k__BackingField: 5
     <GnomeWarriorPrefab>k__BackingField: {fileID: 2094672045661467839, guid: f4f495098b5f5c3449dc8000417df478, type: 3}
     <StartWarriorsAmount>k__BackingField: 1
     <EveryTurnWarriorsAmount>k__BackingField: 2
@@ -35,15 +35,15 @@ MonoBehaviour:
     <spawnRotation>k__BackingField: {x: 0, y: 180, z: 0}
   <FactoryData>k__BackingField:
     <Icon>k__BackingField: {fileID: 970201981, guid: 2f235c7d961df77469c835f048e20345, type: 3}
-    <FoodPerTurnAmount>k__BackingField: 0
-    <Cost>k__BackingField: 0
+    <FoodPerTurnAmount>k__BackingField: 2
+    <Cost>k__BackingField: 5
     <SpawnBonus>k__BackingField: 5
-    <EveryTurnBonus>k__BackingField: 15
+    <EveryTurnBonus>k__BackingField: 10
     <StartHumanAmount>k__BackingField: 0
   <SpiritBuildingData>k__BackingField:
     <Icon>k__BackingField: {fileID: 1229245623, guid: f66b86bc0ac3de24b897eff5ff4d167a, type: 3}
-    <FoodPerTurnAmount>k__BackingField: 0
-    <Cost>k__BackingField: 0
-    <SpawnBonus>k__BackingField: 5
+    <FoodPerTurnAmount>k__BackingField: 2
+    <Cost>k__BackingField: 5
+    <SpawnBonus>k__BackingField: 100
     <EveryTurnBonus>k__BackingField: 15
     <StartHumanAmount>k__BackingField: 0
