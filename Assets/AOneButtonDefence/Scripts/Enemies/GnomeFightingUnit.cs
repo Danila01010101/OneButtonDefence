@@ -13,15 +13,10 @@ public class GnomeFightingUnit : FightingUnit
         skinChanger = new SkinChanger(meshFilter, render);
     }
 
-    protected override void Die()
-    {
-        base.Die();
-        skinChanger = null;
-    }
-
     private void OnDestroy()
     {
         skinChanger.Unsubscribe();
+        skinChanger = null;
     }
 
     public void ChangeSkin(Mesh newMesh, Material newMaterial) => skinChanger.ChangeSkin(newMesh, newMaterial);
