@@ -16,6 +16,7 @@ public class GameInitializer : MonoBehaviour
     [FormerlySerializedAs("partManagerPrefab")] [SerializeField] private GameplayCanvas gameplayCanvasPrefab;
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
     [SerializeField] private Canvas loadingCanvas;
+    [SerializeField] private GameObject debugCanvas;
     [SerializeField] private SpellCanvas spellCanvas;
     [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
@@ -67,6 +68,7 @@ public class GameInitializer : MonoBehaviour
         GameplayCanvas upgradeCanvas = SpawnUpgradeCanvas();
         yield return null;
         var spellCanvas = SetupSpellCanvas();
+        SetupDebugCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
         IEnemyDetector gnomeDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.GnomeLayerName));
         SetupBattleNotifier();
@@ -233,6 +235,11 @@ public class GameInitializer : MonoBehaviour
         return spellCanvasWindow.gameObject;
     }
 
+    private GameObject SetupDebugCanvas()
+    {
+        var debugCanvasWidnow = Instantiate(debugCanvas);
+        return debugCanvasWidnow.gameObject;
+    }
     private void SetupStateMachine(GameplayCanvas gameplayCanvas, GameObject battleStateCanvas, GroundBlocksSpawner worldCreator, 
         CellsGrid grid, IDisableableInput inputForDialogueState, IEnemyDetector detector)
     {
