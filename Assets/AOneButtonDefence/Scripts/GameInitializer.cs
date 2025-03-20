@@ -21,6 +21,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
 
+    private ResourcesCounter resourcesCounter;
     private Transform initializedObjectsParent;
     private BuildingSpawner buildingSpawner;
     private GroundBlocksSpawner worldCreator;
@@ -167,7 +168,7 @@ public class GameInitializer : MonoBehaviour
 
     private void SpawnResourceCounter()
     {
-        ResourcesCounter resourcesCounter = new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
+        resourcesCounter = new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
         resourcesCounter.transform.SetParent(initializedObjectsParent);
         resourcesCounter.SetStartValues(gameData.StartFoodAmount, gameData.StartMaterialsAmount, gameData.StartSpiritAmount);
         resourcesCounter.SetGnomeDeathFine(gameData.GnomeDeathSpiritFine);
@@ -269,7 +270,7 @@ public class GameInitializer : MonoBehaviour
     {
         rewardSpawner = new GameObject("RewardSpawner").AddComponent<RewardSpawner>();
         rewardSpawner.transform.SetParent(initializedObjectsParent);
-        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, new RewardSpawner.RewardAnimationSettings(1, 1));
+        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, new RewardSpawner.RewardAnimationSettings(1, 1), resourcesCounter);
     }
 
     private void OnDestroy()

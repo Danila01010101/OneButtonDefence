@@ -1,9 +1,50 @@
 using System;
+using System.Diagnostics;
 using UnityEngine;
 
 public class ResourcesCounter : MonoBehaviour
 {
-	public static ResourcesCounter Instance;
+	private static ResourcesCounter instance;
+
+    #region StaticActions
+
+    public static event Action<int> FoodAmountChanged
+    {
+        add => instance.Data.FoodAmountChanged += value;
+        remove => instance.Data.FoodAmountChanged -= value;
+    }
+
+    public static event Action<int> SpiritAmountChanged
+    {
+        add => instance.Data.SpiritAmountChanged += value;
+        remove => instance.Data.SpiritAmountChanged -= value;
+    }
+
+    public static event Action<int> MaterialsAmountChanged
+    {
+        add => instance.Data.MaterialsAmountChanged += value;
+        remove => instance.Data.MaterialsAmountChanged -= value;
+    }
+
+    public static event Action<int> WarriorsAmountChanged
+    {
+        add => instance.Data.WarriorsAmountChanged += value;
+        remove => instance.Data.WarriorsAmountChanged -= value;
+    }
+
+    public static event Action<int> GemsAmountChanged
+    {
+        add => instance.Data.GemsAmountChanged += value;
+        remove => instance.Data.GemsAmountChanged -= value;
+    }
+
+    #endregion
+
+    public static int Materials => instance.Data.Materials;
+    public static int FoodAmount => instance.Data.FoodAmount;
+    public static int SurvivorSpirit => instance.Data.SurvivorSpirit;
+    public static int Warriors => instance.Data.Warriors;
+    public static int GemsAmount => instance.Data.GemsAmount;
 
     public ResourcesData Data { get; private set; }
 
@@ -11,20 +52,30 @@ public class ResourcesCounter : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != this)
+        if (instance != this)
         {
-            Destroy(Instance);
+            Destroy(instance);
         }
 
         Data = new ResourcesData();
-        Instance = this;
+        instance = this;
     }
 
     private void DetectGnomeDeath() => Data.SurvivorSpirit -= gnomeDeathFine;
 
-    private void OnEnable() => GnomeFightingUnit.GnomeDied += DetectGnomeDeath;
+    private void DetectSkinBuy(int cost) => Data.GemsAmount -= cost;
 
-    private void OnDisable() => GnomeFightingUnit.GnomeDied -= DetectGnomeDeath;
+    private void OnEnable() 
+    {
+        SkinPanel.SkinBought += DetectSkinBuy;
+        GnomeFightingUnit.GnomeDied += DetectGnomeDeath;
+    }
+
+    private void OnDisable()
+    {
+        SkinPanel.SkinBought -= DetectSkinBuy;
+        GnomeFightingUnit.GnomeDied -= DetectGnomeDeath;
+    }
 
     public void SetStartValues(int startFood, int startMaterials, int survivorSpirit)
     {

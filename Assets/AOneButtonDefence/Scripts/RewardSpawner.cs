@@ -1,20 +1,21 @@
 using System.Collections;
-using DG.Tweening;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
 {
     private Gem rewardObjectPrefab;
     private RectTransform uiTarget;
+    private ResourcesCounter resourcesCounter;
     private bool isUpgradeStarted = false;
     private RewardAnimationSettings animationSettings;
 
-    public void Initialize(Gem rewardObjectPrefab, RectTransform uiTarget, RewardAnimationSettings rewardAnimationSettings)
+    public void Initialize(Gem rewardObjectPrefab, RectTransform uiTarget, 
+        RewardAnimationSettings rewardAnimationSettings, ResourcesCounter counter)
     {
         this.rewardObjectPrefab = rewardObjectPrefab;
         this.uiTarget = uiTarget;
         animationSettings = rewardAnimationSettings;
+        resourcesCounter = counter;
     }
 
     private void Start()
@@ -24,10 +25,7 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
 
     private void OnDestroy()
     {
-        if (Application.loadedLevelName == UnityEngine.SceneManagement.SceneManager.GetActiveScene().name)
-        {
-            EnemyDeathManager.Instance.UnregisterListener(this);
-        }
+        EnemyDeathManager.Instance.UnregisterListener(this);
     }
     
     private void DetectUpgradeStateStart() => isUpgradeStarted = true;
@@ -60,7 +58,7 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
         
         collectableObject.FlyToUI(UIGameObjectShower.Instance.UICamera, uiTarget, animationSettings.Duration, animationSettings.endScale, () =>
         {
-            ResourcesCounter.Instance.Data.GemsAmount++;
+            resourcesCounter.Data.GemsAmount++;
             collectableObject.Destroy();
         });
     }

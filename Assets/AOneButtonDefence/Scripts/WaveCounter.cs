@@ -6,6 +6,7 @@ public class WaveCounter : MonoBehaviour
     private int currentWave = 0;
     
     public event System.Action<int> OnWaveChanged;
+
     public static WaveCounter Instance
     {
         get
@@ -23,6 +24,7 @@ public class WaveCounter : MonoBehaviour
             return instance;
         }
     }
+
     private void Awake()
     {
         if (instance != null && instance != this)

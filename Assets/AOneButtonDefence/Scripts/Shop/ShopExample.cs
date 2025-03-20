@@ -7,17 +7,25 @@ public class ShopExample : MonoBehaviour
 
     public static Action<SkinData> GnomeSkinChanged;
 
+	private ResourcesCounter resourcesCounter;
+
     private void Awake()
     {
 	    var skin = new SkinData(gnome, 10);
     }
 
+	public void Initialize(ResourcesCounter counter)
+	{
+		resourcesCounter = counter;
+
+    }
+
     public void BuySkin(SkinData skin)
     {
-	    if (skin.Cost > ResourcesCounter.Instance.Data.GemsAmount)
+	    if (skin.Cost > ResourcesCounter.GemsAmount)
 		    return;
 	    
-	    ResourcesCounter.Instance.Data.GemsAmount -= skin.Cost;
+	    resourcesCounter.Data.GemsAmount -= skin.Cost;
 	    GnomeSkinChanged?.Invoke(skin);
     }
 

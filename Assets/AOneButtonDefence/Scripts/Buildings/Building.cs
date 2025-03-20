@@ -12,13 +12,11 @@ public abstract class Building : MonoBehaviour
     protected int FoodPerTurnAmount;
     protected int Cost;
 
-    private ResourcesCounter.ResourcesData resources;
     private IAnimatable animator;
 
     private void Awake()
     {
         animator = GetComponent<IAnimatable>();
-        resources = ResourcesCounter.Instance.Data;
     }
 
     public void ActivateSpawnActionWithDelay() => StartCoroutine(WaitFrameBeforeStartAction());
@@ -28,11 +26,12 @@ public abstract class Building : MonoBehaviour
         //Delay needed to activate spawn action after building position changed.
         yield return null;
         ActivateSpawnAction();
+        RegisterEndMoveAction();
     }
 
     protected virtual void ActivateSpawnAction()
     {
-        ResourcesCounter.Instance.Data.Materials -= Cost;
+        FineCounter.Instance.InstantMaterialsFine(Cost);
     }
 
     public abstract void SetupData(BuildingsData buildingsData);
@@ -42,22 +41,20 @@ public abstract class Building : MonoBehaviour
         AnimationDuration = animationDuration;
     }
 
-    protected virtual void ActivateEndMoveAction()
+    protected virtual void RegisterEndMoveAction()
     {
-        resources.FoodAmount -= FoodPerTurnAmount;
+        FineCounter.Instance.AddFoodFine(FoodPerTurnAmount);
     }
 
     protected virtual void OnEnable()
     {
         UpgradeState.UpgradeStateStarted += animator.StartAnimation;
         UpgradeState.UpgradeStateEnded += animator.InteruptAnimation;
-        UpgradeState.UpgradeStateEnded += ActivateEndMoveAction;
     }
 
     protected virtual void OnDisable()
     {
         UpgradeState.UpgradeStateStarted -= animator.StartAnimation;
         UpgradeState.UpgradeStateEnded -= animator.InteruptAnimation;
-        UpgradeState.UpgradeStateEnded -= ActivateEndMoveAction;
     }
 }

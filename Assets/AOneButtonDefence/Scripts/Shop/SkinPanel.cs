@@ -24,9 +24,9 @@ public class SkinPanel : MonoBehaviour
     public Image SelectSkinSprite;
     public Image BuySkin;
 
-    [HideInInspector]
     public static Action<Mesh, Material> SkinChanged;
     public static Action<GameObject> ShopInitialized;
+    public static Action<int> SkinBought;
     public static Action ShopEnabled;
     public static Action ShopDisabled;
 
@@ -86,13 +86,13 @@ public class SkinPanel : MonoBehaviour
         }
         else
         {
-            if (SkinList[CurrentChose].Cost > ResourcesCounter.Instance.Data.GemsAmount)
+            if (SkinList[CurrentChose].Cost > ResourcesCounter.GemsAmount)
             {
                 Debug.Log("Недостаточно алмазов");
                 return;
             }
-            ResourcesCounter.Instance.Data.GemsAmount -= SkinList[CurrentChose].Cost;
 
+            SkinBought?.Invoke(SkinList[CurrentChose].Cost);
             SkinList[CurrentChose].Unlocked = true;
             SelectSkin(CurrentChose);
         }

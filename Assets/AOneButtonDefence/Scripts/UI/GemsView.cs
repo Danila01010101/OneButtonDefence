@@ -32,7 +32,7 @@ public class GemsView : MonoBehaviour
 
     private void Start()
     {
-        UpdateGemsValue(ResourcesCounter.Instance.Data.GemsAmount);
+        UpdateGemsValue(ResourcesCounter.GemsAmount);
     }
 
     private void UpdateGemsValue(int value)
@@ -53,11 +53,11 @@ public class GemsView : MonoBehaviour
 
     private void OnEnable()
     {
-        ResourcesCounter.Instance.Data.GemsAmountChanged += UpdateGemsValue;
+        ResourcesCounter.GemsAmountChanged += UpdateGemsValue;
     }
 
     private void OnDisable()
     {
-        ResourcesCounter.Instance.Data.GemsAmountChanged -= UpdateGemsValue;
+        ResourcesCounter.GemsAmountChanged -= UpdateGemsValue;
     }
 }

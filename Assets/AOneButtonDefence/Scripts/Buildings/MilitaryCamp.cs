@@ -23,17 +23,16 @@ public class MilitaryCamp : Building
         unitsFactory = new UnitsFactory(new List<FightingUnit>() { data.GnomeWarriorPrefab }, knightDetector);
     }
 
-    protected override void ActivateEndMoveAction()
+    protected override void RegisterEndMoveAction()
     {
-        base.ActivateEndMoveAction();
-
+        base.RegisterEndMoveAction();
         AddWarriors(data.EveryTurnWarriorsAmount);
     }
 
     private void AddWarriors(int amount)
     {
         FoodPerTurnAmount += amount;
-        ResourcesCounter.Instance.Data.Warriors += amount;
+        IncomeCounter.Instance.AddWarriorIncome(amount);
         
         for (int i = 0; i < amount; i++)
         {

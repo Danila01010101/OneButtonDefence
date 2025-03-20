@@ -5,7 +5,7 @@ public class Factory : Building
     protected override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();
-        ResourcesCounter.Instance.Data.Materials += data.SpawnBonus;
+        IncomeCounter.Instance.InstantMaterialsIncome(data.SpawnBonus);
     }
 
     public override void SetupData(BuildingsData buildingsData)
@@ -15,9 +15,9 @@ public class Factory : Building
         FoodPerTurnAmount = data.FoodPerTurnAmount;
     }
 
-    protected override void ActivateEndMoveAction()
+    protected override void RegisterEndMoveAction()
     {
-        base.ActivateEndMoveAction();
-        ResourcesCounter.Instance.Data.Materials += data.EveryTurnBonus;
+        base.RegisterEndMoveAction();
+        IncomeCounter.Instance.AddMaterialsIncome(data.EveryTurnBonus);
     }
 }
