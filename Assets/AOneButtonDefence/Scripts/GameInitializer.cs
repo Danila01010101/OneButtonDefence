@@ -19,6 +19,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private SpellCanvas spellCanvas;
     [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
+    [SerializeField] private SoundSettings settingsCanvas;
 
     private Transform initializedObjectsParent;
     private BuildingSpawner buildingSpawner;
@@ -72,6 +73,7 @@ public class GameInitializer : MonoBehaviour
         SetupBattleNotifier();
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
+        SetupSettingsCanvas();
         yield return null;
         GameInitialized?.Invoke();
         isSerializationCompleted = true;
@@ -269,5 +271,11 @@ public class GameInitializer : MonoBehaviour
     {
         skinChangeDetector.Unsubscribe();
         musicMediator.Unsubscribe();
+    }
+
+    private void SetupSettingsCanvas()
+    {
+        var settingsCanvasWindow = Instantiate(settingsCanvas);
+        settingsCanvasWindow.gameObject.SetActive(false);
     }
 }

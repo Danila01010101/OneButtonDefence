@@ -26,10 +26,10 @@ public class WaveGenerator
             newWavesParameters.waves.Add(newWavesData);
         }
 
-        for (int i = 0; i < newWavesParameters.waves.Count; i++)
-        {
-            Debug.LogWarning(newWavesParameters.waves[i].enemiesAmount);
-        }
+        // for (int i = 0; i < newWavesParameters.waves.Count; i++)
+        // {
+        //     Debug.LogWarning(newWavesParameters.waves[i].enemiesAmount);
+        // }
         
         return newWavesParameters;
     }
