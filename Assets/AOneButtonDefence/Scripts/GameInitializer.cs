@@ -69,11 +69,11 @@ public class GameInitializer : MonoBehaviour
         yield return null;
         var spellCanvas = SetupSpellCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
+        SetupSettingsCanvas();
         IEnemyDetector gnomeDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.GnomeLayerName));
         SetupBattleNotifier();
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
-        SetupSettingsCanvas();
         yield return null;
         GameInitialized?.Invoke();
         isSerializationCompleted = true;
@@ -273,9 +273,10 @@ public class GameInitializer : MonoBehaviour
         musicMediator.Unsubscribe();
     }
 
-    private void SetupSettingsCanvas()
+    private SoundSettings SetupSettingsCanvas()
     {
         var settingsCanvasWindow = Instantiate(settingsCanvas);
-        settingsCanvasWindow.gameObject.SetActive(false);
+        settingsCanvasWindow.Initialize();
+        return settingsCanvasWindow;
     }
 }
