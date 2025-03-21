@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -43,7 +42,7 @@ public abstract class Building : MonoBehaviour
 
     protected virtual void RegisterEndMoveAction()
     {
-        ResourceChanger.Instance.AddFoodPerTurn(FoodPerTurnAmount);
+        ResourceChanger.Instance.AddFoodPerTurn(-FoodPerTurnAmount);
     }
 
     protected virtual void OnEnable()
