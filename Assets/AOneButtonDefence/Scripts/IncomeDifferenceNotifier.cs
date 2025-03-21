@@ -14,13 +14,13 @@ public class IncomeDifferenceNotifier
         var (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.FoodChange);
         FoodIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
 
-        (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.FoodChange);
+        (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.MaterialsChange);
         MaterialsIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
 
-        (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.FoodChange);
+        (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.SpiritChange);
         SpiritIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
 
-        (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.FoodChange);
+        (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.WarriorChange);
         WarriorsIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
     }
 
