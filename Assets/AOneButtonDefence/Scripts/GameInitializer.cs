@@ -210,10 +210,10 @@ public class GameInitializer : MonoBehaviour
     {
         GameplayCanvas upgradeCanvas = Instantiate(gameplayCanvasPrefab);
         upgradeCanvas.Initialize(4, 
-            worldGenerationData.BuildingsData.FarmData.Icon,
-            worldGenerationData.BuildingsData.SpiritBuildingData.Icon,
-            worldGenerationData.BuildingsData.MilitaryCampData.Icon,
-            worldGenerationData.BuildingsData.FactoryData.Icon
+            worldGenerationData.BuildingsData.FarmData,
+            worldGenerationData.BuildingsData.SpiritBuildingData,
+            worldGenerationData.BuildingsData.MilitaryCampData,
+            worldGenerationData.BuildingsData.FactoryData
             );
         return upgradeCanvas;
     }

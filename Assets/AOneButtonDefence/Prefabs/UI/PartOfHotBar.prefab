@@ -164,6 +164,7 @@ GameObject:
   - component: {fileID: 4976440063813798992}
   - component: {fileID: 7422801006826303249}
   - component: {fileID: -7955995324063234026}
+  - component: {fileID: 2522968737412291960}
   m_Layer: 5
   m_Name: PartOfHotBar
   m_TagString: Untagged
@@ -261,6 +262,20 @@ MonoBehaviour:
   icon: {fileID: 5866894532763162473}
   onImage: {fileID: 8209578697935558062}
   offImage: {fileID: 2484362601171453516}
+--- !u!114 &2522968737412291960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5197255074521863479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5b8bd7a8b013434baeff2307090b30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Button: {fileID: 7422801006826303249}
+  Timer: 0.5
 --- !u!1 &8300453684407161527
 GameObject:
   m_ObjectHideFlags: 0
