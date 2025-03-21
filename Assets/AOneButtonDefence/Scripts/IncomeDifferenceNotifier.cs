@@ -26,7 +26,7 @@ public class IncomeDifferenceNotifier
 
     private (string, bool) GetIncomeString(int changeValue)
     {
-        bool isPositive = changeValue > 0;
+        bool isPositive = changeValue >= 0;
         string newDifferenceInfo = isPositive ? $"+ {changeValue}" : $"- {changeValue}";
         return (newDifferenceInfo, isPositive);
     }
