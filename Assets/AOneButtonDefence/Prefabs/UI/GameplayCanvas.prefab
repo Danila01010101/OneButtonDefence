@@ -981,10 +981,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positiveColor: {r: 0, g: 0.7735849, b: 0, a: 1}
   negativeColor: {r: 1, g: 0, b: 0, a: 1}
-  foodIncomeText: {fileID: 0}
-  spiritIncomeText: {fileID: 0}
-  strengthIncomeText: {fileID: 0}
-  materialsIncomeText: {fileID: 0}
+  foodIncomeText: {fileID: 1099542521388884978}
+  spiritIncomeText: {fileID: 5951077928174308900}
+  strengthIncomeText: {fileID: 6880207978802946983}
+  materialsIncomeText: {fileID: 6164780892493663612}
 --- !u!1 &3604142785773894656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1480,7 +1480,7 @@ GameObject:
   - component: {fileID: 4075213481305315913}
   - component: {fileID: 5951077928174308900}
   m_Layer: 5
-  m_Name: MaterialsIncome (1)
+  m_Name: SpiritIncome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4033,7 +4033,7 @@ GameObject:
   - component: {fileID: 1515131201351262761}
   - component: {fileID: 6880207978802946983}
   m_Layer: 5
-  m_Name: MaterialsIncome
+  m_Name: PowerIncome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

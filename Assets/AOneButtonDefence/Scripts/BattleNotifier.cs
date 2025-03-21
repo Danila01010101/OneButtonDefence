@@ -10,10 +10,21 @@ public class BattleNotifier : IBattleNotifier
 
     public BattleNotifier()
     {
+        instance = this;
+    }
+
+    public void Subscribe()
+    {
         GameBattleState.BattleStarted += DetectBattleStart;
         GameBattleState.BattleWon += DetectBattleEnd;
         GameBattleState.BattleLost += DetectBattleEnd;
-        instance = this;
+    }
+
+    public void Unsubscribe()
+    {
+        GameBattleState.BattleStarted -= DetectBattleStart;
+        GameBattleState.BattleWon -= DetectBattleEnd;
+        GameBattleState.BattleLost -= DetectBattleEnd;
     }
 
     private void DetectBattleStart() => isBattleGoing = true;
