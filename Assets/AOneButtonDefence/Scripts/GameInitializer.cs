@@ -54,6 +54,7 @@ public class GameInitializer : MonoBehaviour
         InitializeMusicMediator(backgroundMusicPlayer, upgradeEffectPlayer);
         yield return null;
         SpawnResourceCounter();
+        SetupResourcesStatistic();
         yield return null;
         SetupUIObjectShower();
         SetupEnemyDeathManager();
@@ -73,6 +74,7 @@ public class GameInitializer : MonoBehaviour
         SetupShopSkinWindow(upgradeCanvas.transform);
         IEnemyDetector gnomeDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.GnomeLayerName));
         SetupBattleNotifier();
+        yield return null;
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
         yield return null;
@@ -177,6 +179,7 @@ public class GameInitializer : MonoBehaviour
     private void SetupResourcesStatistic()
     {
         ResourceChanger incomeCounter = new ResourceChanger(resourcesCounter);
+        new IncomeDifferenceNotifier(incomeCounter);
     }
 
     private void InitializeDialogCamera()

@@ -1,14 +1,15 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class StatisticsView : MonoBehaviour
+public class StatisticView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI foodValueText;
     [SerializeField] private TextMeshProUGUI spiritValueText;
-    [SerializeField] private TextMeshProUGUI strenghtValueText;
+    [SerializeField] private TextMeshProUGUI strengthValueText;
     [SerializeField] private TextMeshProUGUI materialsValueText;
     [SerializeField] private TextMeshProUGUI gemsText;
-
+    
     private void Start()
     {
         SubscribeForValueChanging();
@@ -18,7 +19,7 @@ public class StatisticsView : MonoBehaviour
 
     private void UpdateSpiritValue(int newValue) => spiritValueText.text = newValue.ToString();
 
-    private void UpdateStrenghtValue(int newValue) => strenghtValueText.text = newValue.ToString();
+    private void UpdateStrengthValue(int newValue) => strengthValueText.text = newValue.ToString();
 
     private void UpdateMaterialsValue(int newValue) => materialsValueText.text = newValue.ToString();
 
@@ -32,7 +33,7 @@ public class StatisticsView : MonoBehaviour
     {
         UpdateFoodValue(data.FoodAmount);
         UpdateSpiritValue(data.SurvivorSpirit);
-        UpdateStrenghtValue(data.Warriors);
+        UpdateStrengthValue(data.Warriors);
         UpdateMaterialsValue(data.Materials);
         UpdateGemsValue(data.GemsAmount);
     }

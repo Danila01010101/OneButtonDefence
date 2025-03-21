@@ -6,19 +6,21 @@ public class IncomeDifferenceNotifier
     public static Action<string, bool> MaterialsIncomeUpdated;
     public static Action<string, bool> SpiritIncomeUpdated;
     public static Action<string, bool> WarriorsIncomeUpdated;
+    
+    private ResourceChanger resourceChanger;
 
     private void UpdateIncomeValues()
     {
-        var (newDifferenceInfo, isPositive) = GetIncomeString(ResourceChanger.Instance.FoodChange);
+        var (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.FoodChange);
         FoodIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
 
-        (newDifferenceInfo, isPositive) = GetIncomeString(ResourceChanger.Instance.FoodChange);
+        (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.FoodChange);
         MaterialsIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
 
-        (newDifferenceInfo, isPositive) = GetIncomeString(ResourceChanger.Instance.FoodChange);
+        (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.FoodChange);
         SpiritIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
 
-        (newDifferenceInfo, isPositive) = GetIncomeString(ResourceChanger.Instance.FoodChange);
+        (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.FoodChange);
         WarriorsIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
     }
 
@@ -29,8 +31,10 @@ public class IncomeDifferenceNotifier
         return (newDifferenceInfo, isPositive);
     }
 
-    public IncomeDifferenceNotifier() 
+    public IncomeDifferenceNotifier(ResourceChanger resourceChanger)
     {
+        this.resourceChanger = resourceChanger;
         UpgradeState.UpgradeStateStarted += UpdateIncomeValues;
+        UpgradeState.UpgradeStateEnding += UpdateIncomeValues;
     }
 }
