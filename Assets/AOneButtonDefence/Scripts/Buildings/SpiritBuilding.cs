@@ -7,7 +7,7 @@ public class SpiritBuilding : Building
     protected override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();
-        IncomeCounter.Instance.InstantSpiritIncome(data.SpawnBonus);
+        ResourceChanger.Instance.InstantSpiritChange(data.SpawnBonus);
     }
 
     public override void SetupData(BuildingsData buildingsData)
@@ -20,6 +20,6 @@ public class SpiritBuilding : Building
     protected override void RegisterEndMoveAction()
     {
         base.RegisterEndMoveAction();
-        IncomeCounter.Instance.AddSpiritIncome(data.EveryTurnBonus);
+        ResourceChanger.Instance.AddSpiritPerTurn(data.EveryTurnBonus);
     }
 }

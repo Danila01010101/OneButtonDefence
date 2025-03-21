@@ -31,7 +31,7 @@ public abstract class Building : MonoBehaviour
 
     protected virtual void ActivateSpawnAction()
     {
-        FineCounter.Instance.InstantMaterialsFine(Cost);
+        ResourceChanger.Instance.InstantMaterialsChange(-Cost);
     }
 
     public abstract void SetupData(BuildingsData buildingsData);
@@ -43,18 +43,18 @@ public abstract class Building : MonoBehaviour
 
     protected virtual void RegisterEndMoveAction()
     {
-        FineCounter.Instance.AddFoodFine(FoodPerTurnAmount);
+        ResourceChanger.Instance.AddFoodPerTurn(FoodPerTurnAmount);
     }
 
     protected virtual void OnEnable()
     {
         UpgradeState.UpgradeStateStarted += animator.StartAnimation;
-        UpgradeState.UpgradeStateEnded += animator.InteruptAnimation;
+        UpgradeState.UpgradeStateEnding += animator.InteruptAnimation;
     }
 
     protected virtual void OnDisable()
     {
         UpgradeState.UpgradeStateStarted -= animator.StartAnimation;
-        UpgradeState.UpgradeStateEnded -= animator.InteruptAnimation;
+        UpgradeState.UpgradeStateEnding -= animator.InteruptAnimation;
     }
 }

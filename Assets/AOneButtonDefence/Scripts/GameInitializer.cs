@@ -174,6 +174,11 @@ public class GameInitializer : MonoBehaviour
         resourcesCounter.SetGnomeDeathFine(gameData.GnomeDeathSpiritFine);
     }
 
+    private void SetupResourcesStatistic()
+    {
+        ResourceChanger incomeCounter = new ResourceChanger(resourcesCounter);
+    }
+
     private void InitializeDialogCamera()
     {
         var dialogCamera = Instantiate(cameraData.DialogCameraPrefab);

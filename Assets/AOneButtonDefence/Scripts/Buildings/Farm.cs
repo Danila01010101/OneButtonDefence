@@ -5,7 +5,7 @@ public class Farm : Building
     protected override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();
-        IncomeCounter.Instance.InstantFoodIncome(data.EveryTurnBonus);
+        ResourceChanger.Instance.InstantFoodChange(data.SpawnBonus);
     }
 
     public override void SetupData(BuildingsData buildingsData)
@@ -18,6 +18,6 @@ public class Farm : Building
     protected override void RegisterEndMoveAction()
     {
         base.RegisterEndMoveAction();
-        IncomeCounter.Instance.AddFoodIncome(data.EveryTurnBonus);
+        ResourceChanger.Instance.AddFoodPerTurn(data.EveryTurnBonus);
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -30,15 +29,9 @@ public class GemsView : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        UpdateGemsValue(ResourcesCounter.GemsAmount);
-    }
-
-    private void UpdateGemsValue(int value)
+    public void PlayUpdateAnimation()
     {
         AnimateText(bounceValue, duration);
-        gemsText.text = value.ToString();
     }
 
     private void AnimateText(Vector3 bounceValue, float duration)
@@ -48,16 +41,5 @@ public class GemsView : MonoBehaviour
             .SetEase(Ease.OutQuad));
         sequence.Append(GemsTextTransform.DOScale(originalTextScale, duration / 2)
             .SetEase(Ease.InQuad));
-    }
-
-
-    private void OnEnable()
-    {
-        ResourcesCounter.GemsAmountChanged += UpdateGemsValue;
-    }
-
-    private void OnDisable()
-    {
-        ResourcesCounter.GemsAmountChanged -= UpdateGemsValue;
     }
 }

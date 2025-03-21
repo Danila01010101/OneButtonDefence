@@ -32,7 +32,7 @@ public class MilitaryCamp : Building
     private void AddWarriors(int amount)
     {
         FoodPerTurnAmount += amount;
-        IncomeCounter.Instance.AddWarriorIncome(amount);
+        ResourceChanger.Instance.AddWarriorPerTurn(amount);
         
         for (int i = 0; i < amount; i++)
         {

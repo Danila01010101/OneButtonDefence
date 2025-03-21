@@ -1,4 +1,4 @@
-public class FoodValueView : ResourceValueView
+public class WarriorsView : ResourceValueView
 {
     private void DetectMaterialsChange(ResourcesCounter.ResourcesData data) => UpdateValue(data.FoodAmount);
 
