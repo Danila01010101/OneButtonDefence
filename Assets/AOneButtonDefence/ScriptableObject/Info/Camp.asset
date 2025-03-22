@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c577be0c1bad3498fc39fc39cb7a63, type: 3}
   m_Name: Camp
   m_EditorClassIdentifier: 
-  name: 
+  name: "\u041B\u0430\u0433\u0435\u0440\u044C"
   perBuilding: []
   perRound: []
-  lore: 
+  lore: "\u0413\u043E\u0442\u043E\u0432\u044C\u0442\u0435\u0441\u044C \u043A \u0432\u043E\u0439\u043D\u0435"
   image: {fileID: 0}
   prefab: {fileID: 0}

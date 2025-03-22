@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c577be0c1bad3498fc39fc39cb7a63, type: 3}
   m_Name: Farm
   m_EditorClassIdentifier: 
-  name: 
-  perBuilding: []
-  perRound: []
-  lore: 
+  name: "\u0424\u0435\u0440\u043C\u0430"
+  perBuilding:
+  - Text: "\u0420\u0435\u0441\u0443\u0440\u0441\u044B: -5"
+    Image: {fileID: 0}
+  perRound:
+  - Text: "\u0415\u0434\u0430: +2"
+    Image: {fileID: 0}
+  lore: "\u0425\u043B\u0435\u0431 \u0432\u0441\u0435\u043C\u0443 \u0433\u043E\u043B\u043E\u0432\u0430"
   image: {fileID: 0}
   prefab: {fileID: 0}
