@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class GameplayCanvas : MonoBehaviour
 {
-    [SerializeField] private Button partPrefab;
+    [SerializeField] private UIInfoButton partPrefab;
+    [SerializeField] private UIInfoPanel infoPanel;
     [SerializeField] private GameObject cellsSpawnParent;
     [SerializeField] private UpgradeButton upgradeButton;
     [SerializeField] private int buttonsDistance = 100;
@@ -15,7 +16,7 @@ public class GameplayCanvas : MonoBehaviour
     private GameObject spawnedShopWindow;
     private int partPlacingInterval = 0;
     private float startButtonsAmount;
-    private List<Button> parts = new List<Button>();
+    private List<UIInfoButton> parts = new List<UIInfoButton>();
     private List<ButtonChooseAnimation> partsAnimators = new List<ButtonChooseAnimation>();
     private int lastKey = -1;
     private int beforLastKey = -1;
@@ -24,7 +25,7 @@ public class GameplayCanvas : MonoBehaviour
 
     public UpgradeButton UpgradeButton => upgradeButton;
 
-    public void Initialize(int partsAmount, Sprite farmSprite, Sprite spiritBuildingSprite, Sprite militaryCampSprite, Sprite resourcesCenter)
+    public void Initialize(int partsAmount, FarmData farmData, SpiritBuildingData spiritBuildingData, MilitaryCampData militaryCampData, FactoryData resourcesCenterData)
     {
         if (partsAmount % 2 == 0)
         {
@@ -63,16 +64,23 @@ public class GameplayCanvas : MonoBehaviour
         partsAnimators = partsAnimators.OrderBy(animator => animator.transform.position.x).ToList();
         var sprites = new List<Sprite>()
         {
-            farmSprite,
-            spiritBuildingSprite,
-            militaryCampSprite,
-            resourcesCenter
+            farmData.Icon,
+            spiritBuildingData.Icon,
+            militaryCampData.Icon,
+            resourcesCenterData.Icon
         };
-        
+        var data = new List<BasicBuildingData>()
+        {
+            farmData,
+            spiritBuildingData,
+            militaryCampData,
+            resourcesCenterData
+        };
         for (int i = 0; i < parts.Count; i++)
         {
+            parts[i].Initialize(data[i].Info, infoPanel);
             int partIndex = i;
-            parts[i].onClick.AddListener(delegate { ChoosePart((UpgradeButton.Upgrades)partIndex); });
+            parts[i].Button.onClick.AddListener(delegate { ChoosePart((UpgradeButton.Upgrades)partIndex); });
             partsAnimators[i].SetIcon(sprites[i]);
         }
         
