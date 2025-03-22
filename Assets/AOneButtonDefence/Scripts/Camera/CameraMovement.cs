@@ -41,15 +41,15 @@ public class CameraMovement : MonoBehaviour
             UpdateCameraPositionAndRotation();
         }
     }
-
+    
     private void UpdateCameraPositionAndRotation()
-    {
-        Vector3 rotation = 
-            Vector3.SmoothDamp(transform.rotation.eulerAngles, new Vector3(currentX, currentY, 0), ref rotationVelocity, data.CameraRotationSmooth);
-        Vector3 position = target.position - (Quaternion.Euler(rotation)  * Vector3.forward * currentDistance);
-        transform.position = position;
-        transform.eulerAngles = rotation;
+    { 
+        Vector3 targetPosition = target.position - (Quaternion.Euler(currentX, currentY, 0) * Vector3.forward * currentDistance);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, data.CameraRotationSmooth * Time.deltaTime);
+        Quaternion targetRotation = Quaternion.Euler(currentX, currentY, 0f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, data.CameraRotationSmooth * Time.deltaTime);
     }
+
 
     private void RotateCamera(Vector2 direction)
     {
