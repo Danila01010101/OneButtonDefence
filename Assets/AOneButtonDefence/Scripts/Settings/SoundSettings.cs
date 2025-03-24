@@ -11,6 +11,7 @@ public class SoundSettings : MonoBehaviour
     
     private AudioSource[] musicAudioSource;
     
+    [HideInInspector]
     public float value;
 
     public void Initialize()
