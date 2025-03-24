@@ -1183,6 +1183,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ab943b0113dce584e87a3a0b5213e5d8, type: 2}
   - {fileID: 11400000, guid: 81dc2b2d8b306cf49bd07afea06e2fa7, type: 2}
   - {fileID: 11400000, guid: ebf121d95a6adc5428a73a31dca4556e, type: 2}
+  - {fileID: 11400000, guid: 789c4435361d7c248ad1ad88c69511f8, type: 2}
+  - {fileID: 11400000, guid: 0c54e7d09ea5de84db0ede590899a9b8, type: 2}
   CurrentChose: 0
   ChosenSkin: 0
   SkinName: {fileID: 5992573334379910290}
