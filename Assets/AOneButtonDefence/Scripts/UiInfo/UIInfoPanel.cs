@@ -16,7 +16,6 @@ public class UIInfoPanel : MonoBehaviour
 
     public TextMeshProUGUI Lore;
 
-    //public Image Image;
     public void Initializator(InfoPanelScriptableObject panelData)
     {
         ClearningData();
@@ -29,6 +28,7 @@ public class UIInfoPanel : MonoBehaviour
             if (panelData.PerBuilding()[i].Image != null)
             {
                 perBuildingSprites[i].sprite = panelData.PerBuilding()[i].Image;
+                perBuildingSprites[i].gameObject.SetActive(true);
             }
             else
             {
@@ -43,6 +43,7 @@ public class UIInfoPanel : MonoBehaviour
             if (panelData.PerRound()[i].Image != null)
             {
                 perRoundSprites[i].sprite = panelData.PerRound()[i].Image;
+                perRoundSprites[i].gameObject.SetActive(true);
             }
             else
             {

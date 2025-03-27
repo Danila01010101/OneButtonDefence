@@ -9,8 +9,7 @@ public class InfoPanelScriptableObject : ScriptableObject
     [SerializeField] private List<PanelSection> perBuilding;
     [SerializeField] private List<PanelSection> perRound;
     [SerializeField] private string lore;
-    [SerializeField] private Image image;
-    [SerializeField] private GameObject prefab;
+    [SerializeField] private Sprite image;
 
     public string Name()
     {
@@ -28,7 +27,7 @@ public class InfoPanelScriptableObject : ScriptableObject
     {
         return lore;
     }
-    public Image Image()
+    public Sprite Image()
     {
         return image;
     }
