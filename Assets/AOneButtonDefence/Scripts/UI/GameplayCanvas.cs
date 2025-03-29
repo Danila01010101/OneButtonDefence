@@ -10,8 +10,10 @@ public class GameplayCanvas : MonoBehaviour
     [SerializeField] private UpgradeButton upgradeButton;
     [SerializeField] private int buttonsDistance = 100;
     [SerializeField] private Button shopButton;
+    [SerializeField] private Button settingsButton;
 
     private GameObject spawnedShopWindow;
+    private GameObject spawnedSettingsWindow;
     private int partPlacingInterval = 0;
     private float startButtonsAmount;
     private List<Button> parts = new List<Button>();
@@ -77,14 +79,25 @@ public class GameplayCanvas : MonoBehaviour
         
         shopButton.onClick.RemoveAllListeners();
         shopButton.onClick.AddListener(ShowShopWindow);
+        
+        settingsButton.onClick.RemoveAllListeners();
+        settingsButton.onClick.AddListener(ShowSettingsWindow);
     }
 
     private void DetectShopWindow(GameObject window) => spawnedShopWindow = window;
+    
+    private void DetectSettingsWindow(GameObject window) => spawnedSettingsWindow = window;
     
     private void ShowShopWindow()
     {
         if (spawnedShopWindow != null)
             spawnedShopWindow.gameObject.SetActive(true);
+    }
+
+    private void ShowSettingsWindow()
+    {
+        if (spawnedSettingsWindow != null)
+            spawnedSettingsWindow.gameObject.SetActive(true);
     }
 
     private void ChoosePart(UpgradeButton.Upgrades index)
@@ -146,10 +159,12 @@ public class GameplayCanvas : MonoBehaviour
     private void OnEnable()
     {
         SkinPanel.ShopInitialized += DetectShopWindow;
+        SoundSettings.SettingsInitialized += DetectSettingsWindow;
     }
 
     private void OnDisable()
     {
         SkinPanel.ShopInitialized -= DetectShopWindow;
+        SoundSettings.SettingsInitialized -= DetectSettingsWindow;
     }
 }
