@@ -47,6 +47,7 @@ public class ResourcesCounter : MonoBehaviour
                 foodAmount = value;
             }
         }
+        
         public int Warriors
         {
             get => warriors;
@@ -68,6 +69,7 @@ public class ResourcesCounter : MonoBehaviour
                 materials = value;
             }
         }
+        
         public int SurvivorSpirit
         {
             get => survivorSpirit;

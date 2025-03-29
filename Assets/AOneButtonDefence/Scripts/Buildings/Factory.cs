@@ -1,6 +1,6 @@
 public class Factory : Building
 {
-    private FactoryData data;
+    private BasicBuildingData data;
 
     protected override void ActivateSpawnAction()
     {
@@ -11,7 +11,7 @@ public class Factory : Building
     public override void SetupData(BuildingsData buildingsData)
     {
         data = buildingsData.FactoryData;
-        Cost = data.Cost;
+        Cost = data.;
         FoodPerTurnAmount = data.FoodPerTurnAmount;
     }
 

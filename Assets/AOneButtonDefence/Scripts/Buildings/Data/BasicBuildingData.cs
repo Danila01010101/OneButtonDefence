@@ -6,6 +6,8 @@ public abstract class BasicBuildingData
 {
     [field: SerializeField] public Sprite Icon { get; private set; }
     [field: SerializeField] public Building Prefab { get; private set; }
+    [field: SerializeField] public Vector3 SpawnOffset { get; private set; }
+    [field: SerializeField] public Vector3 SpawnRotation { get; private set; }
 
     [Header("Стоимость постройки")]
     public ResourceChangeData[] buildResourceConsumption;

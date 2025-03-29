@@ -32,6 +32,7 @@ public abstract class Building : MonoBehaviour
 
     protected virtual void ActivateSpawnAction()
     {
+        
         ResourcesCounter.Instance.Data.Materials -= Cost;
     }
 
