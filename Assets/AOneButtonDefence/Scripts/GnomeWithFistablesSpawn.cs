@@ -1,20 +1,21 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Image = Microsoft.Unity.VisualStudio.Editor.Image;
 
 public class GnomeWithFistablesSpawn : MonoBehaviour
 {
     
     [SerializeField]private int minTimeBetweenSpawns;
     [SerializeField]private int maxTimeBetweenSpawns;
-    [SerializeField]private Image GnomeImage;
+    [SerializeField]private GnomeWithFistables gnomeWithFistablesPrefab;
+    [SerializeField]private RectTransform endRectForGnome;
+    [SerializeField]private RectTransform GnomeRectSpawn;
+    [SerializeField]private Canvas GameplayCanvas;
+    [SerializeField]private bool IsDebug;
     
     private float timer;
     private float timeBetweenSpawns;
-    
-    public RectTransform GnomeRectSpawn;
-    public Canvas GameplayCanvas;
-
-    public bool IsDebug;
     
     private void Start()
     {
@@ -43,7 +44,8 @@ public class GnomeWithFistablesSpawn : MonoBehaviour
 
     private void SpawnGnome()
     {
-        Image gnome = Instantiate(GnomeImage, GameplayCanvas.transform);
-        gnome.rectTransform.anchoredPosition = GnomeRectSpawn.anchoredPosition;
+        GnomeWithFistables gnome = Instantiate(gnomeWithFistablesPrefab, GameplayCanvas.transform);
+        gnome.gameObject.GetComponent<RectTransform>().anchoredPosition = GnomeRectSpawn.anchoredPosition;
+        gnome.Initialize(endRectForGnome);
     }
 }
