@@ -24,14 +24,13 @@ public class SkinPanel : MonoBehaviour
     public Image SelectSkinSprite;
     public Image BuySkin;
 
-    [HideInInspector]
     public static Action<Mesh, Material> SkinChanged;
     public static Action<GameObject> ShopInitialized;
+    public static Action<int> SkinBought;
     public static Action ShopEnabled;
     public static Action ShopDisabled;
 
     private ShopSkinShower spawnedShopSkinShower;
-
     public void Initialize(IInput input)
     {
         spawnedShopSkinShower = UIGameObjectShower.Instance.RenderPrefab(exampleSkinShowerPrefab, exampleSkinChangerPosition, Quaternion.Euler(exampleSkinChangerEulerAngles));
@@ -62,20 +61,7 @@ public class SkinPanel : MonoBehaviour
         SkinLore.text = SkinList[CurrentChose].SkinLore;
         SkinCost.text = SkinList[CurrentChose].Cost.ToString();
 
-        if (SkinList[CurrentChose].Unlocked)
-        {
-            BuyButtonText.text = "купить";
-            SkinCost.text = "стоит " + SkinList[CurrentChose] + " алмазов";
-        }
-        else
-        {
-            BuyButtonText.text = "купить";
-        }
-        
-        if (CurrentChose == ChosenSkin)
-        {
-            //BuyButtonText.text = "??????";
-        }
+        ChangeText();
     }
 
     public void SetSkin()
@@ -86,13 +72,13 @@ public class SkinPanel : MonoBehaviour
         }
         else
         {
-            if (SkinList[CurrentChose].Cost > ResourcesCounter.Instance.Data.GemsAmount)
+            if (SkinList[CurrentChose].Cost > ResourcesCounter.GemsAmount)
             {
                 Debug.Log("Недостаточно алмазов");
                 return;
             }
-            ResourcesCounter.Instance.Data.GemsAmount -= SkinList[CurrentChose].Cost;
 
+            SkinBought?.Invoke(SkinList[CurrentChose].Cost);
             SkinList[CurrentChose].Unlocked = true;
             SelectSkin(CurrentChose);
         }
@@ -100,9 +86,9 @@ public class SkinPanel : MonoBehaviour
 
     private void SelectSkin(int index)
     {
+        ChosenSkin = index;
         SkinChanged?.Invoke(SkinList[index].Mesh, SkinList[index].Material);
-        BuyButtonText.text = "купить";
-        SkinCost.text = "стоит " + SkinList[index] + " алмазов";
+        ChangeText();
         SelectSkinSprite.sprite = SkinList[index].Icon;
     }
     
@@ -136,7 +122,23 @@ public class SkinPanel : MonoBehaviour
         
         ShopDisabled?.Invoke();
     }
-
+    private void ChangeText()
+    {
+        if (SkinList[CurrentChose].Unlocked)
+        {
+            BuyButtonText.text = "Применить";
+            if (CurrentChose == ChosenSkin)
+            {
+                BuyButtonText.text = "Выбрано";
+            }
+            SkinCost.text = "";
+        }
+        else
+        {
+            SkinCost.text = "стоит " + SkinList[CurrentChose].Cost + " алмазов";
+            BuyButtonText.text = "купить";
+        }
+    }
     private void OnEnable() => EnablePanel();
 
     private void OnDisable() => DisablePanel();

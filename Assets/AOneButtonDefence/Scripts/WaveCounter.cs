@@ -2,36 +2,21 @@ using UnityEngine;
 
 public class WaveCounter : MonoBehaviour
 {
-    private static WaveCounter instance;
     private int currentWave = 0;
     
     public event System.Action<int> OnWaveChanged;
-    public static WaveCounter Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<WaveCounter>();
-                if (instance == null)
-                {
-                    GameObject singletonObject = new GameObject(typeof(WaveCounter).Name);
-                    instance = singletonObject.AddComponent<WaveCounter>();
-                    DontDestroyOnLoad(singletonObject);
-                }
-            }
-            return instance;
-        }
-    }
+
+    public static WaveCounter Instance { get; private set; }
+
     private void Awake()
     {
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
-            instance = this;
+            Instance = this;
         }
     }
 

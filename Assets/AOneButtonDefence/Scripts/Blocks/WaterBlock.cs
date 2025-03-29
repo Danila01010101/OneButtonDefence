@@ -3,6 +3,6 @@ public class WaterBlock : Ground
     public override void ActivateBonus()
     {
         base.ActivateBonus();
-        ResourcesCounter.Instance.Data.FoodAmount += 20;
+        ResourceChanger.Instance.InstantFoodChange(20);
     }
 }

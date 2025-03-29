@@ -7,7 +7,7 @@ public class SpiritBuilding : Building
     protected override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();
-        ResourcesCounter.Instance.Data.SurvivorSpirit += data.SpawnBonus;
+        ResourceChanger.Instance.InstantSpiritChange(data.SpawnBonus);
     }
 
     public override void SetupData(BuildingsData buildingsData)
@@ -17,9 +17,9 @@ public class SpiritBuilding : Building
         FoodPerTurnAmount = data.FoodPerTurnAmount;
     }
 
-    protected override void ActivateEndMoveAction()
+    protected override void RegisterEndMoveAction()
     {
-        base.ActivateEndMoveAction();
-        ResourcesCounter.Instance.Data.SurvivorSpirit += data.EveryTurnBonus;
+        base.RegisterEndMoveAction();
+        ResourceChanger.Instance.AddSpiritPerTurn(data.EveryTurnBonus);
     }
 }

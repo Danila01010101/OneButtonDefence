@@ -23,17 +23,18 @@ public class MilitaryCamp : Building
         unitsFactory = new UnitsFactory(new List<FightingUnit>() { data.GnomeWarriorPrefab }, knightDetector);
     }
 
-    protected override void ActivateEndMoveAction()
+    protected override void RegisterEndMoveAction()
     {
-        base.ActivateEndMoveAction();
-
-        AddWarriors(data.EveryTurnWarriorsAmount);
+        base.RegisterEndMoveAction();
+        ResourceChanger.Instance.AddWarriorPerTurn(data.EveryTurnWarriorsAmount);
     }
+    
+    private void EveryTurnWarriorsSpawn() => AddWarriors(data.EveryTurnWarriorsAmount);
 
     private void AddWarriors(int amount)
     {
         FoodPerTurnAmount += amount;
-        ResourcesCounter.Instance.Data.Warriors += amount;
+        ResourceChanger.Instance.InstantWarriorChange(amount);
         
         for (int i = 0; i < amount; i++)
         {
@@ -48,5 +49,18 @@ public class MilitaryCamp : Building
     {
         yield return null;
         AddWarriors(data.StartWarriorsAmount);
+        ResourceChanger.Instance.InstantWarriorChange(data.StartWarriorsAmount);
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnDisable();
+        UpgradeState.UpgradeStateEnding += EveryTurnWarriorsSpawn;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        UpgradeState.UpgradeStateEnding += EveryTurnWarriorsSpawn;
     }
 }

@@ -16,10 +16,13 @@ public class GameInitializer : MonoBehaviour
     [FormerlySerializedAs("partManagerPrefab")] [SerializeField] private GameplayCanvas gameplayCanvasPrefab;
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
     [SerializeField] private Canvas loadingCanvas;
+    [SerializeField] private GameObject debugCanvas;
     [SerializeField] private SpellCanvas spellCanvas;
     [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
 
+    private BattleNotifier battleNotifier;
+    private ResourcesCounter resourcesCounter;
     private Transform initializedObjectsParent;
     private BuildingSpawner buildingSpawner;
     private GroundBlocksSpawner worldCreator;
@@ -50,8 +53,11 @@ public class GameInitializer : MonoBehaviour
         IUpgradeEffectPlayer upgradeEffectPlayer = players.Item2;
         backgroundMusicPlayer.StartLoadingMusic();
         InitializeMusicMediator(backgroundMusicPlayer, upgradeEffectPlayer);
+        InstantiateWaveCounter();
+        SetupBattleNotifier();
         yield return null;
         SpawnResourceCounter();
+        SetupResourcesStatistic();
         yield return null;
         SetupUIObjectShower();
         SetupEnemyDeathManager();
@@ -64,13 +70,16 @@ public class GameInitializer : MonoBehaviour
         IEnemyDetector knightDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.EnemyLayerName));
         InitializeBuildingSpawner(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration, knightDetector);
         yield return null;
+        yield return null;
         GameplayCanvas upgradeCanvas = SpawnUpgradeCanvas();
         yield return null;
         var spellCanvas = SetupSpellCanvas();
+        SetupDebugCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
         IEnemyDetector gnomeDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.GnomeLayerName));
-        SetupBattleNotifier();
+        yield return null;
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
+        battleNotifier.Subscribe();
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
         yield return null;
         GameInitialized?.Invoke();
@@ -165,10 +174,16 @@ public class GameInitializer : MonoBehaviour
 
     private void SpawnResourceCounter()
     {
-        ResourcesCounter resourcesCounter = new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
+        resourcesCounter = new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
         resourcesCounter.transform.SetParent(initializedObjectsParent);
         resourcesCounter.SetStartValues(gameData.StartFoodAmount, gameData.StartMaterialsAmount, gameData.StartSpiritAmount);
         resourcesCounter.SetGnomeDeathFine(gameData.GnomeDeathSpiritFine);
+    }
+
+    private void SetupResourcesStatistic()
+    {
+        ResourceChanger incomeCounter = new ResourceChanger(resourcesCounter);
+        new IncomeDifferenceNotifier(incomeCounter);
     }
 
     private void InitializeDialogCamera()
@@ -233,6 +248,14 @@ public class GameInitializer : MonoBehaviour
         return spellCanvasWindow.gameObject;
     }
 
+    private GameObject SetupDebugCanvas()
+    {
+        var debugCanvasWidnow = Instantiate(debugCanvas);
+        return debugCanvasWidnow.gameObject;
+    }
+    
+    private void InstantiateWaveCounter() => new GameObject("WaveCounter").AddComponent<WaveCounter>().transform.SetParent(initializedObjectsParent);
+        
     private void SetupStateMachine(GameplayCanvas gameplayCanvas, GameObject battleStateCanvas, GroundBlocksSpawner worldCreator, 
         CellsGrid grid, IDisableableInput inputForDialogueState, IEnemyDetector detector)
     {
@@ -253,7 +276,7 @@ public class GameInitializer : MonoBehaviour
         gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset);
     }
 
-    private void SetupBattleNotifier() => new BattleNotifier();
+    private void SetupBattleNotifier() => battleNotifier = new BattleNotifier();
 
     private IEnemyDetector SetupEnemyDetector(LayerMask enemyMask) => 
         new UnitDetector(gameData.WorldSize, enemyMask, 1f);
@@ -262,12 +285,13 @@ public class GameInitializer : MonoBehaviour
     {
         rewardSpawner = new GameObject("RewardSpawner").AddComponent<RewardSpawner>();
         rewardSpawner.transform.SetParent(initializedObjectsParent);
-        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, new RewardSpawner.RewardAnimationSettings(1, 1));
+        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, new RewardSpawner.RewardAnimationSettings(1, 1), resourcesCounter);
     }
 
     private void OnDestroy()
     {
         skinChangeDetector.Unsubscribe();
         musicMediator.Unsubscribe();
+        battleNotifier.Unsubscribe();
     }
 }

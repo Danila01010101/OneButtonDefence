@@ -13,6 +13,7 @@ public class CameraMovement : MonoBehaviour
     private float currentY;
     private Vector3 rotationVelocity;
     private bool isInitialize;
+    private bool canMove = true;
 
     public void Initialize(IInput input, CameraData data)
     {
@@ -36,23 +37,26 @@ public class CameraMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (isInitialize)
+        if (isInitialize && canMove)
         {
             UpdateCameraPositionAndRotation();
         }
     }
-
+    
     private void UpdateCameraPositionAndRotation()
-    {
-        Vector3 rotation = 
-            Vector3.SmoothDamp(transform.rotation.eulerAngles, new Vector3(currentX, currentY, 0), ref rotationVelocity, data.CameraRotationSmooth);
-        Vector3 position = target.position - (Quaternion.Euler(rotation)  * Vector3.forward * currentDistance);
-        transform.position = position;
-        transform.eulerAngles = rotation;
+    { 
+        Vector3 targetPosition = target.position - (Quaternion.Euler(currentX, currentY, 0) * Vector3.forward * currentDistance);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, data.CameraRotationSmooth * Time.deltaTime);
+        Quaternion targetRotation = Quaternion.Euler(currentX, currentY, 0f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, data.CameraRotationSmooth * Time.deltaTime);
     }
+
 
     private void RotateCamera(Vector2 direction)
     {
+        if (canMove == false)
+            return;
+        
         direction *= data.CameraRotateSpeed;
         direction.y = -direction.y;
         currentY += direction.x;
@@ -61,6 +65,9 @@ public class CameraMovement : MonoBehaviour
 
     private void MoveCamera(Vector3 moveDirection)
     {
+        if (canMove == false)
+            return;
+        
         Vector3 forward = transform.forward;
         Vector3 right = transform.right;
 
@@ -76,12 +83,15 @@ public class CameraMovement : MonoBehaviour
 
     private void ChangeHeight(float heightAxis)
     {
+        if (canMove == false)
+            return;
+        
         currentDistance = Mathf.Clamp(currentDistance - heightAxis * data.CameraZoomSpeed, data.MinimumCameraDistance, data.MaximumCameraDistance);
     }
     
-    private void EnableCamera() => virtualCamera.enabled = true;
+    private void EnableCamera() => canMove = true;
     
-    private void DisableCamera() => virtualCamera.enabled = false;
+    private void DisableCamera() => canMove = false;
 
     private void Subscribe()
     {

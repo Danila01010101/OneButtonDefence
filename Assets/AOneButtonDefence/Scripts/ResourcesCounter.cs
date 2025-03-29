@@ -1,9 +1,22 @@
 using System;
+using System.Diagnostics;
 using UnityEngine;
 
 public class ResourcesCounter : MonoBehaviour
 {
-	public static ResourcesCounter Instance;
+	private static ResourcesCounter instance;
+
+    public static event Action<ResourcesData> ResourcesAmountChanged
+    {
+        add => instance.Data.ResourcesAmountChanged += value;
+        remove => instance.Data.ResourcesAmountChanged -= value;
+    }
+
+    public static int Materials => instance.Data.Materials;
+    public static int FoodAmount => instance.Data.FoodAmount;
+    public static int SurvivorSpirit => instance.Data.SurvivorSpirit;
+    public static int Warriors => instance.Data.Warriors;
+    public static int GemsAmount => instance.Data.GemsAmount;
 
     public ResourcesData Data { get; private set; }
 
@@ -11,20 +24,34 @@ public class ResourcesCounter : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != this)
+        if (instance != this)
         {
-            Destroy(Instance);
+            Destroy(instance);
         }
 
         Data = new ResourcesData();
-        Instance = this;
+        instance = this;
     }
 
     private void DetectGnomeDeath() => Data.SurvivorSpirit -= gnomeDeathFine;
 
-    private void OnEnable() => GnomeFightingUnit.GnomeDied += DetectGnomeDeath;
+    private void DetectSkinBuy(int cost) => Data.GemsAmount -= cost;
 
-    private void OnDisable() => GnomeFightingUnit.GnomeDied -= DetectGnomeDeath;
+    private void UpdateValues() => Data.ResourcesAmountChanged?.Invoke(Data);
+
+    private void OnEnable() 
+    {
+        SkinPanel.SkinBought += DetectSkinBuy;
+        GnomeFightingUnit.GnomeDied += DetectGnomeDeath;
+        GameInitializer.GameInitialized += UpdateValues;
+    }
+
+    private void OnDisable()
+    {
+        SkinPanel.SkinBought -= DetectSkinBuy;
+        GnomeFightingUnit.GnomeDied -= DetectGnomeDeath;
+        GameInitializer.GameInitialized -= UpdateValues;
+    }
 
     public void SetStartValues(int startFood, int startMaterials, int survivorSpirit)
     {
@@ -43,8 +70,8 @@ public class ResourcesCounter : MonoBehaviour
 
             set
             {
-                FoodAmountChanged?.Invoke(value);
                 foodAmount = value;
+                ResourcesAmountChanged?.Invoke(this);
             }
         }
         
@@ -54,8 +81,8 @@ public class ResourcesCounter : MonoBehaviour
 
             set
             {
-                WarriorsAmountChanged?.Invoke(value);
                 warriors = value;
+                ResourcesAmountChanged?.Invoke(this);
             }
         }
         
@@ -65,8 +92,8 @@ public class ResourcesCounter : MonoBehaviour
 
             set
             {
-                MaterialsAmountChanged?.Invoke(value);
                 materials = value;
+                ResourcesAmountChanged?.Invoke(this);
             }
         }
         
@@ -76,8 +103,8 @@ public class ResourcesCounter : MonoBehaviour
 
             set
             {
-                SpiritAmountChanged?.Invoke(value);
                 survivorSpirit = value;
+                ResourcesAmountChanged?.Invoke(this);
             }
         }
 
@@ -87,8 +114,8 @@ public class ResourcesCounter : MonoBehaviour
 
             set
             {
-                GemsAmountChanged?.Invoke(value);
                 gemsAmount = value;
+                ResourcesAmountChanged?.Invoke(this);
             }
         }
 
@@ -98,10 +125,6 @@ public class ResourcesCounter : MonoBehaviour
         private int survivorSpirit;
         private int gemsAmount;
 
-        public Action<int> FoodAmountChanged;
-        public Action<int> WarriorsAmountChanged;
-        public Action<int> MaterialsAmountChanged;
-        public Action<int> SpiritAmountChanged;
-        public Action<int> GemsAmountChanged;
+        public Action<ResourcesData> ResourcesAmountChanged;
     }
 }

@@ -16,7 +16,7 @@ public class UpgradeState : IState
     private readonly float upgradePhaseCompletionDelay;
 
     public static Action UpgradeStateStarted;
-    public static Action UpgradeStateEnded;
+    public static Action UpgradeStateEnding;
 
     public UpgradeState(IStringStateChanger stateMachine, GameplayCanvas upgradeUI, float upgradePhaseDuration, float upgradePhaseCompletionDelay)
     {
@@ -39,7 +39,6 @@ public class UpgradeState : IState
     public void Exit()
     {
         upgradeUI.gameObject.SetActive(false);
-        UpgradeStateEnded?.Invoke();
         UpgradeButton.UpgradesChoosen -= DetectUpgradeChoosing;
     }
 
@@ -74,27 +73,31 @@ public class UpgradeState : IState
     private IEnumerator CompleteUpgradeState()
     {
         isCompletingTurn = true;
-        
+
+        yield return null;
+
+        UpgradeStateEnding?.Invoke();
+
         yield return new WaitForSeconds(upgradePhaseCompletionDelay);
         
-        if (ResourcesCounter.Instance.Data.Materials <= 0)
+        if (ResourcesCounter.Materials <= 0)
         {
             stateMachine.ChangeStateWithString(GameStateNames.ResourcesLoseDialogue);
             yield break;
         }
 
-        if (ResourcesCounter.Instance.Data.FoodAmount <= 0)
+        if (ResourcesCounter.FoodAmount <= 0)
         {
             stateMachine.ChangeStateWithString(GameStateNames.FoodLoseDialogue);
             yield break;
         }
         
-        if (ResourcesCounter.Instance.Data.SurvivorSpirit <= 0)
+        if (ResourcesCounter.SurvivorSpirit <= 0)
         {
             stateMachine.ChangeStateWithString(GameStateNames.SpiritLoseDialogue);
             yield break;
         }
-        
+
         stateMachine.ChangeStateWithString(GameStateNames.BattleState);
         isCompletingTurn = false;
     }
