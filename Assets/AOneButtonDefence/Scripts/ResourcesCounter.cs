@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
@@ -6,10 +7,20 @@ public class ResourcesCounter : MonoBehaviour
 {
 	private static ResourcesCounter instance;
 
+    private Dictionary <string, int> resources = new Dictionary <string, int> ();
+
     public static event Action<ResourcesData> ResourcesAmountChanged
     {
         add => instance.Data.ResourcesAmountChanged += value;
         remove => instance.Data.ResourcesAmountChanged -= value;
+    }
+
+    public void AddResource(ResourceAmount resourceAmount)
+    {
+        foreach (var esource in resources)
+        {
+
+        }
     }
 
     public static int Materials => instance.Data.Materials;

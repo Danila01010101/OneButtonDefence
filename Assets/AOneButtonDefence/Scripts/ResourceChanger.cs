@@ -15,13 +15,10 @@ public class ResourceChanger
         Subscribe();
     }
 
-    public void InstantFoodChange(int value) => resourcesCounter.Data.FoodAmount += value;
+    public void InstantResourceChange(ResourceAmount resourceAmount)
+    {
 
-    public void InstantMaterialsChange(int value) => resourcesCounter.Data.Materials += value;
-
-    public void InstantSpiritChange(int value) => resourcesCounter.Data.SurvivorSpirit += value;
-
-    public void InstantWarriorChange(int value) => resourcesCounter.Data.Warriors += value;
+    }
 
     public void AddFoodPerTurn(int value) => FoodChange += value;
 
