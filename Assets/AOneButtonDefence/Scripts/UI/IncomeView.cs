@@ -36,17 +36,17 @@ using UnityEngine;
 
 		private void OnEnable()
 		{
-			IncomeDifferenceNotifier.FoodIncomeUpdated += UpdateFoodIncome;
-			IncomeDifferenceNotifier.SpiritIncomeUpdated += UpdateSpiritIncome;
-			IncomeDifferenceNotifier.MaterialsIncomeUpdated += UpdateMaterialsIncome;
-			IncomeDifferenceNotifier.WarriorsIncomeUpdated += UpdateStrengthIncome;
+			IncomeDifferenceTextConverter.FoodIncomeUpdated += UpdateFoodIncome;
+			IncomeDifferenceTextConverter.SpiritIncomeUpdated += UpdateSpiritIncome;
+			IncomeDifferenceTextConverter.MaterialsIncomeUpdated += UpdateMaterialsIncome;
+			IncomeDifferenceTextConverter.WarriorsIncomeUpdated += UpdateStrengthIncome;
 		}
 
 		private void OnDisable()
 		{
-			IncomeDifferenceNotifier.FoodIncomeUpdated += UpdateFoodIncome;
-			IncomeDifferenceNotifier.SpiritIncomeUpdated -= UpdateSpiritIncome;
-			IncomeDifferenceNotifier.MaterialsIncomeUpdated -= UpdateMaterialsIncome;
-			IncomeDifferenceNotifier.WarriorsIncomeUpdated -= UpdateStrengthIncome;
+			IncomeDifferenceTextConverter.FoodIncomeUpdated += UpdateFoodIncome;
+			IncomeDifferenceTextConverter.SpiritIncomeUpdated -= UpdateSpiritIncome;
+			IncomeDifferenceTextConverter.MaterialsIncomeUpdated -= UpdateMaterialsIncome;
+			IncomeDifferenceTextConverter.WarriorsIncomeUpdated -= UpdateStrengthIncome;
 		}
 	}

@@ -22,7 +22,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
 
     private BattleNotifier battleNotifier;
-    private ResourcesCounter resourcesCounter;
+    private GameResourcesCounter gameResourcesCounter;
     private Transform initializedObjectsParent;
     private BuildingSpawner buildingSpawner;
     private GroundBlocksSpawner worldCreator;
@@ -174,16 +174,15 @@ public class GameInitializer : MonoBehaviour
 
     private void SpawnResourceCounter()
     {
-        resourcesCounter = new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
-        resourcesCounter.transform.SetParent(initializedObjectsParent);
-        resourcesCounter.SetStartValues(gameData.StartFoodAmount, gameData.StartMaterialsAmount, gameData.StartSpiritAmount);
-        resourcesCounter.SetGnomeDeathFine(gameData.GnomeDeathSpiritFine);
+        gameResourcesCounter = new GameObject("ResourcesCounter").AddComponent<GameResourcesCounter>();
+        gameResourcesCounter.transform.SetParent(initializedObjectsParent);
+        gameResourcesCounter.Initialize(gameData.StartFoodAmount, gameData.StartMaterialsAmount, gameData.StartSpiritAmount);
+        gameResourcesCounter.SetGnomeDeathFine(gameData.GnomeDeathSpiritFine);
     }
 
     private void SetupResourcesStatistic()
     {
-        ResourceChanger incomeCounter = new ResourceChanger(resourcesCounter);
-        new IncomeDifferenceNotifier(incomeCounter);
+        new ResourceIncomeCounter(gameResourcesCounter);
     }
 
     private void InitializeDialogCamera()
@@ -285,11 +284,12 @@ public class GameInitializer : MonoBehaviour
     {
         rewardSpawner = new GameObject("RewardSpawner").AddComponent<RewardSpawner>();
         rewardSpawner.transform.SetParent(initializedObjectsParent);
-        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, new RewardSpawner.RewardAnimationSettings(1, 1), resourcesCounter);
+        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, new RewardSpawner.RewardAnimationSettings(1, 1), gameResourcesCounter);
     }
 
     private void OnDestroy()
     {
+        ResourceIncomeCounter.Instance.Unsubscribe();
         skinChangeDetector.Unsubscribe();
         musicMediator.Unsubscribe();
         battleNotifier.Unsubscribe();
