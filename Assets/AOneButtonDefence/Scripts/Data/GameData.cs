@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GameTurnsData", menuName = "ScriptableObjects/new GameData")]
@@ -6,10 +7,8 @@ public class GameData : ScriptableObject
     [field: SerializeField] public Vector3 WorldSize { get; private set; }
 
     [field: Header("Start resources")]
-    [field: SerializeField] public int StartFoodAmount { get; private set; }
-    [field: SerializeField] public int StartMaterialsAmount { get; private set; }
-    [field: SerializeField] public int StartSpiritAmount { get; private set; }
-    [field: SerializeField] public int GnomeDeathSpiritFine { get; private set; }
+    [field: SerializeField] public List<ResourceAmount> StartResources { get; private set; }
+    [field: SerializeField] public ResourceAmount GnomeDeathSpiritFine { get; private set; }
     [field: Header("Enemy reward")]
     [field: SerializeField] public Gem EnemyRewardPrefab { get; private set; }
     [field: Header("Dialogs prefabs")]

@@ -6,6 +6,7 @@ public abstract class Building : MonoBehaviour
 {
     [field : SerializeField] public Vector3 BuildingOffset { get; private set; }
 
+    protected BasicBuildingData data;
     protected float AnimationDuration { get; private set; }
 
     protected int FoodPerTurnAmount;
@@ -30,7 +31,7 @@ public abstract class Building : MonoBehaviour
 
     protected virtual void ActivateSpawnAction()
     {
-        ResourceChanger.Instance.InstantMaterialsChange(-Cost);
+        ResourceIncomeCounter.Instance.InstantResourceChange(-Cost);
     }
 
     public abstract void SetupData(BuildingsData buildingsData);
@@ -42,7 +43,7 @@ public abstract class Building : MonoBehaviour
 
     protected virtual void RegisterEndMoveAction()
     {
-        ResourceChanger.Instance.AddFoodPerTurn(-FoodPerTurnAmount);
+        ResourceIncomeCounter.Instance.AddFoodPerTurn(-FoodPerTurnAmount);
     }
 
     protected virtual void OnEnable()

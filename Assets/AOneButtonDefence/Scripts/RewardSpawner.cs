@@ -5,17 +5,17 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
 {
     private Gem rewardObjectPrefab;
     private RectTransform uiTarget;
-    private ResourcesCounter resourcesCounter;
     private bool isUpgradeStarted = false;
     private RewardAnimationSettings animationSettings;
+    private ResourceData gemResource;
 
     public void Initialize(Gem rewardObjectPrefab, RectTransform uiTarget, 
-        RewardAnimationSettings rewardAnimationSettings, ResourcesCounter counter)
+        RewardAnimationSettings rewardAnimationSettings, ResourceData gemResource)
     {
+        this.gemResource = gemResource;
         this.rewardObjectPrefab = rewardObjectPrefab;
         this.uiTarget = uiTarget;
         animationSettings = rewardAnimationSettings;
-        resourcesCounter = counter;
     }
 
     private void Start()
@@ -58,7 +58,7 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
         
         collectableObject.FlyToUI(UIGameObjectShower.Instance.UICamera, uiTarget, animationSettings.Duration, animationSettings.endScale, () =>
         {
-            resourcesCounter.Data.GemsAmount++;
+            ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(gemResource, 1));
             collectableObject.Destroy();
         });
     }

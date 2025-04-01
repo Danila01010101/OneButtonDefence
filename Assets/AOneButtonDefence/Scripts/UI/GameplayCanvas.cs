@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameplayCanvas : MonoBehaviour
@@ -11,6 +12,7 @@ public class GameplayCanvas : MonoBehaviour
     [SerializeField] private UpgradeButton upgradeButton;
     [SerializeField] private int buttonsDistance = 100;
     [SerializeField] private Button shopButton;
+    [SerializeField] private statisticViewInitializer statisticViewInitializer;
 
     private GameObject spawnedShopWindow;
     private int partPlacingInterval = 0;
@@ -24,8 +26,10 @@ public class GameplayCanvas : MonoBehaviour
 
     public UpgradeButton UpgradeButton => upgradeButton;
 
-    public void Initialize(int partsAmount, FarmData farmData, SpiritBuildingData spiritBuildingData, MilitaryCampData militaryCampData, FactoryData resourcesCenterData)
+    public void Initialize(int partsAmount, ResourceData foodResource,  ResourceData varriorResource,  ResourceData spiritResource,  ResourceData fabricResource,  ResourceData gemsResource)
     {
+        statisticViewInitializer.Initialize(foodResource, varriorResource, spiritResource, fabricResource, gemsResource);
+        
         if (partsAmount % 2 == 0)
         {
             partPlacingInterval = 50;
@@ -63,21 +67,21 @@ public class GameplayCanvas : MonoBehaviour
         partsAnimators = partsAnimators.OrderBy(animator => animator.transform.position.x).ToList();
         var sprites = new List<Sprite>()
         {
-            farmData.Icon,
-            spiritBuildingData.Icon,
-            militaryCampData.Icon,
-            resourcesCenterData.Icon
+            foodResource.Icon,
+            spiritResource.Icon,
+            varriorResource.Icon,
+            fabricResource.Icon
         };
-        var data = new List<BasicBuildingData>()
-        {
-            farmData,
-            spiritBuildingData,
-            militaryCampData,
-            resourcesCenterData
-        };
+        // var data = new List<BasicBuildingData>()
+        // {
+        //     farmData,
+        //     spiritBuildingData,
+        //     militaryCampData,
+        //     resourcesCenterData
+        // };
         for (int i = 0; i < parts.Count; i++)
         {
-            parts[i].Initialize(data[i].Info, infoPanel);
+            //parts[i].Initialize(data[i].Info, infoPanel);
             int partIndex = i;
             parts[i].Button.onClick.AddListener(delegate { ChoosePart((UpgradeButton.Upgrades)partIndex); });
             partsAnimators[i].SetIcon(sprites[i]);

@@ -1,11 +1,9 @@
 public class Farm : Building
 {
-    private FarmData data;
-
     protected override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();
-        ResourceChanger.Instance.InstantFoodChange(data.SpawnBonus);
+        ResourceIncomeCounter.Instance.InstantFoodChange(data.SpawnBonus);
     }
 
     public override void SetupData(BuildingsData buildingsData)
@@ -18,6 +16,6 @@ public class Farm : Building
     protected override void RegisterEndMoveAction()
     {
         base.RegisterEndMoveAction();
-        ResourceChanger.Instance.AddFoodPerTurn(data.EveryTurnBonus);
+        ResourceIncomeCounter.Instance.AddFoodPerTurn(data.EveryTurnBonus);
     }
 }

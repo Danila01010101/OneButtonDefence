@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -13,7 +14,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
     [SerializeField] private SpellCastData spellCastData;
-    [FormerlySerializedAs("partManagerPrefab")] [SerializeField] private GameplayCanvas gameplayCanvasPrefab;
+    [SerializeField] private GameplayCanvas gameplayCanvasPrefab;
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
     [SerializeField] private Canvas loadingCanvas;
     [SerializeField] private GameObject debugCanvas;
@@ -22,6 +23,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
 
     private BattleNotifier battleNotifier;
+    private ResourceChangeMediator resourceChangeMediator;
     private GameResourcesCounter gameResourcesCounter;
     private Transform initializedObjectsParent;
     private BuildingSpawner buildingSpawner;
@@ -58,6 +60,7 @@ public class GameInitializer : MonoBehaviour
         yield return null;
         SpawnResourceCounter();
         SetupResourcesStatistic();
+        SetupResourceChangeMediator();
         yield return null;
         SetupUIObjectShower();
         SetupEnemyDeathManager();
@@ -176,13 +179,19 @@ public class GameInitializer : MonoBehaviour
     {
         gameResourcesCounter = new GameObject("ResourcesCounter").AddComponent<GameResourcesCounter>();
         gameResourcesCounter.transform.SetParent(initializedObjectsParent);
-        gameResourcesCounter.Initialize(gameData.StartFoodAmount, gameData.StartMaterialsAmount, gameData.StartSpiritAmount);
-        gameResourcesCounter.SetGnomeDeathFine(gameData.GnomeDeathSpiritFine);
+        gameResourcesCounter.Initialize(gameData.StartResources);
     }
 
     private void SetupResourcesStatistic()
     {
         new ResourceIncomeCounter(gameResourcesCounter);
+    }
+
+    private void SetupResourceChangeMediator()
+    {
+        resourceChangeMediator = new ResourceChangeMediator();
+        resourceChangeMediator.Subscribe();
+        gameResourcesCounter.SetGnomeDeathFine(gameData.GnomeDeathSpiritFine);
     }
 
     private void InitializeDialogCamera()
@@ -290,6 +299,7 @@ public class GameInitializer : MonoBehaviour
     private void OnDestroy()
     {
         ResourceIncomeCounter.Instance.Unsubscribe();
+        resourceChangeMediator.Unsubscribe();
         skinChangeDetector.Unsubscribe();
         musicMediator.Unsubscribe();
         battleNotifier.Unsubscribe();

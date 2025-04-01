@@ -72,7 +72,7 @@ public class SkinPanel : MonoBehaviour
         }
         else
         {
-            if (SkinList[CurrentChose].Cost > ResourcesCounter.GemsAmount)
+            if (SkinList[CurrentChose].Cost > GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.Gem))
             {
                 Debug.Log("Недостаточно алмазов");
                 return;

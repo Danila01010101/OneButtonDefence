@@ -26,7 +26,7 @@ public class MilitaryCamp : Building
     protected override void RegisterEndMoveAction()
     {
         base.RegisterEndMoveAction();
-        ResourceChanger.Instance.AddWarriorPerTurn(data.EveryTurnWarriorsAmount);
+        ResourceIncomeCounter.Instance.AddWarriorPerTurn(data.EveryTurnWarriorsAmount);
     }
     
     private void EveryTurnWarriorsSpawn() => AddWarriors(data.EveryTurnWarriorsAmount);
@@ -34,7 +34,7 @@ public class MilitaryCamp : Building
     private void AddWarriors(int amount)
     {
         FoodPerTurnAmount += amount;
-        ResourceChanger.Instance.InstantWarriorChange(amount);
+        ResourceIncomeCounter.Instance.InstantWarriorChange(amount);
         
         for (int i = 0; i < amount; i++)
         {
@@ -49,7 +49,7 @@ public class MilitaryCamp : Building
     {
         yield return null;
         AddWarriors(data.StartWarriorsAmount);
-        ResourceChanger.Instance.InstantWarriorChange(data.StartWarriorsAmount);
+        ResourceIncomeCounter.Instance.InstantWarriorChange(data.StartWarriorsAmount);
     }
 
     protected override void OnEnable()

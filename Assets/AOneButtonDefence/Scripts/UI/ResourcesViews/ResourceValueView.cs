@@ -1,23 +1,42 @@
 using TMPro;
 using UnityEngine;
 
-public abstract class ResourceValueView : MonoBehaviour
+public abstract class ResourceValueView : MonoBehaviour, IResourceView
 {
     [SerializeField] protected TextMeshProUGUI valueText;
     [SerializeField] protected TextMeshProUGUI turnIncomeDifferenceText;
-
-    protected abstract void Subscribe();
-    protected abstract void Unsubscribe();
     
-    protected void UpdateValue(int newValue)
+    private ResourceData resourceData;
+
+    public void Initialize(ResourceData resourceData)
     {
-        valueText.text = newValue.ToString();
+        this.resourceData = resourceData;
+        SubscribeForValueChanging();
     }
     
-    protected void UpdateTurnIncomeValue(string newValue) 
+    public virtual void UpdateValue()
     {
+        valueText.text = GameResourcesCounter.GetResourceAmount(resourceData.Type).ToString();
+    }
+    
+    public virtual void UpdateTurnIncomeValue(string newValue, bool isPositive) 
+    {
+        turnIncomeDifferenceText.color = isPositive ? Color.green : Color.red;
         turnIncomeDifferenceText.text = newValue;
     }
 
-    private void OnDestroy() => Unsubscribe();
+    private void SubscribeForValueChanging()
+    {
+        UpgradeState.UpgradeStateStarted += UpdateValue;
+    }
+
+    private void UnsubscribeForValueChanging()
+    {
+        UpgradeState.UpgradeStateStarted -= UpdateValue;
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeForValueChanging();
+    }
 }

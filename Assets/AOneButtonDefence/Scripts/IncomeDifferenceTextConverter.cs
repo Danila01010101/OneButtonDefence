@@ -7,20 +7,20 @@ public class IncomeDifferenceTextConverter
     public static Action<string, bool> SpiritIncomeUpdated;
     public static Action<string, bool> WarriorsIncomeUpdated;
     
-    private ResourceIncomeCounter resourceIncomeCounter;
+    private ResourceIncomeCounter ResourceIncomeCounter => ResourceIncomeCounter.Instance;
 
     private void UpdateIncomeValues()
     {
-        var (newDifferenceInfo, isPositive) = GetIncomeString(resourceIncomeCounter.FoodChange);
+        var (newDifferenceInfo, isPositive) = GetIncomeString(ResourceIncomeCounter.GetResourceIncome(ResourceData.ResourceType.Food));
         FoodIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
 
-        (newDifferenceInfo, isPositive) = GetIncomeString(resourceIncomeCounter.MaterialsChange);
+        (newDifferenceInfo, isPositive) = GetIncomeString(ResourceIncomeCounter.GetResourceIncome(ResourceData.ResourceType.Material));
         MaterialsIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
 
-        (newDifferenceInfo, isPositive) = GetIncomeString(resourceIncomeCounter.SpiritChange);
+        (newDifferenceInfo, isPositive) = GetIncomeString(ResourceIncomeCounter.GetResourceIncome(ResourceData.ResourceType.Spirit));
         SpiritIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
 
-        (newDifferenceInfo, isPositive) = GetIncomeString(resourceIncomeCounter.WarriorChange);
+        (newDifferenceInfo, isPositive) = GetIncomeString(ResourceIncomeCounter.GetResourceIncome(ResourceData.ResourceType.Warrior));
         WarriorsIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
     }
 
@@ -31,9 +31,8 @@ public class IncomeDifferenceTextConverter
         return (newDifferenceInfo, isPositive);
     }
 
-    public IncomeDifferenceTextConverter(ResourceIncomeCounter resourceIncomeCounter)
+    public IncomeDifferenceTextConverter()
     {
-        this.resourceIncomeCounter = resourceIncomeCounter;
         UpgradeState.UpgradeStateStarted += UpdateIncomeValues;
         UpgradeState.UpgradeStateEnding += UpdateIncomeValues;
     }

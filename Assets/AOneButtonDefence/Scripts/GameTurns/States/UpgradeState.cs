@@ -80,19 +80,19 @@ public class UpgradeState : IState
 
         yield return new WaitForSeconds(upgradePhaseCompletionDelay);
         
-        if (ResourcesCounter.Materials <= 0)
+        if (GameResourcesCounter.Materials <= 0)
         {
             stateMachine.ChangeStateWithString(GameStateNames.ResourcesLoseDialogue);
             yield break;
         }
 
-        if (ResourcesCounter.FoodAmount <= 0)
+        if (GameResourcesCounter.FoodAmount <= 0)
         {
             stateMachine.ChangeStateWithString(GameStateNames.FoodLoseDialogue);
             yield break;
         }
         
-        if (ResourcesCounter.SurvivorSpirit <= 0)
+        if (GameResourcesCounter.SurvivorSpirit <= 0)
         {
             stateMachine.ChangeStateWithString(GameStateNames.SpiritLoseDialogue);
             yield break;
