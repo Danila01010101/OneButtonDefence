@@ -54,9 +54,6 @@ public abstract class Building : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             var spawnedWarrior = unitsFactory.SpawnUnit<GnomeFightingUnit>(transform.position + data.spawnOffset);
-
-            if (SkinChangeDetector.Instance.IsSkinChanged)
-                spawnedWarrior.ChangeSkin(SkinChangeDetector.Instance.CurrentSkinMesh, SkinChangeDetector.Instance.CurrentSkinMaterial);
         }
     }
 
