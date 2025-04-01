@@ -31,20 +31,6 @@ public class MilitaryCamp : Building
     
     private void EveryTurnWarriorsSpawn() => AddWarriors(data.EveryTurnWarriorsAmount);
 
-    private void AddWarriors(int amount)
-    {
-        FoodPerTurnAmount += amount;
-        ResourceIncomeCounter.Instance.InstantWarriorChange(amount);
-        
-        for (int i = 0; i < amount; i++)
-        {
-            var spawnedWarrior = unitsFactory.SpawnUnit<GnomeFightingUnit>(transform.position + data.spawnOffset);
-            
-            if (SkinChangeDetector.Instance.IsSkinChanged)
-                spawnedWarrior.ChangeSkin(SkinChangeDetector.Instance.CurrentSkinMesh, SkinChangeDetector.Instance.CurrentSkinMaterial);
-        }
-    }
-
     private IEnumerator SpawnWithDelay()
     {
         yield return null;

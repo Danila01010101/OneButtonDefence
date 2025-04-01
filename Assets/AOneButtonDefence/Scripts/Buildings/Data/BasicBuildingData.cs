@@ -8,14 +8,8 @@ public abstract class BasicBuildingData
     [field: SerializeField] public Building Prefab { get; private set; }
     [field: SerializeField] public Vector3 SpawnOffset { get; private set; }
     [field: SerializeField] public Vector3 SpawnRotation { get; private set; }
-
-    [Header("Стоимость постройки")]
-    public ResourceChangeData[] buildResourceConsumption;
-    public ResourceChangeData[] buildResourceIncome;
-
-    [Header("Доход/расход ресурсов за ход")]
-    public ResourceChangeData[] resourceIncome;
-    public ResourceChangeData[] resourceConsumption; 
+    [field: SerializeField] public ResourceChangeData[] buildResourceChange { get; private set; }
+    [field: SerializeField] public ResourceChangeData[] resourcePerTurnChange { get; private set; }
 
     [System.Serializable]
     public class ResourceChangeData

@@ -26,7 +26,7 @@ public class GameplayCanvas : MonoBehaviour
 
     public UpgradeButton UpgradeButton => upgradeButton;
 
-    public void Initialize(int partsAmount, ResourceData foodResource,  ResourceData varriorResource,  ResourceData spiritResource,  ResourceData fabricResource,  ResourceData gemsResource)
+    public void Initialize(int partsAmount, BuildingsData buildingsData, ResourceData foodResource,  ResourceData varriorResource,  ResourceData spiritResource,  ResourceData fabricResource,  ResourceData gemsResource)
     {
         statisticViewInitializer.Initialize(foodResource, varriorResource, spiritResource, fabricResource, gemsResource);
         
@@ -65,13 +65,7 @@ public class GameplayCanvas : MonoBehaviour
 
         parts = parts.OrderBy(part => part.transform.position.x).ToList();
         partsAnimators = partsAnimators.OrderBy(animator => animator.transform.position.x).ToList();
-        var sprites = new List<Sprite>()
-        {
-            foodResource.Icon,
-            spiritResource.Icon,
-            varriorResource.Icon,
-            fabricResource.Icon
-        };
+        
         // var data = new List<BasicBuildingData>()
         // {
         //     farmData,
