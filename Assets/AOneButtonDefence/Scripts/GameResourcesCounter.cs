@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class GameResourcesCounter : MonoBehaviour
 {
-    public static IReadOnlyList<ResourceAmount> ResourceAmounts => instance.resourcesKeeper.Resources;
-    
     private static GameResourcesCounter instance;
     private ResourcesKeeper resourcesKeeper;
 
@@ -15,6 +13,8 @@ public class GameResourcesCounter : MonoBehaviour
     }
     
     public void ChangeResourceAmount(ResourceAmount resource) => resourcesKeeper.AddResource(resource);
+
+    public static int GetResourceAmount(ResourceData.ResourceType type) => instance.resourcesKeeper.GetResourceAmount(type);
 
     private void Awake()
     {

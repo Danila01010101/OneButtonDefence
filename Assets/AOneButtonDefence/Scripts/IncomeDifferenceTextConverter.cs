@@ -1,26 +1,26 @@
 using System;
 
-public class IncomeDifferenceNotifier
+public class IncomeDifferenceTextConverter
 {
     public static Action<string, bool> FoodIncomeUpdated;
     public static Action<string, bool> MaterialsIncomeUpdated;
     public static Action<string, bool> SpiritIncomeUpdated;
     public static Action<string, bool> WarriorsIncomeUpdated;
     
-    private ResourceChanger resourceChanger;
+    private ResourceIncomeCounter resourceIncomeCounter;
 
     private void UpdateIncomeValues()
     {
-        var (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.FoodChange);
+        var (newDifferenceInfo, isPositive) = GetIncomeString(resourceIncomeCounter.FoodChange);
         FoodIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
 
-        (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.MaterialsChange);
+        (newDifferenceInfo, isPositive) = GetIncomeString(resourceIncomeCounter.MaterialsChange);
         MaterialsIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
 
-        (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.SpiritChange);
+        (newDifferenceInfo, isPositive) = GetIncomeString(resourceIncomeCounter.SpiritChange);
         SpiritIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
 
-        (newDifferenceInfo, isPositive) = GetIncomeString(resourceChanger.WarriorChange);
+        (newDifferenceInfo, isPositive) = GetIncomeString(resourceIncomeCounter.WarriorChange);
         WarriorsIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
     }
 
@@ -31,9 +31,9 @@ public class IncomeDifferenceNotifier
         return (newDifferenceInfo, isPositive);
     }
 
-    public IncomeDifferenceNotifier(ResourceChanger resourceChanger)
+    public IncomeDifferenceTextConverter(ResourceIncomeCounter resourceIncomeCounter)
     {
-        this.resourceChanger = resourceChanger;
+        this.resourceIncomeCounter = resourceIncomeCounter;
         UpgradeState.UpgradeStateStarted += UpdateIncomeValues;
         UpgradeState.UpgradeStateEnding += UpdateIncomeValues;
     }
