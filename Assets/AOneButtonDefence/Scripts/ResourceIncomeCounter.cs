@@ -16,6 +16,8 @@ public class ResourceIncomeCounter
         Subscribe();
     }
 
+    public int GetResourceIncome(ResourceData.ResourceType resourceType) => resourcesKeeper.GetResourceAmount(resourceType);
+
     public void InstantResourceChange(ResourceAmount resourceAmount) => gameResourcesCounter.ChangeResourceAmount(resourceAmount);
 
     public void RegisterResourcePerTurnChange(ResourceAmount resourceAmount) =>
