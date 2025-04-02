@@ -1,7 +1,5 @@
 public class Factory : Building
 {
-    private BasicBuildingData data;
-
     protected override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();

@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class BasicBuildingData 
 {
     [field: SerializeField] public Sprite Icon { get; private set; }
+    [field: SerializeField] public Upgrades UpgradeType { get; private set; }
     [field: SerializeField] public Building Prefab { get; private set; }
     [field: SerializeField] public Vector3 SpawnOffset { get; private set; }
     [field: SerializeField] public Vector3 SpawnRotation { get; private set; }
@@ -14,7 +15,9 @@ public abstract class BasicBuildingData
     [System.Serializable]
     public class ResourceChangeData
     {
-        public ResourceAmount resourceAmount;
-        public string resourceDescription;
+        public ResourceAmount ResourceAmount { get; private set; }
+        public string ResourceDescription { get; private set; }
     }
+
+    public enum Upgrades { Farm = 0, SpiritBuilding = 1, MilitaryCamp = 2, ResourcesCenter = 3 }
 }

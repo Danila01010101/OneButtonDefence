@@ -77,7 +77,7 @@ public class GameplayCanvas : MonoBehaviour
         {
             //parts[i].Initialize(data[i].Info, infoPanel);
             int partIndex = i;
-            parts[i].Button.onClick.AddListener(delegate { ChoosePart((UpgradeButton.Upgrades)partIndex); });
+            parts[i].Button.onClick.AddListener(delegate { ChoosePart((BasicBuildingData.Upgrades)partIndex); });
             partsAnimators[i].SetIcon(sprites[i]);
         }
         
@@ -93,7 +93,7 @@ public class GameplayCanvas : MonoBehaviour
             spawnedShopWindow.gameObject.SetActive(true);
     }
 
-    private void ChoosePart(UpgradeButton.Upgrades index)
+    private void ChoosePart(BasicBuildingData.Upgrades index)
     {
         if (beforLastKey == (int)index)
         {
@@ -146,7 +146,7 @@ public class GameplayCanvas : MonoBehaviour
             return;
         }
 
-        upgradeButton.UpgradeChosenPart((UpgradeButton.Upgrades) lastKey, (UpgradeButton.Upgrades) beforLastKey);
+        upgradeButton.UpgradeChosenPart((BasicBuildingData.Upgrades) lastKey, (BasicBuildingData.Upgrades) beforLastKey);
     }
 
     private void OnEnable()

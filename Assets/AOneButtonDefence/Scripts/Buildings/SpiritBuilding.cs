@@ -2,8 +2,6 @@ using System.Collections;
 
 public class SpiritBuilding : Building
 {
-    private SpiritBuildingData data;
-
     protected override void ActivateSpawnAction()
     {
         base.ActivateSpawnAction();

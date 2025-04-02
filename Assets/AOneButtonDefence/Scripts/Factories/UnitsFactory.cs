@@ -12,7 +12,7 @@ public class UnitsFactory
         this.enemies = enemies;
     }
 
-    public T SpawnUnit<T>(Vector3 position) where T : FightingUnit
+    public virtual T SpawnUnit<T>(Vector3 position) where T : FightingUnit
     {
         FightingUnit spawnedEnemy = null;
         
@@ -29,9 +29,6 @@ public class UnitsFactory
         
         if (spawnedEnemy== null)
             throw new System.ArgumentException("Invalid type of enemy or enemy list is incorrect");
-
-        if (SkinChangeDetector.Instance.IsSkinChanged)
-            spawnedWarrior.ChangeSkin(SkinChangeDetector.Instance.CurrentSkinMesh, SkinChangeDetector.Instance.CurrentSkinMaterial);
         
         spawnedEnemy.Initialize(detector);
         return spawnedEnemy as T;

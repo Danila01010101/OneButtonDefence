@@ -3,34 +3,27 @@ using UnityEngine;
 
 public class BuildingFactory
 {
-    private BuildingsData buildingsData;
-    private List<Building> buildingsList = new List<Building>();
+    private List<BasicBuildingData> buildingsList;
     private float animationDuration;
 
     public BuildingFactory(BuildingsData buildingsData, float animationDuration)
     {
-        this.buildingsData = buildingsData;
+        buildingsList = buildingsData.Buildings;
         this.animationDuration = animationDuration;
-        buildingsList = buildingsData.buildingsList;
     }
 
-    public T SpawnBuilding<T>() where T : Building
+    public Building SpawnBuilding(BasicBuildingData.Upgrades upgradeType, Vector3 position)
     {
-        for (int i = 0; i < buildingsList.Count; i++)
+        foreach (var buildingData in buildingsList)
         {
-            Building building = buildingsList[i];
-
-            if (building is T)
+            if (buildingData.UpgradeType == upgradeType)
             {
-                Building spawnedBuilding = MonoBehaviour.Instantiate(building);
-                spawnedBuilding.SetupData(buildingsData);
-                spawnedBuilding.SetAnimationTime(animationDuration);
-                spawnedBuilding.ActivateSpawnActionWithDelay();
-                
-                return spawnedBuilding as T;
+                Building spawnedBuilding = Object.Instantiate(buildingData.Prefab, position, Quaternion.Euler(buildingData.SpawnRotation));
+                spawnedBuilding.Initialize(buildingData, position, animationDuration);
+                return spawnedBuilding;
             }
         }
 
-        throw new System.ArgumentException("Invalid type of building or building list is incorrect");
+        throw new System.ArgumentException($"No building found for UpgradeType {upgradeType}");
     }
 }

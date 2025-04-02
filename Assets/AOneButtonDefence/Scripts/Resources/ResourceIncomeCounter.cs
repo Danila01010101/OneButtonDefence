@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ResourceIncomeCounter
 {
@@ -6,6 +7,7 @@ public class ResourceIncomeCounter
     
     private readonly GameResourcesCounter gameResourcesCounter;
     private ResourcesKeeper resourcesKeeper;
+    private Dictionary<ResourceData.ResourceType, IResourceEffect> resourceEffects;
 
     public ResourceIncomeCounter(GameResourcesCounter counter, List<ResourceAmount> startResourcesPerTurn)
     {
@@ -18,7 +20,15 @@ public class ResourceIncomeCounter
 
     public int GetResourceIncome(ResourceData.ResourceType resourceType) => resourcesKeeper.GetResourceAmount(resourceType);
 
-    public void InstantResourceChange(ResourceAmount resourceAmount) => gameResourcesCounter.ChangeResourceAmount(resourceAmount);
+    public void InstantResourceChange(ResourceAmount resourceAmount, Vector3? spawnPosition = null)
+    {
+        gameResourcesCounter.ChangeResourceAmount(resourceAmount);
+        
+        if (resourceEffects.TryGetValue(resourceAmount.Resource.Type, out IResourceEffect effect))
+        {
+            effect.ApplyEffect(resourceAmount.Amount, spawnPosition);
+        }
+    }
 
     public void RegisterResourcePerTurnChange(ResourceAmount resourceAmount) =>
         resourcesKeeper.AddResource(resourceAmount);

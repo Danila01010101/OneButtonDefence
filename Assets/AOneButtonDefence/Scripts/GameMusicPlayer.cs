@@ -33,7 +33,7 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer
 
     public void PlayBattleWinEffect() => PlayMusic(firstAudioSource, data.BattleWinSoundEffect);
 
-    public void PlayUpgradesSoundEffect(UpgradeButton.Upgrades firstType, UpgradeButton.Upgrades secondType)
+    public void PlayUpgradesSoundEffect(BasicBuildingData.Upgrades firstType, BasicBuildingData.Upgrades secondType)
     {
         PlayMusic(firstAudioSource, GetSoundByType(firstType));
         PlayMusic(secondAudioSource, GetSoundByType(secondType));
@@ -45,17 +45,17 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer
         audioSource.Play();
     }
 
-    private AudioClip GetSoundByType(UpgradeButton.Upgrades type)
+    private AudioClip GetSoundByType(BasicBuildingData.Upgrades type)
     {
         switch (type)
         {
-            case UpgradeButton.Upgrades.Farm:
+            case BasicBuildingData.Upgrades.Farm:
                 return data.UpgradeFarmSoundEffect;
-            case UpgradeButton.Upgrades.SpiritBuilding:
+            case BasicBuildingData.Upgrades.SpiritBuilding:
                 return data.UpgradeFarmSoundEffect;
-            case UpgradeButton.Upgrades.MilitaryCamp:
+            case BasicBuildingData.Upgrades.MilitaryCamp:
                 return data.UpgradeFarmSoundEffect;
-            case UpgradeButton.Upgrades.ResourcesCenter:
+            case BasicBuildingData.Upgrades.ResourcesCenter:
                 return data.UpgradeFarmSoundEffect;
             default:
                 throw new NotImplementedException();

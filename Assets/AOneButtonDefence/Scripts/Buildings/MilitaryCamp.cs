@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 public class MilitaryCamp : Building
 {
-    private MilitaryCampData data;
-    private UnitsFactory unitsFactory;
     
     protected override void ActivateSpawnAction()
     {
@@ -16,11 +14,6 @@ public class MilitaryCamp : Building
     {
         data = buildingsData.MilitaryCampData;
         Cost = data.Cost;
-    }
-
-    public void SetupFactory(IEnemyDetector knightDetector)
-    {
-        unitsFactory = new UnitsFactory(new List<FightingUnit>() { data.GnomeWarriorPrefab }, knightDetector);
     }
 
     protected override void RegisterEndMoveAction()

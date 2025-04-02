@@ -26,27 +26,28 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
         camp.SetupFactory(detector);
     }
 
-    private void ActivateUpgrades(UpgradeButton.Upgrades firstUpgrade, UpgradeButton.Upgrades secondUpgrade)
+    private void ActivateUpgrades(BasicBuildingData.Upgrades firstUpgrade, BasicBuildingData.Upgrades secondUpgrade)
     {
         ActivateUpgrade(firstUpgrade);
         ActivateUpgrade(secondUpgrade);
     }
 
-    private void ActivateUpgrade(UpgradeButton.Upgrades upgrade)
+    private void ActivateUpgrade(BasicBuildingData.Upgrades upgrade)
     {
+        SpawnBuilding(upgrade);
         switch (upgrade)
         {
-            case UpgradeButton.Upgrades.Farm:
-                SpawnBuilding<Farm>();
+            case BasicBuildingData.Upgrades.Farm:
+                SpawnBuilding();
                 break;
-            case UpgradeButton.Upgrades.SpiritBuilding:
-                SpawnBuilding<SpiritBuilding>();
+            case BasicBuildingData.Upgrades.SpiritBuilding:
+                SpawnBuilding();
                 break;
-            case UpgradeButton.Upgrades.MilitaryCamp:
-                var camp = SpawnBuilding<MilitaryCamp>();
+            case BasicBuildingData.Upgrades.MilitaryCamp:
+                var camp = SpawnBuilding();
                 camp.SetupFactory(detector);
                 break;
-            case UpgradeButton.Upgrades.ResourcesCenter:
+            case BasicBuildingData.Upgrades.ResourcesCenter:
                 SpawnBuilding<Factory>();
                 break;
             default:
@@ -54,18 +55,19 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
         }
     }
 
-    private T SpawnBuilding<T>() where T : Building
+    private Building SpawnBuilding(BasicBuildingData.Upgrades upgradeType)
     {
-        T building = buildingFacrory.SpawnBuilding<T>();
-        SetupBuildingPosition(building, grid.GetBestCellCoordinates());
+        var building =  buildingFacrory.SpawnBuilding(upgradeType, SetupBuildingOnGrid(grid.GetBestCellCoordinates()));
+        building.SetupFacroty(detector);
         return building;
     }
 
-    private void SetupBuildingPosition(Building building, CellPlaceCoordinates placePosition) 
+    private Vector3 SetupBuildingOnGrid(CellPlaceCoordinates placePosition) 
     {
-        building.transform.position = grid.GetWorldPositionByCoordinates(placePosition.X, placePosition.Z) + building.BuildingOffset;
+        var position = grid.GetWorldPositionByCoordinates(placePosition.X, placePosition.Z);
         grid.Place(placePosition);
         CellFilled?.Invoke(placePosition);
+        return position;
     }
 
     private void OnEnable()

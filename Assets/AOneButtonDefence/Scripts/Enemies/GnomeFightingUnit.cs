@@ -5,14 +5,14 @@ public class GnomeFightingUnit : FightingUnit
 {
     [SerializeField] protected MeshFilter meshFilter;
     
-    private SkinChanger skinChanger;
+    private GnomeSkinChanger gnomeSkinChanger;
 
     public static Action GnomeDied;
 
     public override void Initialize(IEnemyDetector detector)
     {
         base.Initialize(detector);
-        skinChanger = new SkinChanger(meshFilter, render);
+        gnomeSkinChanger = new GnomeSkinChanger(meshFilter, render);
     }
 
     protected override void Die()
@@ -23,9 +23,9 @@ public class GnomeFightingUnit : FightingUnit
 
     private void OnDestroy()
     {
-        skinChanger.Unsubscribe();
-        skinChanger = null;
+        gnomeSkinChanger.Unsubscribe();
+        gnomeSkinChanger = null;
     }
 
-    public void ChangeSkin(Mesh newMesh, Material newMaterial) => skinChanger.ChangeSkin(newMesh, newMaterial);
+    public void ChangeSkin(Mesh newMesh, Material newMaterial) => gnomeSkinChanger.ChangeSkin(newMesh, newMaterial);
 }
