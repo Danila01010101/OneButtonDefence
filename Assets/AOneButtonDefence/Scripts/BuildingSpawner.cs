@@ -19,11 +19,10 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
 
     public void SetupStartBuildings()
     {
-        SpawnBuilding<Farm>();
-        SpawnBuilding<SpiritBuilding>();
-        SpawnBuilding<Factory>();
-        var camp = SpawnBuilding<MilitaryCamp>();
-        camp.SetupFactory(detector);
+        SpawnBuilding(BasicBuildingData.Upgrades.Farm);
+        SpawnBuilding(BasicBuildingData.Upgrades.SpiritBuilding);
+        SpawnBuilding(BasicBuildingData.Upgrades.Factory);
+        SpawnBuilding(BasicBuildingData.Upgrades.MilitaryCamp);
     }
 
     private void ActivateUpgrades(BasicBuildingData.Upgrades firstUpgrade, BasicBuildingData.Upgrades secondUpgrade)
@@ -32,34 +31,11 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
         ActivateUpgrade(secondUpgrade);
     }
 
-    private void ActivateUpgrade(BasicBuildingData.Upgrades upgrade)
-    {
-        SpawnBuilding(upgrade);
-        switch (upgrade)
-        {
-            case BasicBuildingData.Upgrades.Farm:
-                SpawnBuilding();
-                break;
-            case BasicBuildingData.Upgrades.SpiritBuilding:
-                SpawnBuilding();
-                break;
-            case BasicBuildingData.Upgrades.MilitaryCamp:
-                var camp = SpawnBuilding();
-                camp.SetupFactory(detector);
-                break;
-            case BasicBuildingData.Upgrades.ResourcesCenter:
-                SpawnBuilding<Factory>();
-                break;
-            default:
-                throw new NotImplementedException();
-        }
-    }
+    private void ActivateUpgrade(BasicBuildingData.Upgrades upgrade) => SpawnBuilding(upgrade);
 
-    private Building SpawnBuilding(BasicBuildingData.Upgrades upgradeType)
+    private void SpawnBuilding(BasicBuildingData.Upgrades upgradeType)
     {
         var building =  buildingFacrory.SpawnBuilding(upgradeType, SetupBuildingOnGrid(grid.GetBestCellCoordinates()));
-        building.SetupFacroty(detector);
-        return building;
     }
 
     private Vector3 SetupBuildingOnGrid(CellPlaceCoordinates placePosition) 

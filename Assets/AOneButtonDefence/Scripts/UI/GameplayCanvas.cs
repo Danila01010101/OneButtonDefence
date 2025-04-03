@@ -26,9 +26,9 @@ public class GameplayCanvas : MonoBehaviour
 
     public UpgradeButton UpgradeButton => upgradeButton;
 
-    public void Initialize(int partsAmount, BuildingsData buildingsData, ResourceData foodResource,  ResourceData varriorResource,  ResourceData spiritResource,  ResourceData fabricResource,  ResourceData gemsResource)
+    public void Initialize(int partsAmount, BuildingsData buildingsData)
     {
-        statisticViewInitializer.Initialize(foodResource, varriorResource, spiritResource, fabricResource, gemsResource);
+        statisticViewInitializer.Initialize(ResourceData.ResourceType.Food, ResourceData.ResourceType.Warrior, ResourceData.ResourceType.Spirit, ResourceData.ResourceType.Material, ResourceData.ResourceType.Gem);
         
         if (partsAmount % 2 == 0)
         {
@@ -66,19 +66,12 @@ public class GameplayCanvas : MonoBehaviour
         parts = parts.OrderBy(part => part.transform.position.x).ToList();
         partsAnimators = partsAnimators.OrderBy(animator => animator.transform.position.x).ToList();
         
-        // var data = new List<BasicBuildingData>()
-        // {
-        //     farmData,
-        //     spiritBuildingData,
-        //     militaryCampData,
-        //     resourcesCenterData
-        // };
         for (int i = 0; i < parts.Count; i++)
         {
-            //parts[i].Initialize(data[i].Info, infoPanel);
-            int partIndex = i;
-            parts[i].Button.onClick.AddListener(delegate { ChoosePart((BasicBuildingData.Upgrades)partIndex); });
-            partsAnimators[i].SetIcon(sprites[i]);
+            BasicBuildingData currentBuildingData = buildingsData.Buildings[i];
+            parts[i].Initialize(currentBuildingData, infoPanel);
+            parts[i].Button.onClick.AddListener(delegate { ChoosePart(currentBuildingData.UpgradeType); });
+            partsAnimators[i].SetIcon(currentBuildingData.Icon);
         }
         
         shopButton.onClick.RemoveAllListeners();

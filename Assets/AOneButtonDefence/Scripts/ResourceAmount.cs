@@ -17,4 +17,12 @@ public class ResourceAmount
             Amount += resourceAmount.Amount;
         }
     }
+
+    public void AddResourceAmount(ResourceData.ResourceType resourceType, int amount)
+    {
+        if (Resource.Type == resourceType)
+        {
+            Amount += amount;
+        }
+    }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(IAnimatable))]
-public abstract class Building : MonoBehaviour
+public class Building : MonoBehaviour
 {
     public Vector3 BuildingOffset => data.SpawnOffset;
 

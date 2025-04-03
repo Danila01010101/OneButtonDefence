@@ -8,7 +8,7 @@ public class statisticViewInitializer : MonoBehaviour
     [SerializeField] private ResourceValueView materialsView;
     [SerializeField] private ResourceValueView gemsView;
 
-    public void Initialize(ResourceData foodResource,  ResourceData warriorResource,  ResourceData spiritResource,  ResourceData fabricResource, ResourceData gemsResource)
+    public void Initialize(ResourceData.ResourceType foodResource,  ResourceData.ResourceType warriorResource,  ResourceData.ResourceType spiritResource,  ResourceData.ResourceType fabricResource, ResourceData.ResourceType gemsResource)
     {
         foodView.Initialize(foodResource);
         spiritView.Initialize(spiritResource);

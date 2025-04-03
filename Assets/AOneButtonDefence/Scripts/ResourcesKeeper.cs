@@ -22,6 +22,16 @@ public class ResourcesKeeper
         resource.AddResourceAmount(resourceAmount);
     }
 
+    public void AddResourceByType(ResourceData.ResourceType resourceType, int amount)
+    {
+        var resource = resources.FirstOrDefault(r => r.Resource.Type == resourceType);
+
+        if (resource == null)
+            throw new Exception("No such resource registered.");
+        
+        resource.AddResourceAmount(resourceType, amount);
+    }
+
     public int GetResourceAmount(ResourceData.ResourceType type)
     {
         var resource = resources.FirstOrDefault(r => r.Resource.Type == type);

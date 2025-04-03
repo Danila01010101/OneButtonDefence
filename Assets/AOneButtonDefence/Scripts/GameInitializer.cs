@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -59,7 +60,7 @@ public class GameInitializer : MonoBehaviour
         SetupBattleNotifier();
         yield return null;
         SpawnResourceCounter();
-        SetupResourcesStatistic();
+        SetupResourcesStatistic(gameResourcesCounter);
         SetupResourceChangeMediator();
         yield return null;
         SetupUIObjectShower();
@@ -182,16 +183,15 @@ public class GameInitializer : MonoBehaviour
         gameResourcesCounter.Initialize(gameData.StartResources);
     }
 
-    private void SetupResourcesStatistic()
+    private void SetupResourcesStatistic(GameResourcesCounter gameResourcesCounter)
     {
-        new ResourceIncomeCounter(gameResourcesCounter);
+        new ResourceIncomeCounter(gameResourcesCounter, gameData.StartResources);
     }
 
     private void SetupResourceChangeMediator()
     {
-        resourceChangeMediator = new ResourceChangeMediator();
+        resourceChangeMediator = new ResourceChangeMediator(gameData.GnomeDeathSpiritFine, gameData.GemsResource);
         resourceChangeMediator.Subscribe();
-        gameResourcesCounter.SetGnomeDeathFine(gameData.GnomeDeathSpiritFine);
     }
 
     private void InitializeDialogCamera()
@@ -232,12 +232,7 @@ public class GameInitializer : MonoBehaviour
     private GameplayCanvas SpawnUpgradeCanvas()
     {
         GameplayCanvas upgradeCanvas = Instantiate(gameplayCanvasPrefab);
-        upgradeCanvas.Initialize(4, 
-            worldGenerationData.BuildingsData.FarmData,
-            worldGenerationData.BuildingsData.SpiritBuildingData,
-            worldGenerationData.BuildingsData.MilitaryCampData,
-            worldGenerationData.BuildingsData.FactoryData
-            );
+        upgradeCanvas.Initialize(4, worldGenerationData.BuildingsData );
         return upgradeCanvas;
     }
     
@@ -293,7 +288,7 @@ public class GameInitializer : MonoBehaviour
     {
         rewardSpawner = new GameObject("RewardSpawner").AddComponent<RewardSpawner>();
         rewardSpawner.transform.SetParent(initializedObjectsParent);
-        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, new RewardSpawner.RewardAnimationSettings(1, 1), gameResourcesCounter);
+        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, new RewardSpawner.RewardAnimationSettings(1, 1), gameData.GemsResource);
     }
 
     private void OnDestroy()

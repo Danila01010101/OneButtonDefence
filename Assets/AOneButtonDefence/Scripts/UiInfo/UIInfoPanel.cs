@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,65 +5,79 @@ using UnityEngine.UI;
 
 public class UIInfoPanel : MonoBehaviour
 {
-    public TextMeshProUGUI Name;
+    [Header("Основные элементы UI")]
+    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private Image buildingIcon;
+    [SerializeField] private TextMeshProUGUI loreText;
 
-    public List<TextMeshProUGUI> perBuildingText; 
-    public List<Image> perBuildingSprites;
+    [Header("Настройки для генерации строк")]
+    [SerializeField] private Transform perBuildingContainer;
+    [SerializeField] private Transform perRoundContainer;
+    [SerializeField] private BuildingResourceInfoView resourceInfoPrefab;
 
-    public List<TextMeshProUGUI> perRoundText;
-    public List<Image> perRoundSprites;
+    [Header("Настройки позиционирования")]
+    [SerializeField] private Vector3 startMainWindowposition;
+    [SerializeField] private float screenSizeIncreaseValue;
+    [SerializeField] private float distancePerString;
 
-    public TextMeshProUGUI Lore;
+    private readonly List<BuildingResourceInfoView> activeResourceRows = new List<BuildingResourceInfoView>();
+    private RectTransform panelRectTransform;
 
-    public void Initializator(InfoPanelScriptableObject panelData)
+    private void Awake()
     {
-        ClearningData();
-        Name.text = panelData.Name();
-        for (int i = 0; i < panelData.PerBuilding().Count; i++)
-        {
-            perBuildingText[i].gameObject.SetActive(true);
-            perBuildingText[i].gameObject.SetActive(true);
-            perBuildingText[i].text = panelData.PerBuilding()[i].Text;
-            if (panelData.PerBuilding()[i].Image != null)
-            {
-                perBuildingSprites[i].sprite = panelData.PerBuilding()[i].Image;
-                perBuildingSprites[i].gameObject.SetActive(true);
-            }
-            else
-            {
-                perBuildingSprites[i].gameObject.SetActive(false);
-            }
-        }
-        for (int i = 0; i < panelData.PerRound().Count; i++)
-        {
-            perRoundText[i].gameObject.SetActive(true);
-            perRoundSprites[i].gameObject.SetActive(true);
-            perRoundText[i].text = panelData.PerRound()[i].Text;
-            if (panelData.PerRound()[i].Image != null)
-            {
-                perRoundSprites[i].sprite = panelData.PerRound()[i].Image;
-                perRoundSprites[i].gameObject.SetActive(true);
-            }
-            else
-            {
-                perRoundSprites[i].gameObject.SetActive(false);
-            }
-        }
-        Lore.text = panelData.Lore();
+        panelRectTransform = GetComponent<RectTransform>();
     }
-    private void ClearningData()
+
+    public void Initialize(BasicBuildingData buildingData)
     {
-        Name.text = "";
-        for (int i = 0; i < perBuildingText.Count; i++)
+        ClearData();
+        nameText.text = buildingData.UpgradeType.ToString();
+        buildingIcon.sprite = buildingData.Icon;
+        
+        int maxRows = Mathf.Max(buildingData.buildResourceChange.Length, buildingData.resourcePerTurnChange.Length);
+        PopulateResourceList(buildingData.buildResourceChange, perBuildingContainer);
+        PopulateResourceList(buildingData.resourcePerTurnChange, perRoundContainer);
+        loreText.text = buildingData.BuildingLore;
+
+        AdjustWindowSize(maxRows);
+    }
+
+    private void PopulateResourceList(BasicBuildingData.ResourceChangeInfo[] resources, Transform container)
+    {
+        float offsetY = 0;
+        foreach (var resourceInfo in resources)
         {
-            perBuildingText[i].gameObject.SetActive(false);
-            perBuildingSprites[i].gameObject.SetActive(false);
+            var newRow = Instantiate(resourceInfoPrefab, container);
+            activeResourceRows.Add(newRow);
+
+            newRow.SetResourceInfo(resourceInfo);
+            var rectTransform = newRow.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition -= new Vector2(0, offsetY);
+            offsetY += distancePerString;
         }
-        for (int i = 0; i < perRoundText.Count; i++) 
+    }
+
+    private void AdjustWindowSize(int maxRows)
+    {
+        float sizeIncrease = screenSizeIncreaseValue * maxRows;
+        
+        panelRectTransform.sizeDelta += new Vector2(0, sizeIncrease);
+        panelRectTransform.anchoredPosition = startMainWindowposition + new Vector3(0, sizeIncrease / 2, 0);
+    }
+
+    private void ClearData()
+    {
+        nameText.text = "";
+        buildingIcon.sprite = null;
+        loreText.text = "";
+
+        foreach (var row in activeResourceRows)
         {
-            perRoundText[i].gameObject.SetActive(false);
-            perRoundSprites[i].gameObject.SetActive(false);
+            Destroy(row.gameObject);
         }
-        Lore.text = "";
+        activeResourceRows.Clear();
+
+        panelRectTransform.sizeDelta = new Vector2(panelRectTransform.sizeDelta.x, 0);
+        panelRectTransform.anchoredPosition = startMainWindowposition;
     }
 }

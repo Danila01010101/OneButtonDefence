@@ -1,23 +1,24 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public abstract class BasicBuildingData 
+[System.Serializable]
+public class BasicBuildingData 
 {
     [field: SerializeField] public Sprite Icon { get; private set; }
     [field: SerializeField] public Upgrades UpgradeType { get; private set; }
     [field: SerializeField] public Building Prefab { get; private set; }
     [field: SerializeField] public Vector3 SpawnOffset { get; private set; }
     [field: SerializeField] public Vector3 SpawnRotation { get; private set; }
-    [field: SerializeField] public ResourceChangeData[] buildResourceChange { get; private set; }
-    [field: SerializeField] public ResourceChangeData[] resourcePerTurnChange { get; private set; }
+    [field: SerializeField] public string BuildingLore { get; private set; }
+    [field: SerializeField] public ResourceChangeInfo[] buildResourceChange { get; private set; }
+    [field: SerializeField] public ResourceChangeInfo[] resourcePerTurnChange { get; private set; }
 
     [System.Serializable]
-    public class ResourceChangeData
+    public class ResourceChangeInfo
     {
         public ResourceAmount ResourceAmount { get; private set; }
         public string ResourceDescription { get; private set; }
     }
 
-    public enum Upgrades { Farm = 0, SpiritBuilding = 1, MilitaryCamp = 2, ResourcesCenter = 3 }
+    public enum Upgrades { Farm = 0, SpiritBuilding = 1, MilitaryCamp = 2, Factory = 3 }
 }

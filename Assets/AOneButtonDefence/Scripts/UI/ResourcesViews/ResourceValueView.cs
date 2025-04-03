@@ -6,17 +6,17 @@ public abstract class ResourceValueView : MonoBehaviour, IResourceView
     [SerializeField] protected TextMeshProUGUI valueText;
     [SerializeField] protected TextMeshProUGUI turnIncomeDifferenceText;
     
-    private ResourceData resourceData;
+    private ResourceData.ResourceType resourceType;
 
-    public void Initialize(ResourceData resourceData)
+    public void Initialize(ResourceData.ResourceType resourceType)
     {
-        this.resourceData = resourceData;
+        this.resourceType = resourceType;
         SubscribeForValueChanging();
     }
     
     public virtual void UpdateValue()
     {
-        valueText.text = GameResourcesCounter.GetResourceAmount(resourceData.Type).ToString();
+        valueText.text = GameResourcesCounter.GetResourceAmount(resourceType).ToString();
     }
     
     public virtual void UpdateTurnIncomeValue(string newValue, bool isPositive) 

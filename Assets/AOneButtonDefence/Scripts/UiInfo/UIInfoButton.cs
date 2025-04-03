@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,15 +9,15 @@ using UnityEngine.UI;
 public class UIInfoButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Button Button;
-    public float Timer = 0.5f;
+    public float Timer = 1.2f;
 
     private GameObject panel;
-    private InfoPanelScriptableObject panelData;
+    private BasicBuildingData panelData;
     private UIInfoPanel panelScript;
-    private float _currentTime;
-    private bool _timerOn = false;
+    private float currentTime;
+    private bool timerOn = false;
 
-    public void Initialize(InfoPanelScriptableObject panelData, UIInfoPanel infoPanel)
+    public void Initialize(BasicBuildingData panelData, UIInfoPanel infoPanel)
     {
         panel = infoPanel.gameObject;
         panelScript = infoPanel;
@@ -26,16 +27,16 @@ public class UIInfoButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private void Update()
     {
-        if (_timerOn)
+        if (timerOn)
         {
-            _currentTime += Time.deltaTime;
-            if (_currentTime >= Timer)
+            currentTime += Time.deltaTime;
+            if (currentTime >= Timer)
             {
 
                 panel.SetActive(true);
-                panelScript.Initializator(panelData);
-                _timerOn = false;
-                _currentTime = 0;
+                panelScript.Initialize(panelData);
+                timerOn = false;
+                currentTime = 0;
 
             }
         }
@@ -43,13 +44,13 @@ public class UIInfoButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _timerOn = true;
+        timerOn = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         panel.SetActive(false);
-        _timerOn = false;
-        _currentTime = 0;
+        timerOn = false;
+        currentTime = 0;
     }
 }

@@ -1,11 +1,17 @@
 public class ResourceChangeMediator
 {
     private ResourceAmount gnomeDeathFine;
-    private ResourceData gemResource;
+    private ResourceData gemsResource;
+
+    public ResourceChangeMediator(ResourceAmount gnomeDeathFine, ResourceData gemsResource)
+    {
+        this.gnomeDeathFine = gnomeDeathFine;
+        this.gemsResource = gemsResource;
+    }
 
     private void DetectGnomeDeath() => ResourceIncomeCounter.Instance.InstantResourceChange(gnomeDeathFine);
 
-    private void DetectSkinBuy(int cost) => ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(gemResource, -cost));
+    private void DetectSkinBuy(int cost) => ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(gemsResource, -cost));
 
     public void Subscribe() 
     {
@@ -18,8 +24,4 @@ public class ResourceChangeMediator
         SkinPanel.SkinBought -= DetectSkinBuy;
         GnomeFightingUnit.GnomeDied -= DetectGnomeDeath;
     }
-    
-    public void SetGnomeDeathFine(ResourceAmount fine) => gnomeDeathFine = fine;
-    
-    public void SetSkinResource(ResourceData resource) => gemResource = resource;
 }
