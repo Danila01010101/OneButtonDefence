@@ -17,6 +17,8 @@ public class Building : MonoBehaviour
         animator = GetComponent<IAnimatable>();
         AnimationDuration = animationDuration;
         ActivateSpawnActionWithDelay();
+        UpgradeState.UpgradeStateStarted += animator.StartAnimation;
+        UpgradeState.UpgradeStateEnding += animator.InteruptAnimation;
     }
 
     private void ActivateSpawnActionWithDelay() => StartCoroutine(WaitFrameBeforeStartAction());
@@ -44,12 +46,6 @@ public class Building : MonoBehaviour
         {
             ResourceIncomeCounter.Instance.RegisterResourcePerTurnChange(resourceChange.ResourceAmount);
         }
-    }
-
-    protected virtual void OnEnable()
-    {
-        UpgradeState.UpgradeStateStarted += animator.StartAnimation;
-        UpgradeState.UpgradeStateEnding += animator.InteruptAnimation;
     }
 
     protected virtual void OnDisable()

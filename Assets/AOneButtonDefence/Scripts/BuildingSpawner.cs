@@ -5,19 +5,16 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
 {
     private CellsGrid grid;
     private BuildingFactory buildingFacrory;
-    private IEnemyDetector detector;
 
     public Action<CellPlaceCoordinates> CellFilled { get; set; }
 
-    public void Initialize(CellsGrid grid, BuildingsData upgradeBuildings, float animationDuration, IEnemyDetector detector)
+    public void Initialize(CellsGrid grid, BuildingsData upgradeBuildings, float animationDuration)
     {
         buildingFacrory = new BuildingFactory(upgradeBuildings, animationDuration);
         this.grid = grid;
-        this.detector = detector;
-        SetupStartBuildings();
     }
 
-    public void SetupStartBuildings()
+    private void SetupStartBuildings()
     {
         SpawnBuilding(BasicBuildingData.Upgrades.Farm);
         SpawnBuilding(BasicBuildingData.Upgrades.SpiritBuilding);
@@ -48,11 +45,13 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
 
     private void OnEnable()
     {
+        GameInitializer.GameInitialized += SetupStartBuildings;
         UpgradeButton.UpgradeTypesChoosen += ActivateUpgrades;
     }
 
     private void OnDisable()
     {
+        GameInitializer.GameInitialized -= SetupStartBuildings;
         UpgradeButton.UpgradeTypesChoosen -= ActivateUpgrades;
     }
 }

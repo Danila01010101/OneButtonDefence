@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 using static GameStateMachine;
 
 public class GameInitializer : MonoBehaviour
@@ -60,7 +58,9 @@ public class GameInitializer : MonoBehaviour
         SetupBattleNotifier();
         yield return null;
         SpawnResourceCounter();
-        SetupResourcesStatistic(gameResourcesCounter);
+        IEnemyDetector knightDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.EnemyLayerName));
+        var gnomesFactory = new UnitsFactory(new List<FightingUnit>() { gameData.GnomeUnit }, knightDetector);
+        SetupResourcesStatistic(gameResourcesCounter, gnomesFactory);
         SetupResourceChangeMediator();
         yield return null;
         SetupUIObjectShower();
@@ -71,8 +71,7 @@ public class GameInitializer : MonoBehaviour
         CreateBuildingSpawner();
         var worldGrid = SpawnWorldGrid();
         yield return new WaitUntil(() => worldCreator.IsWorldReady);
-        IEnemyDetector knightDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.EnemyLayerName));
-        InitializeBuildingSpawner(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration, knightDetector);
+        InitializeBuildingSpawner(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration);
         yield return null;
         yield return null;
         GameplayCanvas upgradeCanvas = SpawnUpgradeCanvas();
@@ -183,9 +182,14 @@ public class GameInitializer : MonoBehaviour
         gameResourcesCounter.Initialize(gameData.StartResources);
     }
 
-    private void SetupResourcesStatistic(GameResourcesCounter gameResourcesCounter)
+    private void SetupResourcesStatistic(GameResourcesCounter gameResourcesCounter, UnitsFactory gnomeFactory)
     {
-        new ResourceIncomeCounter(gameResourcesCounter, gameData.StartResources);
+        var resourceEffectsDictionary = new Dictionary<ResourceData.ResourceType, IResourceEffect>()
+        {
+            { ResourceData.ResourceType.Warrior, new WarriorResourceEffect(gnomeFactory, gameData.GnomeSpawnOffset) }
+        };
+        new ResourceIncomeCounter(gameResourcesCounter, gameData.StartResources, resourceEffectsDictionary);
+        new IncomeDifferenceTextConverter();
     }
 
     private void SetupResourceChangeMediator()
@@ -224,9 +228,9 @@ public class GameInitializer : MonoBehaviour
         return buildingsGrid;
     }
 
-    private void InitializeBuildingSpawner(CellsGrid grid,  BuildingsData upgradeBuildings, float animationDuration, IEnemyDetector detector)
+    private void InitializeBuildingSpawner(CellsGrid grid,  BuildingsData upgradeBuildings, float animationDuration)
     {
-        buildingSpawner.Initialize(grid, upgradeBuildings, animationDuration, detector);
+        buildingSpawner.Initialize(grid, upgradeBuildings, animationDuration);
     }
 
     private GameplayCanvas SpawnUpgradeCanvas()

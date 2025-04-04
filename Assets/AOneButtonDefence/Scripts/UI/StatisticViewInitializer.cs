@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class statisticViewInitializer : MonoBehaviour
+public class StatisticViewInitializer : MonoBehaviour
 {
     [SerializeField] private ResourceValueView foodView;
     [SerializeField] private ResourceValueView spiritView;
@@ -10,10 +10,10 @@ public class statisticViewInitializer : MonoBehaviour
 
     public void Initialize(ResourceData.ResourceType foodResource,  ResourceData.ResourceType warriorResource,  ResourceData.ResourceType spiritResource,  ResourceData.ResourceType fabricResource, ResourceData.ResourceType gemsResource)
     {
-        foodView.Initialize(foodResource);
-        spiritView.Initialize(spiritResource);
-        strengthView.Initialize(warriorResource);
-        materialsView.Initialize(fabricResource);
+        foodView.Initialize(foodResource, IncomeDifferenceTextConverter.FoodIncomeUpdated);
+        spiritView.Initialize(spiritResource, IncomeDifferenceTextConverter.SpiritIncomeUpdated);
+        strengthView.Initialize(warriorResource, IncomeDifferenceTextConverter.WarriorsIncomeUpdated);
+        materialsView.Initialize(fabricResource, IncomeDifferenceTextConverter.MaterialsIncomeUpdated);
         gemsView.Initialize(gemsResource);
     }
 }

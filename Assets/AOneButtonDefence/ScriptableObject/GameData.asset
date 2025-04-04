@@ -13,10 +13,21 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   <WorldSize>k__BackingField: {x: 350, y: 20, z: 350}
-  <StartFoodAmount>k__BackingField: 50
-  <StartMaterialsAmount>k__BackingField: 50
-  <StartSpiritAmount>k__BackingField: 50
-  <GnomeDeathSpiritFine>k__BackingField: 5
+  <StartResources>k__BackingField:
+  - <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
+    <Amount>k__BackingField: 356
+  - <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
+    <Amount>k__BackingField: 72
+  - <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
+    <Amount>k__BackingField: 370
+  - <Resource>k__BackingField: {fileID: 11400000, guid: a7a7003b21a1e244eb4249ac18a4c39d, type: 2}
+    <Amount>k__BackingField: 24
+  - <Resource>k__BackingField: {fileID: 11400000, guid: f338b09ada9bdde4cbf8129f1ff59968, type: 2}
+    <Amount>k__BackingField: 0
+  <GemsResource>k__BackingField: {fileID: 11400000, guid: f338b09ada9bdde4cbf8129f1ff59968, type: 2}
+  <GnomeDeathSpiritFine>k__BackingField:
+    <Resource>k__BackingField: {fileID: 0}
+    <Amount>k__BackingField: 0
   <EnemyRewardPrefab>k__BackingField: {fileID: -8478916999206495534, guid: cd34118c604e29141afea74caecd70f2, type: 3}
   <StartDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
   <EndTurnWinDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 74c79feccf7219947a413935ec7bbaae, type: 3}
@@ -24,6 +35,8 @@ MonoBehaviour:
   <FoodLoseDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: c123dfa5a0fce6443a870eabc57f1038, type: 3}
   <ResourceLoseDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: a1e0690fdfac01446956167e57663b91, type: 3}
   <SpiritLoseDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 7d2b860d160963442b34d290028a8f67, type: 3}
+  <GnomeUnit>k__BackingField: {fileID: 2094672045661467839, guid: f4f495098b5f5c3449dc8000417df478, type: 3}
+  <GnomeSpawnOffset>k__BackingField: {x: -0.7, y: 1.428, z: -1.5}
   <BattleWavesParameters>k__BackingField: {fileID: 11400000, guid: d46257c332a947b4bb775c648410080f, type: 2}
   <EnemiesSpawnSpread>k__BackingField: 2
   <EnemiesSpawnOffset>k__BackingField: {x: 1.792, y: 1.72, z: 1.958}

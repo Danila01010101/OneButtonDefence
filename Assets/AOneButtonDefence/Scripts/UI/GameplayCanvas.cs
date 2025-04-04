@@ -12,7 +12,7 @@ public class GameplayCanvas : MonoBehaviour
     [SerializeField] private UpgradeButton upgradeButton;
     [SerializeField] private int buttonsDistance = 100;
     [SerializeField] private Button shopButton;
-    [SerializeField] private statisticViewInitializer statisticViewInitializer;
+    [SerializeField] private StatisticViewInitializer statisticViewInitializer;
 
     private GameObject spawnedShopWindow;
     private int partPlacingInterval = 0;

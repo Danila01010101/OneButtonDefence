@@ -16,7 +16,7 @@ MonoBehaviour:
   - <Icon>k__BackingField: {fileID: -1602776285, guid: 84da4a3cda9f80d4baf868ecb3acb383, type: 3}
     <UpgradeType>k__BackingField: 0
     <Prefab>k__BackingField: {fileID: 4464381053238145285, guid: 034bcc6654a56b64781c5e9e13ee617d, type: 3}
-    <SpawnOffset>k__BackingField: {x: 0, y: 0, z: 0}
+    <SpawnOffset>k__BackingField: {x: -0.17, y: -0.6, z: -0.889}
     <SpawnRotation>k__BackingField: {x: 0, y: 0, z: 0}
     <BuildingLore>k__BackingField: 
     <buildResourceChange>k__BackingField:
@@ -49,7 +49,7 @@ MonoBehaviour:
   - <Icon>k__BackingField: {fileID: 448148582, guid: f66b86bc0ac3de24b897eff5ff4d167a, type: 3}
     <UpgradeType>k__BackingField: 1
     <Prefab>k__BackingField: {fileID: 8130088543098789889, guid: 3c0e672a8585b634a8f15da8d9c62fca, type: 3}
-    <SpawnOffset>k__BackingField: {x: 0, y: 0, z: 0}
+    <SpawnOffset>k__BackingField: {x: 0, y: -0.6, z: 0}
     <SpawnRotation>k__BackingField: {x: 0, y: 0, z: 0}
     <BuildingLore>k__BackingField: "\u041D\u0435 \u0437\u043D\u0430\u0435\u043C,
       \u0435\u0441\u0442\u044C \u043B\u0438 \u0431\u043E\u0433\u0438, \u043D\u043E
@@ -91,7 +91,7 @@ MonoBehaviour:
   - <Icon>k__BackingField: {fileID: -1810445969, guid: a3fb97838cdae574092ddda37acb00d3, type: 3}
     <UpgradeType>k__BackingField: 2
     <Prefab>k__BackingField: {fileID: -8228034523765073158, guid: e63a3734f632f9a4e84bcbbcf8c68ff1, type: 3}
-    <SpawnOffset>k__BackingField: {x: 1.792, y: 1.6, z: 1.958}
+    <SpawnOffset>k__BackingField: {x: 0, y: -0.6, z: -0.14}
     <SpawnRotation>k__BackingField: {x: 0, y: 180, z: 0}
     <BuildingLore>k__BackingField: "\u041A\u0442\u043E \u043D\u0435 \u0443\u043C\u0435\u0435\u0442
       \u0434\u0435\u0440\u0436\u0430\u0442\u044C \u0442\u043E\u043F\u043E\u0440 \u2014
@@ -140,7 +140,7 @@ MonoBehaviour:
   - <Icon>k__BackingField: {fileID: 970201981, guid: 2f235c7d961df77469c835f048e20345, type: 3}
     <UpgradeType>k__BackingField: 3
     <Prefab>k__BackingField: {fileID: -4535492056899306338, guid: f64888de816ba6044b8012c0621bbfa2, type: 3}
-    <SpawnOffset>k__BackingField: {x: 0, y: 0, z: 0}
+    <SpawnOffset>k__BackingField: {x: 0, y: -0.6, z: 0}
     <SpawnRotation>k__BackingField: {x: 0, y: 0, z: 0}
     <BuildingLore>k__BackingField: "\u0411\u043E\u043B\u044C\u0448\u0435 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432!
       \u0411\u043E\u043B\u044C\u0448\u0435 \u043E\u0440\u0443\u0436\u0438\u044F!

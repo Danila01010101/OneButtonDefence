@@ -9,10 +9,11 @@ public class ResourceIncomeCounter
     private ResourcesKeeper resourcesKeeper;
     private Dictionary<ResourceData.ResourceType, IResourceEffect> resourceEffects;
 
-    public ResourceIncomeCounter(GameResourcesCounter counter, List<ResourceAmount> startResourcesPerTurn)
+    public ResourceIncomeCounter(GameResourcesCounter counter, List<ResourceAmount> startResourcesPerTurn, Dictionary<ResourceData.ResourceType, IResourceEffect> resourceEffects)
     {
         resourcesKeeper = new ResourcesKeeper();
         resourcesKeeper.Initialize(startResourcesPerTurn);
+        this.resourceEffects = resourceEffects;
         gameResourcesCounter = counter;
         Instance = this;
         Subscribe();
