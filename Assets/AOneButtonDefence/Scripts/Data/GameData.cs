@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GameTurnsData", menuName = "ScriptableObjects/new GameData")]
@@ -6,10 +7,9 @@ public class GameData : ScriptableObject
     [field: SerializeField] public Vector3 WorldSize { get; private set; }
 
     [field: Header("Start resources")]
-    [field: SerializeField] public int StartFoodAmount { get; private set; }
-    [field: SerializeField] public int StartMaterialsAmount { get; private set; }
-    [field: SerializeField] public int StartSpiritAmount { get; private set; }
-    [field: SerializeField] public int GnomeDeathSpiritFine { get; private set; }
+    [field: SerializeField] public List<StartResourceAmount> StartResources { get; private set; }
+    [field: SerializeField] public ResourceData GemsResource { get; private set; }
+    [field: SerializeField] public StartResourceAmount GnomeDeathSpiritFine { get; private set; }
     [field: Header("Enemy reward")]
     [field: SerializeField] public Gem EnemyRewardPrefab { get; private set; }
     [field: Header("Dialogs prefabs")]
@@ -22,6 +22,8 @@ public class GameData : ScriptableObject
     
     //[field: SerializeField] public int TurnAmountBeforeEvent { get; private set; } = 4;
     [field: Header("Battle parameters")]
+    [field: SerializeField] public GnomeFightingUnit GnomeUnit { get; private set; }
+    [field: SerializeField] public Vector3 GnomeSpawnOffset { get; private set; }
     [field: SerializeField] public BattleWavesParameters BattleWavesParameters { get; private set; }
     [field: SerializeField] public float EnemiesSpawnSpread { get; private set; }
     [field: SerializeField] public Vector3 EnemiesSpawnOffset { get; private set; }

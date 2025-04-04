@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 using static GameStateMachine;
 
 public class GameInitializer : MonoBehaviour
@@ -13,7 +13,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
     [SerializeField] private SpellCastData spellCastData;
-    [FormerlySerializedAs("partManagerPrefab")] [SerializeField] private GameplayCanvas gameplayCanvasPrefab;
+    [SerializeField] private GameplayCanvas gameplayCanvasPrefab;
     [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
     [SerializeField] private Canvas loadingCanvas;
     [SerializeField] private GameObject debugCanvas;
@@ -22,7 +22,9 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
 
     private BattleNotifier battleNotifier;
-    private ResourcesCounter resourcesCounter;
+    private ResourceChangeMediator resourceChangeMediator;
+    private GameResourcesCounter gameResourcesCounter;
+    private IncomeDifferenceTextConverter incomeDifferenceTextConverter;
     private Transform initializedObjectsParent;
     private BuildingSpawner buildingSpawner;
     private GroundBlocksSpawner worldCreator;
@@ -57,7 +59,10 @@ public class GameInitializer : MonoBehaviour
         SetupBattleNotifier();
         yield return null;
         SpawnResourceCounter();
-        SetupResourcesStatistic();
+        IEnemyDetector knightDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.EnemyLayerName));
+        var gnomesFactory = new UnitsFactory(new List<FightingUnit>() { gameData.GnomeUnit }, knightDetector);
+        SetupResourcesStatistic(gameResourcesCounter, gnomesFactory);
+        SetupResourceChangeMediator();
         yield return null;
         SetupUIObjectShower();
         SetupEnemyDeathManager();
@@ -67,8 +72,7 @@ public class GameInitializer : MonoBehaviour
         CreateBuildingSpawner();
         var worldGrid = SpawnWorldGrid();
         yield return new WaitUntil(() => worldCreator.IsWorldReady);
-        IEnemyDetector knightDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.EnemyLayerName));
-        InitializeBuildingSpawner(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration, knightDetector);
+        InitializeBuildingSpawner(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration);
         yield return null;
         yield return null;
         GameplayCanvas upgradeCanvas = SpawnUpgradeCanvas();
@@ -174,16 +178,39 @@ public class GameInitializer : MonoBehaviour
 
     private void SpawnResourceCounter()
     {
-        resourcesCounter = new GameObject("ResourcesCounter").AddComponent<ResourcesCounter>();
-        resourcesCounter.transform.SetParent(initializedObjectsParent);
-        resourcesCounter.SetStartValues(gameData.StartFoodAmount, gameData.StartMaterialsAmount, gameData.StartSpiritAmount);
-        resourcesCounter.SetGnomeDeathFine(gameData.GnomeDeathSpiritFine);
+        gameResourcesCounter = new GameObject("ResourcesCounter").AddComponent<GameResourcesCounter>();
+        gameResourcesCounter.transform.SetParent(initializedObjectsParent);
+        
+        var resources = new List<ResourceAmount>();
+        foreach (var resource in gameData.StartResources)
+        {
+            resources.Add(new ResourceAmount(resource));
+        }
+        
+        gameResourcesCounter.Initialize(resources);
     }
 
-    private void SetupResourcesStatistic()
+    private void SetupResourcesStatistic(GameResourcesCounter gameResourcesCounter, UnitsFactory gnomeFactory)
     {
-        ResourceChanger incomeCounter = new ResourceChanger(resourcesCounter);
-        new IncomeDifferenceNotifier(incomeCounter);
+        var resources = new List<ResourceAmount>();
+        foreach (var resource in gameData.StartResources)
+        {
+            resources.Add(new ResourceAmount(resource.Resource, 0));
+        }
+        
+        var resourceEffectsDictionary = new Dictionary<ResourceData.ResourceType, IResourceEffect>()
+        {
+            { ResourceData.ResourceType.Warrior, new WarriorResourceEffect(gnomeFactory, gameData.GnomeSpawnOffset) }
+        };
+        
+        new ResourceIncomeCounter(gameResourcesCounter, resources, resourceEffectsDictionary);
+        incomeDifferenceTextConverter = new IncomeDifferenceTextConverter();
+    }
+
+    private void SetupResourceChangeMediator()
+    {
+        resourceChangeMediator = new ResourceChangeMediator(gameData.GnomeDeathSpiritFine, gameData.GemsResource);
+        resourceChangeMediator.Subscribe();
     }
 
     private void InitializeDialogCamera()
@@ -216,20 +243,15 @@ public class GameInitializer : MonoBehaviour
         return buildingsGrid;
     }
 
-    private void InitializeBuildingSpawner(CellsGrid grid,  BuildingsData upgradeBuildings, float animationDuration, IEnemyDetector detector)
+    private void InitializeBuildingSpawner(CellsGrid grid,  BuildingsData upgradeBuildings, float animationDuration)
     {
-        buildingSpawner.Initialize(grid, upgradeBuildings, animationDuration, detector);
+        buildingSpawner.Initialize(grid, upgradeBuildings, animationDuration);
     }
 
     private GameplayCanvas SpawnUpgradeCanvas()
     {
         GameplayCanvas upgradeCanvas = Instantiate(gameplayCanvasPrefab);
-        upgradeCanvas.Initialize(4, 
-            worldGenerationData.BuildingsData.FarmData.Icon,
-            worldGenerationData.BuildingsData.SpiritBuildingData.Icon,
-            worldGenerationData.BuildingsData.MilitaryCampData.Icon,
-            worldGenerationData.BuildingsData.FactoryData.Icon
-            );
+        upgradeCanvas.Initialize(4, worldGenerationData.BuildingsData );
         return upgradeCanvas;
     }
     
@@ -285,13 +307,18 @@ public class GameInitializer : MonoBehaviour
     {
         rewardSpawner = new GameObject("RewardSpawner").AddComponent<RewardSpawner>();
         rewardSpawner.transform.SetParent(initializedObjectsParent);
-        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, new RewardSpawner.RewardAnimationSettings(1, 1), resourcesCounter);
+        rewardSpawner.Initialize(gameData.EnemyRewardPrefab, uiTarget, new RewardSpawner.RewardAnimationSettings(1, 1), gameData.GemsResource);
     }
 
     private void OnDestroy()
     {
+        if (ResourceIncomeCounter.Instance != null)
+            ResourceIncomeCounter.Instance.Unsubscribe();
+        
+        resourceChangeMediator.Unsubscribe();
         skinChangeDetector.Unsubscribe();
         musicMediator.Unsubscribe();
         battleNotifier.Unsubscribe();
+        incomeDifferenceTextConverter.Unsubscribe();
     }
 }
