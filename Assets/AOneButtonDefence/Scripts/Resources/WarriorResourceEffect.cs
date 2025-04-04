@@ -20,7 +20,6 @@ public class WarriorResourceEffect : IResourceEffect
 
         for (int i = 0; i < amount; i++)
         {
-            Debug.Log(spawnPosition+ gnomeSpawnOffset);
             var spawnedWarrior = unitsFactory.SpawnUnit<GnomeFightingUnit>(spawnPosition.Value + gnomeSpawnOffset);
             
             if (SkinChangeDetector.Instance.IsSkinChanged)
