@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -16,16 +17,19 @@ public class UIInfoPanel : MonoBehaviour
     [SerializeField] private BuildingResourceInfoView resourceInfoPrefab;
 
     [Header("Настройки позиционирования")]
-    [SerializeField] private Vector3 startMainWindowposition;
     [SerializeField] private float screenSizeIncreaseValue;
     [SerializeField] private float distancePerString;
 
     private readonly List<BuildingResourceInfoView> activeResourceRows = new List<BuildingResourceInfoView>();
     private RectTransform panelRectTransform;
+    private Vector3 startMainWindowposition;
+    private float startHeight;
 
     private void Awake()
     {
         panelRectTransform = GetComponent<RectTransform>();
+        startMainWindowposition = panelRectTransform.anchoredPosition;
+        startHeight = panelRectTransform.sizeDelta.y;
     }
 
     public void Initialize(BasicBuildingData buildingData)
@@ -52,17 +56,17 @@ public class UIInfoPanel : MonoBehaviour
 
             newRow.SetResourceInfo(resourceInfo);
             var rectTransform = newRow.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition -= new Vector2(0, offsetY);
-            offsetY += distancePerString;
+            rectTransform.anchoredPosition += new Vector2(0, offsetY);
+            offsetY += distancePerString; 
         }
     }
 
     private void AdjustWindowSize(int maxRows)
     {
         float sizeIncrease = screenSizeIncreaseValue * maxRows;
-        
-        panelRectTransform.sizeDelta += new Vector2(0, sizeIncrease);
-        panelRectTransform.anchoredPosition = startMainWindowposition + new Vector3(0, sizeIncrease / 2, 0);
+    
+        panelRectTransform.sizeDelta = new Vector2(panelRectTransform.sizeDelta.x, startHeight + sizeIncrease);
+        panelRectTransform.anchoredPosition = startMainWindowposition + new Vector3(0, sizeIncrease / 2f, 0);
     }
 
     private void ClearData()
@@ -75,9 +79,9 @@ public class UIInfoPanel : MonoBehaviour
         {
             Destroy(row.gameObject);
         }
-        activeResourceRows.Clear();
 
-        panelRectTransform.sizeDelta = new Vector2(panelRectTransform.sizeDelta.x, 0);
+        activeResourceRows.Clear();
+        panelRectTransform.sizeDelta = new Vector2(panelRectTransform.sizeDelta.x, startHeight);
         panelRectTransform.anchoredPosition = startMainWindowposition;
     }
 }

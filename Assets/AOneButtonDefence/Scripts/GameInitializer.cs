@@ -24,6 +24,7 @@ public class GameInitializer : MonoBehaviour
     private BattleNotifier battleNotifier;
     private ResourceChangeMediator resourceChangeMediator;
     private GameResourcesCounter gameResourcesCounter;
+    private IncomeDifferenceTextConverter incomeDifferenceTextConverter;
     private Transform initializedObjectsParent;
     private BuildingSpawner buildingSpawner;
     private GroundBlocksSpawner worldCreator;
@@ -189,7 +190,7 @@ public class GameInitializer : MonoBehaviour
             { ResourceData.ResourceType.Warrior, new WarriorResourceEffect(gnomeFactory, gameData.GnomeSpawnOffset) }
         };
         new ResourceIncomeCounter(gameResourcesCounter, gameData.StartResources, resourceEffectsDictionary);
-        new IncomeDifferenceTextConverter();
+        incomeDifferenceTextConverter = new IncomeDifferenceTextConverter();
     }
 
     private void SetupResourceChangeMediator()
@@ -302,5 +303,6 @@ public class GameInitializer : MonoBehaviour
         skinChangeDetector.Unsubscribe();
         musicMediator.Unsubscribe();
         battleNotifier.Unsubscribe();
+        incomeDifferenceTextConverter.Unsubscribe();
     }
 }

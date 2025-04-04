@@ -31,6 +31,12 @@ public class IncomeDifferenceTextConverter
         return (newDifferenceInfo, isPositive);
     }
 
+    public void Unsubscribe()
+    {
+        UpgradeState.UpgradeStateStarted -= UpdateIncomeValues;
+        UpgradeState.UpgradeStateEnding -= UpdateIncomeValues;
+    }
+    
     public IncomeDifferenceTextConverter()
     {
         UpgradeState.UpgradeStateStarted += UpdateIncomeValues;
