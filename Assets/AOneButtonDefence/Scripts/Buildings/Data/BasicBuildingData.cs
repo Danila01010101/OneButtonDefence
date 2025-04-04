@@ -16,8 +16,8 @@ public class BasicBuildingData
     [System.Serializable]
     public class ResourceChangeInfo
     {
-        public ResourceAmount ResourceAmount { get; private set; }
-        public string ResourceDescription { get; private set; }
+        [field: SerializeField] public ResourceAmount ResourceAmount { get; private set; }
+        [field: SerializeField] public string ResourceDescription { get; private set; }
     }
 
     public enum Upgrades { Farm = 0, SpiritBuilding = 1, MilitaryCamp = 2, Factory = 3 }
