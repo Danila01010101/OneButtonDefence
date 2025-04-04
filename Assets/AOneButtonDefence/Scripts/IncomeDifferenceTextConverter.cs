@@ -2,26 +2,23 @@ using System;
 
 public class IncomeDifferenceTextConverter
 {
-    public static Action<string, bool> FoodIncomeUpdated;
-    public static Action<string, bool> MaterialsIncomeUpdated;
-    public static Action<string, bool> SpiritIncomeUpdated;
-    public static Action<string, bool> WarriorsIncomeUpdated;
+    public static Action<ResourceData.ResourceType, string, bool> ResourceIncomeChanged;
     
     private ResourceIncomeCounter ResourceIncomeCounter => ResourceIncomeCounter.Instance;
 
     private void UpdateIncomeValues()
     {
         var (newDifferenceInfo, isPositive) = GetIncomeString(ResourceIncomeCounter.GetResourceIncome(ResourceData.ResourceType.Food));
-        FoodIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
+        ResourceIncomeChanged?.Invoke(ResourceData.ResourceType.Food, newDifferenceInfo, isPositive);
 
         (newDifferenceInfo, isPositive) = GetIncomeString(ResourceIncomeCounter.GetResourceIncome(ResourceData.ResourceType.Material));
-        MaterialsIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
+        ResourceIncomeChanged?.Invoke(ResourceData.ResourceType.Material, newDifferenceInfo, isPositive);
 
         (newDifferenceInfo, isPositive) = GetIncomeString(ResourceIncomeCounter.GetResourceIncome(ResourceData.ResourceType.Spirit));
-        SpiritIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
+        ResourceIncomeChanged?.Invoke(ResourceData.ResourceType.Spirit, newDifferenceInfo, isPositive);
 
         (newDifferenceInfo, isPositive) = GetIncomeString(ResourceIncomeCounter.GetResourceIncome(ResourceData.ResourceType.Warrior));
-        WarriorsIncomeUpdated?.Invoke(newDifferenceInfo, isPositive);
+        ResourceIncomeChanged?.Invoke(ResourceData.ResourceType.Warrior, newDifferenceInfo, isPositive);
     }
 
     private (string, bool) GetIncomeString(int changeValue)

@@ -33,7 +33,7 @@ public class GemsView : ResourceValueView
         AnimateText(bounceValue, duration);
     }
 
-    public override void UpdateTurnIncomeValue(string newValue, bool isPositive) { }
+    public override void UpdateTurnIncomeValue(ResourceData.ResourceType type, string newValue, bool isPositive) { }
 
     private void AnimateText(Vector3 bounceValue, float duration)
     {

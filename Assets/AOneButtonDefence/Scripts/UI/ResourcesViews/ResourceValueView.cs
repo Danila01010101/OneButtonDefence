@@ -7,13 +7,11 @@ public class ResourceValueView : MonoBehaviour, IResourceView
     [SerializeField] protected TextMeshProUGUI valueText;
     [SerializeField] protected TextMeshProUGUI turnIncomeDifferenceText;
 
-    private Action<string, bool> incomeUpdated;
     private ResourceData.ResourceType resourceType;
 
-    public void Initialize(ResourceData.ResourceType resourceType, Action<string, bool> incomeUpdated = null)
+    public void Initialize(ResourceData.ResourceType resourceType)
     {
         this.resourceType = resourceType;
-        this.incomeUpdated = incomeUpdated;
         SubscribeForValueChanging();
     }
 
@@ -21,10 +19,10 @@ public class ResourceValueView : MonoBehaviour, IResourceView
     {
         valueText.text = GameResourcesCounter.GetResourceAmount(resourceType).ToString();
     }
-    
-    public virtual void UpdateTurnIncomeValue(string newValue, bool isPositive) 
+
+    public virtual void UpdateTurnIncomeValue(ResourceData.ResourceType type, string newValue, bool isPositive) 
     {
-        if (turnIncomeDifferenceText == null)
+        if (turnIncomeDifferenceText != null && type != resourceType)
             return;
         
         turnIncomeDifferenceText.color = isPositive ? Color.green : Color.red;
@@ -34,14 +32,13 @@ public class ResourceValueView : MonoBehaviour, IResourceView
     private void SubscribeForValueChanging()
     {
         UpgradeState.UpgradeStateStarted += UpdateValue;
+        IncomeDifferenceTextConverter.ResourceIncomeChanged += UpdateTurnIncomeValue;
     }
 
     private void UnsubscribeForValueChanging()
     {
         UpgradeState.UpgradeStateStarted -= UpdateValue;
-        
-        if (incomeUpdated != null)
-            incomeUpdated -= UpdateTurnIncomeValue;
+        IncomeDifferenceTextConverter.ResourceIncomeChanged -= UpdateTurnIncomeValue;
     }
 
     private void OnDestroy()
