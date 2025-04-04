@@ -19,7 +19,7 @@ public class ResourcesKeeper
         if (resource == null)
             throw new Exception("No such resource registered.");
         
-        resource.AddResourceAmount(resource);
+        resource.AddResourceAmount(resourceAmount);
     }
 
     public void AddResourceByType(ResourceData.ResourceType resourceType, int amount)
