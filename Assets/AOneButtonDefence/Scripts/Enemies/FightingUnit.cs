@@ -27,6 +27,7 @@ public class FightingUnit : MonoBehaviour, IDamagable
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = characterStats.DeathSound;
+        audioSource.volume = GameObject.FindGameObjectWithTag("InfoPanel").GetComponent<SoundSettings>().value;
         this.detector = detector;
         InitializeAnimationComponents();
         navMeshComponent = GetComponent<NavMeshAgent>();

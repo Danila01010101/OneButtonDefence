@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 774132809339908267}
   m_Layer: 5
   m_Name: InfoPanelCanvas
-  m_TagString: Untagged
+  m_TagString: InfoPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
