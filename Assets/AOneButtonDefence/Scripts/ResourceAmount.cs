@@ -1,8 +1,10 @@
+using UnityEngine;
+
 [System.Serializable]
 public class ResourceAmount
 {
-    public ResourceData Resource { get; private set; }
-    public int Amount { get; private set; }
+    [field: SerializeField] public ResourceData Resource { get; private set; }
+    [field: SerializeField] public int Amount { get; private set; }
 
     public ResourceAmount(ResourceData resource, int amount)
     {
