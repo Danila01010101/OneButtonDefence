@@ -36,7 +36,8 @@ public class Building : MonoBehaviour
         foreach (var resourceChange in data.buildResourceChange)
         {
             var position = resourceChange.ResourceAmount.Resource.IsSpawnable ? (Vector3?) (transform.position + data.SpawnOffset) : null;
-            ResourceIncomeCounter.Instance.InstantResourceChange(resourceChange.ResourceAmount, position);
+            ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(resourceChange.ResourceAmount), position);
+            Debug.Log($"Added {resourceChange.ResourceAmount} {resourceChange.ResourceAmount.Resource.Type} resource from {gameObject.name}");
         }
     }
 
@@ -44,7 +45,7 @@ public class Building : MonoBehaviour
     {
         foreach (var resourceChange in data.resourcePerTurnChange)
         {
-            ResourceIncomeCounter.Instance.RegisterResourcePerTurnChange(resourceChange.ResourceAmount);
+            ResourceIncomeCounter.Instance.RegisterResourcePerTurnChange(new ResourceAmount(resourceChange.ResourceAmount));
         }
     }
 

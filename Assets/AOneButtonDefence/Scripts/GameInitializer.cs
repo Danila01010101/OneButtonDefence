@@ -180,16 +180,30 @@ public class GameInitializer : MonoBehaviour
     {
         gameResourcesCounter = new GameObject("ResourcesCounter").AddComponent<GameResourcesCounter>();
         gameResourcesCounter.transform.SetParent(initializedObjectsParent);
-        gameResourcesCounter.Initialize(gameData.StartResources);
+        
+        var resources = new List<ResourceAmount>();
+        foreach (var resource in gameData.StartResources)
+        {
+            resources.Add(new ResourceAmount(resource));
+        }
+        
+        gameResourcesCounter.Initialize(resources);
     }
 
     private void SetupResourcesStatistic(GameResourcesCounter gameResourcesCounter, UnitsFactory gnomeFactory)
     {
+        var resources = new List<ResourceAmount>();
+        foreach (var resource in gameData.StartResources)
+        {
+            resources.Add(new ResourceAmount(resource.Resource, 0));
+        }
+        
         var resourceEffectsDictionary = new Dictionary<ResourceData.ResourceType, IResourceEffect>()
         {
             { ResourceData.ResourceType.Warrior, new WarriorResourceEffect(gnomeFactory, gameData.GnomeSpawnOffset) }
         };
-        new ResourceIncomeCounter(gameResourcesCounter, gameData.StartResources, resourceEffectsDictionary);
+        
+        new ResourceIncomeCounter(gameResourcesCounter, resources, resourceEffectsDictionary);
         incomeDifferenceTextConverter = new IncomeDifferenceTextConverter();
     }
 
@@ -298,7 +312,9 @@ public class GameInitializer : MonoBehaviour
 
     private void OnDestroy()
     {
-        ResourceIncomeCounter.Instance.Unsubscribe();
+        if (ResourceIncomeCounter.Instance != null)
+            ResourceIncomeCounter.Instance.Unsubscribe();
+        
         resourceChangeMediator.Unsubscribe();
         skinChangeDetector.Unsubscribe();
         musicMediator.Unsubscribe();

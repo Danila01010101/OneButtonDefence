@@ -21,18 +21,18 @@ public class ResourceIncomeCounter
 
     public int GetResourceIncome(ResourceData.ResourceType resourceType) => resourcesKeeper.GetResourceAmount(resourceType);
 
-    public void InstantResourceChange(ResourceAmount resourceAmount, Vector3? spawnPosition = null)
+    public void InstantResourceChange(ResourceAmount startResourceAmount, Vector3? spawnPosition = null)
     {
-        gameResourcesCounter.ChangeResourceAmount(resourceAmount);
+        gameResourcesCounter.ChangeResourceAmount(startResourceAmount);
         
-        if (resourceEffects.TryGetValue(resourceAmount.Resource.Type, out IResourceEffect effect))
+        if (resourceEffects.TryGetValue(startResourceAmount.Resource.Type, out IResourceEffect effect))
         {
-            effect.ApplyEffect(resourceAmount.Amount, spawnPosition);
+            effect.ApplyEffect(startResourceAmount.Amount, spawnPosition);
         }
     }
 
-    public void RegisterResourcePerTurnChange(ResourceAmount resourceAmount) =>
-        resourcesKeeper.AddResource(resourceAmount);
+    public void RegisterResourcePerTurnChange(ResourceAmount startResourceAmount) =>
+        resourcesKeeper.AddResource(startResourceAmount);
 
     private void ActivateIncome()
     {

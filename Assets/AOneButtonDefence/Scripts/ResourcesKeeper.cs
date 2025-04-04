@@ -5,11 +5,11 @@ using System.Linq;
 public class ResourcesKeeper
 {
     public IReadOnlyList<ResourceAmount> Resources => resources;
-    private List<ResourceAmount> resources;
+    private List<ResourceAmount> resources = new List<ResourceAmount>();
 
-    public void Initialize(List<ResourceAmount> resources)
+    public void Initialize(List<ResourceAmount> startResources)
     {
-        this.resources = resources;
+        resources = startResources;
     }
 
     public void AddResource(ResourceAmount resourceAmount)
@@ -19,7 +19,7 @@ public class ResourcesKeeper
         if (resource == null)
             throw new Exception("No such resource registered.");
         
-        resource.AddResourceAmount(resourceAmount);
+        resource.AddResourceAmount(resource);
     }
 
     public void AddResourceByType(ResourceData.ResourceType resourceType, int amount)

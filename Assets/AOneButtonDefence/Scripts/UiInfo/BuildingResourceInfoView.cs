@@ -21,7 +21,7 @@ public class BuildingResourceInfoView : MonoBehaviour
         }
 
         resourceIcon.sprite = resourceInfo.ResourceAmount.Resource.Icon;
-        resourceAmountText.text = $"{(resourceInfo.ResourceAmount.Amount >= 0 ? "+" : "")}{resourceInfo.ResourceAmount.Amount}";
+        resourceAmountText.text = $"{(resourceInfo.ResourceAmount.Amount > 0 ? "+" : "")}{resourceInfo.ResourceAmount.Amount}";
         resourceDescriptionText.text = resourceInfo.ResourceDescription;
 
         gameObject.SetActive(true);

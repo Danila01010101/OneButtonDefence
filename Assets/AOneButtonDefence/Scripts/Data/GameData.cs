@@ -7,9 +7,9 @@ public class GameData : ScriptableObject
     [field: SerializeField] public Vector3 WorldSize { get; private set; }
 
     [field: Header("Start resources")]
-    [field: SerializeField] public List<ResourceAmount> StartResources { get; private set; }
+    [field: SerializeField] public List<StartResourceAmount> StartResources { get; private set; }
     [field: SerializeField] public ResourceData GemsResource { get; private set; }
-    [field: SerializeField] public ResourceAmount GnomeDeathSpiritFine { get; private set; }
+    [field: SerializeField] public StartResourceAmount GnomeDeathSpiritFine { get; private set; }
     [field: Header("Enemy reward")]
     [field: SerializeField] public Gem EnemyRewardPrefab { get; private set; }
     [field: Header("Dialogs prefabs")]

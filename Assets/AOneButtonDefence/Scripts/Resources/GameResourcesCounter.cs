@@ -12,7 +12,7 @@ public class GameResourcesCounter : MonoBehaviour
         resourcesKeeper.Initialize(resources);
     }
     
-    public void ChangeResourceAmount(ResourceAmount resource) => resourcesKeeper.AddResource(resource);
+    public void ChangeResourceAmount(ResourceAmount startResource) => resourcesKeeper.AddResource(startResource);
 
     public static int GetResourceAmount(ResourceData.ResourceType type) => instance.resourcesKeeper.GetResourceAmount(type);
 

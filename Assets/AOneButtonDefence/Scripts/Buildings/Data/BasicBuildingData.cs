@@ -16,7 +16,7 @@ public class BasicBuildingData
     [System.Serializable]
     public class ResourceChangeInfo
     {
-        [field: SerializeField] public ResourceAmount ResourceAmount { get; private set; }
+        [field: SerializeField] public StartResourceAmount ResourceAmount { get; private set; }
         [field: SerializeField] public string ResourceDescription { get; private set; }
     }
 
