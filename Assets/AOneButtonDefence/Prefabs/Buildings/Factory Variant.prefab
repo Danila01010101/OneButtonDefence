@@ -19534,10 +19534,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29aff886e59336945aee54358ae574d6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6436280707306985982}
+      addedObject: {fileID: 2412711547559725740}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29aff886e59336945aee54358ae574d6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2412711547559725740}
+      addedObject: {fileID: -4535492056899306338}
     - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 29aff886e59336945aee54358ae574d6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4695697190152010619}
@@ -19555,19 +19555,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 29aff886e59336945aee54358ae574d6, type: 3}
   m_PrefabInstance: {fileID: 240429386317699582}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6436280707306985982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1123442022167159983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 383be53655fa68a40a1cb75943fa4e47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <BuildingOffset>k__BackingField: {x: 0, y: -0.6, z: 0}
 --- !u!114 &2412711547559725740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19596,6 +19583,18 @@ MonoBehaviour:
   ShakeStrenght: 25
   ShakeVibrato: 3
   gnomes: []
+--- !u!114 &-4535492056899306338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123442022167159983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ff079cf50bcb94b9dc36180e16ade5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8222041786972265590 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 29aff886e59336945aee54358ae574d6, type: 3}

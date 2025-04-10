@@ -1,6 +1,6 @@
 public interface IUpgradeEffectPlayer
 {
-    void PlayUpgradesSoundEffect(UpgradeButton.Upgrades firstPart, UpgradeButton.Upgrades secondPart);
+    void PlayUpgradesSoundEffect(BasicBuildingData.Upgrades firstPart, BasicBuildingData.Upgrades secondPart);
     void PlayDefeatEffect();
     void PlayBattleWinEffect();
 }

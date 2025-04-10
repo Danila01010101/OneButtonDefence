@@ -2,27 +2,30 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(IAnimatable))]
-public abstract class Building : MonoBehaviour
+public class Building : MonoBehaviour
 {
-    [field : SerializeField] public Vector3 BuildingOffset { get; private set; }
+    public Vector3 BuildingOffset => data.SpawnOffset;
 
+    protected BasicBuildingData data;
     protected float AnimationDuration { get; private set; }
-
-    protected int FoodPerTurnAmount;
-    protected int Cost;
-
     private IAnimatable animator;
 
-    private void Awake()
+    public void Initialize(BasicBuildingData buildingsData, Vector3 position, float animationDuration)
     {
+        data = buildingsData;
+        transform.position = position + data.SpawnOffset;
         animator = GetComponent<IAnimatable>();
+        AnimationDuration = animationDuration;
+        ActivateSpawnActionWithDelay();
+        UpgradeState.UpgradeStateStarted += animator.StartAnimation;
+        UpgradeState.UpgradeStateEnding += animator.InteruptAnimation;
     }
 
-    public void ActivateSpawnActionWithDelay() => StartCoroutine(WaitFrameBeforeStartAction());
+    private void ActivateSpawnActionWithDelay() => StartCoroutine(WaitFrameBeforeStartAction());
 
     private IEnumerator WaitFrameBeforeStartAction()
     {
-        //Delay needed to activate spawn action after building position changed.
+        // Delay needed to activate spawn action after building position changed.
         yield return null;
         ActivateSpawnAction();
         RegisterEndMoveAction();
@@ -30,25 +33,20 @@ public abstract class Building : MonoBehaviour
 
     protected virtual void ActivateSpawnAction()
     {
-        ResourceChanger.Instance.InstantMaterialsChange(-Cost);
-    }
-
-    public abstract void SetupData(BuildingsData buildingsData);
-
-    public void SetAnimationTime(float animationDuration)
-    {
-        AnimationDuration = animationDuration;
+        foreach (var resourceChange in data.buildResourceChange)
+        {
+            var position = resourceChange.ResourceAmount.Resource.IsSpawnable ? (Vector3?) (transform.position + data.SpawnOffset) : null;
+            ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(resourceChange.ResourceAmount), position);
+            Debug.Log($"Added {resourceChange.ResourceAmount} {resourceChange.ResourceAmount.Resource.Type} resource from {gameObject.name}");
+        }
     }
 
     protected virtual void RegisterEndMoveAction()
     {
-        ResourceChanger.Instance.AddFoodPerTurn(-FoodPerTurnAmount);
-    }
-
-    protected virtual void OnEnable()
-    {
-        UpgradeState.UpgradeStateStarted += animator.StartAnimation;
-        UpgradeState.UpgradeStateEnding += animator.InteruptAnimation;
+        foreach (var resourceChange in data.resourcePerTurnChange)
+        {
+            ResourceIncomeCounter.Instance.RegisterResourcePerTurnChange(new ResourceAmount(resourceChange.ResourceAmount));
+        }
     }
 
     protected virtual void OnDisable()

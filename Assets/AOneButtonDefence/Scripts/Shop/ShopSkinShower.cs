@@ -8,11 +8,11 @@ public class ShopSkinShower : MonoBehaviour
     [SerializeField] private MeshFilter meshFilter;
     [SerializeField] private Renderer skinRenderer;
     
-    public SkinChanger SkinChanger { get; private set; }
+    public GnomeSkinChanger GnomeSkinChanger { get; private set; }
 
     public void Initialize(IInput input)
     {
-        SkinChanger = new SkinChanger(meshFilter, skinRenderer);
+        GnomeSkinChanger = new GnomeSkinChanger(meshFilter, skinRenderer);
         SkinRotator.Initialize(input);
     }
 
@@ -22,7 +22,7 @@ public class ShopSkinShower : MonoBehaviour
 
     private void OnDestroy()
     {
-        SkinChanger.Unsubscribe();
-        SkinChanger = null;
+        GnomeSkinChanger.Unsubscribe();
+        GnomeSkinChanger = null;
     }
 }
