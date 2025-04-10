@@ -47,7 +47,7 @@ public class UIInfoPanel : MonoBehaviour
 
     private void PopulateResourceList(BasicBuildingData.ResourceChangeInfo[] resources, Transform container)
     {
-        float offsetY = 0;
+        float offsetY = distancePerString/2;
         foreach (var resourceInfo in resources)
         {
             var newRow = Instantiate(resourceInfoPrefab, container);

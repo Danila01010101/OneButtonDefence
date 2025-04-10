@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -197.17963, y: -137}
+  m_AnchoredPosition: {x: -217, y: -137}
   m_SizeDelta: {x: 300, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &347906733095454833
@@ -544,8 +544,8 @@ MonoBehaviour:
   perBuildingContainer: {fileID: 3203917583485995733}
   perRoundContainer: {fileID: 1831240844543788403}
   resourceInfoPrefab: {fileID: 1824243158863538052, guid: d3d4be5b46ad9354a97b52425374ee9e, type: 3}
-  screenSizeIncreaseValue: 55
-  distancePerString: -52
+  screenSizeIncreaseValue: 110
+  distancePerString: -100
 --- !u!222 &1715016622779567755
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -619,7 +619,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 201.12, y: -137}
+  m_AnchoredPosition: {x: 172, y: -137}
   m_SizeDelta: {x: 300, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7947655557712280614
