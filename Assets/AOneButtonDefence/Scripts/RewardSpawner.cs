@@ -5,7 +5,7 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
 {
     private Gem rewardObjectPrefab;
     private RectTransform uiTarget;
-    private bool isUpgradeStarted = false;
+    private bool isUpgradeStarted;
     private RewardAnimationSettings animationSettings;
     private ResourceData gemResource;
 
@@ -28,7 +28,7 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
         EnemyDeathManager.Instance.UnregisterListener(this);
     }
     
-    private void DetectUpgradeStateStart() => isUpgradeStarted = true;
+    private void DetectFightEnd() => isUpgradeStarted = true;
 
     public void OnEnemyDeath(Vector3 position, int currencyAmount)
     {
@@ -56,7 +56,7 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
             yield return null;
         }
         
-        collectableObject.FlyToUI(UIGameObjectShower.Instance.UICamera, uiTarget, animationSettings.Duration, animationSettings.endScale, () =>
+        collectableObject.FlyToUI(UIGameObjectShower.Instance.UICamera, uiTarget, animationSettings.Duration, animationSettings.EndScale, () =>
         {
             ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(gemResource, 1));
             collectableObject.Destroy();
@@ -65,23 +65,23 @@ public class RewardSpawner : MonoBehaviour, IEnemyDeathListener
 
     private void OnEnable()
     {
-        UpgradeState.UpgradeStateStarted += DetectUpgradeStateStart;
+        GameBattleState.EnemiesDefeated += DetectFightEnd;
     }
 
     private void OnDisable()
     {
-        UpgradeState.UpgradeStateStarted -= DetectUpgradeStateStart;
+        GameBattleState.EnemiesDefeated -= DetectFightEnd;
     }
 
     public struct RewardAnimationSettings
     {
         public readonly float Duration;
-        public readonly float endScale;
+        public readonly float EndScale;
 
         public RewardAnimationSettings(float duration, float endScale)
         {
-            this.Duration = duration;
-            this.endScale = endScale;
+            Duration = duration;
+            EndScale = endScale;
         }
     }
 }
