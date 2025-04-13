@@ -903,9 +903,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodView: {fileID: 2467735164151225562}
-  spiritView: {fileID: 1997933334655623293}
+  spiritView: {fileID: 3567855650262024970}
   strengthView: {fileID: 1309225923590807321}
-  materialsView: {fileID: 3567855650262024970}
+  materialsView: {fileID: 1997933334655623293}
   gemsView: {fileID: 3415403017376298862}
 --- !u!1 &3604142785773894656
 GameObject:
