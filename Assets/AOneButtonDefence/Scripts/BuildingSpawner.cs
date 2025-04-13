@@ -5,76 +5,53 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
 {
     private CellsGrid grid;
     private BuildingFactory buildingFacrory;
-    private IEnemyDetector detector;
 
     public Action<CellPlaceCoordinates> CellFilled { get; set; }
 
-    public void Initialize(CellsGrid grid, BuildingsData upgradeBuildings, float animationDuration, IEnemyDetector detector)
+    public void Initialize(CellsGrid grid, BuildingsData upgradeBuildings, float animationDuration)
     {
         buildingFacrory = new BuildingFactory(upgradeBuildings, animationDuration);
         this.grid = grid;
-        this.detector = detector;
-        SetupStartBuildings();
     }
 
-    public void SetupStartBuildings()
+    private void SetupStartBuildings()
     {
-        SpawnBuilding<Farm>();
-        SpawnBuilding<SpiritBuilding>();
-        SpawnBuilding<Factory>();
-        var camp = SpawnBuilding<MilitaryCamp>();
-        camp.SetupFactory(detector);
+        SpawnBuilding(BasicBuildingData.Upgrades.Farm);
+        SpawnBuilding(BasicBuildingData.Upgrades.SpiritBuilding);
+        SpawnBuilding(BasicBuildingData.Upgrades.Factory);
+        SpawnBuilding(BasicBuildingData.Upgrades.MilitaryCamp);
     }
 
-    private void ActivateUpgrades(UpgradeButton.Upgrades firstUpgrade, UpgradeButton.Upgrades secondUpgrade)
+    private void ActivateUpgrades(BasicBuildingData.Upgrades firstUpgrade, BasicBuildingData.Upgrades secondUpgrade)
     {
         ActivateUpgrade(firstUpgrade);
         ActivateUpgrade(secondUpgrade);
     }
 
-    private void ActivateUpgrade(UpgradeButton.Upgrades upgrade)
+    private void ActivateUpgrade(BasicBuildingData.Upgrades upgrade) => SpawnBuilding(upgrade);
+
+    private void SpawnBuilding(BasicBuildingData.Upgrades upgradeType)
     {
-        switch (upgrade)
-        {
-            case UpgradeButton.Upgrades.Farm:
-                SpawnBuilding<Farm>();
-                break;
-            case UpgradeButton.Upgrades.SpiritBuilding:
-                SpawnBuilding<SpiritBuilding>();
-                break;
-            case UpgradeButton.Upgrades.MilitaryCamp:
-                var camp = SpawnBuilding<MilitaryCamp>();
-                camp.SetupFactory(detector);
-                break;
-            case UpgradeButton.Upgrades.ResourcesCenter:
-                SpawnBuilding<Factory>();
-                break;
-            default:
-                throw new NotImplementedException();
-        }
+        var building =  buildingFacrory.SpawnBuilding(upgradeType, SetupBuildingOnGrid(grid.GetBestCellCoordinates()));
     }
 
-    private T SpawnBuilding<T>() where T : Building
+    private Vector3 SetupBuildingOnGrid(CellPlaceCoordinates placePosition) 
     {
-        T building = buildingFacrory.SpawnBuilding<T>();
-        SetupBuildingPosition(building, grid.GetBestCellCoordinates());
-        return building;
-    }
-
-    private void SetupBuildingPosition(Building building, CellPlaceCoordinates placePosition) 
-    {
-        building.transform.position = grid.GetWorldPositionByCoordinates(placePosition.X, placePosition.Z) + building.BuildingOffset;
+        var position = grid.GetWorldPositionByCoordinates(placePosition.X, placePosition.Z);
         grid.Place(placePosition);
         CellFilled?.Invoke(placePosition);
+        return position;
     }
 
     private void OnEnable()
     {
+        GameInitializer.GameInitialized += SetupStartBuildings;
         UpgradeButton.UpgradeTypesChoosen += ActivateUpgrades;
     }
 
     private void OnDisable()
     {
+        GameInitializer.GameInitialized -= SetupStartBuildings;
         UpgradeButton.UpgradeTypesChoosen -= ActivateUpgrades;
     }
 }
