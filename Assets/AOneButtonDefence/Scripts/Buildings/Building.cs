@@ -18,11 +18,11 @@ public class Building : MonoBehaviour
         transform.position = position + data.SpawnOffset;
         animator = GetComponent<IAnimatable>();
         startAnimation = GetComponent<BuildAnimation>();
+        startAnimation.BuildingAnimation();
         AnimationDuration = animationDuration;
         ActivateSpawnActionWithDelay();
         UpgradeState.UpgradeStateStarted += animator.StartAnimation;
         UpgradeState.UpgradeStateEnding += animator.InteruptAnimation;
-        //startAnimation.StartAnimation();
     }
 
     private void ActivateSpawnActionWithDelay() => StartCoroutine(WaitFrameBeforeStartAction());
@@ -33,7 +33,7 @@ public class Building : MonoBehaviour
         yield return null;
         ActivateSpawnAction();
         RegisterEndMoveAction();
-        startAnimation.StartAnimation();
+        //startAnimation.StartAnimation();
     }
 
     protected virtual void ActivateSpawnAction()

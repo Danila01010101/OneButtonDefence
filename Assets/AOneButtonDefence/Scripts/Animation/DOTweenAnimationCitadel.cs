@@ -37,7 +37,7 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
     private void Start()
     {
         changeMaterial = gameObject.GetComponent<ChangeMaterial>();
-        startBothCorePosition = BothCore.transform.position;
+        startBothCorePosition = BothCore.transform.localPosition;
     }
 
     public void StartAnimation() => currentAnimation = StartCoroutine(StartSpawnGnomes());
@@ -136,7 +136,7 @@ public class DOTweenAnimationCitadel : MonoBehaviour, IAnimatable
 
         float smoothY = Mathf.SmoothStep(-MovingDistance, MovingDistance, (t + MovingDistance) / (MovingDistance * 2));
 
-        BothCore.transform.position = new Vector3(BothCore.transform.position.x, startBothCorePosition.y + smoothY, BothCore.transform.position.z);
+        BothCore.transform.localPosition = new Vector3(BothCore.transform.localPosition.x, startBothCorePosition.y + smoothY, BothCore.transform.localPosition.z);
     }
 
     private IEnumerator StopWorking(GameObject gnome)
