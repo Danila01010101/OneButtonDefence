@@ -170,7 +170,6 @@ RectTransform:
   - {fileID: 2232920470487917916}
   - {fileID: 1104416721552969704}
   - {fileID: 4763963211694604385}
-  - {fileID: 284051529139713161}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -254,6 +253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e4b684a7215ef47a13d382af47d34f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ResourceInfo>k__BackingField: {fileID: 3006546497936465762}
+  <UpgradeWindow>k__BackingField: {fileID: 1280572027255842080}
   partPrefab: {fileID: 2522968737412291960, guid: 43e65ab3302d4f641a1535259ebffca6, type: 3}
   infoPanel: {fileID: 4043800436265409459}
   cellsSpawnParent: {fileID: 6221289014996434937}
@@ -356,6 +357,7 @@ RectTransform:
   m_Children:
   - {fileID: 2007358617652852098}
   - {fileID: 5639900395056490916}
+  - {fileID: 284051529139713161}
   m_Father: {fileID: 9221315910732856857}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -948,8 +950,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 32, y: 0}
-  m_SizeDelta: {x: 0, y: -30}
+  m_AnchoredPosition: {x: 16, y: 0}
+  m_SizeDelta: {x: -32, y: -30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1993391448562970936
 MonoBehaviour:
@@ -2515,13 +2517,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6461253997704809216}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3560722008149078231}
-  m_Father: {fileID: 9221315910732856857}
+  m_Father: {fileID: 1104416721552969704}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}

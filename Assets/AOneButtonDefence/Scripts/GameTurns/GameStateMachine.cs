@@ -13,12 +13,12 @@ public class GameStateMachine : StateMachine, IStringStateChanger
 
         stringStates = new Dictionary<string, IState>()
         {
-            { GameStateNames.StartDialog, new DialogState(this, data.GameTurnsData.StartDialogCanvas, GameStateNames.Upgrade, data.Input, true) },
-            { GameStateNames.WinDialogue, new DialogState(this, data.GameTurnsData.EndTurnWinDialogCanvas, GameStateNames.Upgrade, data.Input) },
-            { GameStateNames.BattleLoseDialogue, new DialogState(this, data.GameTurnsData.BattleLoseDialogCanvas, GameStateNames.Reload, data.Input) },
-            { GameStateNames.SpiritLoseDialogue, new DialogState(this, data.GameTurnsData.SpiritLoseDialogCanvas, GameStateNames.Reload, data.Input) },
-            { GameStateNames.ResourcesLoseDialogue, new DialogState(this, data.GameTurnsData.ResourceLoseDialogCanvas, GameStateNames.Reload, data.Input) },
-            { GameStateNames.FoodLoseDialogue, new DialogState(this, data.GameTurnsData.FoodLoseDialogCanvas, GameStateNames.Reload, data.Input) },
+            { GameStateNames.StartDialog, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.StartDialogCanvas, GameStateNames.Upgrade, data.Input, true) },
+            { GameStateNames.WinDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.EndTurnWinDialogCanvas, GameStateNames.Upgrade, data.Input) },
+            { GameStateNames.BattleLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.BattleLoseDialogCanvas, GameStateNames.Reload, data.Input) },
+            { GameStateNames.SpiritLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.SpiritLoseDialogCanvas, GameStateNames.Reload, data.Input) },
+            { GameStateNames.ResourcesLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.ResourceLoseDialogCanvas, GameStateNames.Reload, data.Input) },
+            { GameStateNames.FoodLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.FoodLoseDialogCanvas, GameStateNames.Reload, data.Input) },
             { GameStateNames.Reload, new ReloadingState() },
             //{ GameStateNames.DragonDialog, new DialogState(this, gameData.EndTurnDialogCanvas) },
             { GameStateNames.BattleState, new GameBattleState(battleStateData) },

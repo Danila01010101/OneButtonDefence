@@ -21,6 +21,7 @@ public class GameBattleState : IState
     private string gnomeTag;
 
     public static Action BattleStarted;
+    public static Action EnemiesDefeated;
     public static Action BattleWon;
     public static Action BattleLost;
 
@@ -103,6 +104,8 @@ public class GameBattleState : IState
         while (true)
         {
             yield return new WaitForEndOfFrame();
+            EnemiesDefeated?.Invoke();
+            yield return new WaitForSeconds(1.75f);
 
             if (knightUnits.Count > 0)
             {
@@ -111,7 +114,7 @@ public class GameBattleState : IState
             else
             {
                 WaveCounter.Instance.EndWave();
-                BattleWon.Invoke();
+                BattleWon?.Invoke();
                 stateMachine.ChangeStateWithString(GameStateNames.WinDialogue);
             }
 
