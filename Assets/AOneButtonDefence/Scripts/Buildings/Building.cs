@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(IAnimatable))]
+[RequireComponent(typeof(BuildAnimation))]
 public class Building : MonoBehaviour
 {
     public Vector3 BuildingOffset => data.SpawnOffset;
@@ -9,16 +10,19 @@ public class Building : MonoBehaviour
     protected BasicBuildingData data;
     protected float AnimationDuration { get; private set; }
     private IAnimatable animator;
+    private BuildAnimation startAnimation;
 
     public void Initialize(BasicBuildingData buildingsData, Vector3 position, float animationDuration)
     {
         data = buildingsData;
         transform.position = position + data.SpawnOffset;
         animator = GetComponent<IAnimatable>();
+        startAnimation = GetComponent<BuildAnimation>();
         AnimationDuration = animationDuration;
         ActivateSpawnActionWithDelay();
         UpgradeState.UpgradeStateStarted += animator.StartAnimation;
         UpgradeState.UpgradeStateEnding += animator.InteruptAnimation;
+        //startAnimation.StartAnimation();
     }
 
     private void ActivateSpawnActionWithDelay() => StartCoroutine(WaitFrameBeforeStartAction());
@@ -29,6 +33,7 @@ public class Building : MonoBehaviour
         yield return null;
         ActivateSpawnAction();
         RegisterEndMoveAction();
+        startAnimation.StartAnimation();
     }
 
     protected virtual void ActivateSpawnAction()
