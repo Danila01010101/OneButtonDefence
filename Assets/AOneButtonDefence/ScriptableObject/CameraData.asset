@@ -18,7 +18,7 @@ MonoBehaviour:
   <DialogCameraEulerAngles>k__BackingField: {x: 49.99998, y: 144.81525, z: -0.0000013282353}
   <MinimumCameraDistance>k__BackingField: 3
   <MaximumCameraDistance>k__BackingField: 10
-  <CameraMovementSpeed>k__BackingField: 0.4
+  <CameraMovementSpeed>k__BackingField: 0.35
   <CameraRotateSpeed>k__BackingField: 100
   <CameraRotationSmooth>k__BackingField: 20
   <MinimumXAngle>k__BackingField: 5

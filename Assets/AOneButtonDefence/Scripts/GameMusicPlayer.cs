@@ -21,6 +21,8 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer
     
     public void StopMusic() => backgroundAudioSource.Stop();
 
+    AudioSource IBackgroundMusicPlayer.GetSource() => firstAudioSource;
+
     public void StartLoadingMusic() => PlayMusic(backgroundAudioSource, data.LoadingSound);
 
     public void StartDialogueMusic() => PlayMusic(backgroundAudioSource, data.StartDialogueMusic);
@@ -32,6 +34,8 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer
     public void PlayDefeatEffect() => PlayMusic(firstAudioSource, data.BattleLostSoundEffect);
 
     public void PlayBattleWinEffect() => PlayMusic(firstAudioSource, data.BattleWinSoundEffect);
+
+    AudioSource IUpgradeEffectPlayer.GetSource() => secondAudioSource;
 
     public void PlayUpgradesSoundEffect(BasicBuildingData.Upgrades firstType, BasicBuildingData.Upgrades secondType)
     {

@@ -16,4 +16,5 @@ public class CharacterStats : ScriptableObject
     [field : SerializeField] public Color EndColor { get; private set; }
     [field : SerializeField] public int MinGemSpawn { get; private set; } = 1;
     [field : SerializeField] public int MaxGemSpawn { get; private set; } = 2;
+    [field : SerializeField] public AudioClip DeathSound { get; private set; }
 }

@@ -20,6 +20,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private SpellCanvas spellCanvas;
     [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
+    [SerializeField] private SoundSettings infoCanvas;
 
     private BattleNotifier battleNotifier;
     private ResourceChangeMediator resourceChangeMediator;
@@ -80,6 +81,8 @@ public class GameInitializer : MonoBehaviour
         var spellCanvas = SetupSpellCanvas();
         SetupDebugCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
+        var startAudioSources = new List<AudioSource>() { upgradeEffectPlayer.GetSource(), upgradeEffectPlayer.GetSource() };
+        SetupInfoCanvas(startAudioSources);
         IEnemyDetector gnomeDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.GnomeLayerName));
         yield return null;
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
@@ -320,5 +323,12 @@ public class GameInitializer : MonoBehaviour
         musicMediator.Unsubscribe();
         battleNotifier.Unsubscribe();
         incomeDifferenceTextConverter.Unsubscribe();
+    }
+
+    private SoundSettings SetupInfoCanvas(List<AudioSource> startAudioSources)
+    {
+        var infoCanvasWindow = Instantiate(infoCanvas);
+        infoCanvasWindow.Initialize(startAudioSources);
+        return infoCanvasWindow;
     }
 }

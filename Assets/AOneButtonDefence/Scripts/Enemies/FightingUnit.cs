@@ -1,9 +1,12 @@
     using UnityEngine;
-using UnityEngine.AI;
+    using UnityEngine.AI;
+    using DG.Tweening;
 
 [RequireComponent(typeof(WalkingAnimation))]
 [RequireComponent(typeof(FightAnimation))]
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(DeathAnimation))]
 public class FightingUnit : MonoBehaviour, IDamagable
 {
     [SerializeField] protected CharacterStats characterStats;
@@ -14,12 +17,16 @@ public class FightingUnit : MonoBehaviour, IDamagable
     private WarriorStateMachine stateMachine;
     private FightAnimation fightAnimation;
     private WalkingAnimation walkingAnimation;
+    private DeathAnimation deathAnimation;
     private MaterialChanger materialChanger;
+    private AudioSource audioSource;
     
     private IEnemyDetector detector;
 
     public virtual void Initialize(IEnemyDetector detector)
     {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = characterStats.DeathSound;
         this.detector = detector;
         InitializeAnimationComponents();
         navMeshComponent = GetComponent<NavMeshAgent>();
@@ -28,6 +35,7 @@ public class FightingUnit : MonoBehaviour, IDamagable
         InitializeStateMachine();
         materialChanger = new MaterialChanger(this);
         materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration,characterStats.Delay);
+        SoundSettings.AddAudioSource(audioSource);
     }
 
     protected virtual void Update()
@@ -51,6 +59,7 @@ public class FightingUnit : MonoBehaviour, IDamagable
     {
         fightAnimation = GetComponent<FightAnimation>();
         walkingAnimation = GetComponent<WalkingAnimation>();
+        deathAnimation = GetComponent<DeathAnimation>();
     }
 
     private void InitializeStateMachine()
@@ -63,7 +72,8 @@ public class FightingUnit : MonoBehaviour, IDamagable
 
     protected virtual void Die()
     {
-        materialChanger.ChangeMaterialColour(render, characterStats.EndColor, characterStats.StartColor, 0.1f,characterStats.Delay);
-        Destroy(gameObject, 0.11f);
+        deathAnimation.StartAnimation();
+        materialChanger.ChangeMaterialColour(render, characterStats.EndColor, characterStats.StartColor, audioSource.clip.length,characterStats.Delay);
+        Destroy(gameObject, audioSource.clip.length + 0.01f);
     }
 }

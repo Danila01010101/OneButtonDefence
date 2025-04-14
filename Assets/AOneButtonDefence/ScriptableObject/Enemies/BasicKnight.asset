@@ -27,3 +27,4 @@ MonoBehaviour:
   <EndColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
   <MinGemSpawn>k__BackingField: 1
   <MaxGemSpawn>k__BackingField: 2
+  <DeathSound>k__BackingField: {fileID: 8300000, guid: e170dcdfcc169154b9d9efcd2abc3697, type: 3}
