@@ -18,7 +18,6 @@ public class DeathAnimation : MonoBehaviour
     {
         if (audioSource != null)
         {
-            Debug.Log("Death Sound is playing");
             transform.DORotate(new Vector3(transform.rotation.x, transform.rotation.y + 90, transform.rotation.z), duration);
             audioSource.Play();
         }
