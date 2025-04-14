@@ -8,14 +8,18 @@ public class Building : MonoBehaviour
     public Vector3 BuildingOffset => data.SpawnOffset;
 
     protected BasicBuildingData data;
-    protected float AnimationDuration { get; private set; }
+
+    private Vector3 resourceSpawnPosition;
     private IAnimatable animator;
     private BuildAnimation startAnimation;
+    
+    protected float AnimationDuration { get; private set; }
 
     public void Initialize(BasicBuildingData buildingsData, Vector3 position, float animationDuration)
     {
         data = buildingsData;
         transform.position = position + data.SpawnOffset;
+        resourceSpawnPosition = transform.position + data.SpawnOffset;
         animator = GetComponent<IAnimatable>();
         startAnimation = GetComponent<BuildAnimation>();
         startAnimation.BuildingAnimation();
@@ -30,8 +34,7 @@ public class Building : MonoBehaviour
     private IEnumerator WaitFrameBeforeStartAction()
     {
         // Delay needed to activate spawn action after building position changed and animation is over.
-        yield return new WaitForSeconds(AnimationDuration);
-        Debug.Log("Position after initialization for warriors is " + transform.position + data.SpawnOffset);
+        yield return null;
         ActivateSpawnAction();
         RegisterEndMoveAction();
         //startAnimation.StartAnimation();
@@ -41,8 +44,7 @@ public class Building : MonoBehaviour
     {
         foreach (var resourceChange in data.buildResourceChange)
         {
-            var position = resourceChange.ResourceAmount.Resource.IsSpawnable ? (Vector3?) (transform.position + data.SpawnOffset) : null;
-            ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(resourceChange.ResourceAmount), position);
+            ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(resourceChange.ResourceAmount), resourceSpawnPosition);
         }
     }
 
@@ -50,7 +52,14 @@ public class Building : MonoBehaviour
     {
         foreach (var resourceChange in data.resourcePerTurnChange)
         {
-            ResourceIncomeCounter.Instance.RegisterResourcePerTurnChange(new ResourceAmount(resourceChange.ResourceAmount));
+            var resourceAmount = new ResourceAmount(resourceChange.ResourceAmount);
+            
+            if (resourceChange.ResourceAmount.Resource.IsSpawnable)
+            {
+                resourceAmount.SetResourceSpawnPosition(resourceSpawnPosition);
+            }
+            
+            ResourceIncomeCounter.Instance.RegisterResourcePerTurnChange(resourceAmount);
         }
     }
 

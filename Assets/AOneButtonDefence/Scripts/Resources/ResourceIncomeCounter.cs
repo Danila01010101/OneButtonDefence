@@ -27,7 +27,14 @@ public class ResourceIncomeCounter
         
         if (resourceEffects.TryGetValue(startResourceAmount.Resource.Type, out IResourceEffect effect))
         {
-            effect.ApplyEffect(startResourceAmount.Amount, spawnPosition);
+            if (spawnPosition.HasValue)
+            {
+                effect.ApplyEffect(startResourceAmount.Amount, spawnPosition);
+            }
+            else
+            {
+                effect.ApplyEffect(startResourceAmount.Amount, startResourceAmount.ResourceSpawnPositon);
+            }
         }
     }
 
@@ -38,7 +45,10 @@ public class ResourceIncomeCounter
     {
         foreach (var resource in resourcesKeeper.Resources)
         {
-            InstantResourceChange(resource);
+            if (resource.Resource.Type == ResourceData.ResourceType.Warrior)
+                Debug.Log(1);
+            
+            InstantResourceChange(resource, resource.ResourceSpawnPositon);
         }
     }
 

@@ -14,12 +14,16 @@ public class ResourcesKeeper
 
     public void AddResource(ResourceAmount resourceAmount)
     {
-        var resource = resources.FirstOrDefault(r => r.Resource.Type == resourceAmount.Resource.Type);
+        var resource = resources.FirstOrDefault(r => r.Resource.Type == resourceAmount.Resource.Type && r.ResourceSpawnPositon == resourceAmount.ResourceSpawnPositon);
 
         if (resource == null)
-            throw new Exception("No such resource registered.");
-        
-        resource.AddResourceAmount(resourceAmount);
+        {
+            resources.Add(resourceAmount);
+        }
+        else
+        {
+            resource.AddResourceAmount(resourceAmount);
+        }
     }
 
     public void AddResourceByType(ResourceData.ResourceType resourceType, int amount)
@@ -34,11 +38,12 @@ public class ResourcesKeeper
 
     public int GetResourceAmount(ResourceData.ResourceType type)
     {
-        var resource = resources.FirstOrDefault(r => r.Resource.Type == type);
+        var foundResources = resources.FindAll(r => r.Resource.Type == type);
+        int resourceAmount = foundResources.Sum(r => r.Amount);
 
-        if (resource == null)
+        if (foundResources == null)
             throw new Exception("No such resource registered.");
         
-        return resource.Amount;
+        return resourceAmount;
     }
 }
