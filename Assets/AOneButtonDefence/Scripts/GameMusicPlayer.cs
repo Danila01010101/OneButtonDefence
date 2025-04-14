@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer
@@ -21,7 +22,7 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer
     
     public void StopMusic() => backgroundAudioSource.Stop();
 
-    AudioSource IBackgroundMusicPlayer.GetSource() => firstAudioSource;
+    AudioSource IBackgroundMusicPlayer.GetSource() => backgroundAudioSource;
 
     public void StartLoadingMusic() => PlayMusic(backgroundAudioSource, data.LoadingSound);
 
@@ -35,7 +36,7 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer
 
     public void PlayBattleWinEffect() => PlayMusic(firstAudioSource, data.BattleWinSoundEffect);
 
-    AudioSource IUpgradeEffectPlayer.GetSource() => secondAudioSource;
+    List<AudioSource> IUpgradeEffectPlayer.GetSources() => new List<AudioSource>() { firstAudioSource, secondAudioSource };
 
     public void PlayUpgradesSoundEffect(BasicBuildingData.Upgrades firstType, BasicBuildingData.Upgrades secondType)
     {

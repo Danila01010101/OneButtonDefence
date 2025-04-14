@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface IUpgradeEffectPlayer
 {
-    AudioSource GetSource();
+    List<AudioSource> GetSources();
     void PlayUpgradesSoundEffect(BasicBuildingData.Upgrades firstPart, BasicBuildingData.Upgrades secondPart);
     void PlayDefeatEffect();
     void PlayBattleWinEffect();

@@ -81,7 +81,13 @@ public class GameInitializer : MonoBehaviour
         var spellCanvas = SetupSpellCanvas();
         SetupDebugCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
-        var startAudioSources = new List<AudioSource>() { upgradeEffectPlayer.GetSource(), upgradeEffectPlayer.GetSource() };
+        List<AudioSource> upgradeSources = upgradeEffectPlayer.GetSources();
+        var startAudioSources = new List<AudioSource>();
+        startAudioSources.Add(backgroundMusicPlayer.GetSource());
+        foreach (var source in upgradeSources)
+        {
+            startAudioSources.Add(source);
+        }
         SetupInfoCanvas(startAudioSources);
         IEnemyDetector gnomeDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.GnomeLayerName));
         yield return null;
