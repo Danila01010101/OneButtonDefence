@@ -70,7 +70,7 @@ public class FightState : IState, ITargetAttacker
 
     private void CheckTarget()
     {
-        if (target == null || !target.IsAlive())
+        if (target == null || target.IsAlive() == false)
         {
             stateMachine.ChangeState<TargetSearchState>();
         }

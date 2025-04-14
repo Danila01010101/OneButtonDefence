@@ -74,6 +74,7 @@ public class FightingUnit : MonoBehaviour, IDamagable
     {
         deathAnimation.StartAnimation();
         materialChanger.ChangeMaterialColour(render, characterStats.EndColor, characterStats.StartColor, audioSource.clip.length,characterStats.Delay);
-        Destroy(gameObject, audioSource.clip.length + 0.01f);
+        Destroy(gameObject, audioSource.clip.length + 0.005f);
+        Destroy(this);
     }
 }
