@@ -29,8 +29,9 @@ public class Building : MonoBehaviour
 
     private IEnumerator WaitFrameBeforeStartAction()
     {
-        // Delay needed to activate spawn action after building position changed.
-        yield return null;
+        // Delay needed to activate spawn action after building position changed and animation is over.
+        yield return new WaitForSeconds(AnimationDuration);
+        Debug.Log("Position after initialization for warriors is " + transform.position + data.SpawnOffset);
         ActivateSpawnAction();
         RegisterEndMoveAction();
         //startAnimation.StartAnimation();
@@ -42,7 +43,6 @@ public class Building : MonoBehaviour
         {
             var position = resourceChange.ResourceAmount.Resource.IsSpawnable ? (Vector3?) (transform.position + data.SpawnOffset) : null;
             ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(resourceChange.ResourceAmount), position);
-            Debug.Log($"Added {resourceChange.ResourceAmount} {resourceChange.ResourceAmount.Resource.Type} resource from {gameObject.name}");
         }
     }
 
