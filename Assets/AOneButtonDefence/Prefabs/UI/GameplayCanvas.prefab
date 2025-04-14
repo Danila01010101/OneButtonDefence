@@ -360,7 +360,6 @@ RectTransform:
   m_Children:
   - {fileID: 2007358617652852098}
   - {fileID: 5639900395056490916}
-  - {fileID: 284051529139713161}
   m_Father: {fileID: 9221315910732856857}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -559,7 +558,7 @@ GameObject:
   - component: {fileID: 9049108197967533161}
   - component: {fileID: 9016449385637187560}
   m_Layer: 5
-  m_Name: SpiritBackground
+  m_Name: WinsBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -845,7 +844,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2232920470487917916}
-  - component: {fileID: 1993391448562970936}
   - component: {fileID: 1971182525426096033}
   m_Layer: 5
   m_Name: StatisticWindow
@@ -880,19 +878,6 @@ RectTransform:
   m_AnchoredPosition: {x: 16, y: 0}
   m_SizeDelta: {x: -32, y: -30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1993391448562970936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3006546497936465762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3810a6dc5d6e4914e9d0af9a4170029c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  winsValueText: {fileID: 7819176169483921936}
 --- !u!114 &1971182525426096033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2031,7 +2016,7 @@ GameObject:
   - component: {fileID: 739300599076504491}
   - component: {fileID: 4427083456176841271}
   m_Layer: 5
-  m_Name: SpiritBackground
+  m_Name: GemsBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2450,7 +2435,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3560722008149078231}
-  m_Father: {fileID: 1104416721552969704}
+  m_Father: {fileID: 9221315910732856857}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
@@ -3647,7 +3632,7 @@ GameObject:
   - component: {fileID: 8006997691847270323}
   - component: {fileID: 3559999364601862969}
   m_Layer: 5
-  m_Name: SpiritValue
+  m_Name: GemsValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4244,7 +4229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   valueText: {fileID: 3559999364601862969}
-  turnIncomeDifferenceText: {fileID: 0}
+  turnIncomeDifferenceText: {fileID: 3559999364601862969}
   canvas: {fileID: 1405041917996857505}
   bounceValue: {x: 1.2, y: 1.2, z: 0}
   duration: 0.35
