@@ -7,7 +7,7 @@ public class SoundSettings : MonoBehaviour
 {
     [SerializeField] private Slider volumeSlider;
     
-    private List<AudioSource> registeredAudioSources;
+    private List<AudioSource> registeredAudioSources = new List<AudioSource>();
 
     public static Action<GameObject> SettingsInitialized;
     
