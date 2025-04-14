@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,13 +7,23 @@ public class GameResourcesCounter : MonoBehaviour
     private static GameResourcesCounter instance;
     private ResourcesKeeper resourcesKeeper;
 
+    public static Action ResourceAdded;
+
     public void Initialize(List<ResourceAmount> resources)
     {
         resourcesKeeper = new ResourcesKeeper();
         resourcesKeeper.Initialize(resources);
+        foreach (var resource in resourcesKeeper.Resources)
+        {
+            Debug.Log("Start resource " + resource.Resource.Name + " is " + resource.Amount);
+        }
     }
     
-    public void ChangeResourceAmount(ResourceAmount startResource) => resourcesKeeper.AddResource(startResource);
+    public void ChangeResourceAmount(ResourceAmount resourceAmount)
+    {
+        resourcesKeeper.AddResource(resourceAmount);
+        ResourceAdded?.Invoke();
+    }
 
     public static int GetResourceAmount(ResourceData.ResourceType type) => instance.resourcesKeeper.GetResourceAmount(type);
 

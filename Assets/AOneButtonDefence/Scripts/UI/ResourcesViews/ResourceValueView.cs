@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -31,13 +30,13 @@ public class ResourceValueView : MonoBehaviour, IResourceView
 
     private void SubscribeForValueChanging()
     {
-        UpgradeState.UpgradeStateStarted += UpdateValue;
+        GameResourcesCounter.ResourceAdded += UpdateValue;
         IncomeDifferenceTextConverter.ResourceIncomeChanged += UpdateTurnIncomeValue;
     }
 
     private void UnsubscribeForValueChanging()
     {
-        UpgradeState.UpgradeStateStarted -= UpdateValue;
+        GameResourcesCounter.ResourceAdded -= UpdateValue;
         IncomeDifferenceTextConverter.ResourceIncomeChanged -= UpdateTurnIncomeValue;
     }
 

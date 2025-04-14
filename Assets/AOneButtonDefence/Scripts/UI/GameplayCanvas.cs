@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameplayCanvas : MonoBehaviour
 {
+    [field : SerializeField] public GameObject ResourceInfo { get; private set; }
+    [field : SerializeField] public GameObject UpgradeWindow { get; private set; }
     [SerializeField] private UIInfoButton partPrefab;
     [SerializeField] private UIInfoPanel infoPanel;
     [SerializeField] private GameObject cellsSpawnParent;

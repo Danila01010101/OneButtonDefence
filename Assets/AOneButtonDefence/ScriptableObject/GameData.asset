@@ -17,17 +17,17 @@ MonoBehaviour:
   - <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
     <Amount>k__BackingField: 100
   - <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
-    <Amount>k__BackingField: 50
+    <Amount>k__BackingField: 324
   - <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
-    <Amount>k__BackingField: 100
+    <Amount>k__BackingField: 60
   - <Resource>k__BackingField: {fileID: 11400000, guid: a7a7003b21a1e244eb4249ac18a4c39d, type: 2}
     <Amount>k__BackingField: 0
   - <Resource>k__BackingField: {fileID: 11400000, guid: f338b09ada9bdde4cbf8129f1ff59968, type: 2}
     <Amount>k__BackingField: 0
   <GemsResource>k__BackingField: {fileID: 11400000, guid: f338b09ada9bdde4cbf8129f1ff59968, type: 2}
   <GnomeDeathSpiritFine>k__BackingField:
-    <Resource>k__BackingField: {fileID: 0}
-    <Amount>k__BackingField: 0
+    <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
+    <Amount>k__BackingField: -10
   <EnemyRewardPrefab>k__BackingField: {fileID: -8478916999206495534, guid: cd34118c604e29141afea74caecd70f2, type: 3}
   <StartDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
   <EndTurnWinDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 74c79feccf7219947a413935ec7bbaae, type: 3}

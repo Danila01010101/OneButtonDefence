@@ -23,14 +23,15 @@ public class UpgradeState : IState
         this.stateMachine = stateMachine;
         this.upgradeUI = upgradeUI;
         this.upgradePhaseDuration = upgradePhaseDuration;
-        upgradeUI.gameObject.SetActive(false);
+        upgradeUI.gameObject.SetActive(true);
+        upgradeUI.UpgradeWindow.gameObject.SetActive(false);
     }
 
     public void Enter()
     {
         isUpgradeChosen = false;
         upgradePhaseStartTime = Time.time;
-        upgradeUI.gameObject.SetActive(true);
+        upgradeUI.UpgradeWindow.gameObject.SetActive(true);
         UpgradeStateStarted?.Invoke();
         upgradeUI.UpgradeButton.Activate();
         UpgradeButton.UpgradesChoosen += DetectUpgradeChoosing;
@@ -38,7 +39,7 @@ public class UpgradeState : IState
 
     public void Exit()
     {
-        upgradeUI.gameObject.SetActive(false);
+        upgradeUI.UpgradeWindow.gameObject.SetActive(false);
         UpgradeButton.UpgradesChoosen -= DetectUpgradeChoosing;
     }
 
