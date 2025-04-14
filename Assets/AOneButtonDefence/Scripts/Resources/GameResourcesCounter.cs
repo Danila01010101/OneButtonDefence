@@ -13,10 +13,6 @@ public class GameResourcesCounter : MonoBehaviour
     {
         resourcesKeeper = new ResourcesKeeper();
         resourcesKeeper.Initialize(resources);
-        foreach (var resource in resourcesKeeper.Resources)
-        {
-            Debug.Log("Start resource " + resource.Resource.Name + " is " + resource.Amount);
-        }
     }
     
     public void ChangeResourceAmount(ResourceAmount resourceAmount)
