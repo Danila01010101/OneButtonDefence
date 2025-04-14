@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 056d0604181917d4a84251a73d05323f, type: 3}
   m_Name: Music Data
   m_EditorClassIdentifier: 
-  <LoadingSound>k__BackingField: {fileID: 8300000, guid: 7bfc7f86798ba024aa316181ab17a149, type: 3}
+  <LoadingSound>k__BackingField: {fileID: 8300000, guid: 48fda7944ce7b6349a54d8aaaf1256f6, type: 3}
   <StartDialogueMusic>k__BackingField: {fileID: 8300000, guid: 52b8f78070ff5bc46877cd6306ef9f60, type: 3}
   <BattleMusic>k__BackingField: {fileID: 8300000, guid: a5b726661d1fd3847898579d0f432f8e, type: 3}
   <BattleWinSoundEffect>k__BackingField: {fileID: 8300000, guid: a6ad613b48a3252498255c595a118707, type: 3}
