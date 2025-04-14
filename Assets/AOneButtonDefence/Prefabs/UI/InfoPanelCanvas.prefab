@@ -4236,8 +4236,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c1369099d3495c8144dcfdd0277a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  valueText: {fileID: 0}
+  turnIncomeDifferenceText: {fileID: 0}
   canvas: {fileID: 0}
-  gemsText: {fileID: 4022517501856863158}
   bounceValue: {x: 1.2, y: 1.2, z: 0}
   duration: 0.35
 --- !u!1 &7292028392905660501

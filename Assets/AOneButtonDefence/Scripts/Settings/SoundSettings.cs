@@ -1,35 +1,46 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SoundSettings : MonoBehaviour
 {
-    [SerializeField]private Slider volumeSlider;
+    [SerializeField] private Slider volumeSlider;
     
-    [HideInInspector]
+    private List<AudioSource> registeredAudioSources;
+
     public static Action<GameObject> SettingsInitialized;
     
-    private AudioSource[] musicAudioSource;
+    public float value { get; private set; }
     
-    [HideInInspector]
-    public float value;
+    private static SoundSettings instance;
 
-    public void Initialize()
+    public void Initialize(List<AudioSource> startAudioSources)
     {
+        if (instance != null)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+
+        foreach (var source in startAudioSources)
+        {
+            registeredAudioSources.Add(source);
+        }
+
+        volumeSlider.onValueChanged.AddListener(UpdateSources);
         SettingsInitialized?.Invoke(gameObject);
         gameObject.SetActive(false);
     }
     
-    void Start()
+    private void UpdateSources(float newValue)
     {
-        musicAudioSource = GameObject.Find("MusicPlayer").GetComponents<AudioSource>();
-    }
-    
-    void Update()
-    {
-        value = volumeSlider.value;
+        value = newValue;
         
-        foreach (AudioSource audioSource in musicAudioSource)
+        foreach (AudioSource audioSource in registeredAudioSources)
         {
             audioSource.volume = value;
         }
@@ -39,6 +50,8 @@ public class SoundSettings : MonoBehaviour
     {
         volumeSlider.value = (value == 0) ? 1 : 0;
     }
+    
+    public static void AddAudioSource(AudioSource audioSource) => instance.registeredAudioSources.Add(audioSource);
 
     public void SettingsClose()
     {

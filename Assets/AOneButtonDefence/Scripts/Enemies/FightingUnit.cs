@@ -27,7 +27,6 @@ public class FightingUnit : MonoBehaviour, IDamagable
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = characterStats.DeathSound;
-        audioSource.volume = GameObject.FindGameObjectWithTag("InfoPanel").GetComponent<SoundSettings>().value;
         this.detector = detector;
         InitializeAnimationComponents();
         navMeshComponent = GetComponent<NavMeshAgent>();
@@ -36,6 +35,7 @@ public class FightingUnit : MonoBehaviour, IDamagable
         InitializeStateMachine();
         materialChanger = new MaterialChanger(this);
         materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration,characterStats.Delay);
+        SoundSettings.AddAudioSource(audioSource);
     }
 
     protected virtual void Update()
