@@ -21,7 +21,9 @@ public class ResourcesKeeper
 
         if (resource == null)
         {
-            resources.Add(new ResourceAmount(resourceAmount.Resource, resourceAmount.Amount));
+            var newResource = new ResourceAmount(resourceAmount.Resource, resourceAmount.Amount);
+            newResource.SetResourceSpawnPosition(resourceAmount.ResourceSpawnPositon);
+            resources.Add(newResource);
         }
         else
         {
