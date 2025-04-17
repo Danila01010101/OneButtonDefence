@@ -218,7 +218,7 @@ public class GameInitializer : MonoBehaviour
 
     private void SetupResourceChangeMediator()
     {
-        resourceChangeMediator = new ResourceChangeMediator(gameData.GnomeDeathSpiritFine, gameData.GemsResource);
+        resourceChangeMediator = new ResourceChangeMediator(gameData.GnomeDeathSpiritFine, gameData.GemsResource, gameData.GnomeDeathWarriorFine);
         resourceChangeMediator.Subscribe();
     }
 

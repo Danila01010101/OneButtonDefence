@@ -10,6 +10,7 @@ public class GameData : ScriptableObject
     [field: SerializeField] public List<StartResourceAmount> StartResources { get; private set; }
     [field: SerializeField] public ResourceData GemsResource { get; private set; }
     [field: SerializeField] public StartResourceAmount GnomeDeathSpiritFine { get; private set; }
+    [field: SerializeField] public StartResourceAmount GnomeDeathWarriorFine { get; private set; }
     [field: Header("Enemy reward")]
     [field: SerializeField] public Gem EnemyRewardPrefab { get; private set; }
     [field: Header("Dialogs prefabs")]
