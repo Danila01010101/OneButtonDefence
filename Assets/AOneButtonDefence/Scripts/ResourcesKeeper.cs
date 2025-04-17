@@ -9,7 +9,10 @@ public class ResourcesKeeper
 
     public void Initialize(List<ResourceAmount> startResources)
     {
-        resources = startResources;
+        foreach (var resource in startResources)
+        {
+            resources.Add(new ResourceAmount(resource.Resource, resource.Amount));
+        }
     }
 
     public void AddResource(ResourceAmount resourceAmount)
@@ -18,7 +21,7 @@ public class ResourcesKeeper
 
         if (resource == null)
         {
-            resources.Add(resourceAmount);
+            resources.Add(new ResourceAmount(resourceAmount.Resource, resourceAmount.Amount));
         }
         else
         {
