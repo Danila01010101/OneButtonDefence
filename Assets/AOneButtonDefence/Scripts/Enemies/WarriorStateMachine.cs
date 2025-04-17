@@ -43,4 +43,10 @@ public class WarriorStateMachine : StateMachine
             EnemyDetector = detector;
         }
     }
+
+    public void Exit()
+    {
+        currentState.Exit();
+        currentState = null;
+    }
 }
