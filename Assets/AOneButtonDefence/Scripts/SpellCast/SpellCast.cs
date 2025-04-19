@@ -44,7 +44,7 @@ public class SpellCast
     {
         randomSpell.Add(spellStorage[Random.Range(0, spellStorage.Count)].Spell);
         randomSpell.Add(spellStorage[Random.Range(0, spellStorage.Count)].Spell);
-        spellCanvas.ChangeUI(randomSpell[0].IconForUI, randomSpell[1].IconForUI, reloadDuration);
+        spellCanvas.ChangeUI(randomSpell[0].IconForUI, randomSpell[1].IconForUI, randomSpell[0].Background, randomSpell[1].MiniIcon, reloadDuration);
         AddNextSpell();
     }
     
@@ -96,6 +96,6 @@ public class SpellCast
     {
         randomSpell[0] = randomSpell[1];
         randomSpell[1] = spellStorage[Random.Range(0, spellStorage.Count)].Spell;
-        spellCanvas.ChangeUI(randomSpell[0].IconForUI, randomSpell[1].IconForUI, reloadDuration);
+        spellCanvas.ChangeUI(randomSpell[0].IconForUI, randomSpell[1].IconForUI, randomSpell[0].Background, randomSpell[1].MiniIcon, reloadDuration);
     }
 }

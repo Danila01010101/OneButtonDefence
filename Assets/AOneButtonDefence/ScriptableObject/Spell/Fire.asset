@@ -17,6 +17,8 @@ MonoBehaviour:
   damage: 50
   baseMagicCircle: {fileID: 544068497971431647, guid: 77a593e24f4d2e440bf31c2ee3b5b88d, type: 3}
   iconForUI: {fileID: 1552578911, guid: fc746076b82fe2348941c2263d5408b1, type: 3}
+  background: {fileID: 21300000, guid: 2051ce00c7d7f214dad6776b73ec8121, type: 3}
+  miniIcon: {fileID: 21300000, guid: 5895d3bb85bb25949b2c9ab629ae1ab2, type: 3}
   mainColor: {r: 0.9056604, g: 0.09740115, b: 0.09740115, a: 1}
   secondaryColor: {r: 0.9811321, g: 0.18882161, b: 0.18882161, a: 1}
   effectParticles: {fileID: 0}

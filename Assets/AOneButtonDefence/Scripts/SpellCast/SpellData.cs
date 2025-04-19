@@ -12,6 +12,8 @@ public class SpellData : ScriptableObject
     [Header("BaseGraphic")]
     [SerializeField] private GameObject baseMagicCircle;
     [SerializeField] private Sprite iconForUI;
+    [SerializeField] private Sprite background;
+    [SerializeField] private Sprite miniIcon;
     [Header("Graphic")]
     [SerializeField] private Color mainColor = new Color(0f, 0f, 0f, 1f);
     [SerializeField] private Color secondaryColor = new Color(0f, 0f, 0f, 1f);
@@ -32,6 +34,8 @@ public class SpellData : ScriptableObject
     public int Damage => damage;
     public GameObject BaseMagicCircle => baseMagicCircle;
     public Sprite IconForUI => iconForUI;
+    public Sprite Background => background;
+    public Sprite MiniIcon => miniIcon;
     public Color MainColor => mainColor;
     public Color SecondaryColor => secondaryColor;
     public Texture2D EffectParticles => effectParticles;
