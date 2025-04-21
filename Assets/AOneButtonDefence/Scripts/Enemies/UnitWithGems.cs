@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Knight : FightingUnit
+public class UnitWithGems : FightingUnit
 {
     public static Action<Vector3, int> OnEnemyDeath;
     

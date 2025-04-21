@@ -20,19 +20,16 @@ public class FightingUnit : MonoBehaviour, IDamagable
     private DeathAnimation deathAnimation;
     private MaterialChanger materialChanger;
     private AudioSource audioSource;
-    
-    private IEnemyDetector detector;
 
     public virtual void Initialize(IEnemyDetector detector)
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = characterStats.DeathSound;
-        this.detector = detector;
         InitializeAnimationComponents();
         navMeshComponent = GetComponent<NavMeshAgent>();
         health = new Health(characterStats.Health);
         health.Death += Die;
-        InitializeStateMachine();
+        InitializeStateMachine(detector);
         materialChanger = new MaterialChanger(this);
         materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration,characterStats.Delay);
         SoundSettings.AddAudioSource(audioSource);
@@ -62,7 +59,7 @@ public class FightingUnit : MonoBehaviour, IDamagable
         deathAnimation = GetComponent<DeathAnimation>();
     }
 
-    private void InitializeStateMachine()
+    protected virtual void InitializeStateMachine(IEnemyDetector detector)
     {
         var data = new WarriorStateMachine.WarriorStateMachineData(
             transform, characterStats, navMeshComponent,

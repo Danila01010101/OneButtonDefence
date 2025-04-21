@@ -60,8 +60,7 @@ public class SpellCast
         if (spellStorage[currentChose].Count > 0 && Physics.Raycast(ray, out hit)) 
         {
             spellStorage[currentChose].Count--;
-            GameObject spell = GameObject.Instantiate(spellStorage[currentChose].Spell.BaseMagicCircle, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.identity);
-            spell.GetComponent<Spell>().Initialize(spellStorage[currentChose].Spell, damagableTargetLayer);
+            SpellCaster.Cast(spellStorage[currentChose].Spell.BaseMagicCircle, spellStorage[currentChose].Spell, new Vector3(hit.point.x, 1, hit.point.z), damagableTargetLayer);
         }
     }
 

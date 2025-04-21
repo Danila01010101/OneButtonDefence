@@ -2,40 +2,42 @@ using UnityEngine;
 
 public class FightState : IState, ITargetAttacker
 {
-    private IStateChanger stateMachine;
-    private IDamagable target;
-    private MonoBehaviour coroutineStarter;
-    private FightAnimation animation;
-    private bool isTargetSetted;
-    private float lastTimeAttacked;
-    private float attackDelay;
-    private int damage;
+    protected readonly IStateChanger StateMachine;
+    protected readonly MonoBehaviour CoroutineStarter;
+    protected readonly FightAnimation Animation;
+    protected readonly float AttackDelay;
+    protected readonly int Damage;
+    
+    protected bool IsTargetSetted;
+    
+    private IDamagable Target;
+    private float LastTimeAttacked;
 
     public FightState(IStateChanger stateChanger, float attackDelay, int damage, FightAnimation animation)
     {
-        stateMachine = stateChanger;
-        this.attackDelay = attackDelay;
-        this.damage = damage;
-        this.animation = animation;
+        StateMachine = stateChanger;
+        AttackDelay = attackDelay;
+        Damage = damage;
+        Animation = animation;
     }
 
     public void SetTarget(IDamagable target)
     {
-        isTargetSetted = true;
-        this.target = target;
+        IsTargetSetted = true;
+        this.Target = target;
     }
 
-    public void Enter()
+    public virtual void Enter()
     {
-        animation.CharacterAttacked += Attack;
+        Animation.CharacterAttacked += Attack;
     }
 
-    public void Exit() 
+    public virtual void Exit() 
     {
-        target = null;
-        isTargetSetted = false;
-        animation.CharacterAttacked -= Attack;
-        animation.InterruptAnimation();
+        Target = null;
+        IsTargetSetted = false;
+        Animation.CharacterAttacked -= Attack; 
+        Animation.InterruptAnimation();
     }
 
     public void HandleInput() { }
@@ -52,27 +54,27 @@ public class FightState : IState, ITargetAttacker
 
     public void PhysicsUpdate() { }
 
-    public void Update()
+    public virtual void Update()
     {
-        if (lastTimeAttacked + attackDelay >= Time.time)
+        if (LastTimeAttacked + AttackDelay >= Time.time)
             return;
 
         CheckTarget();
-        lastTimeAttacked = Time.time;
-        animation.StartAnimation();
+        LastTimeAttacked = Time.time;
+        Animation.StartAnimation();
     }
 
-    private void Attack()
+    protected virtual void Attack()
     {
-        if (isTargetSetted)
-            target.TakeDamage(damage);
+        if (IsTargetSetted)
+            Target.TakeDamage(Damage);
     }
 
     private void CheckTarget()
     {
-        if (target == null || target.IsAlive() == false)
+        if (Target == null || Target.IsAlive() == false)
         {
-            stateMachine.ChangeState<TargetSearchState>();
+            StateMachine.ChangeState<TargetSearchState>();
         }
     }
 }
