@@ -7,6 +7,7 @@ using static GameStateMachine;
 
 public class GameInitializer : MonoBehaviour
 {
+    [SerializeField] private bool isTestBuild;
     [SerializeField] private GameData gameData;
     [SerializeField] private CameraData cameraData;
     [SerializeField] private MusicData musicData;
@@ -282,6 +283,10 @@ public class GameInitializer : MonoBehaviour
     private GameObject SetupDebugCanvas()
     {
         var debugCanvasWidnow = Instantiate(debugCanvas);
+
+        if (isTestBuild == false)
+            debugCanvasWidnow.SetActive(false);
+        
         return debugCanvasWidnow.gameObject;
     }
     
