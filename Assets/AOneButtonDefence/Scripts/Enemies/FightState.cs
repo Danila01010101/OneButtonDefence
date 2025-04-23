@@ -1,10 +1,10 @@
+using AOneButtonDefence.Scripts.Interfaces;
 using UnityEngine;
 
 public class FightState : IState, ITargetAttacker
 {
     protected readonly IStateChanger StateMachine;
-    protected readonly MonoBehaviour CoroutineStarter;
-    protected readonly FightAnimation Animation;
+    protected readonly IAttackAnimator Animation;
     protected readonly float AttackDelay;
     protected readonly int Damage;
     
@@ -13,7 +13,7 @@ public class FightState : IState, ITargetAttacker
     private IDamagable Target;
     private float LastTimeAttacked;
 
-    public FightState(IStateChanger stateChanger, float attackDelay, int damage, FightAnimation animation)
+    public FightState(IStateChanger stateChanger, float attackDelay, int damage, IAttackAnimator animation)
     {
         StateMachine = stateChanger;
         AttackDelay = attackDelay;

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AOneButtonDefence.Scripts;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,24 +24,15 @@ public class WarriorStateMachine : StateMachine
         ChangeState<TargetSearchState>();
     }
 
-    public class WarriorStateMachineData
+    public class WarriorStateMachineData : UnitStateMachineDataBaseClass
     {
-        public readonly Transform Transform;
         public readonly CharacterStats CharacterStats;
-        public readonly NavMeshAgent Agent;
-        public readonly WalkingAnimation WalkingAnimation;
-        public readonly FightAnimation FightAnimation;
-        public readonly IEnemyDetector EnemyDetector;
         
         public WarriorStateMachineData(Transform transform, CharacterStats characterStats, NavMeshAgent agent, 
-            WalkingAnimation walkingAnimation, FightAnimation fightAnimation, IEnemyDetector detector)
+            WalkingAnimation walkingAnimation, FightAnimation fightAnimation, IEnemyDetector detector) : 
+            base(transform, agent, walkingAnimation, fightAnimation, detector)
         {
-            Transform = transform;
             CharacterStats = characterStats;
-            Agent = agent;
-            WalkingAnimation = walkingAnimation;
-            FightAnimation = fightAnimation;
-            EnemyDetector = detector;
         }
     }
 
