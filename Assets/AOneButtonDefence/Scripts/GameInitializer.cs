@@ -233,9 +233,13 @@ public class GameInitializer : MonoBehaviour
     private void InitializeCameraMovementComponent()
     {
         CameraMovement cameraMovement = Instantiate(virtualCameraPrefab).gameObject.AddComponent<CameraMovement>();
+        TrailerCamera trailerCamera = cameraMovement.gameObject.AddComponent<TrailerCamera>();
         cameraMovement.transform.SetParent(initializedObjectsParent);
         cameraMovement.gameObject.name = "CameraMovement";
         cameraMovement.Initialize(input, cameraData);
+        TrailerInterface trailerInterface = GetComponent<TrailerInterface>();
+        trailerInterface.GameCamera = cameraMovement;
+        trailerInterface.TrailerCamera = trailerCamera;
     }
 
     private void CreateBuildingSpawner()
@@ -262,6 +266,9 @@ public class GameInitializer : MonoBehaviour
     {
         GameplayCanvas upgradeCanvas = Instantiate(gameplayCanvasPrefab);
         upgradeCanvas.Initialize(4, worldGenerationData.BuildingsData );
+        TrailerInterface trailerInterface = GetComponent<TrailerInterface>();
+        trailerInterface.Interface = upgradeCanvas;
+        trailerInterface.Init();
         return upgradeCanvas;
     }
     

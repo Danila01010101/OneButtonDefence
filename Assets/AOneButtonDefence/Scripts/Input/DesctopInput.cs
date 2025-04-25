@@ -81,7 +81,7 @@ public class DesctopInput : IInput, IDisableableInput
         {
             float mouseX = Input.GetAxis(xMoveAxis) * Time.deltaTime;
             float mouseY = Input.GetAxis(yMoveAxis) * Time.deltaTime;
-            Rotated.Invoke(new Vector2(mouseX, mouseY));
+            Rotated?.Invoke(new Vector2(mouseX, mouseY));
         }
     }
 
