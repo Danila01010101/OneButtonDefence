@@ -410,6 +410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 449441093}
   - component: {fileID: 449441094}
+  - component: {fileID: 449441095}
   m_Layer: 0
   m_Name: Initializer
   m_TagString: Untagged
@@ -444,6 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d99624e5e8248224a9d2162c1eca3fd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTestBuild: 0
   gameData: {fileID: 11400000, guid: 1736fbe24c24d7e4c83db94aa59a4d30, type: 2}
   cameraData: {fileID: 11400000, guid: dce509826f487264da42aadc045aa700, type: 2}
   musicData: {fileID: 11400000, guid: 92dee7b0de6425245be4d000ff3186ac, type: 2}
@@ -458,6 +460,22 @@ MonoBehaviour:
   shopSkinWindow: {fileID: 5975019631008922812, guid: ae70cd48a5edb0b49b0f9f6fe427f824, type: 3}
   uiGameObjectShowerPrefab: {fileID: 984342067642433287, guid: 98921ad4e4588964288ac94ed545b226, type: 3}
   infoCanvas: {fileID: 774132809339908267, guid: 1e7e9a3e51c09364eac0a3981287d775, type: 3}
+--- !u!114 &449441095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449441092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a81f04cb337524409cb9ec6af762869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showInterface: 104
+  TrailerCamera: {fileID: 0}
+  Interface: {fileID: 0}
+  GameCamera: {fileID: 0}
 --- !u!1 &897670876
 GameObject:
   m_ObjectHideFlags: 0
