@@ -33,4 +33,11 @@ public class UnitsFactory
         spawnedEnemy.Initialize(detector);
         return spawnedEnemy as T;
     }
+    
+    public FightingUnit SpawnSpecificUnit(FightingUnit prefab, Vector3 position)
+    {
+        FightingUnit spawnedEnemy = MonoBehaviour.Instantiate(prefab, position, Quaternion.identity);
+        spawnedEnemy.Initialize(detector);
+        return spawnedEnemy;
+    }
 }

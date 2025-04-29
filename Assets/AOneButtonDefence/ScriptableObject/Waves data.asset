@@ -13,203 +13,223 @@ MonoBehaviour:
   m_Name: Waves data
   m_EditorClassIdentifier: 
   <waves>k__BackingField:
-  - enemiesAmount: 1
+  - <enemiesToSpawn>k__BackingField:
+    - <EnemyPrefab>k__BackingField: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+      <Amount>k__BackingField: 0
+    - <EnemyPrefab>k__BackingField: {fileID: 8023059998664016813, guid: cd900271b56893b47aee446ecd5ec983, type: 3}
+      <Amount>k__BackingField: 1
     spawnInterval: 0.8
-  - enemiesAmount: 2
+  - <enemiesToSpawn>k__BackingField:
+    - <EnemyPrefab>k__BackingField: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+      <Amount>k__BackingField: 2
     spawnInterval: 0.8
-  - enemiesAmount: 5
+  - <enemiesToSpawn>k__BackingField:
+    - <EnemyPrefab>k__BackingField: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+      <Amount>k__BackingField: 1
     spawnInterval: 0.8
-  - enemiesAmount: 7
+  - <enemiesToSpawn>k__BackingField:
+    - <EnemyPrefab>k__BackingField: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+      <Amount>k__BackingField: 2
     spawnInterval: 0.8
-  - enemiesAmount: 10
+  - <enemiesToSpawn>k__BackingField:
+    - <EnemyPrefab>k__BackingField: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+      <Amount>k__BackingField: 2
     spawnInterval: 0.8
-  - enemiesAmount: 12
+  - <enemiesToSpawn>k__BackingField:
+    - <EnemyPrefab>k__BackingField: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+      <Amount>k__BackingField: 2
     spawnInterval: 0.8
-  - enemiesAmount: 13
+  - <enemiesToSpawn>k__BackingField:
+    - <EnemyPrefab>k__BackingField: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+      <Amount>k__BackingField: 2
     spawnInterval: 0.8
-  - enemiesAmount: 10
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 14
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 15
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 15
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 16
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 18
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 19
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 20
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 21
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 23
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 24
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 25
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 26
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 28
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 29
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 30
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 32
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 33
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 34
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 35
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 37
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 38
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 39
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 41
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 42
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 43
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 44
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 46
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 47
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 48
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 50
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 51
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 52
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 53
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 55
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 56
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 57
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 58
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 60
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 61
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 62
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 64
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 65
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 66
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 67
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 69
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 70
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 71
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 72
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 74
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 75
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 76
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 78
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 79
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 80
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 81
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 83
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 84
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 85
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 87
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 88
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 89
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 90
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 92
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 93
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 94
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 96
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 97
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 98
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 99
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 101
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 102
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 103
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 104
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 106
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 107
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 108
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 110
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 111
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 112
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 113
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 115
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 116
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 117
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 118
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 120
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 121
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 122
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 124
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 125
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 126
+  - <enemiesToSpawn>k__BackingField: []
     spawnInterval: 0.8
-  - enemiesAmount: 127
+  - <enemiesToSpawn>k__BackingField:
+    - <EnemyPrefab>k__BackingField: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+      <Amount>k__BackingField: 2
     spawnInterval: 0.8
-  - enemiesAmount: 129
+  - <enemiesToSpawn>k__BackingField:
+    - <EnemyPrefab>k__BackingField: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+      <Amount>k__BackingField: 2
     spawnInterval: 0.8

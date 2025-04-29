@@ -83,18 +83,22 @@ public class GameBattleState : IState
         BattleWavesParameters.WaveData waveParameters = wavesParameters.waves[currentWaveIndex];
         spawnCoroutine = coroutineStarter.StartCoroutine(StartEnemiesSpawn(waveParameters));
     }
-
+    
     private IEnumerator StartEnemiesSpawn(BattleWavesParameters.WaveData waveData)
     {
-        for (int enemiesAmount = 0; enemiesAmount < waveData.enemiesAmount; enemiesAmount++)
+        foreach (var enemyData in waveData.enemiesToSpawn)
         {
-            yield return new WaitForSeconds(waveData.spawnInterval);
-            unitsFactory.SpawnUnit<UnitWithGems>(grid.GetRandomEmptyCellPosition(spawnSpread) + enemiesSpawnOffset);
+            for (int i = 0; i < enemyData.Amount; i++)
+            {
+                yield return new WaitForSeconds(waveData.spawnInterval);
+                unitsFactory.SpawnSpecificUnit(enemyData.EnemyPrefab, grid.GetRandomEmptyCellPosition(spawnSpread) + enemiesSpawnOffset);
+            }
         }
 
         endTurnCheckCoroutine = coroutineStarter.StartCoroutine(EndStateChecking());
         currentWaveIndex++;
     }
+
 
     private IEnumerator EndStateChecking()
     {

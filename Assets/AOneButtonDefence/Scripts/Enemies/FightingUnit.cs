@@ -13,13 +13,14 @@ public class FightingUnit : MonoBehaviour, IDamagable
     [SerializeField] protected Renderer render;
 
     private Health health;
-    private NavMeshAgent navMeshComponent;
-    private WarriorStateMachine stateMachine;
-    private FightAnimation fightAnimation;
-    private WalkingAnimation walkingAnimation;
-    private DeathAnimation deathAnimation;
-    private MaterialChanger materialChanger;
-    private AudioSource audioSource;
+    
+    protected NavMeshAgent navMeshComponent;
+    protected IStateChanger stateMachine;
+    protected FightAnimation fightAnimation;
+    protected WalkingAnimation walkingAnimation;
+    protected DeathAnimation deathAnimation;
+    protected MaterialChanger materialChanger;
+    protected AudioSource audioSource;
 
     public virtual void Initialize(IEnemyDetector detector)
     {

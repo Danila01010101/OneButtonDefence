@@ -6,10 +6,10 @@ public class WaveGenerator
 {
     public static async Task<BattleWavesParameters> GenerateWaves(BattleWavesParameters wavesParameters, int countwaves)
     {
-        int lastindex = wavesParameters.waves.Count - 1;
+        BattleWavesParameters newWavesParameters = wavesParameters;
+        /*int lastindex = wavesParameters.waves.Count - 1;
         int enemiesAmount = wavesParameters.waves[lastindex].enemiesAmount;
         float spawnInterval = wavesParameters.waves[lastindex].spawnInterval;
-        BattleWavesParameters newWavesParameters = wavesParameters;
         
         int startWave = wavesParameters.waves.Count;
         int endWave = countwaves;
@@ -29,7 +29,7 @@ public class WaveGenerator
         // for (int i = 0; i < newWavesParameters.waves.Count; i++)
         // {
         //     Debug.LogWarning(newWavesParameters.waves[i].enemiesAmount);
-        // }
+        // }*/
         
         return newWavesParameters;
     }

@@ -21,4 +21,6 @@ public interface IStateChanger
     public void OnAnimationExitEvent();
 
     public void OnAnimationTransitionEvent();
+
+    public void Exit();
 }

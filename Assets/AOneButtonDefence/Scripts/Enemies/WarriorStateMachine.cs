@@ -35,10 +35,4 @@ public class WarriorStateMachine : StateMachine
             CharacterStats = characterStats;
         }
     }
-
-    public void Exit()
-    {
-        currentState.Exit();
-        currentState = null;
-    }
 }

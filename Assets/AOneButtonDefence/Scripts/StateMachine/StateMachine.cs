@@ -68,4 +68,10 @@ public abstract class StateMachine : IStateChanger
     {
         currentState?.OnAnimationTransitionEvent();
     }
+
+    public virtual void Exit()
+    {
+        currentState.Exit();
+        currentState = null;
+    }
 }
