@@ -41,26 +41,9 @@ public class UnitsFactory
     public FightingUnit SpawnSpecificUnit(FightingUnit prefab, Vector3 position)
     {
         FightingUnit spawnedEnemy = MonoBehaviour.Instantiate(prefab, position, Quaternion.identity);
-        SetLayer(spawnedEnemy.transform, unitLayerMask);
+        ObjectLayerChanger.SetLayerRecursive(spawnedEnemy.transform, unitLayerMask);
         spawnedEnemy.tag = unitTag;
         spawnedEnemy.Initialize(detector);
         return spawnedEnemy;
-    }
-    
-    private void SetLayer(Transform root, LayerMask layer)
-    {
-        Queue<Transform> queue = new Queue<Transform>();
-        queue.Enqueue(root);
-
-        while (queue.Count > 0)
-        {
-            Transform current = queue.Dequeue();
-            current.gameObject.layer = layer;
-
-            foreach (Transform child in current)
-            {
-                queue.Enqueue(child);
-            }
-        }
     }
 }
