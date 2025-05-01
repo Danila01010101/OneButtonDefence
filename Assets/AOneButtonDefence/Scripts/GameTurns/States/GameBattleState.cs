@@ -34,7 +34,7 @@ public class GameBattleState : IState
         enemyTag = data.EnemyTag;
         gnomeTag = data.GnomeTag;
         grid = data.CellsGrid;
-        unitsFactory = new UnitsFactory(data.EnemiesData.enemies, data.Detector);
+        unitsFactory = new UnitsFactory(data.EnemiesData.enemies, data.Detector, data.EnemyLayer, data.EnemyTag);
         spellCanvas = data.SpellCanvas;
         AsyncHelper.Instance.RunAsyncWithResult(() => WaveGenerator.GenerateWaves(data.WavesParameters, 100), result => wavesParameters = result);
         //CoroutineStarter.StartCoroutine(LevelGenerationClass.GenerateNewLevels(data.WavesParameters, 100, out newParameters));

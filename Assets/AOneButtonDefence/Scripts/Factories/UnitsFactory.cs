@@ -4,11 +4,15 @@ using UnityEngine;
 public class UnitsFactory
 {
     private readonly IEnemyDetector detector;
+    private readonly LayerMask unitLayerMask;
+    private readonly string unitTag;
     private List<FightingUnit> enemies;
 
-    public UnitsFactory(List<FightingUnit> enemies, IEnemyDetector detector)
+    public UnitsFactory(List<FightingUnit> enemies, IEnemyDetector detector, LayerMask unitLayerMask, string unitTag)
     {
         this.detector = detector;
+        this.unitLayerMask = unitLayerMask;
+        this.unitTag = unitTag;
         this.enemies = enemies;
     }
 
@@ -37,7 +41,26 @@ public class UnitsFactory
     public FightingUnit SpawnSpecificUnit(FightingUnit prefab, Vector3 position)
     {
         FightingUnit spawnedEnemy = MonoBehaviour.Instantiate(prefab, position, Quaternion.identity);
+        SetLayer(spawnedEnemy.transform, unitLayerMask);
+        spawnedEnemy.tag = unitTag;
         spawnedEnemy.Initialize(detector);
         return spawnedEnemy;
+    }
+    
+    private void SetLayer(Transform root, LayerMask layer)
+    {
+        Queue<Transform> queue = new Queue<Transform>();
+        queue.Enqueue(root);
+
+        while (queue.Count > 0)
+        {
+            Transform current = queue.Dequeue();
+            current.gameObject.layer = layer;
+
+            foreach (Transform child in current)
+            {
+                queue.Enqueue(child);
+            }
+        }
     }
 }

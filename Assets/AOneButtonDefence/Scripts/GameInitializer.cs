@@ -60,8 +60,9 @@ public class GameInitializer : MonoBehaviour
         SetupBattleNotifier();
         yield return null;
         SpawnResourceCounter();
+        LayerMask gnomeLayerMask = LayerMask.GetMask(gameData.GnomeLayerName);
         IEnemyDetector knightDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.EnemyLayerName));
-        var gnomesFactory = new UnitsFactory(new List<FightingUnit>() { gameData.GnomeUnit }, knightDetector);
+        var gnomesFactory = new UnitsFactory(new List<FightingUnit>() { gameData.GnomeUnit }, knightDetector, gnomeLayerMask, gameData.GnomeTag);
         SetupResourcesStatistic(gameResourcesCounter, gnomesFactory);
         SetupResourceChangeMediator();
         yield return null;
@@ -89,6 +90,7 @@ public class GameInitializer : MonoBehaviour
             startAudioSources.Add(source);
         }
         SetupInfoCanvas(startAudioSources);
+        LayerMask enemyLayerMask = LayerMask.GetMask(gameData.GnomeLayerName);
         IEnemyDetector gnomeDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.GnomeLayerName));
         yield return null;
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
@@ -304,7 +306,7 @@ public class GameInitializer : MonoBehaviour
             gameData.UpgradeStateCompletionDelay,
             detector
         );
-        gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset);
+        gameStateMachine = new GameStateMachine(gameStateMachineData, enemiesData, gameData.EnemiesSpawnOffset, LayerMask.GetMask(gameData.EnemyLayerName));
     }
 
     private void SetupBattleNotifier() => battleNotifier = new BattleNotifier();

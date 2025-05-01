@@ -6,10 +6,10 @@ public class GameStateMachine : StateMachine, IStringStateChanger
 {
     private Dictionary<string, IState> stringStates;
 
-    public GameStateMachine(GameStateMachineData data, EnemiesData enemies, Vector3 enemySpawnOffset)
+    public GameStateMachine(GameStateMachineData data, EnemiesData enemies, Vector3 enemySpawnOffset, LayerMask enemyLayer)
     {
         GameBattleStateData battleStateData = new GameBattleStateData( this, data.CoroutineStarter, data.GameTurnsData.BattleWavesParameters, 
-            enemies, data.CellsGrid, data.SpellCanvas, enemySpawnOffset, data.EnemyTag, data.GnomeTag, data.Detector);
+            enemies, data.CellsGrid, data.SpellCanvas, enemySpawnOffset, data.EnemyTag, data.GnomeTag, data.Detector, enemyLayer);
 
         stringStates = new Dictionary<string, IState>()
         {
