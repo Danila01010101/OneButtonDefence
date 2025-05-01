@@ -158,6 +158,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterStats: {fileID: 11400000, guid: 157bb3241a79d214e897fc6fe1948c4b, type: 2}
   render: {fileID: 6431609580991330501}
+  ultimateStats: {fileID: 11400000, guid: af71903035f8f074399b7d9334e9b5a4, type: 2}
+  fightAnimation: {fileID: 8196865356354846145}
 --- !u!114 &990650273079739192
 MonoBehaviour:
   m_ObjectHideFlags: 0
