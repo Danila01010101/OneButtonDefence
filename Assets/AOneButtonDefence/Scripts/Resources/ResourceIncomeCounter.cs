@@ -45,9 +45,6 @@ public class ResourceIncomeCounter
     {
         foreach (var resource in resourcesKeeper.Resources)
         {
-            if (resource.Resource.Type == ResourceData.ResourceType.Warrior)
-                Debug.Log(1);
-            
             InstantResourceChange(resource, resource.ResourceSpawnPositon);
         }
     }
