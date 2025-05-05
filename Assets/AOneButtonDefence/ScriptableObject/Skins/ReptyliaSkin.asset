@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0ec7ec97224fa4284c6644fe1e2569, type: 3}
   m_Name: ReptyliaSkin
   m_EditorClassIdentifier: 
-  Mesh: {fileID: -2432090755550338912, guid: fbd922fa2ebd7c44097491825fbe93fd, type: 3}
+  Mesh: {fileID: -2432090755550338912, guid: a2248075c5b4ec047a7bd27dade9443e, type: 3}
   Material: {fileID: 2100000, guid: 69a342d2231d0ec4bb8c032e00180359, type: 2}
   Icon: {fileID: 134215315, guid: df5b8d591c924004a99b37130d0c6f29, type: 3}
   Cost: 120
