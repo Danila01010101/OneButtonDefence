@@ -62,10 +62,12 @@ public class TargetSearchState : IState
     private void LookForTarget()
     {
         Transform detectedEnemy = null;
+        float detectedEnemyStoppingDistance = 0f;
         
         if (transform != null)
         {
             detectedEnemy = detector.GetClosestEnemy(transform.position);
+            detectedEnemyStoppingDistance
         }
         else
         {
@@ -75,7 +77,7 @@ public class TargetSearchState : IState
         if (detectedEnemy == null)
             return;
         
-        targetFollower.SetTarget(detectedEnemy);
+        targetFollower.SetTarget(detectedEnemy, );
         stateMachine.ChangeState<TargetFollowingState>();
     }
     

@@ -3,6 +3,6 @@ using UnityEngine;
 
 public interface IEnemyDetector
 {
-    Transform GetClosestEnemy(Vector3 searchCenter);
+    TargetToFollowInfo GetClosestEnemy(Vector3 searchCenter);
     public event Action NewEnemiesDetected;
 }

@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class UnitDetector : IEnemyDetector
 {
     private readonly List<Transform> detectedEnemies = new List<Transform>();
+    private readonly float defaultStoppingDistance;
     private readonly float detectionInterval;
     private readonly Vector3 detectRadius;
     private readonly LayerMask layerMask;
@@ -16,18 +18,20 @@ public class UnitDetector : IEnemyDetector
 
     public event Action NewEnemiesDetected;
 
-    public UnitDetector(Vector3 detectBoxRadius, LayerMask enemyMask, float detectionInterval)
+    public UnitDetector(Vector3 detectBoxRadius, LayerMask enemyMask, float detectionInterval, float defaultStoppingDistance)
     {
         detectRadius = detectBoxRadius;
         layerMask = enemyMask;
         this.detectionInterval = detectionInterval;
+        this.defaultStoppingDistance = defaultStoppingDistance;
         CoroutineStarter.Instance.StartCoroutine(EnemyDetection());
     }
 
-    public Transform GetClosestEnemy(Vector3 searchCenter)
+    public TargetToFollowInfo GetClosestEnemy(Vector3 searchCenter)
     {
         float closestDistanceSqr = float.MaxValue;
         Transform closestTransform = null;
+        NavMeshAgent foundAgent;
 
         foreach (Transform enemy in detectedEnemies)
         {
@@ -43,7 +47,14 @@ public class UnitDetector : IEnemyDetector
             }
         }
 
-        return closestTransform;
+        if (closestTransform.TryGetComponent(out foundAgent))
+        {
+            return new TargetToFollowInfo(closestTransform, foundAgent.radius);
+        }
+        else
+        {
+            return new TargetToFollowInfo(closestTransform, 0);
+        }
     }
     
     private void FindEnemies()

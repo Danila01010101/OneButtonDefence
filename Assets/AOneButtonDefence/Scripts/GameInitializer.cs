@@ -312,7 +312,7 @@ public class GameInitializer : MonoBehaviour
     private void SetupBattleNotifier() => battleNotifier = new BattleNotifier();
 
     private IEnemyDetector SetupEnemyDetector(LayerMask enemyMask) => 
-        new UnitDetector(gameData.WorldSize, enemyMask, 1f);
+        new UnitDetector(gameData.WorldSize, enemyMask, 1f, gameData.DefaultStoppingDistance);
 
     private void SetupRewardSpawner(RectTransform uiTarget)
     {

@@ -27,6 +27,7 @@ public class GameData : ScriptableObject
     [field: SerializeField] public Vector3 GnomeSpawnOffset { get; private set; }
     [field: SerializeField] public BattleWavesParameters BattleWavesParameters { get; private set; }
     [field: SerializeField] public float EnemiesSpawnSpread { get; private set; }
+    [field: SerializeField] public float DefaultStoppingDistance { get; private set; } = 1;
     [field: SerializeField] public Vector3 EnemiesSpawnOffset { get; private set; }
     [field: SerializeField] public float UpgradeStateDuration { get; private set; } = 4;
     [field: SerializeField] public float UpgradeStateCompletionDelay { get; private set; } = 2;
