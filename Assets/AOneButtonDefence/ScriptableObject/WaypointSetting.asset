@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd550c08ae9a2048aa6d21920568814, type: 3}
   m_Name: WaypointSetting
   m_EditorClassIdentifier: 
-  UpdateFrequency: 0.1
+  UpdateFrequency: 0.053529173
   GameMode: 0
-  MarkerPrefab: {fileID: 0}
+  MarkerPrefab: {fileID: 6229256527508535590, guid: dc70a1c0e20c9264aa92d8242c975396, type: 3}
   MaxVisibleDistance: 1000
   IgnoreZAxisForDistance2D: 1
   UseOffScreenIndicators: 1
   ScreenEdgeMargin: 50
   FlipOffScreenMarkerY: 0
-  EnableDistanceScaling: 0
+  EnableDistanceScaling: 1
   DistanceForDefaultScale: 50
   MaxScalingDistance: 200
   MinScaleFactor: 0.5
