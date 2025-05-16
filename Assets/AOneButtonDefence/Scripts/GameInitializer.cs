@@ -3,25 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using WrightAngle.Waypoint;
 using static GameStateMachine;
 
 public class GameInitializer : MonoBehaviour
 {
     [SerializeField] private bool isTestBuild;
+    [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
+    [Header("Data")]
     [SerializeField] private GameData gameData;
     [SerializeField] private CameraData cameraData;
     [SerializeField] private MusicData musicData;
     [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
     [SerializeField] private SpellCastData spellCastData;
+    [SerializeField] private WaypointSettings waypointData;
+    [Header("Canvas")]
     [SerializeField] private GameplayCanvas gameplayCanvasPrefab;
-    [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
     [SerializeField] private Canvas loadingCanvas;
     [SerializeField] private GameObject debugCanvas;
     [SerializeField] private SpellCanvas spellCanvas;
     [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
     [SerializeField] private SoundSettings infoCanvas;
+    [SerializeField] private WaypointUIManager waypointUIManager;
 
     private BattleNotifier battleNotifier;
     private ResourceChangeMediator resourceChangeMediator;
@@ -82,6 +87,7 @@ public class GameInitializer : MonoBehaviour
         var spellCanvas = SetupSpellCanvas();
         SetupDebugCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
+        SetupBattleCanvas(waypointData, Camera.main, waypointUIManager);
         List<AudioSource> upgradeSources = upgradeEffectPlayer.GetSources();
         var startAudioSources = new List<AudioSource>();
         startAudioSources.Add(backgroundMusicPlayer.GetSource());
@@ -341,5 +347,11 @@ public class GameInitializer : MonoBehaviour
         var infoCanvasWindow = Instantiate(infoCanvas);
         infoCanvasWindow.Initialize(startAudioSources);
         return infoCanvasWindow;
+    }
+
+    private void SetupBattleCanvas(WaypointSettings data, Camera camera, WaypointUIManager manager)
+    {
+        var canvasWindow = Instantiate(manager);
+        canvasWindow.Initializator(camera, canvasWindow.GetComponent<RectTransform>(), data);
     }
 }

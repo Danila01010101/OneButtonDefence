@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6676415862268788062}
   - component: {fileID: 7282786752581955469}
   - component: {fileID: 6480178694672766286}
+  - component: {fileID: 3643356597634977760}
   m_Layer: 5
   m_Name: SpellCanvas
   m_TagString: Untagged
@@ -120,6 +121,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3643356597634977760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257477549457381191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d59cb2f261b46b4ba532a1c0cadd195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 0}
+  waypointCamera: {fileID: 0}
+  markerParentCanvas: {fileID: 0}
 --- !u!1 &5281215298547851030
 GameObject:
   m_ObjectHideFlags: 0
