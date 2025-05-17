@@ -47,7 +47,8 @@ public class DialogueSystem : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         numReplic = 0;
         
-        Slider.value = 0;
+        if (Slider != null)
+            Slider.value = 0;
 
         //Text.text = DialogueData.Label[numLabel].Replic[numReplic];
         Name.text = DialogueData.Name;
@@ -73,7 +74,7 @@ public class DialogueSystem : MonoBehaviour
         {
             ChangeReplica();
         }
-        if (Input.GetKeyDown(KeyCodePerSkip))
+        if (Input.GetKeyDown(KeyCodePerSkip) && Slider != null)
         {
             skipReplica = StartCoroutine(Timer(SkipTime));
         }
