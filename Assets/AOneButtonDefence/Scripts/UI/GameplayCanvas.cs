@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class GameplayCanvas : MonoBehaviour
     [field : SerializeField] public GameObject UpgradeWindow { get; private set; }
     [SerializeField] private UIInfoButton partPrefab;
     [SerializeField] private UIInfoPanel infoPanel;
+    [SerializeField] private TextMeshProUGUI iconsText;
     [SerializeField] private GameObject cellsSpawnParent;
     [SerializeField] private UpgradeButton upgradeButton;
     [SerializeField] private int buttonsDistance = 100;
@@ -32,6 +34,7 @@ public class GameplayCanvas : MonoBehaviour
     public void Initialize(int partsAmount, BuildingsData buildingsData)
     {
         statisticViewInitializer.Initialize(ResourceData.ResourceType.Food, ResourceData.ResourceType.Warrior, ResourceData.ResourceType.Spirit, ResourceData.ResourceType.Material, ResourceData.ResourceType.Gem);
+        iconsText.text = "Выберите 2 здания для строительства.";
         
         if (partsAmount % 2 == 0)
         {
@@ -107,6 +110,7 @@ public class GameplayCanvas : MonoBehaviour
             partsAnimators[beforLastKey].SwapSprites();
             beforLastKey = -1;
             howManyChois--;
+            UpdateUpgradeText();
             return;
         }
         
@@ -115,6 +119,7 @@ public class GameplayCanvas : MonoBehaviour
             partsAnimators[lastKey].SwapSprites();
             lastKey = -1;
             howManyChois--;
+            UpdateUpgradeText();
             return;
         }
 
@@ -133,7 +138,24 @@ public class GameplayCanvas : MonoBehaviour
             }
 
             lastKey = (int)index;
+            UpdateUpgradeText();
         }
+    }
+
+    private void UpdateUpgradeText()
+    {
+        switch (howManyChois)
+        {
+            case 0:
+                iconsText.text = "Выберите 2 здания для строительства.";
+                break;
+            case 1:
+                iconsText.text = "Выберите ещё одно здание!";
+                break;
+            case 2:
+                iconsText.text = "0ба здания выбраны. 0жидаем приказа!";
+                break;
+        } 
     }
 
     private void SpawnButton(int placingInterval)
