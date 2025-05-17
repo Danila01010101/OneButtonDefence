@@ -12,6 +12,8 @@ namespace WrightAngle.Waypoint
     [AddComponentMenu("WrightAngle/Waypoint Target")]
     public class WaypointTarget : MonoBehaviour
     {
+        [SerializeField] private Vector3 offset;
+
         [Tooltip("An optional name for this waypoint, primarily for identification in the editor or scripts.")]
         public string DisplayName = "";
 
@@ -75,7 +77,7 @@ namespace WrightAngle.Waypoint
         }
 
         /// <summary>
-        /// Уничтожение точки
+        /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         /// </summary>
         public void DestroyWaypoint()
         {

@@ -2,14 +2,16 @@ using System;
 using UnityEngine;
 using WrightAngle.Waypoint;
 
-[RequireComponent(typeof(WaypointTarget))]
 public class Knight : FightingUnit
 {
+    [SerializeField] private WaypointTarget waypoint;
+    
     public static Action<Vector3, int> OnEnemyDeath;
-    private WaypointTarget waypoint;
     private void Start()
     {
-        waypoint = GetComponent<WaypointTarget>();
+        if (waypoint == null)
+            throw new NullReferenceException();
+        
         waypoint.ActivateWaypoint();
         WaypointUIManager.OnWaypointTargetAdd.Invoke(waypoint);
     }

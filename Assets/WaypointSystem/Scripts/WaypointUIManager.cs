@@ -145,8 +145,6 @@ namespace WrightAngle.Waypoint
 
             // Cache camera position for use within the loop.
             Vector3 cameraPosition = _cachedWaypointCamera.transform.position;
-            float camPixelWidth = _cachedWaypointCamera.pixelWidth;
-            float camPixelHeight = _cachedWaypointCamera.pixelHeight;
 
             // Iterate backwards through the list of active targets for safe removal during iteration.
             for (int i = activeTargetList.Count - 1; i >= 0; i--)
@@ -174,12 +172,31 @@ namespace WrightAngle.Waypoint
                     TryReleaseMarker(target); // Release marker back to the pool if it was active.
                     continue;
                 }
+            }
+        }
+
+        private void LateUpdate()
+        {
+            // Iterate backwards through the list of active targets for safe removal during iteration.
+            for (int i = activeTargetList.Count - 1; i >= 0; i--)
+            {
+                WaypointTarget target = activeTargetList[i];
+                // --- Core Waypoint Logic ---
+                Transform targetTransform = target.transform;
+                float camPixelWidth = _cachedWaypointCamera.pixelWidth;
+                float camPixelHeight = _cachedWaypointCamera.pixelHeight;
+                Vector3 targetWorldPos = targetTransform.position;
+
+                // Cache camera position for use within the loop.
+                Vector3 cameraPosition = _cachedWaypointCamera.transform.position;
+                float distanceToTarget = CalculateDistance(cameraPosition, targetWorldPos);
 
                 // Project the target's world position to screen space.
                 Vector3 screenPos = _cachedWaypointCamera.WorldToScreenPoint(targetWorldPos);
                 bool isBehindCamera = screenPos.z <= 0; // Check if target is behind the camera's near plane.
                 // Check if the projected position is within the screen bounds (and not behind).
-                bool isOnScreen = !isBehindCamera && screenPos.x > 0 && screenPos.x < camPixelWidth && screenPos.y > 0 && screenPos.y < camPixelHeight;
+                bool isOnScreen = !isBehindCamera && screenPos.x > 0 && screenPos.x < camPixelWidth &&
+                                  screenPos.y > 0 && screenPos.y < camPixelHeight;
 
                 // Determine if a marker should be displayed based on screen status and settings.
                 bool shouldShowMarker = isOnScreen || (settings.UseOffScreenIndicators && !isOnScreen);
@@ -193,12 +210,14 @@ namespace WrightAngle.Waypoint
                         markerInstance = markerPool.Get(); // Get from pool (activates the GameObject).
                         activeMarkers.Add(target, markerInstance); // Associate the new marker with the target.
                     }
+
                     // Ensure the marker's GameObject is active (could be inactive if just retrieved from pool).
                     if (!markerInstance.gameObject.activeSelf) markerInstance.gameObject.SetActive(true);
 
                     // --- Update Marker Visuals ---
                     // Call the marker's UpdateDisplay method to set its position, rotation, and scale.
-                    markerInstance.UpdateDisplay(screenPos, isOnScreen, isBehindCamera, _cachedWaypointCamera, settings, distanceToTarget);
+                    markerInstance.UpdateDisplay(screenPos, isOnScreen, isBehindCamera, _cachedWaypointCamera, settings,
+                        distanceToTarget);
                 }
                 else // Marker should not be shown (e.g., off-screen and indicators disabled).
                 {
