@@ -140,7 +140,7 @@ namespace WrightAngle.Waypoint
                 if (markerIcon != null && directionForRotation.sqrMagnitude > 0.001f)
                 {
                     float angle = Vector2.SignedAngle(Vector2.right, directionForRotation);
-                    float flipAngle = settings.FlipOffScreenMarkerY ? 180f : 0f;
+                    float flipAngle = settings.FlipOffScreenMarkerY ? 0f : 180f;
                     // The main rectTransform is positioned, the icon within it can rotate.
                     // Or, if the main rectTransform rotates, text needs to counter-rotate.
                     // Let's assume the rectTransform (this component's GO) is what rotates for off-screen.
