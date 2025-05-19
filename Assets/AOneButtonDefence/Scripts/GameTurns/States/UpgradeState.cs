@@ -33,7 +33,6 @@ public class UpgradeState : IState
         upgradePhaseStartTime = Time.time;
         upgradeUI.UpgradeWindow.gameObject.SetActive(true);
         UpgradeStateStarted?.Invoke();
-        upgradeUI.UpgradeButton.Activate();
         UpgradeButton.UpgradesChoosen += DetectUpgradeChoosing;
     }
 

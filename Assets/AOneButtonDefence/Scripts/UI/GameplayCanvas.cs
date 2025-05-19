@@ -110,7 +110,7 @@ public class GameplayCanvas : MonoBehaviour
             partsAnimators[beforLastKey].SwapSprites();
             beforLastKey = -1;
             howManyChois--;
-            UpdateUpgradeText();
+            UpdateUpgradeView();
             return;
         }
         
@@ -119,7 +119,7 @@ public class GameplayCanvas : MonoBehaviour
             partsAnimators[lastKey].SwapSprites();
             lastKey = -1;
             howManyChois--;
-            UpdateUpgradeText();
+            UpdateUpgradeView();
             return;
         }
 
@@ -138,22 +138,25 @@ public class GameplayCanvas : MonoBehaviour
             }
 
             lastKey = (int)index;
-            UpdateUpgradeText();
+            UpdateUpgradeView();
         }
     }
 
-    private void UpdateUpgradeText()
+    private void UpdateUpgradeView()
     {
         switch (howManyChois)
         {
             case 0:
                 iconsText.text = "Выберите 2 здания для строительства.";
+                upgradeButton.Deactivate();
                 break;
             case 1:
                 iconsText.text = "Выберите ещё одно здание!";
+                upgradeButton.Deactivate();
                 break;
             case 2:
                 iconsText.text = "0ба здания выбраны. 0жидаем приказа!";
+                upgradeButton.Activate();
                 break;
         } 
     }
