@@ -39,7 +39,7 @@ public class SoundSettings : MonoBehaviour
     private void UpdateSources(float newValue)
     {
         value = newValue;
-        soundButtonImage.sprite = (value == 0) ? volumeIconOn : volumeIconOff;
+        soundButtonImage.sprite = (value == 0) ? volumeIconOff : volumeIconOn;
         
         foreach (AudioSource audioSource in registeredAudioSources)
         {
