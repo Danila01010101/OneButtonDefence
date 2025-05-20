@@ -459,7 +459,7 @@ MonoBehaviour:
   spellCanvas: {fileID: 9139631081805866845, guid: 813fe02d1d1ce6c459b9cd9404c26104, type: 3}
   shopSkinWindow: {fileID: 5975019631008922812, guid: ae70cd48a5edb0b49b0f9f6fe427f824, type: 3}
   uiGameObjectShowerPrefab: {fileID: 984342067642433287, guid: 98921ad4e4588964288ac94ed545b226, type: 3}
-  infoCanvas: {fileID: 774132809339908267, guid: 1e7e9a3e51c09364eac0a3981287d775, type: 3}
+  infoCanvas: {fileID: 330298046360741377, guid: 1e7e9a3e51c09364eac0a3981287d775, type: 3}
   waypointUIManager: {fileID: 2486573550260019458, guid: 3a59149c6c4ae58418d7f446901ca67f, type: 3}
 --- !u!1 &897670876
 GameObject:

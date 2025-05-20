@@ -1,15 +1,17 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class SoundSettings : MonoBehaviour
 {
+    [FormerlySerializedAs("soundButton")] [SerializeField] private Image soundButtonImage;
     [SerializeField] private Slider volumeSlider;
+    [SerializeField] private Sprite volumeIconOn;
+    [SerializeField] private Sprite volumeIconOff;
     
     private List<AudioSource> registeredAudioSources = new List<AudioSource>();
-
-    public static Action<GameObject> SettingsInitialized;
     
     public float value { get; private set; }
     
@@ -32,13 +34,12 @@ public class SoundSettings : MonoBehaviour
         }
 
         volumeSlider.onValueChanged.AddListener(UpdateSources);
-        SettingsInitialized?.Invoke(gameObject);
-        gameObject.SetActive(false);
     }
     
     private void UpdateSources(float newValue)
     {
         value = newValue;
+        soundButtonImage.sprite = (value == 0) ? volumeIconOn : volumeIconOff;
         
         foreach (AudioSource audioSource in registeredAudioSources)
         {
@@ -52,9 +53,4 @@ public class SoundSettings : MonoBehaviour
     }
     
     public static void AddAudioSource(AudioSource audioSource) => instance.registeredAudioSources.Add(audioSource);
-
-    public void SettingsClose()
-    {
-        gameObject.SetActive(false);
-    }
 }

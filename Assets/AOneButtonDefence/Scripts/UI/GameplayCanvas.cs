@@ -29,6 +29,8 @@ public class GameplayCanvas : MonoBehaviour
     private int howManyChois = 0;
     private bool isShopWindowSetted = false;
 
+    [field : SerializeField] public SoundSettings SoundSettings { get; private set; }
+
     public UpgradeButton UpgradeButton => upgradeButton;
 
     public void Initialize(int partsAmount, BuildingsData buildingsData)
@@ -86,10 +88,10 @@ public class GameplayCanvas : MonoBehaviour
         settingsButton.onClick.RemoveAllListeners();
         settingsButton.onClick.AddListener(ShowSettingsWindow);
     }
+    
+    public void DetectSettingsWindow(GameObject window) => spawnedSettingsWindow = window;
 
     private void DetectShopWindow(GameObject window) => spawnedShopWindow = window;
-    
-    private void DetectSettingsWindow(GameObject window) => spawnedSettingsWindow = window;
     
     private void ShowShopWindow()
     {
@@ -184,12 +186,10 @@ public class GameplayCanvas : MonoBehaviour
     private void OnEnable()
     {
         SkinPanel.ShopInitialized += DetectShopWindow;
-        SoundSettings.SettingsInitialized += DetectSettingsWindow;
     }
 
     private void OnDisable()
     {
         SkinPanel.ShopInitialized -= DetectShopWindow;
-        SoundSettings.SettingsInitialized -= DetectSettingsWindow;
     }
 }

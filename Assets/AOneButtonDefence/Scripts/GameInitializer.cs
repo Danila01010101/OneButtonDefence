@@ -25,7 +25,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private SpellCanvas spellCanvas;
     [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
-    [SerializeField] private SoundSettings infoCanvas;
+    [SerializeField] private GameObject infoCanvas;
     [SerializeField] private WaypointUIManager waypointUIManager;
 
     private BattleNotifier battleNotifier;
@@ -95,7 +95,8 @@ public class GameInitializer : MonoBehaviour
         {
             startAudioSources.Add(source);
         }
-        SetupInfoCanvas(startAudioSources);
+        SetupInfoCanvas(upgradeCanvas);
+        SetupVolumeChanger(upgradeCanvas, startAudioSources);
         IEnemyDetector gnomeDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.GnomeLayerName));
         yield return null;
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
@@ -342,11 +343,16 @@ public class GameInitializer : MonoBehaviour
         incomeDifferenceTextConverter.Unsubscribe();
     }
 
-    private SoundSettings SetupInfoCanvas(List<AudioSource> startAudioSources)
+    private void SetupInfoCanvas(GameplayCanvas gameplayCanvas)
     {
-        var infoCanvasWindow = Instantiate(infoCanvas);
-        infoCanvasWindow.Initialize(startAudioSources);
-        return infoCanvasWindow;
+        var infoCanvasInstance = Instantiate(infoCanvas);
+        gameplayCanvas.DetectSettingsWindow(infoCanvasInstance);
+        infoCanvasInstance.SetActive(false);
+    }
+    
+    private void SetupVolumeChanger(GameplayCanvas gameplayCanvas, List<AudioSource> startAudioSources)
+    {
+        gameplayCanvas.SoundSettings.Initialize(startAudioSources);
     }
 
     private void SetupBattleCanvas(WaypointSettings data, Camera camera, WaypointUIManager manager)
