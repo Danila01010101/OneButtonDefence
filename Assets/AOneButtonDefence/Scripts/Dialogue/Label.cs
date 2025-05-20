@@ -8,7 +8,8 @@ namespace Adventurer
     [Serializable]
     public class Label
     {
-        public string labelName;
+        public string LabelName;
+        [SerializeField] public CharacterEmotion CharacterEmotion; 
         public List<string> Replic;
         public List<Answer> Answers;
         public int NextLabel = -1;

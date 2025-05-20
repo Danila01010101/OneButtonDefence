@@ -6,25 +6,20 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
-
+// Как я мог это написать? Я нифига не понимаю, ъуъуъуъ( (С) Mivoky
 [RequireComponent(typeof(AudioSource))]
 public class DialogueSystem : MonoBehaviour
 {
     public DialogueData DialogueData;
     public TextMeshProUGUI Name;
     public TextMeshProUGUI Text;
-    public GameObject AnswerPanel;
-    [Header("Menu replic chose")]
-    public List<Button> Buttons = new List<Button>();
-    public List<TextMeshProUGUI> Answers = new List<TextMeshProUGUI>();
+    public Image GnomeAdvisor;
     [Header("Text Speed")]
     public float ReplicSpeed;
     [Header("Skip dialog")]
     public float SkipTime;
     public Slider Slider;
     public KeyCode KeyCodePerSkip = KeyCode.G;
-
-    [SerializeField] private DialogNPCSpawner spawner;
 
     private int numReplic;
     private int numLabel = 0;
@@ -49,23 +44,11 @@ public class DialogueSystem : MonoBehaviour
         
         if (Slider != null)
             Slider.value = 0;
-
-        //Text.text = DialogueData.Label[numLabel].Replic[numReplic];
         Name.text = DialogueData.Name;
+        GnomeAdvisor.sprite = DialogueData.Label[numLabel].CharacterEmotion.Emotion();
 
-        foreach (Button button in Buttons)
-        {
-            button.gameObject.SetActive(false);
-        }
-
-        if (spawner != null)
-            spawner.SpawnDialogNPC();
-
-        AnswerPanel.SetActive(false);
         gameObject.SetActive(true);
         replicaCoroutine = StartCoroutine(ShowReplica());
-
-
     }
 
     private void Update()
@@ -101,18 +84,19 @@ public class DialogueSystem : MonoBehaviour
 
         if (numReplic < DialogueData.Label[numLabel].Replic.Count - 1)
         {
-            StopAllCoroutines();
+            if (replicaCoroutine != null)
+            {
+                StopCoroutine(replicaCoroutine);
+                replicaCoroutine = null;
+            }
             numReplic++; 
 
-            if (DialogueData.Label[numLabel].Replic[numReplic] == DialogueCommands.Debug)
-            {
-                ChangeReplica();
-                return;
-            }
-
-            showReplic = "";
             DetectReplicaSkip();
             return;
+        }
+        else if (DialogueData.Label[numLabel].NextLabel != 0)
+        {
+            ChangeLabel(DialogueData.Label[numLabel].NextLabel);
         }
         else
         {
@@ -135,31 +119,8 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    private void ShowMenu()
-    {
-        countReplic = 0;
-        activeChangeReplic = false;
-        AnswerPanel.SetActive(true);
-        foreach (Answer answer in DialogueData.Label[numLabel].Answers)
-        {
-            countReplic++;
-        }
-
-        for (int i = 0; i < countReplic; i++)
-        {
-            Buttons[i].gameObject.SetActive(true);
-            Answers[i].text = DialogueData.Label[numLabel].Answers[i].AnswerText;
-        }
-    }
-
     public void ChooseReplica(int num)
     {
-        foreach (Button button in Buttons)
-        {
-            button.gameObject.SetActive(false);
-        }
-
-        AnswerPanel.SetActive(false);
 
         activeChangeReplic = true;
         numLabel = DialogueData.Label[numLabel].Answers[num].MoveTo;
@@ -168,7 +129,19 @@ public class DialogueSystem : MonoBehaviour
 
         showReplic = "";
 
-        StopAllCoroutines();
+        StopCoroutine(replicaCoroutine);
+        replicaCoroutine = StartCoroutine(ShowReplica());
+    }
+    private void ChangeLabel(int label)
+    {
+        numLabel = label;
+        numReplic = 0;
+        if (replicaCoroutine != null)
+        {
+            StopCoroutine(replicaCoroutine);
+            replicaCoroutine = null;
+        }
+        GnomeAdvisor.sprite = DialogueData.Label[numLabel].CharacterEmotion.Emotion();
         replicaCoroutine = StartCoroutine(ShowReplica());
     }
 
@@ -178,6 +151,8 @@ public class DialogueSystem : MonoBehaviour
         Destroy(gameObject);
         DialogEnded?.Invoke();
     }
+
+
 
     private IEnumerator Timer(float time)
     {
@@ -196,6 +171,7 @@ public class DialogueSystem : MonoBehaviour
     }
     private IEnumerator ShowReplica()
     {
+        showReplic = "";
         foreach (var replica in DialogueData.Label[numLabel].Replic[numReplic])
         {
             yield return new WaitForSeconds(ReplicSpeed);
@@ -212,7 +188,15 @@ public class DialogueSystem : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (spawner != null)
-            spawner.DeleteNPC();
+        if (replicaCoroutine != null)
+        {
+            StopCoroutine(replicaCoroutine);
+            replicaCoroutine = null;
+        }
+        if (skipReplica != null)
+        {
+            StopCoroutine(skipReplica);
+            skipReplica = null;
+        }
     }
 }
