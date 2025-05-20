@@ -96,7 +96,7 @@ public class GameInitializer : MonoBehaviour
             startAudioSources.Add(source);
         }
         SetupInfoCanvas(upgradeCanvas);
-        SetupVolumeChanger(upgradeCanvas, startAudioSources);
+        SetupVolumeChanger(upgradeCanvas, startAudioSources, musicData.StartValue);
         IEnemyDetector gnomeDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.GnomeLayerName));
         yield return null;
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
@@ -350,9 +350,9 @@ public class GameInitializer : MonoBehaviour
         infoCanvasInstance.SetActive(false);
     }
     
-    private void SetupVolumeChanger(GameplayCanvas gameplayCanvas, List<AudioSource> startAudioSources)
+    private void SetupVolumeChanger(GameplayCanvas gameplayCanvas, List<AudioSource> startAudioSources, float startVolume)
     {
-        gameplayCanvas.SoundSettings.Initialize(startAudioSources);
+        gameplayCanvas.SoundSettings.Initialize(startAudioSources, startVolume);
     }
 
     private void SetupBattleCanvas(WaypointSettings data, Camera camera, WaypointUIManager manager)

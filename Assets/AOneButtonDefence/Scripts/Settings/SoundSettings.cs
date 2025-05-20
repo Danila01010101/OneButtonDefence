@@ -17,7 +17,7 @@ public class SoundSettings : MonoBehaviour
     
     private static SoundSettings instance;
 
-    public void Initialize(List<AudioSource> startAudioSources)
+    public void Initialize(List<AudioSource> startAudioSources, float startVolume)
     {
         if (instance != null)
         {
@@ -34,6 +34,7 @@ public class SoundSettings : MonoBehaviour
         }
 
         volumeSlider.onValueChanged.AddListener(UpdateSources);
+        volumeSlider.value = startVolume;
     }
     
     private void UpdateSources(float newValue)
