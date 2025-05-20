@@ -18,7 +18,8 @@ public class BuildingFactory
         {
             if (buildingData.UpgradeType == upgradeType)
             {
-                Building spawnedBuilding = Object.Instantiate(buildingData.Prefab, position, Quaternion.Euler(buildingData.SpawnRotation));
+                Vector3 randomBuildingRotation = buildingData.SpawnRotations[Random.Range(0, buildingData.SpawnRotations.Count)];
+                Building spawnedBuilding = Object.Instantiate(buildingData.Prefab, position, Quaternion.Euler(randomBuildingRotation));
                 spawnedBuilding.Initialize(buildingData, position, animationDuration);
                 return spawnedBuilding;
             }
