@@ -5,6 +5,7 @@ public class TargetFollowingState : IState, ITargetFollower
 {
     private Transform target;
     private IEnemyDetector detector;
+    private float chaseRange;
     
     private readonly IStateChanger stateMachine;
     private readonly ITargetAttacker targetAttacker;
@@ -12,14 +13,14 @@ public class TargetFollowingState : IState, ITargetFollower
     private readonly Transform transform;
     private readonly LayerMask targetMask;
     private readonly WalkingAnimation animation;
-    private readonly float attackRange;
+    private readonly float defaultChaseRange;
 
     public TargetFollowingState(IStateChanger stateMachine, NavMeshAgent agent, CharacterStats stats, 
         ITargetAttacker targetAttacker, LayerMask targetMask, WalkingAnimation animation, IEnemyDetector detector)
     {
         this.stateMachine = stateMachine;
         this.agent = agent;
-        attackRange = stats.AttackRange;
+        defaultChaseRange = stats.ChaseRange;
         transform = agent.transform;
         this.targetAttacker = targetAttacker;
         this.targetMask = targetMask;
@@ -62,9 +63,9 @@ public class TargetFollowingState : IState, ITargetFollower
 
         float distanceToEnemy = Vector3.Distance(transform.position, target.position);
 
-        if (distanceToEnemy < attackRange)
+        if (distanceToEnemy < chaseRange)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, targetMask);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, chaseRange, targetMask);
             IDamagable foundTarget = FindTarget(colliders);
 
             if (foundTarget != null)
@@ -105,5 +106,11 @@ public class TargetFollowingState : IState, ITargetFollower
         }
 
         return null;
+    }
+
+    public void SetTarget(Transform transform, float enemyStoppingDistance)
+    {
+        target = this.transform;
+        chaseRange = enemyStoppingDistance > defaultChaseRange ? enemyStoppingDistance : defaultChaseRange;
     }
 }

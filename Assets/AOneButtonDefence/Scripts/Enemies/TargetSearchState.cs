@@ -66,8 +66,9 @@ public class TargetSearchState : IState
         
         if (transform != null)
         {
-            detectedEnemy = detector.GetClosestEnemy(transform.position);
-            detectedEnemyStoppingDistance
+            var enemyInfo = detector.GetClosestEnemy(transform.position);
+            detectedEnemy = enemyInfo.Target;
+            detectedEnemyStoppingDistance = enemyInfo.TargetRadius;
         }
         else
         {
@@ -77,7 +78,7 @@ public class TargetSearchState : IState
         if (detectedEnemy == null)
             return;
         
-        targetFollower.SetTarget(detectedEnemy, );
+        targetFollower.SetTarget(detectedEnemy, detectedEnemyStoppingDistance);
         stateMachine.ChangeState<TargetFollowingState>();
     }
     
