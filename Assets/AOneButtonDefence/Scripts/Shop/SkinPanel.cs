@@ -31,6 +31,7 @@ public class SkinPanel : MonoBehaviour
     public static Action ShopDisabled;
 
     private ShopSkinShower spawnedShopSkinShower;
+    
     public void Initialize(IInput input)
     {
         spawnedShopSkinShower = UIGameObjectShower.Instance.RenderPrefab(exampleSkinShowerPrefab, exampleSkinChangerPosition, Quaternion.Euler(exampleSkinChangerEulerAngles));
@@ -60,6 +61,8 @@ public class SkinPanel : MonoBehaviour
         SkinName.text = SkinList[CurrentChose].SkinName;
         SkinLore.text = SkinList[CurrentChose].SkinLore;
         SkinCost.text = SkinList[CurrentChose].Cost.ToString();
+        
+        spawnedShopSkinShower.GnomeSkinChanger.ChangeSkin(SkinList[CurrentChose].Mesh, SkinList[CurrentChose].Material);
 
         ChangeText();
     }

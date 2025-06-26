@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class GameplayCanvas : MonoBehaviour
     [field : SerializeField] public GameObject UpgradeWindow { get; private set; }
     [SerializeField] private UIInfoButton partPrefab;
     [SerializeField] private UIInfoPanel infoPanel;
+    [SerializeField] private TextMeshProUGUI iconsText;
     [SerializeField] private GameObject cellsSpawnParent;
     [SerializeField] private UpgradeButton upgradeButton;
     [SerializeField] private int buttonsDistance = 100;
@@ -27,11 +29,14 @@ public class GameplayCanvas : MonoBehaviour
     private int howManyChois = 0;
     private bool isShopWindowSetted = false;
 
+    [field : SerializeField] public SoundSettings SoundSettings { get; private set; }
+
     public UpgradeButton UpgradeButton => upgradeButton;
 
     public void Initialize(int partsAmount, BuildingsData buildingsData)
     {
         statisticViewInitializer.Initialize(ResourceData.ResourceType.Food, ResourceData.ResourceType.Warrior, ResourceData.ResourceType.Spirit, ResourceData.ResourceType.Material, ResourceData.ResourceType.Gem);
+        iconsText.text = "Выберите 2 здания для строительства.";
         
         if (partsAmount % 2 == 0)
         {
@@ -83,10 +88,10 @@ public class GameplayCanvas : MonoBehaviour
         settingsButton.onClick.RemoveAllListeners();
         settingsButton.onClick.AddListener(ShowSettingsWindow);
     }
+    
+    public void DetectSettingsWindow(GameObject window) => spawnedSettingsWindow = window;
 
     private void DetectShopWindow(GameObject window) => spawnedShopWindow = window;
-    
-    private void DetectSettingsWindow(GameObject window) => spawnedSettingsWindow = window;
     
     private void ShowShopWindow()
     {
@@ -107,6 +112,7 @@ public class GameplayCanvas : MonoBehaviour
             partsAnimators[beforLastKey].SwapSprites();
             beforLastKey = -1;
             howManyChois--;
+            UpdateUpgradeView();
             return;
         }
         
@@ -115,6 +121,7 @@ public class GameplayCanvas : MonoBehaviour
             partsAnimators[lastKey].SwapSprites();
             lastKey = -1;
             howManyChois--;
+            UpdateUpgradeView();
             return;
         }
 
@@ -133,7 +140,27 @@ public class GameplayCanvas : MonoBehaviour
             }
 
             lastKey = (int)index;
+            UpdateUpgradeView();
         }
+    }
+
+    private void UpdateUpgradeView()
+    {
+        switch (howManyChois)
+        {
+            case 0:
+                iconsText.text = "Выберите 2 здания для строительства.";
+                upgradeButton.Deactivate();
+                break;
+            case 1:
+                iconsText.text = "Выберите ещё одно здание!";
+                upgradeButton.Deactivate();
+                break;
+            case 2:
+                iconsText.text = "0ба здания выбраны. 0жидаем приказа!";
+                upgradeButton.Activate();
+                break;
+        } 
     }
 
     private void SpawnButton(int placingInterval)
@@ -159,12 +186,10 @@ public class GameplayCanvas : MonoBehaviour
     private void OnEnable()
     {
         SkinPanel.ShopInitialized += DetectShopWindow;
-        SoundSettings.SettingsInitialized += DetectSettingsWindow;
     }
 
     private void OnDisable()
     {
         SkinPanel.ShopInitialized -= DetectShopWindow;
-        SoundSettings.SettingsInitialized -= DetectSettingsWindow;
     }
 }

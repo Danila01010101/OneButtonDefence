@@ -83,6 +83,53 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6798571787493372928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3630299754629290710}
+  - component: {fileID: 7014033751210208361}
+  m_Layer: 8
+  m_Name: WaypointTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3630299754629290710
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6798571787493372928}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.017, y: 0.73, z: 0.016}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4476221856891448256}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7014033751210208361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6798571787493372928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aaa2442c08b39849ba460796e1b48c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: 0}
+  DisplayName: "\u0420\u044B\u0446\u0430\u0440\u044C"
+  ActivateOnStart: 1
 --- !u!1 &8726996086308873578
 GameObject:
   m_ObjectHideFlags: 0
@@ -99,6 +146,7 @@ GameObject:
   - component: {fileID: 4955538291313367553}
   - component: {fileID: 8673697659296055881}
   - component: {fileID: 6494142204422375179}
+  - component: {fileID: 434979353020991248}
   m_Layer: 8
   m_Name: KnightUnit
   m_TagString: Enemy
@@ -119,6 +167,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4090648823612745859}
+  - {fileID: 3630299754629290710}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -136,6 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterStats: {fileID: 11400000, guid: 4a1071477bb356043ad0a2f933ba70b5, type: 2}
   render: {fileID: 2974141713272177669}
+  waypoint: {fileID: 7014033751210208361}
 --- !u!114 &4863027340435082543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,9 +280,9 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 3
+  DopplerLevel: 0
+  MinDistance: 0.9
+  MaxDistance: 1
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -267,7 +317,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -319,6 +369,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a314f0711a85c4d868407cba35a3cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &434979353020991248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8726996086308873578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aaa2442c08b39849ba460796e1b48c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: 0}
+  DisplayName: "\u0420\u044B\u0446\u0430\u0440\u044C"
+  ActivateOnStart: 1
 --- !u!1001 &4561686912279236456
 PrefabInstance:
   m_ObjectHideFlags: 0

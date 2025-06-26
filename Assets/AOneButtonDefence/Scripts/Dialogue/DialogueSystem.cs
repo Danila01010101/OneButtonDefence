@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,11 +14,15 @@ public class DialogueSystem : MonoBehaviour
     public TextMeshProUGUI Name;
     public TextMeshProUGUI Text;
     public GameObject AnswerPanel;
-    [Header("Меню выбора реплики")]
+    [Header("Menu replic chose")]
     public List<Button> Buttons = new List<Button>();
     public List<TextMeshProUGUI> Answers = new List<TextMeshProUGUI>();
-    [Header("Скорость текста")]
+    [Header("Text Speed")]
     public float ReplicSpeed;
+    [Header("Skip dialog")]
+    public float SkipTime;
+    public Slider Slider;
+    public KeyCode KeyCodePerSkip = KeyCode.G;
 
     [SerializeField] private DialogNPCSpawner spawner;
 
@@ -27,7 +32,9 @@ public class DialogueSystem : MonoBehaviour
 
     private string showReplic;
     private int countReplic;
+    // Корутины
     private Coroutine replicaCoroutine;
+    private Coroutine skipReplica;
 
     private bool activeChangeReplic = true;
 
@@ -39,8 +46,11 @@ public class DialogueSystem : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         numReplic = 0;
-        //Text.text = DialogueData.Label[numLabel].Replic[numReplic];
+        
+        if (Slider != null)
+            Slider.value = 0;
 
+        //Text.text = DialogueData.Label[numLabel].Replic[numReplic];
         Name.text = DialogueData.Name;
 
         foreach (Button button in Buttons)
@@ -54,6 +64,8 @@ public class DialogueSystem : MonoBehaviour
         AnswerPanel.SetActive(false);
         gameObject.SetActive(true);
         replicaCoroutine = StartCoroutine(ShowReplica());
+
+
     }
 
     private void Update()
@@ -62,6 +74,16 @@ public class DialogueSystem : MonoBehaviour
         {
             ChangeReplica();
         }
+        if (Input.GetKeyDown(KeyCodePerSkip) && Slider != null)
+        {
+            skipReplica = StartCoroutine(Timer(SkipTime));
+        }
+        if (Input.GetKeyUp(KeyCodePerSkip))
+        {
+            Slider.value = 0;
+            StopCoroutine(skipReplica);
+        }
+
     }
 
     public void StartDialog()
@@ -150,6 +172,28 @@ public class DialogueSystem : MonoBehaviour
         replicaCoroutine = StartCoroutine(ShowReplica());
     }
 
+    private void SkipDialog()
+    {
+        DetectReplicaSkip();
+        Destroy(gameObject);
+        DialogEnded?.Invoke();
+    }
+
+    private IEnumerator Timer(float time)
+    {
+        float timerTime = 0;
+        while (true) 
+        {
+            yield return new WaitForEndOfFrame();
+            timerTime += Time.deltaTime;
+            Slider.value = timerTime / time;
+            if (timerTime >= time)
+            {
+                SkipDialog();
+            }
+        }
+        
+    }
     private IEnumerator ShowReplica()
     {
         foreach (var replica in DialogueData.Label[numLabel].Replic[numReplic])

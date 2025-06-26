@@ -3,24 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using WrightAngle.Waypoint;
 using static GameStateMachine;
 
 public class GameInitializer : MonoBehaviour
 {
+    [SerializeField] private bool isTestBuild;
+    [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
+    [Header("Data")]
     [SerializeField] private GameData gameData;
     [SerializeField] private CameraData cameraData;
     [SerializeField] private MusicData musicData;
     [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private WorldGenerationData worldGenerationData;
     [SerializeField] private SpellCastData spellCastData;
+    [SerializeField] private WaypointSettings waypointData;
+    [Header("Canvas")]
     [SerializeField] private GameplayCanvas gameplayCanvasPrefab;
-    [SerializeField] private CinemachineVirtualCamera virtualCameraPrefab;
     [SerializeField] private Canvas loadingCanvas;
     [SerializeField] private GameObject debugCanvas;
     [SerializeField] private SpellCanvas spellCanvas;
     [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
-    [SerializeField] private SoundSettings infoCanvas;
+    [SerializeField] private GameObject infoCanvas;
+    [SerializeField] private WaypointUIManager waypointUIManager;
 
     private BattleNotifier battleNotifier;
     private ResourceChangeMediator resourceChangeMediator;
@@ -82,6 +88,7 @@ public class GameInitializer : MonoBehaviour
         var spellCanvas = SetupSpellCanvas();
         SetupDebugCanvas();
         SetupShopSkinWindow(upgradeCanvas.transform);
+        SetupBattleCanvas(waypointData, Camera.main, waypointUIManager);
         List<AudioSource> upgradeSources = upgradeEffectPlayer.GetSources();
         var startAudioSources = new List<AudioSource>();
         startAudioSources.Add(backgroundMusicPlayer.GetSource());
@@ -89,8 +96,9 @@ public class GameInitializer : MonoBehaviour
         {
             startAudioSources.Add(source);
         }
-        SetupInfoCanvas(startAudioSources);
         LayerMask enemyLayerMask = LayerMask.GetMask(gameData.GnomeLayerName);
+        SetupInfoCanvas(upgradeCanvas);
+        SetupVolumeChanger(upgradeCanvas, startAudioSources, musicData.StartValue);
         IEnemyDetector gnomeDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.GnomeLayerName));
         yield return null;
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
@@ -284,6 +292,10 @@ public class GameInitializer : MonoBehaviour
     private GameObject SetupDebugCanvas()
     {
         var debugCanvasWidnow = Instantiate(debugCanvas);
+
+        if (isTestBuild == false)
+            debugCanvasWidnow.SetActive(false);
+        
         return debugCanvasWidnow.gameObject;
     }
     
@@ -333,10 +345,21 @@ public class GameInitializer : MonoBehaviour
         incomeDifferenceTextConverter.Unsubscribe();
     }
 
-    private SoundSettings SetupInfoCanvas(List<AudioSource> startAudioSources)
+    private void SetupInfoCanvas(GameplayCanvas gameplayCanvas)
     {
-        var infoCanvasWindow = Instantiate(infoCanvas);
-        infoCanvasWindow.Initialize(startAudioSources);
-        return infoCanvasWindow;
+        var infoCanvasInstance = Instantiate(infoCanvas);
+        gameplayCanvas.DetectSettingsWindow(infoCanvasInstance);
+        infoCanvasInstance.SetActive(false);
+    }
+    
+    private void SetupVolumeChanger(GameplayCanvas gameplayCanvas, List<AudioSource> startAudioSources, float startVolume)
+    {
+        gameplayCanvas.SoundSettings.Initialize(startAudioSources, startVolume);
+    }
+
+    private void SetupBattleCanvas(WaypointSettings data, Camera camera, WaypointUIManager manager)
+    {
+        var canvasWindow = Instantiate(manager);
+        canvasWindow.Initializator(camera, canvasWindow.GetComponent<RectTransform>(), data);
     }
 }

@@ -444,20 +444,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d99624e5e8248224a9d2162c1eca3fd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTestBuild: 0
+  virtualCameraPrefab: {fileID: 479869093838107416, guid: 80fdc9be4cb8de34396fa621b4f8490c, type: 3}
   gameData: {fileID: 11400000, guid: 1736fbe24c24d7e4c83db94aa59a4d30, type: 2}
   cameraData: {fileID: 11400000, guid: dce509826f487264da42aadc045aa700, type: 2}
   musicData: {fileID: 11400000, guid: 92dee7b0de6425245be4d000ff3186ac, type: 2}
   enemiesData: {fileID: 11400000, guid: 38007ab0f6607404e8a58182076d6a0c, type: 2}
   worldGenerationData: {fileID: 11400000, guid: 0a5f9a6cff94cdd4e8ba60c38855587b, type: 2}
   spellCastData: {fileID: 11400000, guid: 3d3e1ce45036ce74d98b5aedcb82e232, type: 2}
+  waypointData: {fileID: 11400000, guid: 7a617495f49c6dc40b2375b56ee77fd9, type: 2}
   gameplayCanvasPrefab: {fileID: 5254249503310026437, guid: ecbdf0191c1061f4791cc69571515763, type: 3}
-  virtualCameraPrefab: {fileID: 479869093838107416, guid: 80fdc9be4cb8de34396fa621b4f8490c, type: 3}
   loadingCanvas: {fileID: 3805665588448524472, guid: 252ebb6cfaf8c1648aeb1b1665ab8615, type: 3}
   debugCanvas: {fileID: 211902402304824013, guid: f5e001bbecbfa6d46a257e718425c458, type: 3}
   spellCanvas: {fileID: 9139631081805866845, guid: 813fe02d1d1ce6c459b9cd9404c26104, type: 3}
   shopSkinWindow: {fileID: 5975019631008922812, guid: ae70cd48a5edb0b49b0f9f6fe427f824, type: 3}
   uiGameObjectShowerPrefab: {fileID: 984342067642433287, guid: 98921ad4e4588964288ac94ed545b226, type: 3}
-  infoCanvas: {fileID: 774132809339908267, guid: 1e7e9a3e51c09364eac0a3981287d775, type: 3}
+  infoCanvas: {fileID: 330298046360741377, guid: 1e7e9a3e51c09364eac0a3981287d775, type: 3}
+  waypointUIManager: {fileID: 2486573550260019458, guid: 3a59149c6c4ae58418d7f446901ca67f, type: 3}
 --- !u!1 &897670876
 GameObject:
   m_ObjectHideFlags: 0
