@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace AOneButtonDefence.Scripts.Enemies.DragonScripts
 {
-    public class DragonAnimation : IAttackAnimator
+    public class DragonAnimation : MonoBehaviour, IAttackAnimator
     {
         public Action CharacterAttacked { get; set; }
         public Action CharacterAttackEnded { get; set; }

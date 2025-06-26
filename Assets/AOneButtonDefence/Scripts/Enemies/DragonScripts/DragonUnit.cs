@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class DragonUnit : UnitWithGems
 {
-    [SerializeField] private UnitWithUltimateStats ultimateStats; 
-    [SerializeField] private FightAnimation fightAnimation;
+    [SerializeField] private UnitWithUltimateStats ultimateStats;
     [SerializeField] private DragonAnimation ultimateAnimation;
     
     protected override void InitializeStateMachine(IEnemyDetector detector)

@@ -15,7 +15,7 @@ MonoBehaviour:
   <waves>k__BackingField:
   - <enemiesToSpawn>k__BackingField:
     - <EnemyPrefab>k__BackingField: {fileID: -8669827258794944731, guid: cd900271b56893b47aee446ecd5ec983, type: 3}
-      <Amount>k__BackingField: 2
+      <Amount>k__BackingField: 1
     spawnInterval: 0.8
   - <enemiesToSpawn>k__BackingField:
     - <EnemyPrefab>k__BackingField: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}

@@ -47,7 +47,7 @@ public class UnitDetector : IEnemyDetector
             }
         }
 
-        if (closestTransform.TryGetComponent(out foundAgent))
+        if (closestTransform != null && closestTransform.TryGetComponent(out foundAgent))
         {
             return new TargetToFollowInfo(closestTransform, foundAgent.radius);
         }

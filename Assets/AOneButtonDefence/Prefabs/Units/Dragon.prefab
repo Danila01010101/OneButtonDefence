@@ -99,9 +99,10 @@ GameObject:
   - component: {fileID: 8196865356354846145}
   - component: {fileID: 3101923879305854735}
   - component: {fileID: 1983663169925273568}
-  m_Layer: 0
+  - component: {fileID: 4804387499313948041}
+  m_Layer: 8
   m_Name: Dragon
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,6 +120,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5142739765644965413}
+  - {fileID: 6203676448596545970}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -158,8 +160,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterStats: {fileID: 11400000, guid: 157bb3241a79d214e897fc6fe1948c4b, type: 2}
   render: {fileID: 6431609580991330501}
+  waypoint: {fileID: 9139937596801051101}
   ultimateStats: {fileID: 11400000, guid: af71903035f8f074399b7d9334e9b5a4, type: 2}
-  fightAnimation: {fileID: 8196865356354846145}
+  ultimateAnimation: {fileID: 4804387499313948041}
 --- !u!114 &990650273079739192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,7 +211,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 60
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -298,3 +301,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a314f0711a85c4d868407cba35a3cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4804387499313948041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8530227238884133990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a226dd644ed149f6981c416184015a20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8813050630913739628
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6203676448596545970}
+  - component: {fileID: 9139937596801051101}
+  m_Layer: 0
+  m_Name: WaypointTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6203676448596545970
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8813050630913739628}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.025, y: 0.902, z: 0.348}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9177105942423825949}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9139937596801051101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8813050630913739628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aaa2442c08b39849ba460796e1b48c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: 0}
+  DisplayName: D
+  ActivateOnStart: 1
