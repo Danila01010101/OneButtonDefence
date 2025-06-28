@@ -10,19 +10,14 @@ namespace AOneButtonDefence.Scripts.Enemies.DragonScripts
         public Action CharacterAttackEnded { get; set; }
         public void InterruptAnimation()
         {
-            throw new NotImplementedException();
+            CharacterAttackEnded?.Invoke();
         }
 
         public Transform Transform { get; set; }
 
         public void StartAnimation()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void InteruptAnimation()
-        {
-            throw new System.NotImplementedException();
+            CharacterAttacked?.Invoke();
         }
     }
 }
