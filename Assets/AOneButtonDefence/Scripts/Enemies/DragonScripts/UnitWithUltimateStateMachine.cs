@@ -17,7 +17,8 @@ public class UnitWithUltimateStateMachine : StateMachine
             this,
             data.FightAnimation,
             data.BaseStats.AttackDelay,
-            data.BaseStats.Damage
+            data.BaseStats.Damage,
+            data.BaseStats.DamageUpgradeValue
             );
         
         var fightState = new FightWithUltimateState(fightDragonStateData);

@@ -11,7 +11,7 @@ public class FightWithUltimateState : FightState
     private float LastTimeUltimateUsed;
     
     public FightWithUltimateState(FightWithUltimateStateData unitWithUltimateData) 
-        : base(unitWithUltimateData.StateMachine, unitWithUltimateData.AttackDelay, unitWithUltimateData.Damage, unitWithUltimateData.Animation)
+        : base(unitWithUltimateData.StateMachine, unitWithUltimateData.AttackDelay, unitWithUltimateData.Damage, unitWithUltimateData.DamageUpgradeValue, unitWithUltimateData.Animation)
     {
         this.unitWithUltimateData = unitWithUltimateData;
         spellsPositionTransform = unitWithUltimateData.Animation.Transform;
@@ -59,9 +59,10 @@ public class FightWithUltimateState : FightState
         public readonly IAttackAnimator Animation;
         public readonly float AttackDelay;
         public readonly int Damage;
+        public readonly int DamageUpgradeValue;
 
         public FightWithUltimateStateData(float ultimateDelay, List<SpellData> spellsData, LayerMask targetLayer, IAttackAnimator ultimateAnimator, 
-            IStateChanger stateMachine, IAttackAnimator animation, float attackDelay, int damage)
+            IStateChanger stateMachine, IAttackAnimator animation, float attackDelay, int damage, int damageUpgradeValue)
         {
             UltimateDelay = ultimateDelay;
             SpellsData = spellsData;
@@ -71,6 +72,7 @@ public class FightWithUltimateState : FightState
             Animation = animation;
             AttackDelay = attackDelay;
             Damage = damage;
+            DamageUpgradeValue = damageUpgradeValue;
         }
     }
 }

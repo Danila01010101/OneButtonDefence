@@ -7,7 +7,7 @@ public class WarriorStateMachine : StateMachine
 {
     public WarriorStateMachine(WarriorStateMachineData data)
     {
-        var fightState = new FightState(this, data.CharacterStats.AttackDelay, data.CharacterStats.Damage, data.FightAnimation);
+        var fightState = new FightState(this, data.CharacterStats.AttackDelay, data.CharacterStats.Damage, data.CharacterStats.DamageUpgradeValue, data.FightAnimation);
         var targetFollowingState = new TargetFollowingState(this, data.Agent, data.CharacterStats, fightState, 
             data.CharacterStats.EnemyLayerMask, data.WalkingAnimation, data.EnemyDetector);
         var targetSearchStateData = new TargetSearchState.TargetSearchStateData(
