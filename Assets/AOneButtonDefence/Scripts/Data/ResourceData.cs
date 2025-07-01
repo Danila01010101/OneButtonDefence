@@ -14,6 +14,7 @@ public class ResourceData : ScriptableObject
         Warrior,
         Spirit,
         Material,
-        Gem
+        Gem,
+        StrenghtBuff
     }
 }

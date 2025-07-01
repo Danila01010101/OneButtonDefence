@@ -6,7 +6,7 @@ using UnityEngine;
 public class BattleWavesParameters : ScriptableObject
 {
     [field: SerializeField] public List<WaveData> waves { get; private set; }
-    
+     
     [Serializable]
     public class EnemySpawnData
     {
