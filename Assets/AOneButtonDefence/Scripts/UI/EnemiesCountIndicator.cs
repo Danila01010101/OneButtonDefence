@@ -11,13 +11,13 @@ public class EnemiesCountIndicator : MonoBehaviour
     public void Initiallize(BattleWavesParameters battleWavesParameters)
     {
         wavesParameters = battleWavesParameters;
+        ChangeInfo(0);
     }
 
     private void ChangeInfo(int currentWaveIndex) 
     {
-        int nextWaveIndex = currentWaveIndex + 1;
         int totalEnemies = wavesParameters.waves
-            .ElementAtOrDefault(nextWaveIndex)?
+            .ElementAtOrDefault(currentWaveIndex)?
             .enemiesToSpawn
             ?.Sum(enemiesList => enemiesList.Amount)
             ?? 0;
