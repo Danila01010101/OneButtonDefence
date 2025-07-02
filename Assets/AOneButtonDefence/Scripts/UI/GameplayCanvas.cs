@@ -8,6 +8,7 @@ public class GameplayCanvas : MonoBehaviour
 {
     [field : SerializeField] public GameObject ResourceInfo { get; private set; }
     [field : SerializeField] public GameObject UpgradeWindow { get; private set; }
+    [field : SerializeField] public EnemiesCountIndicator EnemiesCountIndicator { get; private set; }
     [SerializeField] private UIInfoButton partPrefab;
     [SerializeField] private UIInfoPanel infoPanel;
     [SerializeField] private TextMeshProUGUI iconsText;

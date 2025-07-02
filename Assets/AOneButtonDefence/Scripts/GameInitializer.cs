@@ -84,6 +84,7 @@ public class GameInitializer : MonoBehaviour
         yield return null;
         yield return null;
         GameplayCanvas upgradeCanvas = SpawnUpgradeCanvas();
+        upgradeCanvas.EnemiesCountIndicator.Initiallize(gameData.BattleWavesParameters);
         yield return null;
         var spellCanvas = SetupSpellCanvas();
         SetupDebugCanvas();
