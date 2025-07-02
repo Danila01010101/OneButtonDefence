@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 [CreateAssetMenu(fileName = "New SpellData", menuName = "ScriptableObjects/new Spell Data", order = 58)]
 public class SpellData : ScriptableObject
 {
