@@ -271,7 +271,7 @@ public class GameInitializer : MonoBehaviour
     private GameplayCanvas SpawnUpgradeCanvas()
     {
         GameplayCanvas upgradeCanvas = Instantiate(gameplayCanvasPrefab);
-        upgradeCanvas.Initialize(4, worldGenerationData.BuildingsData );
+        upgradeCanvas.Initialize(5, worldGenerationData.BuildingsData );
         return upgradeCanvas;
     }
     
