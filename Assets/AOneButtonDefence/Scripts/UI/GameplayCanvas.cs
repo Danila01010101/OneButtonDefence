@@ -55,20 +55,16 @@ public class GameplayCanvas : MonoBehaviour
         }
         else
         {
-            startButtonsAmount = partsAmount / 2 + 0.5f;
+            SpawnButton(0);
+
+            startButtonsAmount = (partsAmount - 1) / 2;
+            partPlacingInterval = buttonsDistance;
 
             for (int i = 0; i < startButtonsAmount; i++)
             {
                 SpawnButton(partPlacingInterval);
-                
-                partPlacingInterval = partPlacingInterval + buttonsDistance / 2;
-
-                if (partPlacingInterval != 0)
-                {
-                    SpawnButton(-partPlacingInterval);
-                }
-
-                partPlacingInterval = partPlacingInterval + buttonsDistance / 2;
+                SpawnButton(-partPlacingInterval);
+                partPlacingInterval += buttonsDistance;
             }
         }
 
