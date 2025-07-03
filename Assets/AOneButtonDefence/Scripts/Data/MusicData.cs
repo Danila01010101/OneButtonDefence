@@ -13,6 +13,7 @@ public class MusicData : ScriptableObject
 	[field:SerializeField] public AudioClip BattleLostSoundEffect { get; private set; }
 	[field:SerializeField] public AudioClip UpgradeMusic { get; private set; }
 	[field:Header("Upgrade effects")]
+	[field:SerializeField] public AudioClip WarriorBuffSoundEffect { get; private set; }
 	[field:SerializeField] public AudioClip UpgradeFactorySoundEffect { get; private set; }
 	[field:SerializeField] public AudioClip UpgradeChurchSoundEffect { get; private set; }
 	[field:SerializeField] public AudioClip UpgradeCampSoundEffect { get; private set; }

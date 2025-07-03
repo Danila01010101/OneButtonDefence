@@ -19,6 +19,7 @@ MonoBehaviour:
   <BattleWinSoundEffect>k__BackingField: {fileID: 8300000, guid: a6ad613b48a3252498255c595a118707, type: 3}
   <BattleLostSoundEffect>k__BackingField: {fileID: 8300000, guid: 460092be8e083c24d84da62779389368, type: 3}
   <UpgradeMusic>k__BackingField: {fileID: 8300000, guid: 78098e2d2cc99864e90dc35d048f8946, type: 3}
+  <WarriorBuffSoundEffect>k__BackingField: {fileID: 8300000, guid: c15b104ca21820249b47b2fe5f5de554, type: 3}
   <UpgradeFactorySoundEffect>k__BackingField: {fileID: 8300000, guid: 95f5f00d6e23b194f9303ae5b29215cd, type: 3}
   <UpgradeChurchSoundEffect>k__BackingField: {fileID: 8300000, guid: 95f5f00d6e23b194f9303ae5b29215cd, type: 3}
   <UpgradeCampSoundEffect>k__BackingField: {fileID: 8300000, guid: c15b104ca21820249b47b2fe5f5de554, type: 3}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 125
   <Damage>k__BackingField: 55
-  <DamageUpgradeValue>k__BackingField: 2
+  <DamageUpgradeValue>k__BackingField: 0
   <Speed>k__BackingField: 0.0025
   <DetectionRadius>k__BackingField: 100
   <ChaseRange>k__BackingField: 1

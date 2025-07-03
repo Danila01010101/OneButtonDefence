@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 125
   <Damage>k__BackingField: 55
+  <DamageUpgradeValue>k__BackingField: 0
   <Speed>k__BackingField: 0.01
   <DetectionRadius>k__BackingField: 100
-  <AttackRange>k__BackingField: 0.35
+  <ChaseRange>k__BackingField: 1
   <AttackDelay>k__BackingField: 1.2
   <EnemyLayerMask>k__BackingField:
     serializedVersion: 2
