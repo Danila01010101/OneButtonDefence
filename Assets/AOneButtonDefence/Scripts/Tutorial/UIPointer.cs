@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class UIPointer : MonoBehaviour
 {
-    private RectTransform _target;
-    private RectTransform _pointer;
+    private RectTransform target;
+    private RectTransform pointer;
 
     public void Initialize(RectTransform target, RectTransform pointer)
     {
-        _target = target;
-        _pointer = pointer;
+        this.target = target;
+        this.pointer = pointer;
     }
 
     private void Update()
     {
-        if (_target == null) return;
+        if (target == null) return;
 
-        Vector2 dir = (_target.position - _pointer.position).normalized;
-        _pointer.right = dir; // Поворачиваем указатель
-        _pointer.anchoredPosition = -dir * 50f; // Смещаем от края
+        Vector2 dir = (target.position - pointer.position).normalized;
+        pointer.right = dir; // Поворачиваем указатель
+        pointer.anchoredPosition = -dir * 50f; // Смещаем от края
     }
 }

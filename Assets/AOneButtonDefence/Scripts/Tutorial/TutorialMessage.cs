@@ -4,31 +4,30 @@ using UnityEngine;
 
 public class TutorialMessage : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _messageText;
-    [SerializeField] private RectTransform _pointer;
+    [SerializeField] private TMP_Text messageText;
+    [SerializeField] private RectTransform pointer;
 
     public event Action OnClosed;
-    private GameObject _target;
+    private GameObject target;
 
     public void Setup(GameObject target, string message)
     {
-        _target = target;
-        _messageText.text = message;
+        this.target = target;
+        messageText.text = message;
 
-        // Автоматическое определение типа объекта
         if (target.GetComponent<RectTransform>()) SetupForUI();
         else SetupForWorldObject();
     }
 
     private void SetupForUI()
     {
-        var rt = _target.GetComponent<RectTransform>();
-        _pointer.gameObject.AddComponent<UIPointer>().Initialize(rt, _pointer);
+        var rt = target.GetComponent<RectTransform>();
+        pointer.gameObject.AddComponent<UIPointer>().Initialize(rt, pointer);
     }
 
     private void SetupForWorldObject()
     {
-        _pointer.gameObject.AddComponent<WorldPointer>().Initialize(_target.transform, _pointer);
+        pointer.gameObject.AddComponent<WorldPointer>().Initialize(target.transform, pointer);
     }
 
     public void Close()
