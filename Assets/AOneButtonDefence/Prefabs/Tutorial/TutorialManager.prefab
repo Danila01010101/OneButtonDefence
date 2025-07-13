@@ -30,7 +30,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -49,5 +49,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfbbea7bd89177d479ab4d35622e27d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tutorialPrefab: {fileID: 6591597721181069662, guid: be1d8b349d094f5479003c69be6ea45e, type: 3}
-  _canvas: {fileID: 0}
+  tutorialPrefab: {fileID: 6591597721181069662, guid: be1d8b349d094f5479003c69be6ea45e, type: 3}
+  canvas: {fileID: 0}

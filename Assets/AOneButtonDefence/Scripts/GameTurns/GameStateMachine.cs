@@ -13,7 +13,8 @@ public class GameStateMachine : StateMachine, IStringStateChanger
 
         stringStates = new Dictionary<string, IState>()
         {
-            { GameStateNames.StartDialog, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.StartDialogCanvas, GameStateNames.Upgrade, data.Input, true) },
+            { GameStateNames.StartDialog, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.StartDialogCanvas, GameStateNames.StartTutorial, data.Input, true) },
+            { GameStateNames.StartTutorial, new TutorialStartState(this, GameStateNames.Upgrade) },
             { GameStateNames.WinDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.EndTurnWinDialogCanvas, GameStateNames.Upgrade, data.Input) },
             { GameStateNames.BattleLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.BattleLoseDialogCanvas, GameStateNames.Reload, data.Input) },
             { GameStateNames.SpiritLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.SpiritLoseDialogCanvas, GameStateNames.Reload, data.Input) },

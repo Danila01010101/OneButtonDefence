@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e00136f7149226948a862adf7e9adba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageText: {fileID: 8765943479488888108}
-  _pointer: {fileID: 0}
+  messageText: {fileID: 8765943479488888108}
+  pointer: {fileID: 1590686720197177343}
 --- !u!1 &3384404085927865681
 GameObject:
   m_ObjectHideFlags: 0

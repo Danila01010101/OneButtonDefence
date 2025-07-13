@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 using WrightAngle.Waypoint;
 using static GameStateMachine;
 
@@ -23,6 +24,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private Canvas loadingCanvas;
     [SerializeField] private GameObject debugCanvas;
     [SerializeField] private SpellCanvas spellCanvas;
+    [SerializeField] private TutorialManager tutorialManagerPrefab;
     [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
     [SerializeField] private GameObject infoCanvas;
@@ -105,10 +107,18 @@ public class GameInitializer : MonoBehaviour
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
         battleNotifier.Subscribe();
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
+        InitializeTutorial(upgradeCanvas, TutorialStartState.TutorialStarted);
         yield return null;
         GameInitialized?.Invoke();
         isSerializationCompleted = true;
         Destroy(loadingCanvas.gameObject);
+    }
+
+    private void InitializeTutorial(Canvas parent, UnityAction tutorialActivationEvent)
+    {
+        var tutorialManager = Instantiate(tutorialManagerPrefab, parent.transform);
+        tutorialManager.Initialize(parent);
+        var tutorial = new BasicMechanicsTutorial(tutorialManager, tutorialActivationEvent);
     }
 
     private void Update()
