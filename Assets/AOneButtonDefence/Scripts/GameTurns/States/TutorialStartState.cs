@@ -7,7 +7,7 @@ public class TutorialStartState : IState
     private readonly IStringStateChanger stateMachine;
     private readonly string nextStateName;
 
-    private static Action TutorialStarted;
+    public static Action TutorialStarted;
 
     public TutorialStartState(IStringStateChanger stateMachine, string nextStateName)
     {

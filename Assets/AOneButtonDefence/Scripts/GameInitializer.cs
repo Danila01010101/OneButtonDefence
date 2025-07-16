@@ -107,18 +107,18 @@ public class GameInitializer : MonoBehaviour
         SetupStateMachine(upgradeCanvas, spellCanvas, worldCreator, worldGrid, disableableInput, gnomeDetector);
         battleNotifier.Subscribe();
         SetupRewardSpawner(GemsView.Instance.GemsTextTransform);
-        InitializeTutorial(upgradeCanvas, TutorialStartState.TutorialStarted);
+        InitializeTutorial(upgradeCanvas.GetComponent<Canvas>());
         yield return null;
         GameInitialized?.Invoke();
         isSerializationCompleted = true;
         Destroy(loadingCanvas.gameObject);
     }
 
-    private void InitializeTutorial(Canvas parent, UnityAction tutorialActivationEvent)
+    private void InitializeTutorial(Canvas parent)
     {
         var tutorialManager = Instantiate(tutorialManagerPrefab, parent.transform);
         tutorialManager.Initialize(parent);
-        var tutorial = new BasicMechanicsTutorial(tutorialManager, tutorialActivationEvent);
+        var tutorial = new BasicMechanicsTutorial(tutorialManager, new List<ITutorialGO>() { FindObjectOfType<TutorialObject>() });
     }
 
     private void Update()

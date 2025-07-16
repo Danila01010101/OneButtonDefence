@@ -8,12 +8,15 @@ public class BasicMechanicsTutorial
 {
     private TutorialManager tutorialManager;
     private List<ITutorialGO> objectsForTutorial;
-    private int currentTutoorialObjectIndex;
+    private int currentTutorialObjectIndex;
+    private bool isActivated;
 
-    public BasicMechanicsTutorial(TutorialManager tutorialManager, UnityAction tutorialStart)
+    public BasicMechanicsTutorial(TutorialManager tutorialManager, List<ITutorialGO> objectsForTutorial)
     {
         this.tutorialManager = tutorialManager;
-        tutorialStart += StartTutorial;
+        TutorialStartState.TutorialStarted += StartTutorial;
+        TutorialManager.TutorialTriggered += ActivateNextTutorial;
+        SetTutorialObjects(objectsForTutorial);
     }
 
     public void SetTutorialObjects(List<ITutorialGO> objectsForTutorial)
@@ -25,22 +28,25 @@ public class BasicMechanicsTutorial
     {
         tutorialManager.ShowTutorial(objectsForTutorial[0], ShowNextTutorial);
     }
+    
+    private void ActivateNextTutorial() => isActivated = true;
 
     private void ShowNextTutorial() => CoroutineStarter.Instance.StartCoroutine(WaitForNextTutorial());
 
     private IEnumerator WaitForNextTutorial()
     {
-        if (++currentTutoorialObjectIndex > objectsForTutorial.Count)
+        if (++currentTutorialObjectIndex > objectsForTutorial.Count)
         {
             Debug.Log("Tutorial ended.");
             yield break;
         }
 
-        while (objectsForTutorial[currentTutoorialObjectIndex].IsActivated == false)
+        while (isActivated == false)
         {
             yield return new WaitForSeconds(0.1f);
         }
 
-        tutorialManager.ShowTutorial(objectsForTutorial[currentTutoorialObjectIndex], ShowNextTutorial);
+        isActivated = false;
+        tutorialManager.ShowTutorial(objectsForTutorial[currentTutorialObjectIndex], ShowNextTutorial);
     }
 }
