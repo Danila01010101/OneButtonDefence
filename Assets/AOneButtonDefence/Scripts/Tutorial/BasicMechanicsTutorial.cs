@@ -11,21 +11,32 @@ public class BasicMechanicsTutorial
     private int currentTutorialObjectIndex;
     private bool isActivated;
 
-    public BasicMechanicsTutorial(TutorialManager tutorialManager, List<ITutorialGO> objectsForTutorial)
+    public BasicMechanicsTutorial(TutorialManager tutorialManager)
     {
         this.tutorialManager = tutorialManager;
         TutorialStartState.TutorialStarted += StartTutorial;
         TutorialManager.TutorialTriggered += ActivateNextTutorial;
-        SetTutorialObjects(objectsForTutorial);
+        SetTutorialObjects(TutorialManager.GetTutorialObjects());
     }
 
-    public void SetTutorialObjects(List<ITutorialGO> objectsForTutorial)
+    public void SetTutorialObjects(List<ITutorialGO> foundObjectsForTutorial)
     {
-        this.objectsForTutorial = objectsForTutorial.OrderBy(tutorialObject => tutorialObject.Index).ToList();
+        if (objectsForTutorial == null || objectsForTutorial.Count == 0)
+        {
+            Debug.Log("No tutorial objects in scene");
+            return;
+        }
+        
+        objectsForTutorial = foundObjectsForTutorial.OrderBy(tutorialObject => tutorialObject.Index).ToList();
     } 
 
     public void StartTutorial()
     {
+        objectsForTutorial = TutorialManager.GetTutorialObjects();
+        
+        if (objectsForTutorial == null || objectsForTutorial.Count == 0) 
+            return;
+        
         tutorialManager.ShowTutorial(objectsForTutorial[0], ShowNextTutorial);
     }
     
@@ -34,7 +45,7 @@ public class BasicMechanicsTutorial
     private void ShowNextTutorial() => CoroutineStarter.Instance.StartCoroutine(WaitForNextTutorial());
 
     private IEnumerator WaitForNextTutorial()
-    {
+    {   
         if (++currentTutorialObjectIndex > objectsForTutorial.Count)
         {
             Debug.Log("Tutorial ended.");
@@ -48,5 +59,7 @@ public class BasicMechanicsTutorial
 
         isActivated = false;
         tutorialManager.ShowTutorial(objectsForTutorial[currentTutorialObjectIndex], ShowNextTutorial);
+        objectsForTutorial = TutorialManager.GetTutorialObjects();
+        yield return null;
     }
 }

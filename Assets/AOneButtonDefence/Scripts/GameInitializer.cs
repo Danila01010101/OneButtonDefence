@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
@@ -99,7 +100,6 @@ public class GameInitializer : MonoBehaviour
         {
             startAudioSources.Add(source);
         }
-        LayerMask enemyLayerMask = LayerMask.GetMask(gameData.GnomeLayerName);
         SetupInfoCanvas(upgradeCanvas);
         SetupVolumeChanger(upgradeCanvas, startAudioSources, musicData.StartValue);
         IEnemyDetector gnomeDetector = SetupEnemyDetector(LayerMask.GetMask(gameData.GnomeLayerName));
@@ -118,7 +118,7 @@ public class GameInitializer : MonoBehaviour
     {
         var tutorialManager = Instantiate(tutorialManagerPrefab, parent.transform);
         tutorialManager.Initialize(parent);
-        var tutorial = new BasicMechanicsTutorial(tutorialManager, new List<ITutorialGO>() { FindObjectOfType<TutorialObject>() });
+        var tutorial = new BasicMechanicsTutorial(tutorialManager);
     }
 
     private void Update()

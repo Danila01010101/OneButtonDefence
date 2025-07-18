@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -36,5 +38,12 @@ public class TutorialManager : MonoBehaviour
     public static void TriggerTutorial()
     {
         TutorialTriggered?.Invoke();
+    }
+    
+    public static List<ITutorialGO> GetTutorialObjects()
+    {
+        return FindObjectsByType<TutorialObject>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+            .Cast<ITutorialGO>()
+            .ToList();
     }
 }

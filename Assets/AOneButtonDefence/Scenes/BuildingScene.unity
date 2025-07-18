@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -457,6 +457,7 @@ MonoBehaviour:
   loadingCanvas: {fileID: 3805665588448524472, guid: 252ebb6cfaf8c1648aeb1b1665ab8615, type: 3}
   debugCanvas: {fileID: 211902402304824013, guid: f5e001bbecbfa6d46a257e718425c458, type: 3}
   spellCanvas: {fileID: 9139631081805866845, guid: 813fe02d1d1ce6c459b9cd9404c26104, type: 3}
+  tutorialManagerPrefab: {fileID: 3910486501471816852, guid: be0b7c64cc7eee541957158fa1b93857, type: 3}
   shopSkinWindow: {fileID: 5975019631008922812, guid: ae70cd48a5edb0b49b0f9f6fe427f824, type: 3}
   uiGameObjectShowerPrefab: {fileID: 984342067642433287, guid: 98921ad4e4588964288ac94ed545b226, type: 3}
   infoCanvas: {fileID: 330298046360741377, guid: 1e7e9a3e51c09364eac0a3981287d775, type: 3}

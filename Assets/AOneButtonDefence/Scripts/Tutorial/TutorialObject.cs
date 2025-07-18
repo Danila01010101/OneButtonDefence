@@ -7,7 +7,8 @@ public class TutorialObject : MonoBehaviour, ITutorialGO
     [SerializeField] private string message;
     [SerializeField] private float duration = 0;
     [SerializeField] private int index;
-    [SerializeField] private bool isActivated;
+    
+    private bool isActivated;
 
     public static Action TaskTriggerActivated;
 
@@ -18,9 +19,7 @@ public class TutorialObject : MonoBehaviour, ITutorialGO
     public int Index => index;
 
     public float Duration => duration;
-
-    public bool IsActivated => isActivated;
-
+    
     public void TriggerTaskFinished() => isActivated = true;
 
     public void TriggerStartTutorial() 
