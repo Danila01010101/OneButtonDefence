@@ -16,7 +16,8 @@ public class UIPointer : MonoBehaviour
         if (target == null) return;
 
         Vector2 dir = (target.position - pointer.position).normalized;
-        pointer.right = dir; // Поворачиваем указатель
-        pointer.anchoredPosition = -dir * 50f; // Смещаем от края
+        pointer.anchoredPosition = dir * 150f;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        pointer.rotation = Quaternion.Euler(0, 0, angle - 135f);
     }
 }
