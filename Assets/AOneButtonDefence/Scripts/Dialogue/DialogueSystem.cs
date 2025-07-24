@@ -147,7 +147,6 @@ public class DialogueSystem : MonoBehaviour
 
     private void SkipDialog()
     {
-        DetectReplicaSkip();
         Destroy(gameObject);
         DialogEnded?.Invoke();
     }
