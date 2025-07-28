@@ -21,13 +21,32 @@ public class TutorialMessage : MonoBehaviour
 
     private void SetupForUI()
     {
-        var rt = target.GetComponent<RectTransform>();
-        pointer.gameObject.AddComponent<UIPointer>().Initialize(rt, pointer);
+        var targetRectTransform = target.GetComponent<RectTransform>();
+        if (targetRectTransform == null)
+            return;
+
+        var worldPointer = pointer.GetComponent<WorldPointer>();
+        if (worldPointer != null)
+            Destroy(worldPointer);
+
+        var uiPointer = pointer.GetComponent<UIPointer>();
+        if (uiPointer == null)
+            uiPointer = pointer.gameObject.AddComponent<UIPointer>();
+
+        uiPointer.Initialize(targetRectTransform, pointer);
     }
 
     private void SetupForWorldObject()
     {
-        pointer.gameObject.AddComponent<WorldPointer>().Initialize(target.transform, pointer);
+        var uiPointer = pointer.GetComponent<UIPointer>();
+        if (uiPointer != null)
+            Destroy(uiPointer);
+
+        var worldPointer = pointer.GetComponent<WorldPointer>();
+        if (worldPointer == null)
+            worldPointer = pointer.gameObject.AddComponent<WorldPointer>();
+
+        worldPointer.Initialize(target.transform, pointer);
     }
 
     public void Close()

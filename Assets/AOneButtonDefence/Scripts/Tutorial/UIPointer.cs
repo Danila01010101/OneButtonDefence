@@ -6,6 +6,7 @@ public class UIPointer : MonoBehaviour
     [Header("Animation Settings")]
     [SerializeField] private float approachDuration = 1f;
     [SerializeField] private float retreatDuration = 0.3f;
+    [SerializeField] private float retreatLenght = 125;
 
     private RectTransform target;
     private RectTransform pointer;
@@ -22,7 +23,6 @@ public class UIPointer : MonoBehaviour
         startAnchoredPosition = pointer.anchoredPosition;
         isInitialized = true;
 
-        // Рассчитываем 1/3 расстояния между начальной позицией и целью
         CalculateDistance();
         CreatePointerAnimation();
     }
@@ -38,8 +38,7 @@ public class UIPointer : MonoBehaviour
             pointer.GetComponentInParent<Canvas>().worldCamera,
             pointer.position
         );
-
-        // Полное расстояние между указателем и целью
+        
         fullDistance = Vector2.Distance(targetScreenPos, pointerScreenPos);
         oneThirdDistance = fullDistance / 3f;
     }
@@ -50,33 +49,23 @@ public class UIPointer : MonoBehaviour
 
         pointerSequence?.Kill();
 
-        // Получаем позиции в пространстве канваса
         Vector2 targetScreenPos = RectTransformUtility.WorldToScreenPoint(
             pointer.GetComponentInParent<Canvas>().worldCamera,
             target.position
         );
-
-        Vector2 pointerScreenPos = RectTransformUtility.WorldToScreenPoint(
-            pointer.GetComponentInParent<Canvas>().worldCamera,
-            pointer.position
-        );
-
-        // Конвертируем обратно в локальные координаты
+        
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             pointer.parent as RectTransform,
             targetScreenPos,
             pointer.GetComponentInParent<Canvas>().worldCamera,
             out Vector2 targetAnchoredPos
         );
-
-        // Вычисляем направление
+        
         Vector2 direction = (targetAnchoredPos - startAnchoredPosition).normalized;
 
-        // Позиция приближения (2/3 расстояния до цели)
-        Vector2 approachPos = direction * oneThirdDistance;
-
-        // Позиция отступления (1/3 расстояния назад)
         Vector2 retreatPos = direction * (oneThirdDistance * 2.75f);
+
+        Vector2 approachPos = retreatPos - direction * retreatLenght;
 
         pointer.anchoredPosition = direction * (oneThirdDistance * 2.75f);
 
