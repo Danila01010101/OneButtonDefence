@@ -23,7 +23,6 @@ public class BasicMechanicsTutorial
     {
         if (objectsForTutorial == null || objectsForTutorial.Count == 0)
         {
-            Debug.Log("No tutorial objects in scene");
             return;
         }
         
