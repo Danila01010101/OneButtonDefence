@@ -66,7 +66,6 @@ public class DialogueSystem : MonoBehaviour
             Slider.value = 0;
             StopCoroutine(skipReplica);
         }
-
     }
 
     public void StartDialog()
