@@ -6,7 +6,12 @@ public class TutorialMessage : MonoBehaviour
 {
     [SerializeField] private TMP_Text messageText;
     [SerializeField] private RectTransform pointer;
+    [SerializeField] private float edgePadding = 40f;
+    [SerializeField] private float spacing = 125f;
 
+    public float EngePadding => edgePadding;
+    public float Spacing => spacing;
+    
     public event Action OnClosed;
     private GameObject target;
 
