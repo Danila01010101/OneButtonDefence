@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageText: {fileID: 8765943479488888108}
   pointer: {fileID: 1590686720197177343}
-  edgePadding: 20
+  edgePadding: 165
   spacing: 135
 --- !u!1 &3384404085927865681
 GameObject:
