@@ -35,8 +35,8 @@ public class BasicMechanicsTutorial
         
         if (objectsForTutorial == null || objectsForTutorial.Count == 0) 
             return;
-        
-        tutorialManager.ShowTutorial(objectsForTutorial[0], ShowNextTutorial);
+
+        ShowNextTutorial();
     }
     
     private void ActivateNextTutorial() => isActivated = true;
@@ -45,7 +45,7 @@ public class BasicMechanicsTutorial
 
     private IEnumerator WaitForNextTutorial()
     {   
-        if (++currentTutorialObjectIndex > objectsForTutorial.Count)
+        if (currentTutorialObjectIndex + 1 > objectsForTutorial.Count)
         {
             Debug.Log("Tutorial ended.");
             yield break;
@@ -57,7 +57,7 @@ public class BasicMechanicsTutorial
         }
 
         isActivated = false;
-        tutorialManager.ShowTutorial(objectsForTutorial[currentTutorialObjectIndex], ShowNextTutorial);
+        tutorialManager.ShowTutorial(objectsForTutorial[currentTutorialObjectIndex++], ShowNextTutorial);
         objectsForTutorial = TutorialManager.GetTutorialObjects();
         yield return null;
     }
