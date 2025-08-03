@@ -749,7 +749,6 @@ MonoBehaviour:
     \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0441\u044F..."
   duration: 14
   index: 0
-  isActivated: 1
 --- !u!1 &4343948189355866096
 GameObject:
   m_ObjectHideFlags: 0
