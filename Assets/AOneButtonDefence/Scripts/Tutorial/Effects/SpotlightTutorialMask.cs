@@ -1,58 +1,59 @@
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
+[RequireComponent(typeof(RawImage))]
 public class SpotlightTutorialMask : MonoBehaviour
 {
-    [SerializeField] private Material material;
-    
-    [Header("Скорость анимации")]
-    public float animationDuration = 0.4f;
+    [SerializeField] private float featherSize = 80f;
+    [SerializeField] private float animationDuration = 0.3f;
 
-    [Header("Отступ от объекта")]
-    public float padding = 20f;
+    private Material materialInstance;
+    private RectTransform canvasRectTransform;
+    private Tweener moveTween;
 
-    [Header("Маска, к которой применён шейдер")]
-    public Material spotlightMaterial;
+    private void Awake()
+    {
+        RawImage image = GetComponent<RawImage>();
+        materialInstance = Instantiate(image.material);
+        image.material = materialInstance;
 
-    [Header("Камера канваса (если нужна)")]
-    public Camera uiCamera;
+        Canvas canvas = GetComponentInParent<Canvas>();
+        if (canvas.renderMode != RenderMode.ScreenSpaceOverlay)
+        {
+            Debug.LogWarning("Этот скрипт работает только с ScreenSpaceOverlay Canvas.");
+        }
 
-    private Tween moveTween;
-    private Tween sizeTween;
+        canvasRectTransform = canvas.GetComponent<RectTransform>();
+
+        materialInstance.SetVector("_ScreenResolution", new Vector4(Screen.width, Screen.height, 0, 0));
+    }
 
     public void SetNewTarget(RectTransform target)
     {
-        Vector2 canvasSize = ((RectTransform)transform).rect.size;
+        Vector3[] corners = new Vector3[4];
+        target.GetWorldCorners(corners);
 
-        Vector2 worldPosition = target.position;
-        Vector2 viewportPosition = Camera.main.ScreenToViewportPoint(worldPosition);
-        Vector2 targetCenter = new Vector2(viewportPosition.x, viewportPosition.y);
-
-        Vector2 size = target.rect.size;
-        Vector2 targetSize = size / canvasSize;
-
-        Vector2 startCenter = material.GetVector("_HoleCenter");
-        Vector2 startSize = material.GetVector("_HoleSize");
+        Vector2 minScreenPos = RectTransformUtility.WorldToScreenPoint(null, corners[0]);
+        Vector2 maxScreenPos = RectTransformUtility.WorldToScreenPoint(null, corners[2]);
 
         moveTween?.Kill();
-        sizeTween?.Kill();
 
-        moveTween = DOTween.To(() => startCenter, 
-            val => material.SetVector("_HoleCenter", val), 
-            targetCenter, 
-            animationDuration);
+        Vector4 currentMin = materialInstance.GetVector("_RectMin");
+        Vector4 currentMax = materialInstance.GetVector("_RectMax");
 
-        sizeTween = DOTween.To(() => startSize, 
-            val => material.SetVector("_HoleSize", val), 
-            targetSize, 
-            animationDuration);
+        moveTween = DOTween.To(() => currentMin, v => {
+            materialInstance.SetVector("_RectMin", v);
+        }, new Vector4(minScreenPos.x, minScreenPos.y, 0, 0), animationDuration)
+        .SetEase(Ease.InOutQuad);
+
+        DOTween.To(() => currentMax, v => {
+            materialInstance.SetVector("_RectMax", v);
+        }, new Vector4(maxScreenPos.x, maxScreenPos.y, 0, 0), animationDuration)
+        .SetEase(Ease.InOutQuad);
+
+        materialInstance.SetVector("_Feather", new Vector4(featherSize, featherSize, 0, 0));
     }
 
-    public void HideHole()
-    {
-        moveTween?.Kill();
-        sizeTween?.Kill();
-
-        spotlightMaterial.SetVector("_HoleSize", Vector2.zero);
-    }
+    public void SetActive(bool state) => gameObject.SetActive(state);
 }
