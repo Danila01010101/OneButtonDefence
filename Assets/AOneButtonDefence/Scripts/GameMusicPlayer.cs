@@ -62,8 +62,10 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer
                 return data.UpgradeCampSoundEffect;
             case BasicBuildingData.Upgrades.Factory:
                 return data.UpgradeFactorySoundEffect;
-            case BasicBuildingData.Upgrades.WarriorStrenght:
+            case BasicBuildingData.Upgrades.WarriorStrength:
                 return data.WarriorBuffSoundEffect;
+            case BasicBuildingData.Upgrades.SpellStrength:
+                return data.SpellBuffSoundEffect;
             default:
                 throw new NotImplementedException();
         }

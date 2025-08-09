@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using AOneButtonDefence.Scripts.Initializators;
 using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
@@ -21,6 +22,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private GameObject debugCanvas;
     [SerializeField] private SpellCanvas spellCanvas;
     [SerializeField] private TutorialManager tutorialManagerPrefab;
+    [SerializeField] private SpotlightTutorialMask tutorialMaskPrefab;
     [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
     [SerializeField] private GameObject infoCanvas;
@@ -205,6 +207,10 @@ public class GameInitializer : MonoBehaviour
         // Tutorial
         var tutorialInit = new TutorialInitializer(tutorialManagerPrefab, upgradeCanvas.GetComponent<Canvas>());
         yield return tutorialInit.Initialize();
+        
+        //Tutorial mask
+        var tutorialSpotlightMask = new TutorialMaskInitializer(tutorialMaskPrefab, upgradeCanvas.GetComponent<Canvas>());
+        yield return tutorialSpotlightMask.Initialize();
 
         yield return null;
 

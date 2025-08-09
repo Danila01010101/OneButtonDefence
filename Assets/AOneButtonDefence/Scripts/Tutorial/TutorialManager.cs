@@ -30,12 +30,16 @@ public class TutorialManager : MonoBehaviour
         var tutorial = Instantiate(tutorialPrefab, canvas.transform);
         PositionTutorial(tutorial.GetComponent<RectTransform>(), tutorialObject.PointerTarget, tutorial.Spacing, tutorial.EngePadding);
         tutorial.Setup(tutorialObject.PointerTarget, tutorialObject.Message);
+        SpotlightTutorialMask.SetNewTarget(tutorialObject.PointerTarget.GetComponent<RectTransform>());
 
         if (tutorialObject.Duration > 0)
             Destroy(tutorial.gameObject, tutorialObject.Duration);
     
         if (onComplete != null)
+        {
+            tutorial.OnClosed += SpotlightTutorialMask.DisableMask;
             tutorial.OnClosed += onComplete;
+        }
     }
     
     private void PositionTutorial(RectTransform tutorialRect, GameObject target, float spacing, float edgePadding)

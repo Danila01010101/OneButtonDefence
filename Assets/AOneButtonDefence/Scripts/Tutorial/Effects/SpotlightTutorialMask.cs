@@ -11,9 +11,19 @@ public class SpotlightTutorialMask : MonoBehaviour
     private Material materialInstance;
     private RectTransform canvasRectTransform;
     private Tweener moveTween;
+    private static SpotlightTutorialMask instance;
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+            
         RawImage image = GetComponent<RawImage>();
         materialInstance = Instantiate(image.material);
         image.material = materialInstance;
@@ -29,8 +39,10 @@ public class SpotlightTutorialMask : MonoBehaviour
         materialInstance.SetVector("_ScreenResolution", new Vector4(Screen.width, Screen.height, 0, 0));
     }
 
-    public void SetNewTarget(RectTransform target)
+    private void ChangeMaskTarget(RectTransform target)
     {
+        SetActive(true);
+        
         Vector3[] corners = new Vector3[4];
         target.GetWorldCorners(corners);
 
@@ -55,5 +67,9 @@ public class SpotlightTutorialMask : MonoBehaviour
         materialInstance.SetVector("_Feather", new Vector4(featherSize, featherSize, 0, 0));
     }
 
-    public void SetActive(bool state) => gameObject.SetActive(state);
+    private void SetActive(bool state) => gameObject.SetActive(state);
+    
+    public static void SetNewTarget(RectTransform target) => instance.ChangeMaskTarget(target);
+
+    public static void DisableMask() => instance.SetActive(false);
 }
