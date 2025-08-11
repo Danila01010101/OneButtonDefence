@@ -37,6 +37,11 @@ public class SpotlightTutorialMask : MonoBehaviour
         canvasRectTransform = canvas.GetComponent<RectTransform>();
 
         materialInstance.SetVector("_ScreenResolution", new Vector4(Screen.width, Screen.height, 0, 0));
+
+        materialInstance.SetVector("_RectMin", new Vector4(Screen.width/2, Screen.height/2, 0, 0));
+        materialInstance.SetVector("_RectMax", new Vector4(Screen.width/2, Screen.height/2, 0, 0));
+
+        DisableMask();
     }
 
     private void ChangeMaskTarget(RectTransform target)

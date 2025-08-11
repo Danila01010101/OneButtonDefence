@@ -36,29 +36,38 @@ public class BasicMechanicsTutorial
         if (objectsForTutorial == null || objectsForTutorial.Count == 0) 
             return;
 
-        ShowNextTutorial();
+        ShowNextStep();
     }
     
     private void ActivateNextTutorial() => isActivated = true;
 
-    private void ShowNextTutorial() => CoroutineStarter.Instance.StartCoroutine(WaitForNextTutorial());
+    private void ShowNextStep()
+    {
+        CoroutineStarter.Instance.StartCoroutine(WaitForNextStep());
+    }
 
-    private IEnumerator WaitForNextTutorial()
-    {   
-        if (currentTutorialObjectIndex + 1 > objectsForTutorial.Count)
+    private IEnumerator WaitForNextStep()
+    {
+        var steps = objectsForTutorial.OrderBy(x => x.Index).ToList();
+
+        if (currentTutorialObjectIndex >= steps.Count)
         {
-            Debug.Log("Tutorial ended.");
+            Debug.Log("Tutorial finished!");
             yield break;
         }
 
-        while (isActivated == false)
-        {
-            yield return new WaitForSeconds(0.1f);
-        }
+        // Берём текущий шаг
+        var step = steps[currentTutorialObjectIndex];
+        currentTutorialObjectIndex++;
 
-        isActivated = false;
-        tutorialManager.ShowTutorial(objectsForTutorial[currentTutorialObjectIndex++], ShowNextTutorial);
-        SetTutorialObjects(TutorialManager.GetTutorialObjects());
+        // Показываем его и указываем, что после завершения надо вызвать ShowNextStep
+        while (step.IsActivated == false)
+        {
+            yield return null;
+        } 
+        
+        tutorialManager.ShowTutorial(step, ShowNextStep);
+
         yield return null;
     }
 }

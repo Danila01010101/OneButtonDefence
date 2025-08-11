@@ -10,6 +10,8 @@ public class UpgradeButton : MonoBehaviour
 
     private Button button;
 
+    public Action Activated;
+
     private void Awake()
     {
         button = GetComponent<Button>();
@@ -21,7 +23,11 @@ public class UpgradeButton : MonoBehaviour
         UpgradeTypesChoosen(firstPart, secondPart);
     }
 
-    public void Activate() => button.interactable = true;
+    public void Activate()
+    {
+        button.interactable = true;
+        Activated?.Invoke();
+    }
 
     public void Deactivate() => button.interactable = false;
 }

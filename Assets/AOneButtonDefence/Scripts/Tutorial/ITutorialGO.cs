@@ -6,6 +6,5 @@ public interface ITutorialGO
     string Message { get; }
     float Duration { get; }
     int Index { get; }
-    void TriggerStartTutorial();
-    void TriggerTaskFinished();
+    bool IsActivated { get; }
 }

@@ -34,12 +34,6 @@ public class TutorialManager : MonoBehaviour
 
         if (tutorialObject.Duration > 0)
             Destroy(tutorial.gameObject, tutorialObject.Duration);
-    
-        if (onComplete != null)
-        {
-            tutorial.OnClosed += SpotlightTutorialMask.DisableMask;
-            tutorial.OnClosed += onComplete;
-        }
     }
     
     private void PositionTutorial(RectTransform tutorialRect, GameObject target, float spacing, float edgePadding)

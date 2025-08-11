@@ -7,9 +7,11 @@ public class TutorialObject : MonoBehaviour, ITutorialGO
     [SerializeField] private string message;
     [SerializeField] private float duration = 0;
     [SerializeField] private int index;
+    [SerializeField] private bool IsActivatedFromStart = true;
+    
+    protected bool isActivated = false;
 
-    public bool IsActivated { get; private set; }
-    public static Action TaskTriggerActivated;
+    public bool IsActivated => IsActivatedFromStart || isActivated;
 
     public GameObject PointerTarget => pointerTarget == null ? gameObject : pointerTarget;
 
@@ -18,11 +20,4 @@ public class TutorialObject : MonoBehaviour, ITutorialGO
     public int Index => index;
 
     public float Duration => duration;
-    
-    public void TriggerTaskFinished() => IsActivated = true;
-
-    public void TriggerStartTutorial() 
-    {
-        if (IsActivated == false) TaskTriggerActivated?.Invoke();
-    }
 }
