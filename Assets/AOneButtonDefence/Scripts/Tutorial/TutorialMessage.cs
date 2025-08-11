@@ -15,10 +15,11 @@ public class TutorialMessage : MonoBehaviour
     public event Action OnClosed;
     private GameObject target;
 
-    public void Setup(GameObject target, string message)
+    public void Setup(GameObject target, string message, Action onClosed = null)
     {
         this.target = target;
         messageText.text = message;
+        OnClosed += onClosed;
 
         if (target.GetComponent<RectTransform>()) SetupForUI();
         else SetupForWorldObject();
@@ -57,6 +58,7 @@ public class TutorialMessage : MonoBehaviour
     public void Close()
     {
         OnClosed?.Invoke();
+        OnClosed = null;
         Destroy(gameObject);
     }
 }

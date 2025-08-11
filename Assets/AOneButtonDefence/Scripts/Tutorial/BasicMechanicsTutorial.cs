@@ -58,7 +58,7 @@ public class BasicMechanicsTutorial
 
         isActivated = false;
         tutorialManager.ShowTutorial(objectsForTutorial[currentTutorialObjectIndex++], ShowNextTutorial);
-        objectsForTutorial = TutorialManager.GetTutorialObjects();
+        SetTutorialObjects(TutorialManager.GetTutorialObjects());
         yield return null;
     }
 }

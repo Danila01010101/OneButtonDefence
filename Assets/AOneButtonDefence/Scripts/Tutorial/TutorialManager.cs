@@ -29,7 +29,7 @@ public class TutorialManager : MonoBehaviour
     {
         var tutorial = Instantiate(tutorialPrefab, canvas.transform);
         PositionTutorial(tutorial.GetComponent<RectTransform>(), tutorialObject.PointerTarget, tutorial.Spacing, tutorial.EngePadding);
-        tutorial.Setup(tutorialObject.PointerTarget, tutorialObject.Message);
+        tutorial.Setup(tutorialObject.PointerTarget, tutorialObject.Message, onComplete);
         SpotlightTutorialMask.SetNewTarget(tutorialObject.PointerTarget.GetComponent<RectTransform>());
 
         if (tutorialObject.Duration > 0)
