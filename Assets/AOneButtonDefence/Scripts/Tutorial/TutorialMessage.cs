@@ -57,9 +57,13 @@ public class TutorialMessage : MonoBehaviour
 
     public void Close()
     {
+        Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
         SpotlightTutorialMask.DisableMask();
         OnClosed?.Invoke();
         OnClosed = null;
-        Destroy(gameObject);
     }
 }

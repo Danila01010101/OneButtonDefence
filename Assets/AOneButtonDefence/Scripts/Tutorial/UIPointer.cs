@@ -45,6 +45,7 @@ public class UIPointer : MonoBehaviour
 
     private void CreatePointerAnimation()
     {
+        UpdatePointerRotation();
         if (!isInitialized || target == null || pointer == null) return;
 
         pointerSequence?.Kill();
@@ -92,7 +93,7 @@ public class UIPointer : MonoBehaviour
         );
 
         Vector2 direction = (targetScreenPos - pointerScreenPos).normalized;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 135f;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 100f;
         pointer.localRotation = Quaternion.Euler(0, 0, angle);
     }
 
