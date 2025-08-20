@@ -183,10 +183,12 @@ public class GameplayCanvas : MonoBehaviour
     private void OnEnable()
     {
         SkinPanel.ShopInitialized += DetectShopWindow;
+        UpgradeState.UpgradeStateStarted += UpdateUpgradeView;
     }
 
     private void OnDisable()
     {
         SkinPanel.ShopInitialized -= DetectShopWindow;
+        UpgradeState.UpgradeStateStarted -= UpdateUpgradeView;
     }
 }
