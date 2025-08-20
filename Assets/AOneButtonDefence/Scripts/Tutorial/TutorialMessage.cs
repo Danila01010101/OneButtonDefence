@@ -14,6 +14,8 @@ public class TutorialMessage : MonoBehaviour
     
     public event Action OnClosed;
     private GameObject target;
+    
+    public static event Action TutorialWindowDestroyed;
 
     public void Setup(GameObject target, string message, Action onClosed = null)
     {
@@ -65,5 +67,6 @@ public class TutorialMessage : MonoBehaviour
         SpotlightTutorialMask.DisableMask();
         OnClosed?.Invoke();
         OnClosed = null;
+        TutorialWindowDestroyed?.Invoke();
     }
 }
