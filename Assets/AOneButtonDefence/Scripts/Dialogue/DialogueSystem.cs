@@ -41,11 +41,13 @@ public class DialogueSystem : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         numReplic = 0;
+        Name.text = DialogueData.Name;
         
         if (Slider != null)
             Slider.value = 0;
-        Name.text = DialogueData.Name;
-        GnomeAdvisor.sprite = DialogueData.Label[numLabel].CharacterEmotion.Emotion();
+        
+        if (GnomeAdvisor != null)
+            GnomeAdvisor.sprite = DialogueData.Label[numLabel].CharacterEmotion.Emotion();
 
         gameObject.SetActive(true);
         replicaCoroutine = StartCoroutine(ShowReplica());
