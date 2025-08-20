@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +11,7 @@ public class TutorialManager : MonoBehaviour
 
     private static TutorialManager instance;
 
-    public static Action TutorialTriggered;
+    public static Action TutorialStepStarted;
 
     private void Awake()
     {
@@ -27,13 +28,21 @@ public class TutorialManager : MonoBehaviour
 
     public void ShowTutorial(ITutorialGO tutorialObject, Action onComplete = null)
     {
+        TriggerTutorial();
         var tutorial = Instantiate(tutorialPrefab, canvas.transform);
         PositionTutorial(tutorial.GetComponent<RectTransform>(), tutorialObject.PointerTarget, tutorial.Spacing, tutorial.EngePadding);
         tutorial.Setup(tutorialObject.PointerTarget, tutorialObject.Message, onComplete);
         SpotlightTutorialMask.SetNewTarget(tutorialObject.PointerTarget.GetComponent<RectTransform>());
 
         if (tutorialObject.Duration > 0)
-            Destroy(tutorial.gameObject, tutorialObject.Duration);
+            StartCoroutine(DestroyAfterRealtime(tutorial.gameObject, tutorialObject.Duration));
+    }
+    
+    public static List<ITutorialGO> GetTutorialObjects()
+    {
+        return FindObjectsByType<TutorialObject>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+            .Cast<ITutorialGO>()
+            .ToList();
     }
     
     private void PositionTutorial(RectTransform tutorialRect, GameObject target, float spacing, float edgePadding)
@@ -41,7 +50,6 @@ public class TutorialManager : MonoBehaviour
         var cam = canvas.worldCamera != null ? canvas.worldCamera : Camera.main;
         var canvasRect = canvas.GetComponent<RectTransform>();
 
-        // Сохраняем оригинальные anchor'ы и временно ставим центр
         Vector2 originalAnchorMin = tutorialRect.anchorMin;
         Vector2 originalAnchorMax = tutorialRect.anchorMax;
         tutorialRect.anchorMin = tutorialRect.anchorMax = new Vector2(0.5f, 0.5f);
@@ -56,11 +64,9 @@ public class TutorialManager : MonoBehaviour
             screenPos = RectTransformUtility.WorldToScreenPoint(cam, target.transform.position);
         }
 
-        // Центр экрана (в пикселях)
         float centerX = Screen.width * 0.5f;
         float centerY = Screen.height * 0.5f;
 
-        // Переводим в координаты с центром в (0,0)
         Vector2 centeredScreenPos = new Vector2(screenPos.x - centerX, screenPos.y - centerY);
 
         float halfWidth = tutorialRect.rect.width * 0.5f;
@@ -71,14 +77,13 @@ public class TutorialManager : MonoBehaviour
         float minY = -centerY + edgePadding + halfHeight;
         float maxY = centerY - edgePadding - halfHeight;
 
-        // Четыре потенциальных позиции относительно центра экрана
         Vector2[] candidates = new Vector2[4];
-        candidates[0] = new Vector2(centeredScreenPos.x + spacing + halfWidth, centeredScreenPos.y); // Right
-        candidates[1] = new Vector2(centeredScreenPos.x - spacing - halfWidth, centeredScreenPos.y); // Left
-        candidates[2] = new Vector2(centeredScreenPos.x, centeredScreenPos.y + spacing + halfHeight); // Top
-        candidates[3] = new Vector2(centeredScreenPos.x, centeredScreenPos.y - spacing - halfHeight); // Bottom
+        candidates[0] = new Vector2(centeredScreenPos.x + spacing + halfWidth, centeredScreenPos.y); 
+        candidates[1] = new Vector2(centeredScreenPos.x - spacing - halfWidth, centeredScreenPos.y); 
+        candidates[2] = new Vector2(centeredScreenPos.x, centeredScreenPos.y + spacing + halfHeight); 
+        candidates[3] = new Vector2(centeredScreenPos.x, centeredScreenPos.y - spacing - halfHeight);
 
-        Vector2 chosenPos = candidates[0]; // default
+        Vector2 chosenPos = candidates[0]; 
 
         foreach (var candidate in candidates)
         {
@@ -95,20 +100,19 @@ public class TutorialManager : MonoBehaviour
 
         tutorialRect.anchoredPosition = chosenPos;
 
-        // Возвращаем anchor обратно
         tutorialRect.anchorMin = originalAnchorMin;
         tutorialRect.anchorMax = originalAnchorMax;
     }
     
-    public static void TriggerTutorial()
+    private static void TriggerTutorial()
     {
-        TutorialTriggered?.Invoke();
+        TutorialStepStarted?.Invoke();
     }
     
-    public static List<ITutorialGO> GetTutorialObjects()
+    private IEnumerator DestroyAfterRealtime(GameObject obj, float delay)
     {
-        return FindObjectsByType<TutorialObject>(FindObjectsInactive.Include, FindObjectsSortMode.None)
-            .Cast<ITutorialGO>()
-            .ToList();
+        yield return new WaitForSecondsRealtime(delay);
+        if (obj != null)
+            Destroy(obj);
     }
 }

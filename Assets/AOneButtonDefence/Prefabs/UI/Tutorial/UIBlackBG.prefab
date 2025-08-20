@@ -87,4 +87,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   featherSize: 80
-  animationDuration: 0.6
+  animationDuration: 0.4

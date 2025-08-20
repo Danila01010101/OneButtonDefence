@@ -8,7 +8,6 @@ public class TutorialForResources : MonoBehaviour
     {
         handler = delegate
         {
-            TutorialManager.TriggerTutorial();
             DialogState.AnimatableDialogueEnded -= handler;
             Destroy(this);
         };

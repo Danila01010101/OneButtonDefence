@@ -4,14 +4,17 @@ using UnityEngine;
 public class UpgradeButtonTutorial : TutorialObject
 {
     [SerializeField] private UpgradeButton upgradeButton;
+
+    private Action handler;
     
     private void Awake()
     {
-        upgradeButton.Activated += delegate { isActivated = true; };
+        handler = delegate { isActivated = true; };
+        upgradeButton.Activated += handler;
     }
 
     private void OnDestroy()
     {
-        upgradeButton.Activated -= delegate { isActivated = true; };
+        upgradeButton.Activated -= handler;
     }
 }

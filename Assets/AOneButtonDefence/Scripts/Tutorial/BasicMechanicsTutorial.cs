@@ -15,7 +15,7 @@ public class BasicMechanicsTutorial
     {
         this.tutorialManager = tutorialManager;
         TutorialStartState.TutorialStarted += StartTutorial;
-        TutorialManager.TutorialTriggered += ActivateNextTutorial;
+        TutorialManager.TutorialStepStarted += ActivateNextTutorial;
         SetTutorialObjects(TutorialManager.GetTutorialObjects());
     }
 

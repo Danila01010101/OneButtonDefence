@@ -11,6 +11,7 @@ public class SpotlightTutorialMask : MonoBehaviour
     private Material materialInstance;
     private RectTransform canvasRectTransform;
     private Tweener moveTween;
+    private Tweener moveTweenMax;
     private static SpotlightTutorialMask instance;
 
     private void Awake()
@@ -22,8 +23,9 @@ public class SpotlightTutorialMask : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
-            
+
         RawImage image = GetComponent<RawImage>();
         materialInstance = Instantiate(image.material);
         image.material = materialInstance;
@@ -38,8 +40,8 @@ public class SpotlightTutorialMask : MonoBehaviour
 
         materialInstance.SetVector("_ScreenResolution", new Vector4(Screen.width, Screen.height, 0, 0));
 
-        materialInstance.SetVector("_RectMin", new Vector4(Screen.width/2, Screen.height/2, 0, 0));
-        materialInstance.SetVector("_RectMax", new Vector4(Screen.width/2, Screen.height/2, 0, 0));
+        materialInstance.SetVector("_RectMin", new Vector4(Screen.width / 2, Screen.height / 2, 0, 0));
+        materialInstance.SetVector("_RectMax", new Vector4(Screen.width / 2, Screen.height / 2, 0, 0));
 
         DisableMask();
     }
@@ -47,7 +49,7 @@ public class SpotlightTutorialMask : MonoBehaviour
     private void ChangeMaskTarget(RectTransform target)
     {
         SetActive(true);
-        
+
         Vector3[] corners = new Vector3[4];
         target.GetWorldCorners(corners);
 
@@ -55,25 +57,30 @@ public class SpotlightTutorialMask : MonoBehaviour
         Vector2 maxScreenPos = RectTransformUtility.WorldToScreenPoint(null, corners[2]);
 
         moveTween?.Kill();
+        moveTweenMax?.Kill();
 
         Vector4 currentMin = materialInstance.GetVector("_RectMin");
         Vector4 currentMax = materialInstance.GetVector("_RectMax");
 
-        moveTween = DOTween.To(() => currentMin, v => {
+        moveTween = DOTween.To(() => currentMin, v =>
+        {
             materialInstance.SetVector("_RectMin", v);
         }, new Vector4(minScreenPos.x, minScreenPos.y, 0, 0), animationDuration)
-        .SetEase(Ease.InOutQuad);
+        .SetEase(Ease.InOutQuad)
+        .SetUpdate(true);
 
-        DOTween.To(() => currentMax, v => {
+        moveTweenMax = DOTween.To(() => currentMax, v =>
+        {
             materialInstance.SetVector("_RectMax", v);
         }, new Vector4(maxScreenPos.x, maxScreenPos.y, 0, 0), animationDuration)
-        .SetEase(Ease.InOutQuad);
+        .SetEase(Ease.InOutQuad)
+        .SetUpdate(true);
 
         materialInstance.SetVector("_Feather", new Vector4(featherSize, featherSize, 0, 0));
     }
 
     private void SetActive(bool state) => gameObject.SetActive(state);
-    
+
     public static void SetNewTarget(RectTransform target) => instance.ChangeMaskTarget(target);
 
     public static void DisableMask() => instance.SetActive(false);
