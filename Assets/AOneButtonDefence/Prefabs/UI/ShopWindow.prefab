@@ -1132,6 +1132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5491645276051763623}
   - component: {fileID: 5975019631008922812}
+  - component: {fileID: 8533160605567349117}
   m_Layer: 5
   m_Name: ShopWindow
   m_TagString: Untagged
@@ -1196,6 +1197,19 @@ MonoBehaviour:
   PrevSkinSprite: {fileID: 119959241707246155}
   SelectSkinSprite: {fileID: 4193082239611531939}
   BuySkin: {fileID: 5921189152107910669}
+--- !u!114 &8533160605567349117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6055569704036511221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98c04129169156740a19d6ae658cba04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeButton: {fileID: 5179887331001502566}
 --- !u!1 &6247323890082645066
 GameObject:
   m_ObjectHideFlags: 0
@@ -1206,7 +1220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5281541342602822618}
   - component: {fileID: 7265604899236172030}
-  - component: {fileID: 6399392054171935080}
+  - component: {fileID: 2554970277582154647}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -1242,7 +1256,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6247323890082645066}
   m_CullTransparentMesh: 1
---- !u!114 &6399392054171935080
+--- !u!114 &2554970277582154647
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1251,27 +1265,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 6247323890082645066}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.015686275, g: 0.67058825, b: 0.48627454, a: 1}
+  m_Material: {fileID: 2100000, guid: 5f4ac1ae181d81448bd28b177f0b287a, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &6403460925968224385
 GameObject:
   m_ObjectHideFlags: 0
@@ -1815,19 +1826,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3529405939187526960}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6055569704036511221}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &7123093440972654026
 GameObject:
   m_ObjectHideFlags: 0

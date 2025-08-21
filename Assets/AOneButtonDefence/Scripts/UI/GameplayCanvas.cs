@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameplayCanvas : MonoBehaviour
@@ -15,12 +18,14 @@ public class GameplayCanvas : MonoBehaviour
     [SerializeField] private GameObject cellsSpawnParent;
     [SerializeField] private UpgradeButton upgradeButton;
     [SerializeField] private int buttonsDistance = 100;
-    [SerializeField] private Button shopButton;
-    [SerializeField] private Button settingsButton;
+    [SerializeField] private Button shopOpenButton;
+    [SerializeField] private Button settingsOpenButton;
     [SerializeField] private StatisticViewInitializer statisticViewInitializer;
 
-    private GameObject spawnedShopWindow;
-    private GameObject spawnedSettingsWindow;
+    private UnityAction shopWindowHandler;
+    private UnityAction settingsWindowHandler;
+    private ClosableWindow spawnedShopWindow;
+    private ClosableWindow spawnedSettingsWindow;
     private int partPlacingInterval = 0;
     private float startButtonsAmount;
     private List<UIInfoButton> parts = new List<UIInfoButton>();
@@ -78,28 +83,42 @@ public class GameplayCanvas : MonoBehaviour
             parts[i].Button.onClick.AddListener(delegate { ChoosePart(currentBuildingData.UpgradeType); });
             partsAnimators[i].SetIcon(currentBuildingData.Icon);
         }
-        
-        shopButton.onClick.RemoveAllListeners();
-        shopButton.onClick.AddListener(ShowShopWindow);
-        
-        settingsButton.onClick.RemoveAllListeners();
-        settingsButton.onClick.AddListener(ShowSettingsWindow);
     }
     
-    public void DetectSettingsWindow(GameObject window) => spawnedSettingsWindow = window;
+    public void DetectSettingsWindow(ClosableWindow window)
+    {
+        spawnedSettingsWindow = window;
+        settingsOpenButton.onClick.RemoveAllListeners();
+        settingsWindowHandler = () => { SetSettingsWindowActive(true); };
+        settingsOpenButton.onClick.AddListener(settingsWindowHandler);
+        spawnedSettingsWindow.AddCloseListener(() => { SetShopWindowActive(false); });
+    }
 
-    private void DetectShopWindow(GameObject window) => spawnedShopWindow = window;
+    private void DetectShopWindow(ClosableWindow window)
+    {
+        spawnedShopWindow = window;
+        shopOpenButton.onClick.RemoveAllListeners();
+        shopWindowHandler = () => { SetShopWindowActive(true); };
+        shopOpenButton.onClick.AddListener(shopWindowHandler);
+        spawnedShopWindow.AddCloseListener(() => { SetShopWindowActive(false); });
+    }
     
-    private void ShowShopWindow()
+    private void SetShopWindowActive(bool value)
     {
         if (spawnedShopWindow != null)
-            spawnedShopWindow.gameObject.SetActive(true);
+        {
+            spawnedShopWindow.gameObject.SetActive(value);
+            SetGameplayUIActive(!value);
+        }
     }
     
-    private void ShowSettingsWindow()
+    private void SetSettingsWindowActive(bool value)
     {
         if (spawnedSettingsWindow != null)
-            spawnedSettingsWindow.gameObject.SetActive(true);
+        {
+            spawnedSettingsWindow.gameObject.SetActive(value);
+            SetGameplayUIActive(!value);
+        }
     }
 
     private void ChoosePart(BasicBuildingData.Upgrades index)
@@ -167,6 +186,12 @@ public class GameplayCanvas : MonoBehaviour
         var buttonAnimation = spawnedButton.GetComponent<ButtonChooseAnimation>();
         partsAnimators.Add(buttonAnimation);
         parts.Add(spawnedButton);
+    }
+
+    private void SetGameplayUIActive(bool value)
+    {
+        UpgradeWindow.gameObject.SetActive(value);
+        ResourceInfo.gameObject.SetActive(value);
     }
 
     public void WhenButtonClicked()

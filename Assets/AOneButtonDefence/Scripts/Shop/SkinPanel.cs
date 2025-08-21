@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(ClosableWindow))]
 public class SkinPanel : MonoBehaviour
 {
     [SerializeField] private ShopSkinShower exampleSkinShowerPrefab;
@@ -25,7 +26,7 @@ public class SkinPanel : MonoBehaviour
     public Image BuySkin;
 
     public static Action<Mesh, Material> SkinChanged;
-    public static Action<GameObject> ShopInitialized;
+    public static Action<ClosableWindow> ShopInitialized;
     public static Action<int> SkinBought;
     public static Action ShopEnabled;
     public static Action ShopDisabled;
@@ -38,7 +39,7 @@ public class SkinPanel : MonoBehaviour
         spawnedShopSkinShower.Initialize(input);
         ChangeCurrentChose(0);
         SelectSkin(0);
-        ShopInitialized?.Invoke(gameObject);
+        ShopInitialized?.Invoke(GetComponent<ClosableWindow>());
         gameObject.SetActive(false);
     }
 
@@ -125,6 +126,7 @@ public class SkinPanel : MonoBehaviour
         
         ShopDisabled?.Invoke();
     }
+    
     private void ChangeText()
     {
         if (SkinList[CurrentChose].Unlocked)

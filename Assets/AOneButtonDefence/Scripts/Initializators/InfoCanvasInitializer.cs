@@ -3,10 +3,10 @@ using System.Collections;
 
 public class InfoCanvasInitializer : IGameInitializerStep
 {
-    private GameObject _prefab;
+    private ClosableWindow _prefab;
     private GameplayCanvas _canvas;
 
-    public InfoCanvasInitializer(GameObject prefab, GameplayCanvas canvas)
+    public InfoCanvasInitializer(ClosableWindow prefab, GameplayCanvas canvas)
     {
         _prefab = prefab;
         _canvas = canvas;
@@ -16,7 +16,7 @@ public class InfoCanvasInitializer : IGameInitializerStep
     {
         var infoCanvasInstance = Object.Instantiate(_prefab);
         _canvas.DetectSettingsWindow(infoCanvasInstance);
-        infoCanvasInstance.SetActive(false);
+        infoCanvasInstance.gameObject.SetActive(false);
         yield break;
     }
 }

@@ -129,8 +129,8 @@ MonoBehaviour:
   cellsSpawnParent: {fileID: 6221289014996434937}
   upgradeButton: {fileID: 6603050041364145697}
   buttonsDistance: 200
-  shopButton: {fileID: 1218620076972821894}
-  settingsButton: {fileID: 199075852536973038}
+  shopOpenButton: {fileID: 1218620076972821894}
+  settingsOpenButton: {fileID: 199075852536973038}
   statisticViewInitializer: {fileID: 1971182525426096033}
   <SoundSettings>k__BackingField: {fileID: 332662719412894983}
 --- !u!114 &6966281153083133322

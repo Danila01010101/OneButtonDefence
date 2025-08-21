@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using AOneButtonDefence.Scripts.Initializators;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameInitializer : MonoBehaviour
 {
-    [SerializeField] private bool isTestBuild;
+    [FormerlySerializedAs("isTestBuild")] [SerializeField] private bool addCoinsOnStart;
     [SerializeField] private Cinemachine.CinemachineVirtualCamera virtualCameraPrefab;
     [Header("Data")]
     [SerializeField] private GameData gameData;
@@ -25,7 +26,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private SpotlightTutorialMask tutorialMaskPrefab;
     [SerializeField] private SkinPanel shopSkinWindow;
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
-    [SerializeField] private GameObject infoCanvas;
+    [SerializeField] private ClosableWindow infoCanvas;
     [SerializeField] private WrightAngle.Waypoint.WaypointUIManager waypointUIManager;
 
     private bool isSerializationCompleted;
@@ -162,7 +163,7 @@ public class GameInitializer : MonoBehaviour
         GameObject spellCanvasObj = spellCanvasInit.Instance;
 
         // Debug canvas
-        var debugCanvasInit = new DebugCanvasInitializer(debugCanvas, isTestBuild);
+        var debugCanvasInit = new DebugCanvasInitializer(debugCanvas, addCoinsOnStart);
         yield return debugCanvasInit.Initialize();
 
         // Shop skin window
