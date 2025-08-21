@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class TutorialForBattle : TutorialObject
 {
+	[SerializeField] private int tutorialsForBattleAmount = 2;
+	
 	private Action handler;
 	private int closedTutorialsAmount;
-		
-	private readonly int tutorialsForBattleAmount = 2;
 	
 	private void Awake()
 	{
