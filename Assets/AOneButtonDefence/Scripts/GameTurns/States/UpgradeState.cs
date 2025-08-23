@@ -18,6 +18,8 @@ public class UpgradeState : IState
     public static Action UpgradeStateStarted;
     public static Action UpgradeStateEnding;
 
+    public static bool IsTimerWork{get; private set;} = false;
+
     public UpgradeState(IStringStateChanger stateMachine, GameplayCanvas upgradeUI, float upgradePhaseDuration, float upgradePhaseCompletionDelay)
     {
         this.stateMachine = stateMachine;
@@ -34,12 +36,14 @@ public class UpgradeState : IState
         upgradeUI.UpgradeWindow.gameObject.SetActive(true);
         UpgradeStateStarted?.Invoke();
         UpgradeButton.UpgradesChoosen += DetectUpgradeChoosing;
+        IsTimerWork = true;
     }
 
     public void Exit()
     {
         upgradeUI.UpgradeWindow.gameObject.SetActive(false);
         UpgradeButton.UpgradesChoosen -= DetectUpgradeChoosing;
+        IsTimerWork = false;
     }
 
     public void HandleInput() { }
