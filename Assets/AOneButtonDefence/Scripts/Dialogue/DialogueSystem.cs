@@ -58,10 +58,12 @@ public class DialogueSystem : MonoBehaviour
         {
             ChangeReplica();
         }
+        
         if (Input.GetKeyDown(KeyCodePerSkip) && Slider != null)
         {
             skipReplica = StartCoroutine(Timer(SkipTime));
         }
+        
         if (Input.GetKeyUp(KeyCodePerSkip))
         {
             Slider.value = 0;
@@ -89,8 +91,8 @@ public class DialogueSystem : MonoBehaviour
                 StopCoroutine(replicaCoroutine);
                 replicaCoroutine = null;
             }
+            
             numReplic++; 
-
             DetectReplicaSkip();
             return;
         }
@@ -132,15 +134,18 @@ public class DialogueSystem : MonoBehaviour
         StopCoroutine(replicaCoroutine);
         replicaCoroutine = StartCoroutine(ShowReplica());
     }
+    
     private void ChangeLabel(int label)
     {
         numLabel = label;
         numReplic = 0;
+        
         if (replicaCoroutine != null)
         {
             StopCoroutine(replicaCoroutine);
             replicaCoroutine = null;
         }
+        
         GnomeAdvisor.sprite = DialogueData.Label[numLabel].CharacterEmotion.Emotion();
         replicaCoroutine = StartCoroutine(ShowReplica());
     }
@@ -150,24 +155,24 @@ public class DialogueSystem : MonoBehaviour
         Destroy(gameObject);
         DialogEnded?.Invoke();
     }
-
-
-
+    
     private IEnumerator Timer(float time)
     {
         float timerTime = 0;
+        
         while (true) 
         {
             yield return new WaitForEndOfFrame();
             timerTime += Time.deltaTime;
             Slider.value = timerTime / time;
+            
             if (timerTime >= time)
             {
                 SkipDialog();
             }
         }
-        
     }
+    
     private IEnumerator ShowReplica()
     {
         showReplic = "";
@@ -175,11 +180,12 @@ public class DialogueSystem : MonoBehaviour
         {
             yield return new WaitForSeconds(ReplicSpeed);
             showReplic += replica;
+            Text.text = showReplic;
+            
             if(audioSource.isPlaying == false)
             {
                 audioSource.Play();
             }
-            Text.text = showReplic;
         }
         
         replicaCoroutine = null;
@@ -192,6 +198,7 @@ public class DialogueSystem : MonoBehaviour
             StopCoroutine(replicaCoroutine);
             replicaCoroutine = null;
         }
+        
         if (skipReplica != null)
         {
             StopCoroutine(skipReplica);
