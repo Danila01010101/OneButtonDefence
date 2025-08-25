@@ -1,14 +1,14 @@
-using System;
 using System.Collections;
 using AOneButtonDefence.Scripts.Data;
 using UnityEngine;
 
-namespace AOneButtonDefence.Scripts.Initializators
+namespace AOneButtonDefence.Scripts
 {
-    public class PlayerControllerInitializer : IGameInitializerStep
-    {        
-        public CharacterVisibilityToggler CharacterVisibilityToggler { get; private set; }
-        
+    public class PlayerControllerInitializer
+    {
+        private PlayerController playerControllerInstance;
+        private CharacterVisibilityToggler visibilityToggler;
+
         private readonly PlayerControllerInitializerData data;
 
         public PlayerControllerInitializer(PlayerControllerInitializerData data)
@@ -18,11 +18,28 @@ namespace AOneButtonDefence.Scripts.Initializators
 
         public IEnumerator Initialize()
         {
-            PlayerController playerControllerInstance = UnityEngine.Object.Instantiate(data.PlayerController);
+            playerControllerInstance = Object.Instantiate(
+                data.PlayerController, 
+                data.CharacterStartPosition, 
+                Quaternion.identity);
+
             playerControllerInstance.Initialize(data.PlayerData, data.CameraTransform);
-            CharacterVisibilityToggler = new CharacterVisibilityToggler(data.PlayerController, 
-                data.CharacterStartPosition, data.BattleStarted, data.BattleEnded );
+
+            visibilityToggler = new CharacterVisibilityToggler(
+                playerControllerInstance,
+                data.CharacterStartPosition,
+                data.BattleEvents);
+
             yield break;
+        }
+
+        public void Dispose()
+        {
+            visibilityToggler?.Dispose();
+            if (playerControllerInstance != null)
+            {
+                Object.Destroy(playerControllerInstance.gameObject);
+            }
         }
 
         public class PlayerControllerInitializerData
@@ -31,17 +48,20 @@ namespace AOneButtonDefence.Scripts.Initializators
             public readonly PlayerControllerData PlayerData;
             public readonly Transform CameraTransform;
             public readonly Vector3 CharacterStartPosition;
-            public readonly Action BattleStarted;
-            public readonly Action BattleEnded;
+            public readonly BattleEvents BattleEvents;
 
-            public PlayerControllerInitializerData(PlayerController playerController, PlayerControllerData playerData, Transform cameraTransform, Vector3 characterStartPosition, Action battleStarted, Action battleEnded)
+            public PlayerControllerInitializerData(
+                PlayerController playerController,
+                PlayerControllerData playerData,
+                Transform cameraTransform,
+                Vector3 characterStartPosition,
+                BattleEvents battleEvents)
             {
                 PlayerController = playerController;
                 PlayerData = playerData;
                 CameraTransform = cameraTransform;
                 CharacterStartPosition = characterStartPosition;
-                BattleStarted = battleStarted;
-                BattleEnded = battleEnded;
+                BattleEvents = battleEvents;
             }
         }
     }

@@ -6,38 +6,47 @@ namespace AOneButtonDefence.Scripts
     public class CharacterVisibilityToggler : IDisposable
     {
         private readonly PlayerController player;
-
+        private readonly BattleEvents battleEvents;
         private Vector3 characterPositionForBattle;
-        private Action battleStartAction;
-        private Action battleEndAction;
 
-        public CharacterVisibilityToggler(PlayerController player, Vector3 characterPositionForBattle, Action battleStartAction, Action battleEndAction)
+        public CharacterVisibilityToggler(PlayerController player, Vector3 characterPositionForBattle, BattleEvents battleEvents)
         {
             this.player = player;
             this.characterPositionForBattle = characterPositionForBattle;
-            this.battleStartAction = battleStartAction;
-            this.battleEndAction = battleEndAction;
-            battleStartAction += OnBattleStart;
-            battleEndAction += OnBattleEnd;
+            this.battleEvents = battleEvents;
+
+            HidePlayer();
+            battleEvents.Subscribe(ShowPlayer, HidePlayer);
         }
-        
+
         public void SetNewPosition(Vector3 newPosition) => characterPositionForBattle = newPosition;
 
-        private void OnBattleStart()
+        private void ShowPlayer() => player.Enable();
+
+        private void HidePlayer()
         {
-            player.transform.position = characterPositionForBattle;
             player.Disable();
+            player.transform.position = characterPositionForBattle;
         }
 
-        private void OnBattleEnd()
-        {
-            player.Enable();
-        }
-        
         public void Dispose()
         {
-            battleStartAction -= OnBattleStart;
-            battleEndAction -= OnBattleEnd;
+            battleEvents.Unsubscribe(ShowPlayer, HidePlayer);
+        }
+    }
+
+    public class BattleEvents
+    {
+        public void Subscribe(Action startHandler, Action endHandler)
+        {
+            GameBattleState.BattleStarted += startHandler;
+            GameBattleState.BattleWon += endHandler;
+        }
+
+        public void Unsubscribe(Action startHandler, Action endHandler)
+        {
+            GameBattleState.BattleStarted -= startHandler;
+            GameBattleState.BattleWon -= endHandler;
         }
     }
 }

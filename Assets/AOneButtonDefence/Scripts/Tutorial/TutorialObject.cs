@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class TutorialObject : MonoBehaviour, ITutorialGO
+public class TutorialObject : MonoBehaviour, ITutorialGO, IDisposable
 {
     [SerializeField] private GameObject pointerTarget;
     [SerializeField] private string message;
@@ -20,4 +20,6 @@ public class TutorialObject : MonoBehaviour, ITutorialGO
     public int Index => index;
 
     public float Duration => duration;
+
+    public virtual void Dispose() { }
 }

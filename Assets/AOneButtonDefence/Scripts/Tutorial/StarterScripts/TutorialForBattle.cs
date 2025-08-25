@@ -21,6 +21,11 @@ public class TutorialForBattle : TutorialObject
 		GameBattleState.BattleStarted += handler;
 	}
 
+	public override void Dispose()
+	{
+		GameBattleState.BattleStarted -= handler;
+	}
+
 	private void CheckBattleTutorialEnd()
 	{	
 		if (++closedTutorialsAmount >= tutorialsForBattleAmount - 1)

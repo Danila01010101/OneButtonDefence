@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using AOneButtonDefence.Scripts;
 using AOneButtonDefence.Scripts.Initializators;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class GameInitializer : MonoBehaviour
@@ -31,6 +33,8 @@ public class GameInitializer : MonoBehaviour
 
     private bool isSerializationCompleted;
     public static Action GameInitialized;
+
+    private Vector3 positionForTestOrb;
 
     private IInput input;
     private IDisableableInput disableableInput;
@@ -167,14 +171,22 @@ public class GameInitializer : MonoBehaviour
         var stateMachineInit = new StateMachineInitializer(gameData, enemiesData, upgradeCanvas, spellCanvasObj, worldCreator, worldGrid, disableableInput, gnomeDetector);
         yield return stateMachineInit.Initialize();
         gameStateMachine = stateMachineInit.Instance;
-
-        Vector3 worldPositionInCoordinates = worldGrid.GetWorldPositionByCoordinates(worldGrid.Size/2, worldGrid.Size/2);
-        Vector3 worldPosition = worldGrid.GetWorldPositionByCoordinates((int)worldPositionInCoordinates.x, (int)worldPositionInCoordinates.z);
+        
+        int centerIndex = worldGrid.Size / 2 - 1;
+        Vector3 playerSpawnPosition = worldGrid.GetWorldPositionByCoordinates(centerIndex, centerIndex) 
+                                      + gameData.GnomeSpawnOffset;
+        BattleEvents battleEvents = new BattleEvents();
         PlayerControllerInitializer.PlayerControllerInitializerData playerInitializeData =
             new PlayerControllerInitializer.PlayerControllerInitializerData(
-                gameData.PlayerUnit, gameData.PlayerUnitData, Camera.main.transform, worldPosition, GameBattleState.BattleStarted, GameBattleState.BattleWon);
+                gameData.PlayerUnit,
+                gameData.PlayerUnitData,
+                Camera.main.transform,
+                playerSpawnPosition,
+                battleEvents);
         PlayerControllerInitializer playerInitializer = new PlayerControllerInitializer(playerInitializeData);
+        positionForTestOrb = playerSpawnPosition;
         yield return playerInitializer.Initialize();
+
 
         battleNotifier.Subscribe();
 
@@ -206,6 +218,9 @@ public class GameInitializer : MonoBehaviour
     private void LateUpdate()
     {
         input?.LateUpdate();
+        
+        if (Input.GetKey(KeyCode.R))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void FixedUpdate()
@@ -213,5 +228,11 @@ public class GameInitializer : MonoBehaviour
         if (!isSerializationCompleted) return;
 
         gameStateMachine?.PhysicsUpdate();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (positionForTestOrb != null)
+            Gizmos.DrawCube(positionForTestOrb, Vector3.one * 10);
     }
 }

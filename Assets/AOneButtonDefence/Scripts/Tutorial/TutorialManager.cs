@@ -56,6 +56,7 @@ public class TutorialManager : MonoBehaviour
         {
             if (tutorial != null)
             {
+                tutorial.Dispose();
                 Destroy(tutorial);
             }
         }
