@@ -1,11 +1,10 @@
 ﻿using Adventurer;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+
 // Как я мог это написать? Я нифига не понимаю, ъуъуъуъ( (С) Mivoky
 [RequireComponent(typeof(AudioSource))]
 public class DialogueSystem : MonoBehaviour
