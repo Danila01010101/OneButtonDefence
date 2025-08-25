@@ -174,6 +174,7 @@ public class GameInitializer : MonoBehaviour
             new PlayerControllerInitializer.PlayerControllerInitializerData(
                 gameData.PlayerUnit, gameData.PlayerUnitData, Camera.main.transform, worldPosition, GameBattleState.BattleStarted, GameBattleState.BattleWon);
         PlayerControllerInitializer playerInitializer = new PlayerControllerInitializer(playerInitializeData);
+        yield return playerInitializer.Initialize();
 
         battleNotifier.Subscribe();
 
