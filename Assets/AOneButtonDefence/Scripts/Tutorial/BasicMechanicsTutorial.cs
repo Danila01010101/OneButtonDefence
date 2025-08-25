@@ -1,32 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class BasicMechanicsTutorial
+public class BasicMechanicsTutorial : IDisposable
 {
     private TutorialManager tutorialManager;
     private List<ITutorialGO> objectsForTutorial;
     private int currentTutorialObjectIndex;
     private bool isActivated;
+    private Coroutine runningCoroutine;
 
     public BasicMechanicsTutorial(TutorialManager tutorialManager)
     {
         this.tutorialManager = tutorialManager;
         TutorialStartState.TutorialStarted += StartTutorial;
         TutorialManager.TutorialStepStarted += ActivateNextTutorial;
+        TutorialMessage.OnSkipButtonPressed += SkipTutorial;
         SetTutorialObjects(TutorialManager.GetTutorialObjects());
     }
 
     public void SetTutorialObjects(List<ITutorialGO> foundObjectsForTutorial)
     {
-        if (objectsForTutorial == null || objectsForTutorial.Count == 0)
-        {
+        if (foundObjectsForTutorial == null || foundObjectsForTutorial.Count == 0)
             return;
-        }
         
-        objectsForTutorial = foundObjectsForTutorial.OrderBy(tutorialObject => tutorialObject.Index).ToList();
+        objectsForTutorial = foundObjectsForTutorial
+            .OrderBy(tutorialObject => tutorialObject.Index)
+            .ToList();
     } 
 
     public void StartTutorial()
@@ -43,7 +45,7 @@ public class BasicMechanicsTutorial
 
     private void ShowNextStep()
     {
-        CoroutineStarter.Instance.StartCoroutine(WaitForNextStep());
+        runningCoroutine = CoroutineStarter.Instance.StartCoroutine(WaitForNextStep());
     }
 
     private IEnumerator WaitForNextStep()
@@ -56,11 +58,9 @@ public class BasicMechanicsTutorial
             yield break;
         }
 
-        // Берём текущий шаг
         var step = steps[currentTutorialObjectIndex];
         currentTutorialObjectIndex++;
 
-        // Показываем его и указываем, что после завершения надо вызвать ShowNextStep
         while (step.IsActivated == false)
         {
             yield return null;
@@ -69,5 +69,27 @@ public class BasicMechanicsTutorial
         tutorialManager.ShowTutorial(step, ShowNextStep);
 
         yield return null;
+    }
+
+    private void SkipTutorial()
+    {
+        if (runningCoroutine != null)
+        {
+            CoroutineStarter.Instance.StopCoroutine(runningCoroutine);
+            runningCoroutine = null;
+        }
+
+        currentTutorialObjectIndex = objectsForTutorial?.Count ?? 0;
+
+        tutorialManager.EndTutorial();
+
+        Debug.Log("Tutorial skipped!");
+    }
+
+    public void Dispose()
+    {
+        TutorialStartState.TutorialStarted -= StartTutorial;
+        TutorialManager.TutorialStepStarted -= ActivateNextTutorial;
+        TutorialMessage.OnSkipButtonPressed -= SkipTutorial;
     }
 }

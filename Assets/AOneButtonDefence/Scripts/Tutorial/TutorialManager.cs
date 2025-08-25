@@ -45,6 +45,24 @@ public class TutorialManager : MonoBehaviour
             .ToList();
     }
     
+    public void EndTutorial()
+    {
+        var activeTutorials = FindObjectsByType<TutorialObject>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None
+        );
+
+        foreach (var tutorial in activeTutorials)
+        {
+            if (tutorial != null)
+            {
+                Destroy(tutorial);
+            }
+        }
+
+        Debug.Log("Tutorial skipped by user!");
+    }
+    
     private void PositionTutorial(RectTransform tutorialRect, GameObject target, float spacing, float edgePadding)
     {
         var cam = canvas.worldCamera != null ? canvas.worldCamera : Camera.main;
