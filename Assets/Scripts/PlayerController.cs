@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private PlayerInput playerInput;
     private Vector2 moveInput;
+    private Vector3 gravityDirection = Vector3.down;
 
     private void Awake()
     {
@@ -55,5 +56,6 @@ public class PlayerController : MonoBehaviour
         }
 
         controller.Move(moveDirection.normalized * (moveSpeed * Time.deltaTime));
+        controller.SimpleMove(gravityDirection * (Physics.gravity.y * Time.deltaTime));
     }
 }
