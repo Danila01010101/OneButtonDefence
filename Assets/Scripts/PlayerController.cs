@@ -1,3 +1,4 @@
+using AOneButtonDefence.Scripts.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,14 +6,13 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float rotationSpeed = 10f;
-    [SerializeField] private Transform cameraTransform;
-
+    private PlayerControllerData data;
+    private Transform cameraTransform;
     private CharacterController controller;
     private PlayerInput playerInput;
     private Vector2 moveInput;
-    private Vector3 gravityDirection = Vector3.down;
+    
+    private readonly Vector3 gravityDirection = Vector3.down;
 
     private void Awake()
     {
@@ -23,6 +23,28 @@ public class PlayerController : MonoBehaviour
 
         playerInput.actions["Move"].performed += OnMove;
         playerInput.actions["Move"].canceled += OnMove;
+    }
+
+    public void Initialize(PlayerControllerData data, Transform cameraTransform)
+    {
+        this.data = data;
+        this.cameraTransform = cameraTransform;
+    }
+
+    public void Enable()
+    {
+        if (controller != null) controller.enabled = true;
+        if (playerInput != null) playerInput.enabled = true;
+        enabled = true;
+        gameObject.SetActive(true);
+    }
+
+    public void Disable()
+    {
+        if (controller != null) controller.enabled = false;
+        if (playerInput != null) playerInput.enabled = false;
+        enabled = false;
+        gameObject.SetActive(false);
     }
 
     private void OnDestroy()
@@ -38,6 +60,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!enabled || !playerInput.enabled) return;
+
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;
 
@@ -52,10 +76,10 @@ public class PlayerController : MonoBehaviour
         if (moveDirection.sqrMagnitude > 0.01f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, data.RotationSpeed * Time.deltaTime);
         }
 
-        controller.Move(moveDirection.normalized * (moveSpeed * Time.deltaTime));
+        controller.Move(moveDirection.normalized * (data.MoveSpeed * Time.deltaTime));
         controller.SimpleMove(gravityDirection * (Physics.gravity.y * Time.deltaTime));
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AOneButtonDefence.Scripts.Data;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GameTurnsData", menuName = "ScriptableObjects/new GameData")]
@@ -23,6 +24,8 @@ public class GameData : ScriptableObject
     
     //[field: SerializeField] public int TurnAmountBeforeEvent { get; private set; } = 4;
     [field: Header("Battle parameters")]
+    [field: SerializeField] public PlayerControllerData PlayerUnitData { get; private set; }
+    [field: SerializeField] public PlayerController PlayerUnit { get; private set; }
     [field: SerializeField] public GnomeFightingUnit GnomeUnit { get; private set; }
     [field: SerializeField] public Vector3 GnomeSpawnOffset { get; private set; }
     [field: SerializeField] public BattleWavesParameters BattleWavesParameters { get; private set; }
