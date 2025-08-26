@@ -37,11 +37,13 @@ public class DesctopInput : IInput, IDisableableInput
 
     public void LateUpdate()
     {
+        HandleRotateInput();
+        
         if (enabled == false)
             return;
+        
         KeyboardMoveInput();
         HandleMoveInput();
-        HandleRotateInput();
         HandleScrollInput();
     }
     
@@ -74,11 +76,13 @@ public class DesctopInput : IInput, IDisableableInput
             lastMousePosition = Input.mousePosition;
         }
     }
+    
     private void KeyboardMoveInput()
     {
         Vector3 moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         Moved?.Invoke(moveDirection);
     }
+    
     private void HandleRotateInput()
     {
         if (Input.GetMouseButton(rotateMouseButton))
