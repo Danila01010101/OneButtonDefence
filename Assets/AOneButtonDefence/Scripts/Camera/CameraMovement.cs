@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     private CameraData data;
+    private Transform defaultTarget;
     private Transform target;
     private CinemachineVirtualCamera virtualCamera;
     private IInput input;
@@ -12,12 +13,13 @@ public class CameraMovement : MonoBehaviour
     private float currentX;
     private float currentY;
     private Vector3 rotationVelocity;
-    private bool isInitialize;
+    private bool isInitialized;
     private bool canMove = true;
 
     public void Initialize(IInput input, CameraData data)
     {
-        target = new GameObject("CameraTarget").transform;
+        defaultTarget = new GameObject("CameraTarget").transform;
+        target = defaultTarget;
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
         virtualCamera.Follow = target;
         virtualCamera.LookAt = target;
@@ -32,12 +34,12 @@ public class CameraMovement : MonoBehaviour
         
         UpdateCameraPositionAndRotation();
         Subscribe();
-        isInitialize = true;
+        isInitialized = true;
     }
 
     private void LateUpdate()
     {
-        if (isInitialize && canMove)
+        if (isInitialized)
         {
             UpdateCameraPositionAndRotation();
         }
@@ -88,20 +90,35 @@ public class CameraMovement : MonoBehaviour
         
         currentDistance = Mathf.Clamp(currentDistance - heightAxis * data.CameraZoomSpeed, data.MinimumCameraDistance, data.MaximumCameraDistance);
     }
+
+    private void ChangeTarget(Transform target)
+    {
+        DisableCameraTargetMovement();
+        defaultTarget.transform.position = target.position;
+        this.target = target;
+    }
+
+    private void ResetTarget()
+    {
+        target = defaultTarget;
+        EnableCameraTargetMovement();
+    }
     
-    private void EnableCamera() => canMove = true;
+    private void EnableCameraTargetMovement() => canMove = true;
     
-    private void DisableCamera() => canMove = false;
+    private void DisableCameraTargetMovement() => canMove = false;
 
     private void Subscribe()
     {
         input.Moved += MoveCamera;
         input.Rotated += RotateCamera;
         input.Scroll += ChangeHeight;
-        DialogState.AnimatableDialogueStarted += DisableCamera;
-        DialogState.AnimatableDialogueEnded += EnableCamera;
-        SkinPanel.ShopEnabled += DisableCamera;
-        SkinPanel.ShopDisabled += EnableCamera;
+        DialogState.AnimatableDialogueStarted += DisableCameraTargetMovement;
+        DialogState.AnimatableDialogueEnded += EnableCameraTargetMovement;
+        SkinPanel.ShopEnabled += DisableCameraTargetMovement;
+        SkinPanel.ShopDisabled += EnableCameraTargetMovement;
+        PlayerController.CharacterEnabled += ChangeTarget;
+        PlayerController.CharacterDisabled += ResetTarget;
     }
 
     private void Unsubscribe()
@@ -109,10 +126,10 @@ public class CameraMovement : MonoBehaviour
         input.Moved -= MoveCamera;
         input.Rotated -= RotateCamera;
         input.Scroll -= ChangeHeight;
-        DialogState.AnimatableDialogueStarted -= DisableCamera;
-        DialogState.AnimatableDialogueEnded -= EnableCamera;
-        SkinPanel.ShopEnabled -= DisableCamera;
-        SkinPanel.ShopDisabled -= EnableCamera;
+        DialogState.AnimatableDialogueStarted -= DisableCameraTargetMovement;
+        DialogState.AnimatableDialogueEnded -= EnableCameraTargetMovement;
+        SkinPanel.ShopEnabled -= DisableCameraTargetMovement;
+        SkinPanel.ShopDisabled -= EnableCameraTargetMovement;
     }
 
     private void OnEnable()

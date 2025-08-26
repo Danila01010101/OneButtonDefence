@@ -1,3 +1,4 @@
+using System;
 using AOneButtonDefence.Scripts.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     
     private readonly Vector3 gravityDirection = Vector3.down;
+
+    public static Action<Transform> CharacterEnabled;
+    public static Action CharacterDisabled;
 
     private void Awake()
     {
@@ -37,6 +41,7 @@ public class PlayerController : MonoBehaviour
         if (playerInput != null) playerInput.enabled = true;
         enabled = true;
         gameObject.SetActive(true);
+        CharacterEnabled?.Invoke(transform);
     }
 
     public void Disable()
@@ -45,6 +50,7 @@ public class PlayerController : MonoBehaviour
         if (playerInput != null) playerInput.enabled = false;
         enabled = false;
         gameObject.SetActive(false);
+        CharacterDisabled?.Invoke();
     }
 
     private void OnDestroy()
