@@ -5,9 +5,9 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     private CameraData data;
-    private Transform targetObject;   // точка, за которой следует камера
-    private Transform target;         // всегда == targetObject (для vcam)
-    private Transform followTarget;   // цель, к которой targetObject тянется
+    private Transform targetObject;
+    private Transform target;
+    private Transform followTarget;
 
     private CinemachineVirtualCamera virtualCamera;
     private IInput input;
@@ -36,13 +36,7 @@ public class CameraMovement : MonoBehaviour
         currentX = angles.x;
         currentY = angles.y;
 
-        // Привести targetObject к начальной позиции/повороту
-        targetObject.position = target.position;
-        targetObject.rotation = Quaternion.Euler(currentX, currentY, 0f);
-
-        UpdateCameraRotation(); // сразу выставить вращение
-        UpdateCameraPosition(); // сразу вычислить позицию
-
+        UpdateCameraPosition();
         Subscribe();
         isInitialized = true;
     }
@@ -51,10 +45,8 @@ public class CameraMovement : MonoBehaviour
     {
         if (!isInitialized) return;
 
-        // 1) Плавно двигаем targetObject к реальному таргету (если есть)
         if (followTarget != null)
         {
-            // можно использовать отдельный коэффициент сглаживания, если нужно
             targetObject.position = Vector3.Lerp(
                 targetObject.position,
                 followTarget.position,
@@ -62,35 +54,26 @@ public class CameraMovement : MonoBehaviour
             );
         }
 
-        // 2) Сначала обновляем поворот камеры (исходя из currentX/currentY)
-        UpdateCameraRotation();
-
-        // 3) Затем обновляем позицию камеры (с использованием уже установленного transform.rotation)
         UpdateCameraPosition();
+        UpdateCameraRotation();
     }
 
     private void UpdateCameraPosition()
     {
-        // вычисляем цель позицию камеры, используя текущий поворот transform.rotation
-        Vector3 targetPosition = target.position - (transform.rotation * Vector3.forward * currentDistance);
+        Vector3 targetPosition = target.position - (Quaternion.Euler(currentX, currentY, 0) * Vector3.forward * currentDistance);
         transform.position = Vector3.Lerp(transform.position, targetPosition, data.CameraRotationSmooth * Time.deltaTime);
     }
 
     private void UpdateCameraRotation()
     {
         Quaternion targetRotation = Quaternion.Euler(currentX, currentY, 0f);
-
-        // Применяем поворот к самой камере (transform) — это важно
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, data.CameraRotationSmooth * Time.deltaTime);
 
-        // И синхронизируем поворот targetObject с камерой — гарантия, что LookAt/Follower видят ту же ориентацию
         targetObject.rotation = transform.rotation;
     }
 
     private void RotateCamera(Vector2 direction)
     {
-        // Ротация разрешена если canMove == true ИЛИ если мы в режиме привязки к target (targetChanged == true)
-        // Если ты хочешь запретить вращение при targetChanged — поменяй условие наоборот.
         if (!canMove && !targetChanged) return;
 
         direction *= data.CameraRotateSpeed;
@@ -113,7 +96,6 @@ public class CameraMovement : MonoBehaviour
         right.Normalize();
 
         Vector3 movement = (forward * moveDirection.z + right * moveDirection.x) * data.CameraMovementSpeed;
-        // двигаем именно targetObject (target == targetObject)
         target.position += movement;
     }
 
@@ -131,13 +113,13 @@ public class CameraMovement : MonoBehaviour
     private void ChangeTarget(Transform newRealTarget)
     {
         DisableCameraTargetMovement();
-        followTarget = newRealTarget; // targetObject плавно едет к новой цели
+        followTarget = newRealTarget;
         targetChanged = true;
     }
 
     private void ResetTarget()
     {
-        followTarget = null; // возвращаем управление в руки игрока
+        followTarget = null;
         EnableCameraTargetMovement();
         targetChanged = false;
     }
