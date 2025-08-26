@@ -60,8 +60,6 @@ public class TutorialManager : MonoBehaviour
                 Destroy(tutorial);
             }
         }
-
-        Debug.Log("Tutorial skipped by user!");
     }
     
     private void PositionTutorial(RectTransform tutorialRect, GameObject target, float spacing, float edgePadding)

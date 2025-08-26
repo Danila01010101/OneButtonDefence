@@ -54,7 +54,6 @@ public class BasicMechanicsTutorial : IDisposable
 
         if (currentTutorialObjectIndex >= steps.Count)
         {
-            Debug.Log("Tutorial finished!");
             yield break;
         }
 
@@ -82,8 +81,6 @@ public class BasicMechanicsTutorial : IDisposable
         currentTutorialObjectIndex = objectsForTutorial?.Count ?? 0;
 
         tutorialManager.EndTutorial();
-
-        Debug.Log("Tutorial skipped!");
     }
 
     public void Dispose()
