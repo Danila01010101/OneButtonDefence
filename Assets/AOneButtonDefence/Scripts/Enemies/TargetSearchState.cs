@@ -20,13 +20,13 @@ public class TargetSearchState : IState
         walkingAnimation = data.WalkingAnimation;
     }
 
-    public void Enter()
+    public virtual void Enter()
     {
         LookForTarget();
         detector.NewEnemiesDetected += LookForTarget;
     }
 
-    public void Exit()
+    public virtual void Exit()
     {
         walkingAnimation.StopAnimation();
         detector.NewEnemiesDetected -= LookForTarget;
@@ -59,7 +59,7 @@ public class TargetSearchState : IState
         }
     }
 
-    private void LookForTarget()
+    protected virtual void LookForTarget()
     {
         Transform detectedEnemy = null;
         float detectedEnemyStoppingDistance = 0f;

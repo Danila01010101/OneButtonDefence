@@ -7,6 +7,7 @@ public class UnitWithGems : FightingUnit
     [SerializeField] private WaypointTarget waypoint;
     
     public static Action<Vector3, int> OnEnemyDeath;
+    
     private void Start()
     {
         if (waypoint == null)
@@ -15,6 +16,15 @@ public class UnitWithGems : FightingUnit
         waypoint.ActivateWaypoint();
         WaypointUIManager.OnWaypointTargetAdd.Invoke(waypoint);
     }
+
+    protected override void InitializeStateMachine(IEnemyDetector detector)
+    {
+        var data = new WarriorStateMachine.WarriorStateMachineData(
+            transform, characterStats, navMeshComponent,
+            walkingAnimation, fightAnimation, detector);
+        stateMachine = new EnemyStateMachine(data);
+    }
+    
     protected override void Die()
     {
         base.Die();
