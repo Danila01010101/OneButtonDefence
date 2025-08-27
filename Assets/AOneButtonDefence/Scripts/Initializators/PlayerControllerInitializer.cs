@@ -19,8 +19,8 @@ namespace AOneButtonDefence.Scripts
         public IEnumerator Initialize()
         {
             playerControllerInstance = Object.Instantiate(
-                data.PlayerController, 
-                data.CharacterStartPosition, 
+                data.PlayerController,
+                data.CharacterStartPosition,
                 Quaternion.identity);
 
             playerControllerInstance.Initialize(data.PlayerData, data.CameraTransform);

@@ -5,18 +5,20 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInput))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamagable
 {
     private PlayerControllerData data;
     private Transform cameraTransform;
     private CharacterController controller;
     private PlayerInput playerInput;
     private Vector2 moveInput;
+    private Health health;
     
     private readonly Vector3 gravityDirection = Vector3.down;
 
     public static Action<Transform> CharacterEnabled;
     public static Action CharacterDisabled;
+    public static Action PlayerDead;
 
     private void Awake()
     {
@@ -33,7 +35,15 @@ public class PlayerController : MonoBehaviour
     {
         this.data = data;
         this.cameraTransform = cameraTransform;
+        health = new Health(data.StartHealth);
+        health.Death += NotifyOfPlayerDeath;
     }
+
+    public bool IsAlive() => health.amount > 0;
+
+    public void TakeDamage(int damage) => health.TakeDamage(damage);
+    
+    private void NotifyOfPlayerDeath() => PlayerDead?.Invoke();
 
     public void Enable()
     {
@@ -57,6 +67,7 @@ public class PlayerController : MonoBehaviour
     {
         playerInput.actions["Move"].performed -= OnMove;
         playerInput.actions["Move"].canceled -= OnMove;
+        health.Death -= NotifyOfPlayerDeath;
     }
 
     private void OnMove(InputAction.CallbackContext context)
