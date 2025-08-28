@@ -46,14 +46,14 @@ namespace AOneButtonDefence.Scripts
         {
             public readonly PlayerController PlayerController;
             public readonly PlayerControllerData PlayerData;
-            public readonly Transform CameraTransform;
+            public readonly Camera CameraTransform;
             public readonly Vector3 CharacterStartPosition;
             public readonly BattleEvents BattleEvents;
 
             public PlayerControllerInitializerData(
                 PlayerController playerController,
                 PlayerControllerData playerData,
-                Transform cameraTransform,
+                Camera cameraTransform,
                 Vector3 characterStartPosition,
                 BattleEvents battleEvents)
             {

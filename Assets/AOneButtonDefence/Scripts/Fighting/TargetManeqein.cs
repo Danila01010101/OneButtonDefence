@@ -8,4 +8,9 @@ public class TargetManeqein : MonoBehaviour, IDamagable
     {
         Debug.Log("Manequen attaked!");
     }
+
+    public string GetName()
+    {
+        return gameObject.name;
+    }
 }

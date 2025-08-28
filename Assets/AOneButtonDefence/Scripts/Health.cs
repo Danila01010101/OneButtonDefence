@@ -3,12 +3,17 @@ using UnityEngine;
 
 public class Health
 {
-    public float amount { get; private set; }
+    public float Amount { get; private set; }
+    
+    public Action<float, float> AmountChanged;
     public Action Death;
+
+    private float maxHealth;
 
     public Health(float startHealth)
     {
-        amount = startHealth;
+        Amount = startHealth;
+        maxHealth = startHealth;
     }
 
     public void TakeDamage(int damage)
@@ -16,9 +21,10 @@ public class Health
         if (damage < 0)
             throw new ArgumentOutOfRangeException();
 
-        amount -= damage;
+        Amount -= damage;
+        AmountChanged?.Invoke(Amount, maxHealth);
 
-        if (amount <= 0)
+        if (Amount <= 0)
             Death?.Invoke();
     }
 
@@ -27,6 +33,6 @@ public class Health
         if (amount < 0)
             throw new ArgumentOutOfRangeException();
 
-        this.amount += amount;
+        this.Amount += amount;
     }
 }

@@ -2,11 +2,14 @@ using System;
 using AOneButtonDefence.Scripts.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour, IDamagable
 {
+    [FormerlySerializedAs("healthbarPrefab")] [SerializeField] private PlayerHealthbar healthbar;
+    
     private PlayerControllerData data;
     private Transform cameraTransform;
     private CharacterController controller;
@@ -31,19 +34,28 @@ public class PlayerController : MonoBehaviour, IDamagable
         playerInput.actions["Move"].canceled += OnMove;
     }
 
-    public void Initialize(PlayerControllerData data, Transform cameraTransform)
+    public void Initialize(PlayerControllerData data, Camera camera)
     {
         this.data = data;
-        this.cameraTransform = cameraTransform;
+        cameraTransform = camera.transform;
         health = new Health(data.StartHealth);
+        healthbar.Initialize(health, camera);
         health.Death += NotifyOfPlayerDeath;
     }
 
-    public bool IsAlive() => health.amount > 0;
+    public bool IsAlive() => health.Amount > 0;
 
     public void TakeDamage(int damage) => health.TakeDamage(damage);
-    
-    private void NotifyOfPlayerDeath() => PlayerDead?.Invoke();
+    public string GetName()
+    {
+        return gameObject.name;
+    }
+
+    private void NotifyOfPlayerDeath()
+    {
+        PlayerDead?.Invoke();
+        Debug.Log("Player died");
+    }
 
     public void Enable()
     {

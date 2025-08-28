@@ -51,7 +51,12 @@ public class FightingUnit : MonoBehaviour, IDamagable
         health.TakeDamage(damage);
     }
 
-    public bool IsAlive() => health.amount > 0;
+    public string GetName()
+    {
+        return gameObject.name;
+    }
+
+    public bool IsAlive() => health.Amount > 0;
 
     protected virtual void InitializeAnimationComponents()
     {

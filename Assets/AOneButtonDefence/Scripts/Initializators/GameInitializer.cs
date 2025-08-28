@@ -180,7 +180,7 @@ public class GameInitializer : MonoBehaviour
             new PlayerControllerInitializer.PlayerControllerInitializerData(
                 gameData.PlayerUnit,
                 gameData.PlayerUnitData,
-                Camera.main.transform,
+                Camera.main,
                 playerSpawnPosition,
                 battleEvents);
         PlayerControllerInitializer playerInitializer = new PlayerControllerInitializer(playerInitializeData);
