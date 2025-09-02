@@ -10,6 +10,7 @@ public class FightState : IState, ITargetAttacker
     protected readonly float AttackDelay;
     protected readonly int BasicDamage;
     protected readonly int DamageUpgradeValue;
+    protected readonly float DefaultDistanceToLoseTarget = 1.2f;
 
     protected int Damage => BasicDamage + DamageUpgradeValue * GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.StrenghtBuff);
     protected bool IsTargetSetted;
@@ -81,7 +82,8 @@ public class FightState : IState, ITargetAttacker
 
     private void CheckTarget()
     {
-        if (Target == null || Target.IsAlive() == false)
+        if (Target == null || Target.IsAlive() == false || 
+            Vector3.Distance(Target.GetTransform().position, SelfDamageable.GetSelfDamagable().GetTransform().position) > DefaultDistanceToLoseTarget)
         {
             StateMachine.ChangeState<TargetSearchState>();
         }

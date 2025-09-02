@@ -45,6 +45,7 @@ public class GameBattleState : IState
         BattleStarted?.Invoke();
         StartWave();
         spellCanvas.SetActive(true);
+        PlayerController.PlayerDead += LoseBattle;
     }
 
     public void Exit()
@@ -60,6 +61,8 @@ public class GameBattleState : IState
         {
             coroutineStarter.StopCoroutine(endTurnCheckCoroutine);
         }
+        
+        PlayerController.PlayerDead -= LoseBattle;
     }
 
     public void HandleInput() { }
@@ -117,9 +120,7 @@ public class GameBattleState : IState
             }
             else
             {
-                WaveCounter.Instance.EndWave();
-                BattleWon?.Invoke();
-                stateMachine.ChangeStateWithString(GameStateNames.WinDialogue);
+                WinBattle();
             }
 
             if (gnomeUnits.Count > 0)
@@ -128,10 +129,22 @@ public class GameBattleState : IState
             }
             else
             {
-                BattleLost?.Invoke();
-                stateMachine.ChangeStateWithString(GameStateNames.BattleLoseDialogue);
+                LoseBattle();
             }
         }
+    }
+
+    private void LoseBattle()
+    {
+        BattleLost?.Invoke();
+        stateMachine.ChangeStateWithString(GameStateNames.BattleLoseDialogue);
+    }
+
+    private void WinBattle()
+    {
+        WaveCounter.Instance.EndWave();
+        BattleWon?.Invoke();
+        stateMachine.ChangeStateWithString(GameStateNames.WinDialogue);
     }
 
     private void CheckAndClearUnits(List<GameObject> units)
