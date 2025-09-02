@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour, IDamagable
 {
-    [FormerlySerializedAs("healthbarPrefab")] [SerializeField] private PlayerHealthbar healthbar;
+    [SerializeField] private PlayerHealthbar healthbar;
     
     private PlayerControllerData data;
     private Transform cameraTransform;
@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     private void NotifyOfPlayerDeath()
     {
         PlayerDead?.Invoke();
+        Disable();
+        Destroy(gameObject, 0.1f);
         Debug.Log("Player died");
     }
 

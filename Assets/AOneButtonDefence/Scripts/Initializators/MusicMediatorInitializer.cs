@@ -1,6 +1,7 @@
+using System;
 using System.Collections;
 
-public class MusicMediatorInitializer : IGameInitializerStep
+public class MusicMediatorInitializer : IGameInitializerStep, IDisposable
 {
     private IBackgroundMusicPlayer _bgPlayer;
     private IUpgradeEffectPlayer _upgradePlayer;
@@ -17,5 +18,10 @@ public class MusicMediatorInitializer : IGameInitializerStep
         Mediator = new MusicPlayerMediator(_bgPlayer, _upgradePlayer);
         Mediator.Subscribe();
         yield break;
+    }
+
+    public void Dispose()
+    {
+        Mediator.Unsubscribe();
     }
 }

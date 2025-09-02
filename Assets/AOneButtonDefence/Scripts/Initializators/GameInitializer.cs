@@ -39,6 +39,7 @@ public class GameInitializer : MonoBehaviour
     private IInput input;
     private IDisableableInput disableableInput;
     private GameStateMachine gameStateMachine;
+    private readonly List<IDisposable> disposables = new List<IDisposable>();
 
     private void Awake()
     {
@@ -76,6 +77,9 @@ public class GameInitializer : MonoBehaviour
         var musicMediatorInit = new MusicMediatorInitializer(backgroundMusicPlayer, upgradeEffectPlayer);
         yield return musicMediatorInit.Initialize();
         var musicMediator = musicMediatorInit.Mediator;
+        
+        if (musicMediatorInit is IDisposable disposable)
+            disposables.Add(disposable);
 
         var waveCounterInit = new WaveCounterInitializer(initializedObjectsParent);
         yield return waveCounterInit.Initialize();
@@ -234,5 +238,21 @@ public class GameInitializer : MonoBehaviour
     {
         if (positionForTestOrb != null)
             Gizmos.DrawCube(positionForTestOrb, Vector3.one * 10);
+    }
+    
+    private void OnDestroy()
+    {
+        foreach (var disposable in disposables)
+        {
+            try
+            {
+                disposable.Dispose();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Dispose error: {disposable.GetType().Name} - {e}");
+            }
+        }
+        disposables.Clear();
     }
 }
