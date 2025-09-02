@@ -4,7 +4,9 @@ public class TargetManeqein : MonoBehaviour, IDamagable
 {
     public bool IsAlive() => true;
 
-    public void TakeDamage(int damage)
+    public Transform GetTransform() => transform;
+    
+    public void TakeDamage(IDamagable damagerTransform, int damage)
     {
         Debug.Log("Manequen attaked!");
     }

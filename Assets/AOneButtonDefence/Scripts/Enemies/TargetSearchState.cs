@@ -15,7 +15,7 @@ public class TargetSearchState : IState
         stateMachine = data.StateMachine;
         targetFollower = data.TargetFollower;
         agent = data.Agent;
-        transform = data.Transform;
+        transform = data.SelfTransform;
         detector = data.Detector;
         walkingAnimation = data.WalkingAnimation;
     }
@@ -85,18 +85,18 @@ public class TargetSearchState : IState
     public class TargetSearchStateData
     {
         public IStateChanger StateMachine { get; private set; }
-        public Transform Transform { get; private set; }
+        public Transform SelfTransform { get; private set; }
         public ITargetFollower TargetFollower { get; private set; }
         public NavMeshAgent Agent { get; private set; }
         public WalkingAnimation WalkingAnimation { get; private set; }
 
         public IEnemyDetector Detector { get; private set; }
 
-        public TargetSearchStateData(IStateChanger stateMachine, Transform transform, ITargetFollower targetFollower,
+        public TargetSearchStateData(IStateChanger stateMachine, Transform selfTransform, ITargetFollower targetFollower,
             NavMeshAgent agent, WalkingAnimation walkingAnimation, IEnemyDetector detector)
         {
             StateMachine = stateMachine;
-            Transform = transform;
+            SelfTransform = selfTransform;
             TargetFollower = targetFollower;
             Agent = agent;
             WalkingAnimation = walkingAnimation;

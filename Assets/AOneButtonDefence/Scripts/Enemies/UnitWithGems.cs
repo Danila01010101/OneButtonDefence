@@ -21,7 +21,7 @@ public class UnitWithGems : FightingUnit
     {
         var data = new WarriorStateMachine.WarriorStateMachineData(
             transform, characterStats, navMeshComponent,
-            walkingAnimation, fightAnimation, detector);
+            walkingAnimation, fightAnimation, detector, this);
         stateMachine = new EnemyStateMachine(data);
     }
     

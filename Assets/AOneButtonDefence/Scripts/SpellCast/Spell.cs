@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spell : MonoBehaviour
+public class Spell : MonoBehaviour, IDamagable
 {
     private ParticleSystem _circle;
     private ParticleSystem _sides;
@@ -140,7 +140,7 @@ public class Spell : MonoBehaviour
             {
                 if (target != null && target.IsAlive())
                 {
-                    target.TakeDamage(spell.Damage);
+                    target.TakeDamage(this, spell.Damage);
                 }
                 else 
                 {
@@ -154,4 +154,12 @@ public class Spell : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public bool IsAlive() => false;
+
+    public void TakeDamage(IDamagable damagerTransform, int damage) { }
+
+    public Transform GetTransform() => transform;
+
+    public string GetName() => gameObject.name;
 }

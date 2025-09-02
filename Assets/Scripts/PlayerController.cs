@@ -45,7 +45,10 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public bool IsAlive() => health.Amount > 0;
 
-    public void TakeDamage(int damage) => health.TakeDamage(damage);
+    public void TakeDamage(IDamagable damagerTransform, int damage) => health.TakeDamage(damagerTransform.GetTransform(), damage);
+    
+    public Transform GetTransform() => transform;
+    
     public string GetName()
     {
         return gameObject.name;

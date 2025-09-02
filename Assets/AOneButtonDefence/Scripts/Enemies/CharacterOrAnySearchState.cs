@@ -18,10 +18,10 @@ public class CharacterOrAnySearchState : TargetSearchState
             preferredTarget = character.transform;
         }
         
-        this.stateMachine = data.StateMachine;
-        this.targetFollower = data.TargetFollower;
-        this.transform = data.Transform;
-        this.detector = data.Detector;
+        stateMachine = data.StateMachine;
+        targetFollower = data.TargetFollower;
+        transform = data.SelfTransform;
+        detector = data.Detector;
     }
 
     protected override void LookForTarget()

@@ -10,7 +10,7 @@ public class DragonUnit : UnitWithGems
     {
         var data = new UnitWithUltimateStateMachine.UnitWithUltimateStateMachineData(
             transform, ultimateStats, characterStats, ultimateAnimation, navMeshComponent,
-            walkingAnimation, fightAnimation, detector);
+            walkingAnimation, fightAnimation, detector, this);
         stateMachine = new UnitWithUltimateStateMachine(data);
     }
 }

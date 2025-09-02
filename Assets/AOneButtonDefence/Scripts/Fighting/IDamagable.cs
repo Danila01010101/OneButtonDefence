@@ -1,6 +1,9 @@
+using UnityEngine;
+
 public interface IDamagable
 {
     bool IsAlive();
-    void TakeDamage(int damage);
+    void TakeDamage(IDamagable damagerTransform, int damage);
+    Transform GetTransform();
     string GetName();
 }

@@ -14,9 +14,17 @@ public class TargetFollowingState : IState, ITargetFollower
     private readonly LayerMask targetMask;
     private readonly WalkingAnimation animation;
     private readonly float defaultChaseRange;
+    private readonly ISelfDamageable selfDamageable;
 
-    public TargetFollowingState(IStateChanger stateMachine, NavMeshAgent agent, CharacterStats stats, 
-        ITargetAttacker targetAttacker, LayerMask targetMask, WalkingAnimation animation, IEnemyDetector detector)
+    public TargetFollowingState(
+        IStateChanger stateMachine,
+        NavMeshAgent agent,
+        CharacterStats stats,
+        ITargetAttacker targetAttacker,
+        LayerMask targetMask,
+        WalkingAnimation animation,
+        IEnemyDetector detector,
+        ISelfDamageable selfDamageable)
     {
         this.stateMachine = stateMachine;
         this.agent = agent;
@@ -26,12 +34,14 @@ public class TargetFollowingState : IState, ITargetFollower
         this.targetMask = targetMask;
         this.animation = animation;
         this.detector = detector;
+        this.selfDamageable = selfDamageable;
     }
 
     public void Enter()
     {
         animation.StartAnimation();
         detector.NewEnemiesDetected += CheckIfTargetChanged;
+        selfDamageable.DamageRecieved += OnDamageReceived;
     }
 
     public void Exit()
@@ -39,6 +49,7 @@ public class TargetFollowingState : IState, ITargetFollower
         animation.StopAnimation();
         target = null;
         detector.NewEnemiesDetected -= CheckIfTargetChanged;
+        selfDamageable.DamageRecieved -= OnDamageReceived;
     }
 
     public void HandleInput() { }
@@ -88,7 +99,7 @@ public class TargetFollowingState : IState, ITargetFollower
     }
 
     public void SetTarget(Transform transform) => target = transform;
-    
+
     private bool IsTargetGone() => target == null;
 
     private void CheckIfTargetChanged() => stateMachine.ChangeState<TargetSearchState>();
@@ -112,5 +123,13 @@ public class TargetFollowingState : IState, ITargetFollower
     {
         target = transform;
         chaseRange = enemyStoppingDistance > defaultChaseRange ? enemyStoppingDistance : defaultChaseRange;
+    }
+
+    private void OnDamageReceived(IDamagable attacker)
+    {
+        if (attacker != null)
+        {
+            SetTarget(attacker.GetTransform());
+        }
     }
 }

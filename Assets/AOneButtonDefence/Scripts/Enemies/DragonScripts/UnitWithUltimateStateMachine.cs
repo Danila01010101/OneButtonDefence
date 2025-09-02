@@ -18,19 +18,20 @@ public class UnitWithUltimateStateMachine : StateMachine
             data.FightAnimation,
             data.BaseStats.AttackDelay,
             data.BaseStats.Damage,
-            data.BaseStats.DamageUpgradeValue
+            data.BaseStats.DamageUpgradeValue,
+            data.SelfDamageable
             );
         
         var fightState = new FightWithUltimateState(fightDragonStateData);
         var targetFollowingState = new TargetFollowingState(this, data.Agent, data.BaseStats, fightState, 
-            data.BaseStats.EnemyLayerMask, data.WalkingAnimation, data.EnemyDetector);
+            data.BaseStats.EnemyLayerMask, data.WalkingAnimation, data.EnemyDetector, data.SelfDamageable);
         var targetSearchStateData = new TargetSearchState.TargetSearchStateData(
-            this, data.Transform, targetFollowingState, data.Agent, data.WalkingAnimation, data.EnemyDetector);
+            this, data.SelfTransform, targetFollowingState, data.Agent, data.WalkingAnimation, data.EnemyDetector);
 
         states = new List<IState>()
         {
             new TargetSearchState(targetSearchStateData),
-            new IdleWarriorState(this, data.Transform.position, data.WalkingAnimation, data.Agent),
+            new IdleWarriorState(this, data.SelfTransform.position, data.WalkingAnimation, data.Agent),
             fightState,
             targetFollowingState
         };
@@ -44,9 +45,9 @@ public class UnitWithUltimateStateMachine : StateMachine
         public readonly CharacterStats BaseStats;
         public readonly IAttackAnimator UltimateAnimation;
 
-        public UnitWithUltimateStateMachineData(Transform transform, UnitWithUltimateStats characterStats, CharacterStats baseStats, DragonAnimation ultimateAnimation, NavMeshAgent agent, 
-            WalkingAnimation walkingAnimation, IAttackAnimator fightAnimation, IEnemyDetector detector) : 
-            base(transform, agent, walkingAnimation, fightAnimation, detector)
+        public UnitWithUltimateStateMachineData(Transform selfTransform, UnitWithUltimateStats characterStats, CharacterStats baseStats, DragonAnimation ultimateAnimation, NavMeshAgent agent, 
+            WalkingAnimation walkingAnimation, IAttackAnimator fightAnimation, IEnemyDetector detector, ISelfDamageable selfDamageable) : 
+            base(selfTransform, agent, walkingAnimation, fightAnimation, detector, selfDamageable)
         {
             BaseStats = baseStats;
             UltimateAnimation = ultimateAnimation;

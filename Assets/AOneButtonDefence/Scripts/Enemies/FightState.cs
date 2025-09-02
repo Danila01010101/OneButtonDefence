@@ -6,6 +6,7 @@ public class FightState : IState, ITargetAttacker
 {
     protected readonly IStateChanger StateMachine;
     protected readonly IAttackAnimator Animation;
+    protected readonly ISelfDamageable SelfDamageable;
     protected readonly float AttackDelay;
     protected readonly int BasicDamage;
     protected readonly int DamageUpgradeValue;
@@ -16,13 +17,14 @@ public class FightState : IState, ITargetAttacker
     private IDamagable Target;
     private float LastTimeAttacked;
 
-    public FightState(IStateChanger stateChanger, float attackDelay, int damage, int damageUpgradeValue, IAttackAnimator animation)
+    public FightState(IStateChanger stateChanger, float attackDelay, int damage, int damageUpgradeValue, IAttackAnimator animation, ISelfDamageable selfDamageable)
     {
         StateMachine = stateChanger;
         AttackDelay = attackDelay;
         BasicDamage = damage;
         DamageUpgradeValue = damageUpgradeValue;
         Animation = animation;
+        SelfDamageable = selfDamageable;
     }
 
     public void SetTarget(IDamagable target)
@@ -74,7 +76,7 @@ public class FightState : IState, ITargetAttacker
             GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.StrenghtBuff) * DamageUpgradeValue) + Target.GetName());
 
         if (IsTargetSetted)
-            Target.TakeDamage(Damage);
+            Target.TakeDamage(SelfDamageable.GetSelfDamagable(), Damage);
     }
 
     private void CheckTarget()

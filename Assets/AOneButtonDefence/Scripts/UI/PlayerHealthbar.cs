@@ -18,7 +18,7 @@ public class PlayerHealthbar : MonoBehaviour
 
         this.health = health;
         SetHealth(health.Amount, health.Amount);
-        health.AmountChanged += SetHealth;
+        health.DamageReceived += SetHealth;
     }
 
     private void SetHealth(float current, float max)
@@ -35,6 +35,6 @@ public class PlayerHealthbar : MonoBehaviour
     private void OnDestroy()
     {
         if (health != null)
-            health.AmountChanged -= SetHealth;
+            health.DamageReceived -= SetHealth;
     }
 }

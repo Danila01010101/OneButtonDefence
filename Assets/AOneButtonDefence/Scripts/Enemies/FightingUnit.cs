@@ -1,3 +1,4 @@
+    using System;
     using UnityEngine;
     using UnityEngine.AI;
     using DG.Tweening;
@@ -7,7 +8,7 @@
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(DeathAnimation))]
-public class FightingUnit : MonoBehaviour, IDamagable
+public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
 {
     [SerializeField] protected CharacterStats characterStats;
     [SerializeField] protected Renderer render;
@@ -21,6 +22,8 @@ public class FightingUnit : MonoBehaviour, IDamagable
     protected DeathAnimation deathAnimation;
     protected MaterialChanger materialChanger;
     protected AudioSource audioSource;
+
+    public event Action<IDamagable> DamageRecieved;
 
     public virtual void Initialize(IEnemyDetector detector)
     {
@@ -46,11 +49,16 @@ public class FightingUnit : MonoBehaviour, IDamagable
         stateMachine.PhysicsUpdate();
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(IDamagable damagerTransform, int damage)
     {
-        health.TakeDamage(damage);
+        health.TakeDamage(damagerTransform.GetTransform(), damage);
+        DamageRecieved?.Invoke(damagerTransform);
     }
 
+    public IDamagable GetSelfDamagable() => this;
+
+    public Transform GetTransform() => transform;
+    
     public string GetName()
     {
         return gameObject.name;
@@ -69,7 +77,7 @@ public class FightingUnit : MonoBehaviour, IDamagable
     {
         var data = new WarriorStateMachine.WarriorStateMachineData(
             transform, characterStats, navMeshComponent,
-            walkingAnimation, fightAnimation, detector);
+            walkingAnimation, fightAnimation, detector, this);
         stateMachine = new WarriorStateMachine(data);
     }
 
