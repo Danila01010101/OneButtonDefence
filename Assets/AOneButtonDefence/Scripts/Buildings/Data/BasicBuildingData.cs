@@ -6,6 +6,7 @@ using UnityEngine;
 public class BasicBuildingData 
 {
     [field: SerializeField] public Sprite Icon { get; private set; }
+    [field: SerializeField] public string BuildingName { get; private set; }
     [field: SerializeField] public Upgrades UpgradeType { get; private set; }
     [field: SerializeField] public Building Prefab { get; private set; }
     [field: SerializeField] public Vector3 SpawnOffset { get; private set; }

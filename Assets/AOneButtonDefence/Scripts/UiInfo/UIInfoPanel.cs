@@ -34,7 +34,7 @@ public class UIInfoPanel : MonoBehaviour
     public void Initialize(BasicBuildingData buildingData)
     {
         ClearData();
-        nameText.text = buildingData.UpgradeType.ToString();
+        nameText.text = buildingData.BuildingName;
         buildingIcon.sprite = buildingData.Icon;
         
         int maxRows = Mathf.Max(buildingData.buildResourceChange.Length, buildingData.resourcePerTurnChange.Length);
