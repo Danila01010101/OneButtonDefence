@@ -101,7 +101,7 @@ public class CameraMovement : MonoBehaviour
 
     private void ChangeHeight(float heightAxis)
     {
-        if (!canMove || targetChanged) return;
+        if (!canMove && !targetChanged) return;
 
         currentDistance = Mathf.Clamp(
             currentDistance - heightAxis * data.CameraZoomSpeed,
