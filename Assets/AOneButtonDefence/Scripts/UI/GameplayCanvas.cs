@@ -181,8 +181,14 @@ public class GameplayCanvas : MonoBehaviour
 
     private void SpawnButton(int placingInterval)
     {
-        var spawnedButton = Instantiate(partPrefab, cellsSpawnParent.transform.position + new Vector3(placingInterval, 0, 0), Quaternion.identity);
-        spawnedButton.transform.SetParent(cellsSpawnParent.transform);
+        var spawnedButton = Instantiate(partPrefab, cellsSpawnParent.transform);
+    
+        var rect = spawnedButton.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(0.5f, 0f);
+        rect.anchorMax = new Vector2(0.5f, 0f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = new Vector2(placingInterval, 0f);
+
         var buttonAnimation = spawnedButton.GetComponent<ButtonChooseAnimation>();
         partsAnimators.Add(buttonAnimation);
         parts.Add(spawnedButton);
