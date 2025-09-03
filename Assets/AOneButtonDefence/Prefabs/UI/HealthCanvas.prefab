@@ -309,6 +309,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1763090664524070528}
   billboardCanvas: {fileID: 1986069986954283934}
+  healthIconsAmount: 10
+  minFill: 0.1
+  maxFill: 0.98
 --- !u!114 &1986069986954283934
 MonoBehaviour:
   m_ObjectHideFlags: 0

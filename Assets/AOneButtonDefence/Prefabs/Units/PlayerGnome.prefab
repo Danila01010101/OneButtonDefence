@@ -380,6 +380,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3900610279007946028, guid: 35072b714b904d348bdc8b21d35790fc, type: 3}
+      propertyPath: scaleFactor
+      value: 0.12
+      objectReference: {fileID: 0}
     - target: {fileID: 4242911390657586369, guid: 35072b714b904d348bdc8b21d35790fc, type: 3}
       propertyPath: m_Layer
       value: 7
