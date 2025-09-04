@@ -15,7 +15,7 @@ MonoBehaviour:
   Mesh: {fileID: -2432090755550338912, guid: 953ef6d4dceba4143a92bf9cf5b0dcb9, type: 3}
   Material: {fileID: 2100000, guid: 69a342d2231d0ec4bb8c032e00180359, type: 2}
   Icon: {fileID: -380932273, guid: aa03bb5941d56054eba60c114f961e61, type: 3}
-  Cost: 100
+  Cost: 25
   SkinName: "\u041B\u0438\u0441\u0438\u0447\u043A\u0430"
   SkinLore: "\u0423\u043C\u0435\u0435\u0442 \u0434\u0435\u043B\u0430\u0442\u044C
     \u043C\u0438\u043B\u044B\u0435 \u0432\u0435\u0449\u0438 \u0441\u0432\u043E\u0438\u043C
