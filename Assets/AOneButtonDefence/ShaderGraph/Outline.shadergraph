@@ -41,6 +41,9 @@
         },
         {
             "m_Id": "65c9d3ba0d8648018df9453943c0bd4a"
+        },
+        {
+            "m_Id": "1a24c9e67acc4c60be50ca2fe78b2dfa"
         }
     ],
     "m_GroupDatas": [],
@@ -128,6 +131,9 @@
         "m_Blocks": [
             {
                 "m_Id": "4115012579764c86a4ccf1e6a32ae25c"
+            },
+            {
+                "m_Id": "1a24c9e67acc4c60be50ca2fe78b2dfa"
             }
         ]
     },
@@ -149,6 +155,40 @@
             "m_Id": "73a7fe0258cf48a9a3ccccebbb7f7df1"
         }
     ]
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
+    "m_ObjectId": "1a24c9e67acc4c60be50ca2fe78b2dfa",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "SurfaceDescription.Alpha",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "fdb355171a6d4235aaebe9c8351953e6"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedDescriptor": "SurfaceDescription.Alpha"
 }
 
 {
@@ -539,7 +579,7 @@
         "m_Id": "35412460ea9b4ec1a4569dec27511db5"
     },
     "m_AllowMaterialOverride": false,
-    "m_SurfaceType": 0,
+    "m_SurfaceType": 1,
     "m_ZTestMode": 4,
     "m_ZWriteControl": 0,
     "m_AlphaMode": 0,
@@ -846,6 +886,21 @@
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "fdb355171a6d4235aaebe9c8351953e6",
+    "m_Id": 0,
+    "m_DisplayName": "Alpha",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Alpha",
+    "m_StageCapability": 2,
+    "m_Value": 0.6800000071525574,
+    "m_DefaultValue": 1.0,
     "m_Labels": []
 }
 
