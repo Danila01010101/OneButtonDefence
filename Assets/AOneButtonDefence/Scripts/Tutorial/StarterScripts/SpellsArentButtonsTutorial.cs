@@ -8,6 +8,8 @@ public class SpellsArentButtonsTutorial : TutorialObject
     [SerializeField] private Button spellButtonComponent;
     [SerializeField] private Image spellBackground;
     
+    private bool isShown = false;
+    
     private UnityAction handler;
 
     private void Awake()
@@ -16,25 +18,41 @@ public class SpellsArentButtonsTutorial : TutorialObject
         {
             isActivated = true;
             TimeManager.SetTimeScale(0.15f);
+            TutorialMessage.TutorialWindowDestroyed += ResetGameTime;
         };
 
         spellButtonComponent.onClick.AddListener(handler);
-        TutorialMessage.TutorialWindowDestroyed += ResetGameTime;
+        GameBattleState.BattleWon += DiactivateIfNotShown;
+    }
+
+    private void DiactivateIfNotShown()
+    {
+        if (isShown == false)
+        {
+            Deactivate();
+            GameBattleState.BattleWon -= DiactivateIfNotShown;
+        }
     }
 
     private void ResetGameTime()
     {
         if (IsActivated)
         {
-            spellBackground.raycastTarget = false;
-            Color newColor = spellBackground.color;
-            newColor.a = 0.5f;
-            spellBackground.color = newColor;
-            TimeManager.SetTimeScale(1f);
-            spellButtonComponent.onClick.RemoveListener(handler);
+            Deactivate();
             TutorialMessage.TutorialWindowDestroyed -= ResetGameTime;
-            Destroy(spellButtonComponent);
-            Destroy(this);
+            isShown = true;
         }
+    }
+
+    private void Deactivate()
+    {
+        spellBackground.raycastTarget = false;
+        Color newColor = spellBackground.color;
+        newColor.a = 0.5f;
+        spellBackground.color = newColor;
+        TimeManager.SetTimeScale(1f);
+        spellButtonComponent.onClick.RemoveListener(handler);
+        Destroy(spellButtonComponent);
+        Destroy(this);
     }
 }
