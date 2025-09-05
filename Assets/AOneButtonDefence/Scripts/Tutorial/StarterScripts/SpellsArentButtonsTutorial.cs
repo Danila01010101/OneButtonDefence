@@ -26,8 +26,9 @@ public class SpellsArentButtonsTutorial : TutorialObject
     {
         if (IsActivated)
         {
-            var newColor = spellBackground.color;
-            newColor.a = 0.7f;
+            spellBackground.raycastTarget = false;
+            Color newColor = spellBackground.color;
+            newColor.a = 0.5f;
             spellBackground.color = newColor;
             TimeManager.SetTimeScale(1f);
             spellButtonComponent.onClick.RemoveListener(handler);
