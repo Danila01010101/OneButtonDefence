@@ -39,6 +39,7 @@ RectTransform:
   - {fileID: 2920555160678154064}
   - {fileID: 5668860345746876217}
   - {fileID: 79456371981621828}
+  - {fileID: 8616143542527855867}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -153,13 +154,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd0684444515a64881ad512b3697892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sequenceConfig: {fileID: 11400000, guid: be45fd422b20de545b66fa03013b67b9, type: 2}
   pointerTarget: {fileID: 1610423507528941882}
   message: "\u0422\u0435\u043F\u0435\u0440\u044C \u043D\u0430 \u043F\u043E\u043B\u0435
     \u0431\u0438\u0442\u0432\u044B \u0442\u043A\u043D\u0438 \u2014 \u0438 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0435
     \u0447\u0442\u043E \u0434\u0435\u0440\u0436\u0438\u0448\u044C \u0432 \u0440\u0443\u043A\u0435
     \u0431\u0430\u0445\u043D\u0435\u0442. \u0412\u0441\u0451 \u043F\u0440\u043E\u0441\u0442\u043E!"
   duration: 6
-  index: 6
+  index: 5
   IsActivatedFromStart: 0
   tutorialsForBattleAmount: 3
 --- !u!114 &7082023547638188828
@@ -174,13 +176,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd70eafa6c4c4a49a86763df9e5ef68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sequenceConfig: {fileID: 11400000, guid: be45fd422b20de545b66fa03013b67b9, type: 2}
   pointerTarget: {fileID: 7145727880589785410}
   message: "C\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0435 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0435
     \u0438\u0437 \u043C\u043E\u0435\u0439 \u0440\u0443\u043A\u0438 \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0443.
     \u0427\u0442\u043E \u0432 \u0440\u044E\u043A\u0437\u0430\u043A\u0435 \u2014 \u0441\u0435\u043A\u0440\u0435\u0442.
     \u0421\u0435\u043A\u0440\u0435\u0442 \u043A\u0430\u0432\u043E? \u0414\u0435\u0434\u0430."
   duration: 6
-  index: 7
+  index: 6
   IsActivatedFromStart: 1
 --- !u!1 &1610423507528941882
 GameObject:
@@ -258,6 +261,76 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &3002094613762525432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8616143542527855867}
+  - component: {fileID: 3982214683313348415}
+  - component: {fileID: 7446729702321079381}
+  m_Layer: 5
+  m_Name: ImageForTutorial
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8616143542527855867
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3002094613762525432}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5638813993524157041}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 10.2452, y: -389.74}
+  m_SizeDelta: {x: 312.4907, y: 300}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3982214683313348415
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3002094613762525432}
+  m_CullTransparentMesh: 1
+--- !u!114 &7446729702321079381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3002094613762525432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6be0d259e53fa4fb35e71a6c5229b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sequenceConfig: {fileID: 11400000, guid: be45fd422b20de545b66fa03013b67b9, type: 2}
+  pointerTarget: {fileID: 3002094613762525432}
+  message: "\u041D\u0443 \u0438 \u043A\u043E\u043C\u0443 \u044F \u0440\u0430\u0441\u0441\u043A\u0430\u0437\u044B\u0432\u0430\u043B?
+    \u041D\u0435 \u043A\u043D\u043E\u043F\u043A\u0430 \u044D\u0442\u043E, \u0442\u044B\u043A\u0430\u0439
+    \u043D\u0430 \u043F\u043E\u043B\u0435 \u0431\u043E\u044F! \u0421\u043A\u0440\u044B\u0442\u044C
+    \u0435\u0435 \u043E\u0442 \u0442\u0435\u0431\u044F \u0447\u0442\u043E\u043B\u0438,
+    \u043C\u0430\u043B\u043E \u043B\u0438 \u0435\u0449\u0435 \u0442\u044B\u043A\u043D\u0435\u0448\u044C!!!"
+  duration: 10
+  index: 8
+  IsActivatedFromStart: 1
+  spellButtonComponent: {fileID: 6434584622137260478}
+  spellBackground: {fileID: 3809861081314067184}
 --- !u!1 &3308081666552088282
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,6 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd70eafa6c4c4a49a86763df9e5ef68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sequenceConfig: {fileID: 11400000, guid: be45fd422b20de545b66fa03013b67b9, type: 2}
   pointerTarget: {fileID: 3308081666552088282}
   message: "\u041D\u0430\u0447\u0430\u043B\u0430\u0441\u044C \u0431\u0438\u0442\u0432\u0430!
     \u041D\u0435 \u0434\u0430\u0439 \u0432\u0440\u0430\u0433\u0430\u043C \u0441\u0435\u0431\u044F
@@ -355,7 +429,7 @@ MonoBehaviour:
     \u043D\u0430 WASD\u2026 \u0445\u043E\u0442\u044F, \u0414\u0435\u0434\u0443 \u0447\u0442\u043E-\u043B\u0438
     \u0442\u0435\u0431\u044F \u0443\u0447\u0438\u0442\u044C?"
   duration: 8
-  index: 8
+  index: 7
   IsActivatedFromStart: 1
 --- !u!1 &5281215298547851030
 GameObject:

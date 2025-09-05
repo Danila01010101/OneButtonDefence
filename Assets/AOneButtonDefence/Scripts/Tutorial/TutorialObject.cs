@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class TutorialObject : MonoBehaviour, ITutorialGO, IDisposable
 {
+    [SerializeField] private TutorialSequenceConfig sequenceConfig;
     [SerializeField] private GameObject pointerTarget;
     [SerializeField] private string message;
     [SerializeField] private float duration = 0;
@@ -20,6 +21,13 @@ public class TutorialObject : MonoBehaviour, ITutorialGO, IDisposable
     public int Index => index;
 
     public float Duration => duration;
+    
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        UnityEditor.Handles.Label(transform.position + Vector3.up * 0.5f, $"Tutorial #{index}");
+    }
+#endif
 
     public virtual void Dispose() { }
 }

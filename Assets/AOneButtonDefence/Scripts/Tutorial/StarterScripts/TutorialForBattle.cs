@@ -27,7 +27,7 @@ public class TutorialForBattle : TutorialObject
 	}
 
 	private void CheckBattleTutorialEnd()
-	{	
+	{
 		if (++closedTutorialsAmount >= tutorialsForBattleAmount - 1)
 		{
 			Debug.Log(closedTutorialsAmount < tutorialsForBattleAmount);

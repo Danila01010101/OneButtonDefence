@@ -277,7 +277,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6378816575340038158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +312,7 @@ MonoBehaviour:
   healthIconsAmount: 10
   minFill: 0.1
   maxFill: 0.98
+  scaleFactor: 1
 --- !u!114 &1986069986954283934
 MonoBehaviour:
   m_ObjectHideFlags: 0
