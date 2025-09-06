@@ -8,7 +8,7 @@ public class GameBattleState : IState
 {
     private IStringStateChanger stateMachine;
     private MonoBehaviour coroutineStarter;
-    private BattleWavesParameters wavesParameters;
+    private WaveGenerator.RuntimeWavesParameters runtimeWavesParameters;
     private UnitsFactory unitsFactory;
     private Coroutine endTurnCheckCoroutine;
     private Coroutine spawnCoroutine;
@@ -29,15 +29,13 @@ public class GameBattleState : IState
     {
         stateMachine = data.StateChanger;
         coroutineStarter = data.CoroutineStarter;
-        wavesParameters = data.WavesParameters;
         enemiesSpawnOffset = data.EnemiesSpawnOffset;
         enemyTag = data.EnemyTag;
         gnomeTag = data.GnomeTag;
         grid = data.CellsGrid;
         unitsFactory = new UnitsFactory(data.EnemiesData.enemies, data.Detector, data.EnemyLayer, data.EnemyTag);
         spellCanvas = data.SpellCanvas;
-        AsyncHelper.Instance.RunAsyncWithResult(() => WaveGenerator.GenerateWaves(data.WavesParameters, 100), result => wavesParameters = result);
-        //CoroutineStarter.StartCoroutine(LevelGenerationClass.GenerateNewLevels(data.WavesParameters, 100, out newParameters));
+        AsyncHelper.Instance.RunAsyncWithResult(() => WaveGenerator.GenerateWaves(data.WavesParameters, 100), result => runtimeWavesParameters = result);
     }
 
     public void Enter()
@@ -83,11 +81,11 @@ public class GameBattleState : IState
 
     private void StartWave()
     {
-        BattleWavesParameters.WaveData waveParameters = wavesParameters.waves[currentWaveIndex];
+        WaveGenerator.RuntimeWaveData waveParameters = runtimeWavesParameters.waves[currentWaveIndex];
         spawnCoroutine = coroutineStarter.StartCoroutine(StartEnemiesSpawn(waveParameters));
     }
     
-    private IEnumerator StartEnemiesSpawn(BattleWavesParameters.WaveData waveData)
+    private IEnumerator StartEnemiesSpawn(WaveGenerator.RuntimeWaveData waveData)
     {
         foreach (var enemyData in waveData.enemiesToSpawn)
         {
