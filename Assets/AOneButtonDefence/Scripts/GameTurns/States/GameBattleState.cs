@@ -24,7 +24,7 @@ public class GameBattleState : IState
     public static Action EnemiesDefeated;
     public static Action BattleWon;
     public static Action BattleLost;
-
+    
     public GameBattleState(GameBattleStateData data)
     {
         stateMachine = data.StateChanger;
@@ -35,7 +35,32 @@ public class GameBattleState : IState
         grid = data.CellsGrid;
         unitsFactory = new UnitsFactory(data.EnemiesData.enemies, data.Detector, data.EnemyLayer, data.EnemyTag);
         spellCanvas = data.SpellCanvas;
-        AsyncHelper.Instance.RunAsyncWithResult(() => WaveGenerator.GenerateWaves(data.WavesParameters, 100), result => runtimeWavesParameters = result);
+
+        List<BattleWavesParameters.EnemyGenerationData> enemyConfigs = (data.WavesParameters.waves.Count > 0) 
+            ? data.WavesParameters.waves[0].enemiesToGenerate 
+            : new List<BattleWavesParameters.EnemyGenerationData>();
+
+        AsyncHelper.Instance.RunAsyncWithResult(
+            () => WaveGenerator.GenerateWaves(data.WavesParameters, 100),
+            result =>
+            {
+                runtimeWavesParameters = result;
+
+                for (int i = 0; i < Mathf.Min(5, runtimeWavesParameters.waves.Count); i++)
+                {
+                    var wave = runtimeWavesParameters.waves[i];
+                    Debug.Log($"Wave {i + 1}, interval: {wave.spawnInterval}");
+                    foreach (var enemy in wave.enemiesToSpawn)
+                    {
+                        Debug.Log($"Enemy: {enemy.EnemyPrefab.name}, Amount: {enemy.Amount}, Interval: {enemy.spawnInterval}");
+                    }
+                }
+            },
+            error =>
+            {
+                Debug.LogError("Ошибка генерации волн: " + error);
+            }
+        );
     }
 
     public void Enter()
