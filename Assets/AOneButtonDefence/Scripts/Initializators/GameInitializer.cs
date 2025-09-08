@@ -67,6 +67,7 @@ public class GameInitializer : MonoBehaviour
         var skinDetectorInit = new SkinDetectorInitializer();
         yield return skinDetectorInit.Initialize();
         var skinChangeDetector = skinDetectorInit.Instance;
+        disposables.Add(skinChangeDetector);
 
         var musicPlayerInit = new MusicPlayerInitializer(initializedObjectsParent, musicData);
         yield return musicPlayerInit.Initialize();

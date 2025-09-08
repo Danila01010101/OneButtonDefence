@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public class SkinChangeDetector
+public class SkinChangeDetector : IDisposable
 {
     private static SkinChangeDetector instance;
     
@@ -26,4 +27,6 @@ public class SkinChangeDetector
         CurrentSkinMaterial = material;
         IsSkinChanged = true;
     }
+
+    public void Dispose() => Unsubscribe();
 }
