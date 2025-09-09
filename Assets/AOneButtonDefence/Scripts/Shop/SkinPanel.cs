@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(ClosableWindow))]
+[RequireComponent(typeof(AudioSource))]
 public class SkinPanel : MonoBehaviour
 {
     [SerializeField] private ShopSkinShower exampleSkinShowerPrefab;
@@ -24,10 +25,13 @@ public class SkinPanel : MonoBehaviour
     public Image PrevSkinSprite;
     public Image SelectSkinSprite;
     public Image BuySkin;
+    
+    private AudioSource buyButtonAudio;
+    private SkinOpenSoundPlayer skinOpenSoundPlayer;
 
-    public static Action<Mesh, Material> SkinChanged;
+    public static Action<SkinData> SkinChanged;
     public static Action<ClosableWindow> ShopInitialized;
-    public static Action<int> SkinBought;
+    public static Action<SkinData> SkinBought;
     public static Action ShopEnabled;
     public static Action ShopDisabled;
 
@@ -37,10 +41,12 @@ public class SkinPanel : MonoBehaviour
     {
         spawnedShopSkinShower = UIGameObjectShower.Instance.RenderPrefab(exampleSkinShowerPrefab, exampleSkinChangerPosition, Quaternion.Euler(exampleSkinChangerEulerAngles));
         spawnedShopSkinShower.Initialize(input);
+        buyButtonAudio = GetComponent<AudioSource>();
         ChangeCurrentChose(0);
         SelectSkin(0);
         ShopInitialized?.Invoke(GetComponent<ClosableWindow>());
         gameObject.SetActive(false);
+        skinOpenSoundPlayer = new SkinOpenSoundPlayer(buyButtonAudio);
     }
 
     public void ChangeCurrentChose(int num)
@@ -63,7 +69,7 @@ public class SkinPanel : MonoBehaviour
         SkinLore.text = SkinList[CurrentChose].SkinLore;
         SkinCost.text = SkinList[CurrentChose].Cost.ToString();
         
-        spawnedShopSkinShower.GnomeSkinChanger.ChangeSkin(SkinList[CurrentChose].Mesh, SkinList[CurrentChose].Material);
+        spawnedShopSkinShower.GnomeSkinChanger.ChangeSkin(SkinList[CurrentChose]);
 
         ChangeText();
     }
@@ -82,7 +88,7 @@ public class SkinPanel : MonoBehaviour
                 return;
             }
 
-            SkinBought?.Invoke(SkinList[CurrentChose].Cost);
+            SkinBought?.Invoke(SkinList[CurrentChose]);
             SkinList[CurrentChose].Unlocked = true;
             SelectSkin(CurrentChose);
         }
@@ -91,7 +97,7 @@ public class SkinPanel : MonoBehaviour
     private void SelectSkin(int index)
     {
         ChosenSkin = index;
-        SkinChanged?.Invoke(SkinList[index].Mesh, SkinList[index].Material);
+        SkinChanged?.Invoke(SkinList[index]);
         ChangeText();
         SelectSkinSprite.sprite = SkinList[index].Icon;
     }
@@ -147,4 +153,9 @@ public class SkinPanel : MonoBehaviour
     private void OnEnable() => EnablePanel();
 
     private void OnDisable() => DisablePanel();
+
+    private void OnDestroy()
+    {
+        skinOpenSoundPlayer.Dispose();
+    }
 }

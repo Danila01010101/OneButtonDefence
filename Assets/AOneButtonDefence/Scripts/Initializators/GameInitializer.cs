@@ -106,6 +106,7 @@ public class GameInitializer : MonoBehaviour
         var resourceChangeMediatorInit = new ResourceChangeMediatorInitializer(gameData);
         yield return resourceChangeMediatorInit.Initialize();
         var resourceChangeMediator = resourceChangeMediatorInit.Mediator;
+        disposables.Add(resourceChangeMediatorInit);
 
         yield return null;
 
@@ -149,7 +150,7 @@ public class GameInitializer : MonoBehaviour
         yield return spellCanvasInit.Initialize();
         GameObject spellCanvasObj = spellCanvasInit.Instance;
 
-        var debugCanvasInit = new DebugCanvasInitializer(debugCanvas, addCoinsOnStart);
+        var debugCanvasInit = new DebugCanvasInitializer(debugCanvas, addCoinsOnStart, gameResourcesCounter, gameData.GemsResource);
         yield return debugCanvasInit.Initialize();
 
         var shopSkinInit = new ShopSkinWindowInitializer(shopSkinWindow, upgradeCanvas.transform, input);

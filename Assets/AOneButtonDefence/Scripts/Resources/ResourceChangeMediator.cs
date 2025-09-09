@@ -17,7 +17,7 @@ public class ResourceChangeMediator
         ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(gnomeDeathSpiritFine));
     }
 
-    private void DetectSkinBuy(int cost) => ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(gemsResource, -cost));
+    private void DetectSkinBuy(SkinData data) => ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(gemsResource, -data.Cost));
 
     public void Subscribe() 
     {

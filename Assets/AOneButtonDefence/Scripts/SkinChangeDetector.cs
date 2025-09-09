@@ -5,8 +5,7 @@ public class SkinChangeDetector : IDisposable
 {
     private static SkinChangeDetector instance;
     
-    public Mesh CurrentSkinMesh { get; private set; }
-    public Material CurrentSkinMaterial { get; private set; }
+    public SkinData CurrentSkinData { get; private set; }
     public bool IsSkinChanged { get; private set; }
     public static SkinChangeDetector Instance;
 
@@ -21,10 +20,9 @@ public class SkinChangeDetector : IDisposable
     
     public void Unsubscribe() => SkinPanel.SkinChanged -= DetectSkinChanged;
 
-    private void DetectSkinChanged(Mesh mesh, Material material)
+    private void DetectSkinChanged(SkinData skin)
     {
-        CurrentSkinMesh = mesh;
-        CurrentSkinMaterial = material;
+        CurrentSkinData = skin;
         IsSkinChanged = true;
     }
 

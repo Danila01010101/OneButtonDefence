@@ -14,17 +14,20 @@ public class GnomeSkinChanger
         SkinPanel.SkinChanged += ChangeSkin;
 		
         if (SkinChangeDetector.Instance.IsSkinChanged)
-            ChangeSkin(SkinChangeDetector.Instance.CurrentSkinMesh, SkinChangeDetector.Instance.CurrentSkinMaterial);
+            ChangeSkin(SkinChangeDetector.Instance.CurrentSkinData);
     }
 
     public void Unsubscribe() => SkinPanel.SkinChanged -= ChangeSkin;
 
-    public void ChangeSkin(Mesh newMesh, Material newMaterial, AudioClip newAudioClip)
+    public void ChangeSkin(SkinData data)
     {
         if (meshFilter != null)
-            meshFilter.mesh = newMesh;
+            meshFilter.mesh = data.Mesh;
         
         if (renderer != null)
-            renderer.material = newMaterial;
+            renderer.material = data.Material;
+        
+        if (audioSource != null)
+            audioSource.clip = data.DeathSound;
     }
 }

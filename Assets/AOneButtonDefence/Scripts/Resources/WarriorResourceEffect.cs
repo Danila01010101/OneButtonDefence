@@ -23,7 +23,7 @@ public class WarriorResourceEffect : IResourceEffect
             var spawnedWarrior = unitsFactory.SpawnUnit<GnomeFightingUnit>(spawnPosition.Value + gnomeSpawnOffset);
             
             if (SkinChangeDetector.Instance.IsSkinChanged)
-                spawnedWarrior.ChangeSkin(SkinChangeDetector.Instance.CurrentSkinMesh, SkinChangeDetector.Instance.CurrentSkinMaterial);
+                spawnedWarrior.ChangeSkin(SkinChangeDetector.Instance.CurrentSkinData);
         }
     }
 }

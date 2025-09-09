@@ -12,7 +12,7 @@ public class GnomeFightingUnit : FightingUnit
     public override void Initialize(IEnemyDetector detector)
     {
         base.Initialize(detector);
-        gnomeSkinChanger = new GnomeSkinChanger(meshFilter, render);
+        gnomeSkinChanger = new GnomeSkinChanger(meshFilter, render, audioSource);
     }
 
     protected override void Die()
@@ -27,5 +27,5 @@ public class GnomeFightingUnit : FightingUnit
         gnomeSkinChanger = null;
     }
 
-    public void ChangeSkin(Mesh newMesh, Material newMaterial) => gnomeSkinChanger.ChangeSkin(newMesh, newMaterial);
+    public void ChangeSkin(SkinData data) => gnomeSkinChanger.ChangeSkin(data);
 }

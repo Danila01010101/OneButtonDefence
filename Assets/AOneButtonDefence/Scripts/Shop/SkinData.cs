@@ -5,16 +5,18 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "New SkinData", menuName = "ScriptableObjects/new skin Data", order = 59)]
 public class SkinData : ScriptableObject
 {
-    [Header("Внешний вид скина")]
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ")]
     public Mesh Mesh;
     public Material Material;
-    [Header("Иконка в UI")]
+    public AudioClip DeathSound;
+    public AudioClip UnlockMusic;
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ UI")]
     public Sprite Icon; 
-    [Header("Информация о скине")]
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ")]
     public int Cost; 
     public string SkinName;
     [TextArea(3, 10)]
     public string SkinLore;
-    [Header("Скин разблокирован")]
+    [Header("пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     public bool Unlocked;
 }

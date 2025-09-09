@@ -1,6 +1,7 @@
+using System;
 using System.Collections;
 
-public class ResourceChangeMediatorInitializer : IGameInitializerStep
+public class ResourceChangeMediatorInitializer : IGameInitializerStep, IDisposable
 {
     private GameData _gameData;
     public ResourceChangeMediator Mediator { get; private set; }
@@ -15,5 +16,10 @@ public class ResourceChangeMediatorInitializer : IGameInitializerStep
         Mediator = new ResourceChangeMediator(_gameData.GnomeDeathSpiritFine, _gameData.GemsResource, _gameData.GnomeDeathWarriorFine);
         Mediator.Subscribe();
         yield break;
+    }
+
+    public void Dispose()
+    {
+        Mediator.Unsubscribe();
     }
 }
