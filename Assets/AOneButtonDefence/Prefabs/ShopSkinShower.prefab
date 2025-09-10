@@ -218,6 +218,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GnomeWarriorDetailedBlend
       objectReference: {fileID: 0}
+    - target: {fileID: 6328519990455879106, guid: de788c7766fd91847927f4d8c9333980, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.254
+      objectReference: {fileID: 0}
+    - target: {fileID: 6328519990455879106, guid: de788c7766fd91847927f4d8c9333980, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.394
+      objectReference: {fileID: 0}
     - target: {fileID: 6891456671195460762, guid: de788c7766fd91847927f4d8c9333980, type: 3}
       propertyPath: m_RootOrder
       value: -1

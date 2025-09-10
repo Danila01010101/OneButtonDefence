@@ -25,6 +25,7 @@ public class SkinPanel : MonoBehaviour
     public Image PrevSkinSprite;
     public Image SelectSkinSprite;
     public Image BuySkin;
+    public ParticleSystem BuySkinEffects;
     
     private AudioSource buyButtonAudio;
     private SkinOpenSoundPlayer skinOpenSoundPlayer;

@@ -10,12 +10,15 @@ public class ShopSkinShower : MonoBehaviour
     [SerializeField] private Renderer skinRenderer;
     [SerializeField] private Transform skinOffsetTransform; 
     
+    private SkinBoughtEffectsPlayer skinBoughtEffectsPlayer;
+    
     public GnomeSkinChanger GnomeSkinChanger { get; private set; }
 
     public void Initialize(IInput input)
     {
         GnomeSkinChanger = new GnomeSkinChanger(meshFilter, skinRenderer, skinOffsetTransform);
         SkinRotator.Initialize(input);
+        skinBoughtEffectsPlayer = new SkinBoughtEffectsPlayer(BuySkinEffects, );
     }
 
     public void ShowExampleSkin() => gameObject.SetActive(true);
