@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameplayCanvas : MonoBehaviour
@@ -200,6 +198,18 @@ public class GameplayCanvas : MonoBehaviour
         ResourceInfo.gameObject.SetActive(value);
     }
 
+    private void DisableOpenableWindowButtons()
+    {
+        shopOpenButton.interactable = false;
+        settingsOpenButton.interactable = false;
+    }
+
+    private void EnableOpenableWindowButton()
+    {
+        shopOpenButton.interactable = true;
+        settingsOpenButton.interactable = true;
+    }
+    
     public void WhenButtonClicked()
     {
         if (lastKey == -1 || beforLastKey == -1)
@@ -214,12 +224,16 @@ public class GameplayCanvas : MonoBehaviour
     private void OnEnable()
     {
         SkinPanel.ShopInitialized += DetectShopWindow;
+        UpgradeButton.UpgradesChoosen += DisableOpenableWindowButtons;
+        UpgradeState.UpgradeStateStarted += EnableOpenableWindowButton;
         UpgradeState.UpgradeStateStarted += UpdateUpgradeView;
     }
 
     private void OnDisable()
     {
         SkinPanel.ShopInitialized -= DetectShopWindow;
+        UpgradeButton.UpgradesChoosen -= DisableOpenableWindowButtons;
+        UpgradeState.UpgradeStateStarted -= EnableOpenableWindowButton;
         UpgradeState.UpgradeStateStarted -= UpdateUpgradeView;
     }
 }
