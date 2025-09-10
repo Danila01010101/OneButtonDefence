@@ -1,19 +1,20 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ShopSkinShower : MonoBehaviour
 {
     [field : SerializeField] public SkinRotator SkinRotator { get; private set; }
     
-    [SerializeField] private MeshFilter meshFilter;
+    [SerializeField] private List<MeshFilter> meshFilter;
     [SerializeField] private Renderer skinRenderer;
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private Transform skinOffsetTransform; 
     
     public GnomeSkinChanger GnomeSkinChanger { get; private set; }
 
     public void Initialize(IInput input)
     {
-        GnomeSkinChanger = new GnomeSkinChanger(meshFilter, skinRenderer, audioSource);
+        GnomeSkinChanger = new GnomeSkinChanger(meshFilter, skinRenderer, skinOffsetTransform);
         SkinRotator.Initialize(input);
     }
 

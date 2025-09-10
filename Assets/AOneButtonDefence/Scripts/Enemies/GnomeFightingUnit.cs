@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GnomeFightingUnit : FightingUnit
 {
-    [SerializeField] protected MeshFilter meshFilter;
+    [SerializeField] protected List<MeshFilter> meshFilter;
+    [SerializeField] protected Transform modelOffsetTransform;
     
     private GnomeSkinChanger gnomeSkinChanger;
 
@@ -12,7 +14,7 @@ public class GnomeFightingUnit : FightingUnit
     public override void Initialize(IEnemyDetector detector)
     {
         base.Initialize(detector);
-        gnomeSkinChanger = new GnomeSkinChanger(meshFilter, render, audioSource);
+        gnomeSkinChanger = new GnomeSkinChanger(meshFilter, render, modelOffsetTransform, audioSource);
     }
 
     protected override void Die()
