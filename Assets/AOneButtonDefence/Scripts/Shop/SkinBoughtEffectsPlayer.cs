@@ -25,16 +25,34 @@ public class SkinBoughtEffectsPlayer : IDisposable
             Sequence seq = DOTween.Sequence();
 
             Vector3 startPos = modelTransform.localPosition;
-            float jumpHeight = 0.3f;
+            Vector3 startRot = modelTransform.localEulerAngles;
+
             float sideShift = 0.2f;
-            float duration = 0.2f;
+            float upShift = 0.2f;
+            float duration = 0.25f;
+            
+            seq.AppendInterval(0.6f);
 
-            seq.Append(modelTransform.DOLocalMove(startPos + new Vector3(sideShift, jumpHeight, 0), duration).SetEase(Ease.OutQuad));
-            seq.Append(modelTransform.DOLocalMove(startPos + new Vector3(-sideShift, jumpHeight, 0), duration).SetEase(Ease.OutQuad));
-            seq.Append(modelTransform.DOLocalMove(startPos + new Vector3(0, jumpHeight, sideShift), duration).SetEase(Ease.OutQuad));
-            seq.Append(modelTransform.DOLocalMove(startPos + new Vector3(0, jumpHeight, -sideShift), duration).SetEase(Ease.OutQuad));
+            seq.Append(modelTransform.DOLocalMove(startPos + new Vector3(-sideShift, upShift, 0), duration)
+                .SetEase(Ease.OutQuad));
+            seq.Join(modelTransform.DOLocalRotate(startRot + new Vector3(0, 0, 30f), duration)
+                .SetEase(Ease.OutQuad));
 
-            seq.Append(modelTransform.DOLocalMove(startPos, duration).SetEase(Ease.InQuad));
+            seq.Append(modelTransform.DOLocalMove(startPos, duration).SetEase(Ease.InOutQuad));
+            seq.Join(modelTransform.DOLocalRotate(startRot, duration).SetEase(Ease.InOutQuad));
+
+            seq.Append(modelTransform.DOLocalMove(startPos + new Vector3(sideShift, upShift, 0), duration)
+                .SetEase(Ease.OutQuad));
+            seq.Join(modelTransform.DOLocalRotate(startRot + new Vector3(0, 0, -30f), duration)
+                .SetEase(Ease.OutQuad));
+
+            seq.Append(modelTransform.DOLocalMove(startPos, duration).SetEase(Ease.InOutQuad));
+            seq.Join(modelTransform.DOLocalRotate(startRot, duration).SetEase(Ease.InOutQuad));
+
+            seq.Append(modelTransform.DOLocalMoveY(startPos.y + 0.25f, 0.35f)
+                .SetEase(Ease.OutQuad));
+            seq.Append(modelTransform.DOLocalMoveY(startPos.y, 0.4f)
+                .SetEase(Ease.OutBounce));
         }
     }
 
