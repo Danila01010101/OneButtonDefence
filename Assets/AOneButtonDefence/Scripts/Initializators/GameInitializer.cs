@@ -153,9 +153,6 @@ public class GameInitializer : MonoBehaviour
         var debugCanvasInit = new DebugCanvasInitializer(debugCanvas, addCoinsOnStart, gameResourcesCounter, gameData.GemsResource);
         yield return debugCanvasInit.Initialize();
 
-        var shopSkinInit = new ShopSkinWindowInitializer(shopSkinWindow, upgradeCanvas.transform, input);
-        yield return shopSkinInit.Initialize();
-
         var battleCanvasInit = new BattleCanvasInitializer(waypointUIManager, waypointData, Camera.main);
         yield return battleCanvasInit.Initialize();
 
@@ -171,6 +168,9 @@ public class GameInitializer : MonoBehaviour
         yield return volumeChangerInit.Initialize();
 
         IEnemyDetector gnomeDetector = new UnitDetector(gameData.WorldSize, LayerMask.GetMask(gameData.GnomeLayerName), 1f, gameData.DefaultStoppingDistance);
+
+        var shopSkinInit = new ShopSkinWindowInitializer(shopSkinWindow, upgradeCanvas.transform, input);
+        yield return shopSkinInit.Initialize();
 
         yield return null;
 
@@ -192,7 +192,6 @@ public class GameInitializer : MonoBehaviour
         PlayerControllerInitializer playerInitializer = new PlayerControllerInitializer(playerInitializeData);
         positionForTestOrb = playerSpawnPosition;
         yield return playerInitializer.Initialize();
-
 
         battleNotifier.Subscribe();
 

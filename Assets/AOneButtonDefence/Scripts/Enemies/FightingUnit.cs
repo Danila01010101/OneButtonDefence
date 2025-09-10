@@ -36,7 +36,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
         InitializeStateMachine(detector);
         materialChanger = new MaterialChanger(this);
         materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration,characterStats.Delay);
-        SoundSettings.AddAudioSource(audioSource);
+        AudioSettings.AddAudioSource(audioSource);
     }
 
     protected virtual void Update()

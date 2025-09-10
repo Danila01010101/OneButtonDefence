@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class SoundSettings : MonoBehaviour
+public class AudioSettings : MonoBehaviour
 {
     [FormerlySerializedAs("soundButton")] [SerializeField] private Image soundButtonImage;
     [SerializeField] private Slider volumeSlider;
@@ -15,7 +15,7 @@ public class SoundSettings : MonoBehaviour
     
     public float value { get; private set; }
     
-    private static SoundSettings instance;
+    private static AudioSettings instance;
 
     public void Initialize(List<AudioSource> startAudioSources, float startVolume)
     {

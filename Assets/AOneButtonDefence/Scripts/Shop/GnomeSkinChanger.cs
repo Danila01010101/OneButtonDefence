@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class GnomeSkinChanger
 {
+    public Transform ModelTransform => modelTransform;
+    
     private readonly List<MeshFilter> meshFilters;
     private readonly Renderer renderer;
     private readonly AudioSource audioSource;
+    private readonly Transform modelTransform;
     private readonly Transform pivotTarget;
 
     public GnomeSkinChanger(List<MeshFilter> meshFilters, Renderer renderer, Transform pivotTarget, AudioSource audioSource = null)
@@ -13,6 +16,7 @@ public class GnomeSkinChanger
         this.meshFilters = meshFilters;
         this.renderer = renderer;
         this.audioSource = audioSource;
+        modelTransform = meshFilters[0].transform;
         this.pivotTarget = pivotTarget;
 
         SkinPanel.SkinChanged += ChangeSkin;

@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class ShopSkinShower : MonoBehaviour
 {
     [field : SerializeField] public SkinRotator SkinRotator { get; private set; }
     
     [SerializeField] private List<MeshFilter> meshFilter;
     [SerializeField] private Renderer skinRenderer;
+    [SerializeField] private ParticleSystem SkinParticles; 
     [SerializeField] private Transform skinOffsetTransform; 
     
     private SkinBoughtEffectsPlayer skinBoughtEffectsPlayer;
@@ -18,7 +20,7 @@ public class ShopSkinShower : MonoBehaviour
     {
         GnomeSkinChanger = new GnomeSkinChanger(meshFilter, skinRenderer, skinOffsetTransform);
         SkinRotator.Initialize(input);
-        skinBoughtEffectsPlayer = new SkinBoughtEffectsPlayer(BuySkinEffects, );
+        skinBoughtEffectsPlayer = new SkinBoughtEffectsPlayer(SkinParticles, GnomeSkinChanger.ModelTransform);
     }
 
     public void ShowExampleSkin() => gameObject.SetActive(true);

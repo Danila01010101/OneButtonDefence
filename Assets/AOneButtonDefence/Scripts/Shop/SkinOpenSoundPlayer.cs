@@ -8,6 +8,7 @@ public class SkinOpenSoundPlayer : IDisposable
     public SkinOpenSoundPlayer(AudioSource source)
     {
         audioSource = source;
+        AudioSettings.AddAudioSource(audioSource);
         SkinPanel.SkinBought += PlaySound;
     }
 

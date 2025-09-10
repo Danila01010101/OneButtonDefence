@@ -17,7 +17,7 @@ public class VolumeChangerInitializer : IGameInitializerStep
 
     public IEnumerator Initialize()
     {
-        _canvas.SoundSettings.Initialize(_sources, _startVolume);
+        _canvas.AudioSettings.Initialize(_sources, _startVolume);
         yield break;
     }
 }
