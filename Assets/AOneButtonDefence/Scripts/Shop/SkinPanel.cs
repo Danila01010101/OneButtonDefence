@@ -77,7 +77,7 @@ public class SkinPanel : MonoBehaviour
 
     public void SetSkin()
     {
-        if (SkinList[CurrentChose].Unlocked == true)
+        if (SkinList[CurrentChose].Unlocked)
         {
             SelectSkin(CurrentChose);
         }

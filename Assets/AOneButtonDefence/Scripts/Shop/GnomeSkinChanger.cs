@@ -11,6 +11,8 @@ public class GnomeSkinChanger
     private readonly Transform modelTransform;
     private readonly Transform pivotTarget;
 
+    private readonly Material lockedMaterial;
+
     public GnomeSkinChanger(List<MeshFilter> meshFilters, Renderer renderer, Transform pivotTarget, AudioSource audioSource = null)
     {
         this.meshFilters = meshFilters;
@@ -19,6 +21,11 @@ public class GnomeSkinChanger
         modelTransform = meshFilters[0].transform;
         this.pivotTarget = pivotTarget;
 
+        lockedMaterial = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+        lockedMaterial.color = Color.black;
+        lockedMaterial.SetColor("_BaseColor", Color.black);
+        lockedMaterial.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Background;
+        
         SkinPanel.SkinChanged += ChangeSkin;
 
         if (SkinChangeDetector.Instance.IsSkinChanged)
@@ -36,7 +43,7 @@ public class GnomeSkinChanger
                 meshRenderer.mesh = data.Mesh;
             }
 
-            if (pivotTarget != null && meshFilters != null && meshFilters.Count > 0)
+            if (pivotTarget != null && meshFilters.Count > 0)
             {
                 var bounds = meshFilters[0].sharedMesh.bounds;
                 Vector3 localBottom = new Vector3(bounds.center.x, bounds.min.y, bounds.center.z);
@@ -51,7 +58,13 @@ public class GnomeSkinChanger
         }
 
         if (renderer != null)
-            renderer.material = data.Material;
+        {
+            // если скин не открыт — заменяем материал на чёрный
+            if (data.Unlocked)
+                renderer.material = data.Material;
+            else
+                renderer.material = lockedMaterial;
+        }
 
         if (audioSource != null)
             audioSource.clip = data.DeathSound;
