@@ -15,6 +15,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
 
     private Health health;
     
+    protected AudioClip currentDeathSound;
     protected NavMeshAgent navMeshComponent;
     protected IStateChanger stateMachine;
     protected FightAnimation fightAnimation;
@@ -39,6 +40,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
         materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration, characterStats.Delay);
         AudioSettings.AddAudioSource(audioSource);
         navMeshComponent.speed = characterStats.Speed;
+        currentDeathSound = characterStats.DeathSound;
     }
 
     protected virtual void Update()
@@ -92,15 +94,23 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
         isDead = true;
         if (health != null)
             health.Death -= Die;
+
         deathAnimation.StartAnimation();
         materialChanger.ChangeMaterialColour(render, characterStats.EndColor, characterStats.StartColor, 0.5f, characterStats.Delay);
         stateMachine?.Exit();
 
-        if (characterStats.DeathSound != null)
+        if (currentDeathSound != null)
         {
-            AudioSource.PlayClipAtPoint(characterStats.DeathSound, transform.position);
+            GameObject soundObj = new GameObject("DeathSound");
+            soundObj.transform.position = transform.position;
+
+            AudioSource audioSource = soundObj.AddComponent<AudioSource>();
+            audioSource.clip = currentDeathSound;
+            audioSource.Play();
+
+            Destroy(soundObj, currentDeathSound.length);
         }
 
-        Destroy(gameObject, 0.1f);
+        Destroy(gameObject);
     }
 }
