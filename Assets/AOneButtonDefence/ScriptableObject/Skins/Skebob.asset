@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mesh: {fileID: -2432090755550338912, guid: 25bcf60e300a89e4eb0162a93a0252a7, type: 3}
   Material: {fileID: 2100000, guid: 69a342d2231d0ec4bb8c032e00180359, type: 2}
-  DeathSound: {fileID: 0}
-  UnlockMusic: {fileID: 0}
+  DeathSound: {fileID: 8300000, guid: ae5d3864b349b1e43a19b5bf1fec8495, type: 3}
+  UnlockMusic: {fileID: 8300000, guid: fd86688183c59f844a1d9fbe24de25cc, type: 3}
   Icon: {fileID: -274621043, guid: fac83298edb2c624b9db6547c65ff099, type: 3}
   Cost: 60
   SkinName: "\u0421\u043A\u0435\u0431\u043E\u0431"

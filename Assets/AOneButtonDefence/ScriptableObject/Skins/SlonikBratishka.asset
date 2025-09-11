@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mesh: {fileID: -2432090755550338912, guid: 0b337362cf551634d9cb3fd8c2d791e0, type: 3}
   Material: {fileID: 2100000, guid: 69a342d2231d0ec4bb8c032e00180359, type: 2}
-  DeathSound: {fileID: 0}
+  DeathSound: {fileID: 8300000, guid: c949a4f8746c30746bb8037ced10d85b, type: 3}
   UnlockMusic: {fileID: 0}
   Icon: {fileID: 1613932850, guid: 8c54d49b5b5f9b94f8b11527ce109943, type: 3}
   Cost: 60
