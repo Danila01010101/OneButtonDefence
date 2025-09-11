@@ -1,7 +1,7 @@
-    using System;
-    using UnityEngine;
-    using UnityEngine.AI;
-    using DG.Tweening;
+using System; 
+using UnityEngine;
+using UnityEngine.AI;
+using DG.Tweening;
 
 [RequireComponent(typeof(WalkingAnimation))]
 [RequireComponent(typeof(FightAnimation))]
@@ -23,35 +23,39 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
     protected MaterialChanger materialChanger;
     protected AudioSource audioSource;
 
+    private bool isDead;
+
     public event Action<IDamagable> DamageRecieved;
 
     public virtual void Initialize(IEnemyDetector detector)
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.clip = characterStats.DeathSound;
         InitializeAnimationComponents();
         navMeshComponent = GetComponent<NavMeshAgent>();
         health = new Health(characterStats.Health);
         health.Death += Die;
         InitializeStateMachine(detector);
         materialChanger = new MaterialChanger(this);
-        materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration,characterStats.Delay);
+        materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration, characterStats.Delay);
         AudioSettings.AddAudioSource(audioSource);
         navMeshComponent.speed = characterStats.Speed;
     }
 
     protected virtual void Update()
     {
+        if (isDead) return;
         stateMachine.Update();
     }
 
     protected virtual void FixedUpdate() 
-    { 
+    {
+        if (isDead) return;
         stateMachine.PhysicsUpdate();
     }
 
     public virtual void TakeDamage(IDamagable damagerTransform, int damage)
     {
+        if (isDead) return;
         health.TakeDamage(damagerTransform.GetTransform(), damage);
         DamageRecieved?.Invoke(damagerTransform);
     }
@@ -84,9 +88,19 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
 
     protected virtual void Die()
     {
+        if (isDead) return;
+        isDead = true;
+        if (health != null)
+            health.Death -= Die;
         deathAnimation.StartAnimation();
-        materialChanger.ChangeMaterialColour(render, characterStats.EndColor, characterStats.StartColor, audioSource.clip.length,characterStats.Delay);
-        stateMachine.Exit();
-        Destroy(gameObject, audioSource.clip.length + 0.005f);
+        materialChanger.ChangeMaterialColour(render, characterStats.EndColor, characterStats.StartColor, 0.5f, characterStats.Delay);
+        stateMachine?.Exit();
+
+        if (characterStats.DeathSound != null)
+        {
+            AudioSource.PlayClipAtPoint(characterStats.DeathSound, transform.position);
+        }
+
+        Destroy(gameObject, 0.1f);
     }
 }

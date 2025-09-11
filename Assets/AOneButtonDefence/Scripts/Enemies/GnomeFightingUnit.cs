@@ -25,7 +25,8 @@ public class GnomeFightingUnit : FightingUnit
 
     private void OnDestroy()
     {
-        gnomeSkinChanger.Unsubscribe();
+        if (gnomeSkinChanger != null)
+            gnomeSkinChanger.Unsubscribe();
         gnomeSkinChanger = null;
     }
 
