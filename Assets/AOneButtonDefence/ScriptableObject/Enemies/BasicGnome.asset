@@ -15,7 +15,7 @@ MonoBehaviour:
   <Health>k__BackingField: 100
   <Damage>k__BackingField: 15
   <DamageUpgradeValue>k__BackingField: 2
-  <Speed>k__BackingField: 0.03
+  <Speed>k__BackingField: 2.2
   <DetectionRadius>k__BackingField: 100
   <ChaseRange>k__BackingField: 1
   <AttackDelay>k__BackingField: 0.525

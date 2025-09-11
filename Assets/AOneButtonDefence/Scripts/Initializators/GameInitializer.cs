@@ -223,9 +223,6 @@ public class GameInitializer : MonoBehaviour
     private void LateUpdate()
     {
         input?.LateUpdate();
-        
-        if (Input.GetKey(KeyCode.R))
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void FixedUpdate()
