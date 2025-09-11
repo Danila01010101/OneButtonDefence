@@ -59,7 +59,6 @@ public class GnomeSkinChanger
 
         if (renderer != null)
         {
-            // если скин не открыт — заменяем материал на чёрный
             if (data.Unlocked)
                 renderer.material = data.Material;
             else
