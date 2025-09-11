@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0ec7ec97224fa4284c6644fe1e2569, type: 3}
   m_Name: TunTunSahur
   m_EditorClassIdentifier: 
-  Mesh: {fileID: -2432090755550338912, guid: a2248075c5b4ec047a7bd27dade9443e, type: 3}
-  Material: {fileID: 0}
+  Mesh: {fileID: -2432090755550338912, guid: 3d348aa04b1c12b499cab472ba138bb8, type: 3}
+  Material: {fileID: 2100000, guid: 69a342d2231d0ec4bb8c032e00180359, type: 2}
   DeathSound: {fileID: 0}
   UnlockMusic: {fileID: 0}
-  Icon: {fileID: 0}
-  Cost: 55
+  Icon: {fileID: 2134172381, guid: 43124476387dcd34c87aecb1ee64c847, type: 3}
+  Cost: 90
   SkinName: ???
   SkinLore: 
-  Unlocked: 1
+  Unlocked: 0

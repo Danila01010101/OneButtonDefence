@@ -246,8 +246,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.0005187988, y: -188}
-  m_SizeDelta: {x: 500, y: 225.8459}
+  m_AnchoredPosition: {x: 0.0005187988, y: -157.44}
+  m_SizeDelta: {x: 500, y: 152.06}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7780596455840153870
 CanvasRenderer:
@@ -304,10 +304,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44
+  m_fontSize: 72
   m_fontSizeBase: 44
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -1182,11 +1182,20 @@ MonoBehaviour:
   exampleSkinChangerEulerAngles: {x: 0, y: 0, z: 0}
   SkinList:
   - {fileID: 11400000, guid: d23d9debe9fe4714b83e57fbc4064ca4, type: 2}
-  - {fileID: 11400000, guid: ab943b0113dce584e87a3a0b5213e5d8, type: 2}
-  - {fileID: 11400000, guid: 81dc2b2d8b306cf49bd07afea06e2fa7, type: 2}
-  - {fileID: 11400000, guid: ebf121d95a6adc5428a73a31dca4556e, type: 2}
-  - {fileID: 11400000, guid: 789c4435361d7c248ad1ad88c69511f8, type: 2}
+  - {fileID: 11400000, guid: 61091b337114dca4c97bed4d0d31a361, type: 2}
+  - {fileID: 11400000, guid: 79df209dddb51cc4ca83b23370d2c9f5, type: 2}
   - {fileID: 11400000, guid: 0c54e7d09ea5de84db0ede590899a9b8, type: 2}
+  - {fileID: 11400000, guid: 87d832647297d7a4aa3a8890f155ac23, type: 2}
+  - {fileID: 11400000, guid: 789c4435361d7c248ad1ad88c69511f8, type: 2}
+  - {fileID: 11400000, guid: 8e9b3b3769e8cd14c976a4590d625ff4, type: 2}
+  - {fileID: 11400000, guid: 8aee6d331363d1740a285bab884fa0c0, type: 2}
+  - {fileID: 11400000, guid: 1c83064f40090de4685a6104c42ac5d7, type: 2}
+  - {fileID: 11400000, guid: 81dc2b2d8b306cf49bd07afea06e2fa7, type: 2}
+  - {fileID: 11400000, guid: 8987f317e02477a488ab3acd8d67d1ca, type: 2}
+  - {fileID: 11400000, guid: 1f5cb27bb6ab468469914b91423e0f9a, type: 2}
+  - {fileID: 11400000, guid: 8735f82b4139a8e4c856f151011264a6, type: 2}
+  - {fileID: 11400000, guid: ebf121d95a6adc5428a73a31dca4556e, type: 2}
+  - {fileID: 11400000, guid: ab943b0113dce584e87a3a0b5213e5d8, type: 2}
   CurrentChose: 0
   ChosenSkin: 0
   SkinName: {fileID: 5992573334379910290}
@@ -1198,6 +1207,7 @@ MonoBehaviour:
   PrevSkinSprite: {fileID: 119959241707246155}
   SelectSkinSprite: {fileID: 4193082239611531939}
   BuySkin: {fileID: 5921189152107910669}
+  BuySkinEffects: {fileID: 0}
 --- !u!114 &8533160605567349117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1492,7 +1502,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -2.3664856, y: -47}
-  m_SizeDelta: {x: 545.524, y: 110.4352}
+  m_SizeDelta: {x: 545.524, y: 97.71}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8038188159776634324
 CanvasRenderer:
@@ -1549,10 +1559,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 72
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1

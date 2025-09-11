@@ -17,7 +17,7 @@ MonoBehaviour:
   DeathSound: {fileID: 8300000, guid: 460092be8e083c24d84da62779389368, type: 3}
   UnlockMusic: {fileID: 8300000, guid: 41af26ddc361322429891b077adbf071, type: 3}
   Icon: {fileID: -298581229, guid: bcf5363e1b82b1b468b03f58fb0cfc6d, type: 3}
-  Cost: 30
+  Cost: 75
   SkinName: "\u0413\u043D\u043E\u043C \u0431\u0430\u043D\u0430\u043D"
   SkinLore: "\u0420\u0443\u0442\u0443\u0442\u0443\u0442\u0443\u0442"
   Unlocked: 0

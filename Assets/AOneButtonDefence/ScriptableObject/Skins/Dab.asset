@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0ec7ec97224fa4284c6644fe1e2569, type: 3}
   m_Name: Dab
   m_EditorClassIdentifier: 
-  Mesh: {fileID: -2432090755550338912, guid: a2248075c5b4ec047a7bd27dade9443e, type: 3}
-  Material: {fileID: 0}
+  Mesh: {fileID: -2432090755550338912, guid: 2fd595b069c201644830c39d123e7234, type: 3}
+  Material: {fileID: 2100000, guid: 69a342d2231d0ec4bb8c032e00180359, type: 2}
   DeathSound: {fileID: 0}
   UnlockMusic: {fileID: 0}
-  Icon: {fileID: 0}
-  Cost: 55
+  Icon: {fileID: 1390737859, guid: c8a8ed81b422aeb4192a9ff62ce95094, type: 3}
+  Cost: 5
   SkinName: ???
   SkinLore: 
-  Unlocked: 1
+  Unlocked: 0
