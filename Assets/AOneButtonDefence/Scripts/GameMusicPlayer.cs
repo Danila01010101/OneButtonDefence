@@ -24,6 +24,7 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer, IDi
         secondAudioSource.loop = false;
 
         SkinOpenSoundPlayer.SkinOpened += OnSkinOpened;
+        SkinPanel.ShopDisabled += OnShopDisabled;
     }
 
     private void OnSkinOpened(float clipLenght)
@@ -37,6 +38,20 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer, IDi
             backgroundAudioSource.Pause();
 
         currentStopCoroutine = CoroutineStarter.Instance.StartCoroutine(ReturnBackgroundMusic(clipLenght));
+    }
+
+    private void OnShopDisabled()
+    {
+        if (currentStopCoroutine != null)
+        {
+            CoroutineStarter.Instance.StopCoroutine(currentStopCoroutine);
+            currentStopCoroutine = null;
+        }
+        
+        if (!backgroundAudioSource.isPlaying)
+        {
+            backgroundAudioSource.UnPause();
+        }
     }
 
     private System.Collections.IEnumerator ReturnBackgroundMusic(float delay)
@@ -88,5 +103,6 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer, IDi
     public void Dispose()
     {
         SkinOpenSoundPlayer.SkinOpened -= OnSkinOpened;
+        SkinPanel.ShopDisabled -= OnShopDisabled;
     }
 }
