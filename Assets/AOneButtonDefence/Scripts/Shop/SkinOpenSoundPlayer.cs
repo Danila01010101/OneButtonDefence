@@ -4,6 +4,8 @@ using UnityEngine;
 public class SkinOpenSoundPlayer : IDisposable
 {
     private AudioSource audioSource;
+    
+    public static event Action<float> SkinOpened;
 
     public SkinOpenSoundPlayer(AudioSource source)
     {
@@ -16,6 +18,8 @@ public class SkinOpenSoundPlayer : IDisposable
     {
         audioSource.clip = skinData.UnlockMusic;
         audioSource.Play();
+        
+        SkinOpened.Invoke(audioSource.clip.length);
     }
 
     public void Dispose()
