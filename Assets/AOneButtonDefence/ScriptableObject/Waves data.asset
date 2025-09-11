@@ -30,7 +30,7 @@ MonoBehaviour:
       EnemyPrefab: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
       startWave: 0
       startAmount: 3
-      growthPerWave: 1
+      growthPerWave: 3
       growthType: 0
       maxWave: 60
       customSpawnInterval: 0.2
@@ -40,8 +40,8 @@ MonoBehaviour:
     - isEnabled: 1
       EnemyPrefab: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
       startWave: 0
-      startAmount: 3
-      growthPerWave: 1
+      startAmount: 4
+      growthPerWave: 2
       growthType: 0
       maxWave: 60
       customSpawnInterval: 0.2
