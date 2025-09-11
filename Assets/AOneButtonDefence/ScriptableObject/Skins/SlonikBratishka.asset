@@ -18,6 +18,6 @@ MonoBehaviour:
   UnlockMusic: {fileID: 0}
   Icon: {fileID: 1613932850, guid: 8c54d49b5b5f9b94f8b11527ce109943, type: 3}
   Cost: 60
-  SkinName: ???
+  SkinName: "\u041F\u0430\u0445\u043E\u043C"
   SkinLore: 
   Unlocked: 0
