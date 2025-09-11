@@ -36,6 +36,9 @@ public class GnomeSkinChanger
 
     public void ChangeSkin(SkinData data)
     {
+        if (audioSource != null)
+            audioSource.clip = data.DeathSound;
+        
         if (meshFilters != null)
         {
             foreach (var meshRenderer in meshFilters)
@@ -64,8 +67,5 @@ public class GnomeSkinChanger
             else
                 renderer.material = lockedMaterial;
         }
-
-        if (audioSource != null)
-            audioSource.clip = data.DeathSound;
     }
 }

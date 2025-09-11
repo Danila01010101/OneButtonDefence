@@ -92,6 +92,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
     {
         if (isDead) return;
         isDead = true;
+
         if (health != null)
             health.Death -= Die;
 
@@ -99,18 +100,11 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
         materialChanger.ChangeMaterialColour(render, characterStats.EndColor, characterStats.StartColor, 0.5f, characterStats.Delay);
         stateMachine?.Exit();
 
-        if (currentDeathSound != null)
+        if (audioSource != null && audioSource.clip != null)
         {
-            GameObject soundObj = new GameObject("DeathSound");
-            soundObj.transform.position = transform.position;
-
-            AudioSource audioSource = soundObj.AddComponent<AudioSource>();
-            audioSource.clip = currentDeathSound;
-            audioSource.Play();
-
-            Destroy(soundObj, currentDeathSound.length);
+            AudioUtility.PlayClipAtPoint(audioSource, transform.position);
         }
 
-        Destroy(gameObject);
+        Destroy(gameObject, 0.1f);
     }
 }
