@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,11 +51,6 @@ public class SkinPanel : MonoBehaviour
         CurrentShopWindow = GetComponent<ClosableWindow>();
         ShopInitialized?.Invoke(CurrentShopWindow);
         skinOpenSoundPlayer = new SkinOpenSoundPlayer(buyButtonAudio);
-    }
-
-    private void Awake()
-    {
-        DisablePanel();
     }
 
     public void ChangeCurrentChose(int num)

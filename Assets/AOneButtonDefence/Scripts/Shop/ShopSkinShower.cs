@@ -11,6 +11,7 @@ public class ShopSkinShower : MonoBehaviour
     [SerializeField] private Renderer skinRenderer;
     [SerializeField] private ParticleSystem SkinParticles; 
     [SerializeField] private Transform skinOffsetTransform; 
+    [SerializeField] private GameObject parentGameObject; 
     
     private SkinBoughtEffectsPlayer skinBoughtEffectsPlayer;
     
@@ -23,9 +24,9 @@ public class ShopSkinShower : MonoBehaviour
         skinBoughtEffectsPlayer = new SkinBoughtEffectsPlayer(SkinParticles, GnomeSkinChanger.ModelTransform);
     }
 
-    public void ShowExampleSkin() => gameObject.SetActive(true);
+    public void ShowExampleSkin() => parentGameObject.SetActive(true);
     
-    public void HideExampleSkin() => gameObject.SetActive(false);
+    public void HideExampleSkin() => parentGameObject.SetActive(false);
 
     private void OnDestroy()
     {
