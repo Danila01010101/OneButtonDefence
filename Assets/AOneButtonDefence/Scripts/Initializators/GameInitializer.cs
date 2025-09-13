@@ -292,9 +292,6 @@ public class GameInitializer : MonoBehaviour
         IEnemyDetector gnomeDetector = null;
         try { gnomeDetector = new UnitDetector(gameData.WorldSize, LayerMask.GetMask(gameData.GnomeLayerName), 1f, gameData.DefaultStoppingDistance); } catch { gnomeDetector = null; }
 
-        ShopSkinWindowInitializer shopSkinInit = new ShopSkinWindowInitializer(shopSkinWindow, upgradeCanvas != null ? upgradeCanvas.transform : null, input);
-        yield return SafeStep("ShopSkinWindowInitializer", () => shopSkinInit.Initialize());
-
         yield return null;
 
         StateMachineInitializer stateMachineInit = new StateMachineInitializer(gameData, enemiesData, upgradeCanvas, spellCanvasObj, worldCreator, worldGrid, disableableInput, gnomeDetector);
@@ -335,6 +332,11 @@ public class GameInitializer : MonoBehaviour
 
         TutorialMaskInitializer tutorialSpotlightMask = new TutorialMaskInitializer(tutorialMaskPrefab, upgradeCanvas != null ? upgradeCanvas.GetComponent<Canvas>() : null);
         yield return SafeStep("TutorialMaskInitializer", () => tutorialSpotlightMask.Initialize());
+
+        yield return null;
+        
+        ShopSkinWindowInitializer shopSkinInit = new ShopSkinWindowInitializer(shopSkinWindow, upgradeCanvas != null ? upgradeCanvas.transform : null, input);
+        yield return SafeStep("ShopSkinWindowInitializer", () => shopSkinInit.Initialize());
 
         yield return null;
 

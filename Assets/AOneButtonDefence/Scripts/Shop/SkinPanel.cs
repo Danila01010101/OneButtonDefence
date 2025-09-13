@@ -36,6 +36,8 @@ public class SkinPanel : MonoBehaviour
     public static Action ShopEnabled;
     public static Action ShopDisabled;
 
+    public static ClosableWindow CurrentShopWindow { get; private set; }
+
     private ShopSkinShower spawnedShopSkinShower;
     
     public void Initialize(IInput input)
@@ -45,9 +47,14 @@ public class SkinPanel : MonoBehaviour
         buyButtonAudio = GetComponent<AudioSource>();
         ChangeCurrentChose(0);
         SelectSkin(0);
-        ShopInitialized?.Invoke(GetComponent<ClosableWindow>());
-        gameObject.SetActive(false);
+        CurrentShopWindow = GetComponent<ClosableWindow>();
+        ShopInitialized?.Invoke(CurrentShopWindow);
         skinOpenSoundPlayer = new SkinOpenSoundPlayer(buyButtonAudio);
+    }
+
+    private void Awake()
+    {
+        DisablePanel();
     }
 
     public void ChangeCurrentChose(int num)
@@ -157,6 +164,7 @@ public class SkinPanel : MonoBehaviour
 
     private void OnDestroy()
     {
-        skinOpenSoundPlayer.Dispose();
+        skinOpenSoundPlayer?.Dispose();
+        if (CurrentShopWindow == GetComponent<ClosableWindow>()) CurrentShopWindow = null;
     }
 }
