@@ -104,11 +104,9 @@ public class GameplayCanvas : MonoBehaviour
     
     private void SetShopWindowActive(bool value)
     {
-        if (spawnedShopWindow != null)
-        {
-            spawnedShopWindow.gameObject.SetActive(value);
-            SetGameplayUIActive(!value);
-        }
+        if (spawnedShopWindow == null) return;
+        spawnedShopWindow.gameObject.SetActive(value);
+        SetGameplayUIActive(!value);
     }
     
     private void SetSettingsWindowActive(bool value)
@@ -192,11 +190,11 @@ public class GameplayCanvas : MonoBehaviour
         partsAnimators.Add(buttonAnimation);
         parts.Add(spawnedButton);
     }
-
+    
     private void SetGameplayUIActive(bool value)
     {
-        UpgradeWindow.gameObject.SetActive(value);
-        ResourceInfo.gameObject.SetActive(value);
+        if (UpgradeWindow != null) UpgradeWindow.SetActive(value);
+        if (ResourceInfo != null) ResourceInfo.SetActive(value);
     }
 
     private void DisableOpenableWindowButtons()
