@@ -89,7 +89,7 @@ public class GameplayCanvas : MonoBehaviour
         settingsOpenButton.onClick.RemoveAllListeners();
         settingsWindowHandler = () => { SetSettingsWindowActive(true); };
         settingsOpenButton.onClick.AddListener(settingsWindowHandler);
-        spawnedSettingsWindow.AddCloseListener(() => { SetShopWindowActive(false); });
+        spawnedSettingsWindow.AddCloseListener(() => { SetSettingsWindowActive(false); });
     }
 
     private void DetectShopWindow(ClosableWindow window)
@@ -99,6 +99,7 @@ public class GameplayCanvas : MonoBehaviour
         shopWindowHandler = () => { SetShopWindowActive(true); };
         shopOpenButton.onClick.AddListener(shopWindowHandler);
         spawnedShopWindow.AddCloseListener(() => { SetShopWindowActive(false); });
+        SetShopWindowActive(false);
     }
     
     private void SetShopWindowActive(bool value)

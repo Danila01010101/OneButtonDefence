@@ -13,11 +13,12 @@ public class ShopSkinWindowInitializer : IGameInitializerStep
         _parent = parent;
         _input = input;
     }
-
+    
     public IEnumerator Initialize()
     {
         var shopWindow = Object.Instantiate(_prefab, _parent);
         shopWindow.Initialize(_input);
+
         yield break;
     }
 }
