@@ -40,6 +40,13 @@ public class GameplayCanvas : MonoBehaviour
 
     public void Initialize(int partsAmount, BuildingsData buildingsData)
     {
+        SkinPanel.ShopInitialized += DetectShopWindow;
+
+        if (SkinPanel.CurrentShopWindow != null)
+        {
+            DetectShopWindow(SkinPanel.CurrentShopWindow);
+        }
+        
         statisticViewInitializer.Initialize(ResourceData.ResourceType.Food, ResourceData.ResourceType.Warrior, ResourceData.ResourceType.Spirit, ResourceData.ResourceType.Material, ResourceData.ResourceType.Gem);
         iconsText.text = "Выберите 2 здания для строительства.";
         
@@ -96,13 +103,16 @@ public class GameplayCanvas : MonoBehaviour
         spawnedSettingsWindow.AddCloseListener(() => { SetSettingsWindowActive(false); });
     }
 
-    public void DetectShopWindow(ClosableWindow window)
+    private void DetectShopWindow(ClosableWindow window)
     {
         spawnedShopWindow = window;
         shopOpenButton.onClick.RemoveAllListeners();
         shopWindowHandler = () => { SetShopWindowActive(true); };
         shopOpenButton.onClick.AddListener(shopWindowHandler);
         spawnedShopWindow.AddCloseListener(() => { SetShopWindowActive(false); });
+        
+        if (spawnedShopWindow.gameObject.activeSelf)
+            SetShopWindowActive(false);    
     }
     
     private void SetShopWindowActive(bool value)
@@ -235,5 +245,10 @@ public class GameplayCanvas : MonoBehaviour
         UpgradeButton.UpgradesChoosen -= DisableOpenableWindowButtons;
         UpgradeState.UpgradeStateStarted -= EnableOpenableWindowButton;
         UpgradeState.UpgradeStateStarted -= UpdateUpgradeView;
+    }
+
+    private void OnDestroy()
+    {
+        SkinPanel.ShopInitialized -= DetectShopWindow;
     }
 }

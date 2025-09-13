@@ -3,8 +3,6 @@ using System.Collections;
 
 public class ShopSkinWindowInitializer : IGameInitializerStep
 {
-    private SkinPanel shopWindow;
-    
     private SkinPanel _prefab;
     private Transform _parent;
     private IInput _input;
@@ -18,7 +16,7 @@ public class ShopSkinWindowInitializer : IGameInitializerStep
 
     public IEnumerator Initialize()
     {
-        shopWindow = Object.Instantiate(_prefab, _parent);
+        var shopWindow = Object.Instantiate(_prefab, _parent);
         shopWindow.Initialize(_input);
 
         if (shopWindow != null && shopWindow.gameObject.activeSelf)
@@ -26,6 +24,4 @@ public class ShopSkinWindowInitializer : IGameInitializerStep
         
         yield break;
     }
-    
-    public void SetWindowsConnection(GameplayCanvas gameplayCanvas) => gameplayCanvas.DetectShopWindow(shopWindow.GetComponent<ClosableWindow>());
 }

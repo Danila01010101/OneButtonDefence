@@ -245,6 +245,7 @@ public class GameInitializer : MonoBehaviour
         }
 
         yield return null;
+        yield return null;
 
         UpgradeCanvasInitializer upgradeCanvasInit = new UpgradeCanvasInitializer(gameplayCanvasPrefab, worldGenerationData);
         yield return SafeStep("UpgradeCanvasInitializer", () => upgradeCanvasInit.Initialize(), () =>
@@ -336,7 +337,6 @@ public class GameInitializer : MonoBehaviour
         
         ShopSkinWindowInitializer shopSkinInit = new ShopSkinWindowInitializer(shopSkinWindow, upgradeCanvas != null ? upgradeCanvas.transform : null, input);
         yield return SafeStep("ShopSkinWindowInitializer", () => shopSkinInit.Initialize());
-        shopSkinInit.SetWindowsConnection(upgradeCanvasInit.CanvasInstance);
 
         yield return null;
 
