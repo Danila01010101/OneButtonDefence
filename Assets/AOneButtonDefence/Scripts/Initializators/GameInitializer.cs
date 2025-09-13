@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using AOneButtonDefence.Scripts;
 using AOneButtonDefence.Scripts.Initializators;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class GameInitializer : MonoBehaviour
@@ -35,152 +34,283 @@ public class GameInitializer : MonoBehaviour
     public static Action GameInitialized;
 
     private Vector3 positionForTestOrb;
-
     private IInput input;
     private IDisableableInput disableableInput;
     private GameStateMachine gameStateMachine;
     private readonly List<IDisposable> disposables = new List<IDisposable>();
 
-    private void Awake()
+    private IEnumerator SafeStep(string name, Func<IEnumerator> step, Action onComplete = null)
     {
-        StartCoroutine(InitializeGame());
+        if (step == null) yield break;
+
+        IEnumerator routine = null;
+        try
+        {
+            routine = step();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[Initializer Error] {name} during start: {e}");
+        }
+
+        if (routine != null)
+        {
+            while (true)
+            {
+                object current = null;
+                try
+                {
+                    if (!routine.MoveNext()) break;
+                    current = routine.Current;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"[Initializer Error] {name} during execution: {e}");
+                    break;
+                }
+                yield return current;
+            }
+        }
+
+        try
+        {
+            onComplete?.Invoke();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[Initializer Error] {name} onComplete: {e}");
+        }
     }
 
-    private IEnumerator InitializeGame()
+    private IEnumerator SafeWaitUntil(Func<bool> predicate, float timeoutSeconds, string stepName)
     {
-        var parentInit = new ParentObjectsInitializer(transform);
-        yield return parentInit.Initialize();
-        Transform initializedObjectsParent = parentInit.InitializedParent;
+        float t = 0f;
+        while (t < timeoutSeconds)
+        {
+            bool ok = false;
+            try { ok = predicate(); }
+            catch (Exception e)
+            {
+                Debug.LogError($"[Initializer Error] {stepName} predicate: {e}");
+                break;
+            }
+            if (ok) yield break;
+            t += Time.deltaTime;
+            yield return null;
+        }
+        Debug.LogWarning($"[Initializer Warning] {stepName} timed out after {timeoutSeconds} seconds.");
+    }
 
-        var loadingCanvasInit = new LoadingCanvasInitializer(loadingCanvas);
-        yield return loadingCanvasInit.Initialize();
-        var spawnedLoadingCanvas = loadingCanvasInit.Instance;
+    private void Awake() => StartCoroutine(InitializeGameSafe());
 
-        var inputInit = new InputInitializer(gameData);
-        yield return inputInit.Initialize();
-        input = inputInit.Input;
-        disableableInput = inputInit.DisableableInput;
+    private IEnumerator InitializeGameSafe()
+    {
+        Transform initializedObjectsParent = null;
+        Canvas spawnedLoadingCanvas = null;
+        IBackgroundMusicPlayer backgroundMusicPlayer = null;
+        IUpgradeEffectPlayer upgradeEffectPlayer = null;
+        BuildingSpawner buildingSpawner = null;
+        GroundBlocksSpawner worldCreator = null;
+        CellsGrid worldGrid = null;
+        GameResourcesCounter gameResourcesCounter = null;
+        UnitsFactory gnomesFactory = null;
+        IncomeDifferenceTextConverter incomeDifferenceTextConverter = null;
+        ResourceChangeMediator resourceChangeMediator = null;
+        GameplayCanvas upgradeCanvas = null;
+        GameObject spellCanvasObj = null;
+        BattleNotifier battleNotifier = null;
 
-        var coroutineStarterInit = new CoroutineStarterInitializer(initializedObjectsParent);
-        yield return coroutineStarterInit.Initialize();
+        ParentObjectsInitializer parentInit = new ParentObjectsInitializer(transform);
+        yield return SafeStep("ParentObjectsInitializer", () => parentInit.Initialize(), () =>
+        {
+            try { initializedObjectsParent = parentInit.InitializedParent; } catch { initializedObjectsParent = null; }
+        });
 
-        var skinDetectorInit = new SkinDetectorInitializer();
-        yield return skinDetectorInit.Initialize();
-        var skinChangeDetector = skinDetectorInit.Instance;
-        disposables.Add(skinChangeDetector);
+        LoadingCanvasInitializer loadingCanvasInit = new LoadingCanvasInitializer(loadingCanvas);
+        yield return SafeStep("LoadingCanvasInitializer", () => loadingCanvasInit.Initialize(), () =>
+        {
+            try { spawnedLoadingCanvas = loadingCanvasInit.Instance; } catch { spawnedLoadingCanvas = null; }
+        });
 
-        var musicPlayerInit = new MusicPlayerInitializer(initializedObjectsParent, musicData);
-        yield return musicPlayerInit.Initialize();
-        IBackgroundMusicPlayer backgroundMusicPlayer = musicPlayerInit.BackgroundPlayer;
-        IUpgradeEffectPlayer upgradeEffectPlayer = musicPlayerInit.UpgradeEffectPlayer;
-        backgroundMusicPlayer.StartLoadingMusic();
+        InputInitializer inputInit = new InputInitializer(gameData);
+        yield return SafeStep("InputInitializer", () => inputInit.Initialize(), () =>
+        {
+            try
+            {
+                input = inputInit.Input;
+                disableableInput = inputInit.DisableableInput;
+            }
+            catch { input = null; disableableInput = null; }
+        });
 
-        var musicMediatorInit = new MusicMediatorInitializer(backgroundMusicPlayer, upgradeEffectPlayer);
-        yield return musicMediatorInit.Initialize();
-        var musicMediator = musicMediatorInit.Mediator;
-        
-        if (musicMediatorInit is IDisposable disposable)
-            disposables.Add(disposable);
+        CoroutineStarterInitializer coroutineStarterInit = new CoroutineStarterInitializer(initializedObjectsParent);
+        yield return SafeStep("CoroutineStarterInitializer", () => coroutineStarterInit.Initialize());
 
-        var waveCounterInit = new WaveCounterInitializer(initializedObjectsParent);
-        yield return waveCounterInit.Initialize();
+        SkinDetectorInitializer skinDetectorInit = new SkinDetectorInitializer();
+        yield return SafeStep("SkinDetectorInitializer", () => skinDetectorInit.Initialize(), () =>
+        {
+            try { disposables.Add(skinDetectorInit.Instance); } catch { }
+        });
 
-        var battleNotifierInit = new BattleNotifierInitializer();
-        yield return battleNotifierInit.Initialize();
-        BattleNotifier battleNotifier = battleNotifierInit.Instance;
+        MusicPlayerInitializer musicPlayerInit = new MusicPlayerInitializer(initializedObjectsParent, musicData);
+        yield return SafeStep("MusicPlayerInitializer", () => musicPlayerInit.Initialize(), () =>
+        {
+            try
+            {
+                backgroundMusicPlayer = musicPlayerInit.BackgroundPlayer;
+                upgradeEffectPlayer = musicPlayerInit.UpgradeEffectPlayer;
+                backgroundMusicPlayer?.StartLoadingMusic();
+            }
+            catch { backgroundMusicPlayer = null; upgradeEffectPlayer = null; }
+        });
+
+        MusicMediatorInitializer musicMediatorInit = new MusicMediatorInitializer(backgroundMusicPlayer, upgradeEffectPlayer);
+        yield return SafeStep("MusicMediatorInitializer", () => musicMediatorInit.Initialize(), () =>
+        {
+            try { if (musicMediatorInit is IDisposable d) disposables.Add(d); } catch { }
+        });
+
+        WaveCounterInitializer waveCounterInit = new WaveCounterInitializer(initializedObjectsParent);
+        yield return SafeStep("WaveCounterInitializer", () => waveCounterInit.Initialize());
+
+        BattleNotifierInitializer battleNotifierInit = new BattleNotifierInitializer();
+        yield return SafeStep("BattleNotifierInitializer", () => battleNotifierInit.Initialize(), () =>
+        {
+            try { battleNotifier = battleNotifierInit.Instance; } catch { battleNotifier = null; }
+        });
 
         yield return null;
 
-        var resourceCounterInit = new ResourceCounterInitializer(initializedObjectsParent, gameData);
-        yield return resourceCounterInit.Initialize();
-        GameResourcesCounter gameResourcesCounter = resourceCounterInit.Instance;
+        ResourceCounterInitializer resourceCounterInit = new ResourceCounterInitializer(initializedObjectsParent, gameData);
+        yield return SafeStep("ResourceCounterInitializer", () => resourceCounterInit.Initialize(), () =>
+        {
+            try { gameResourcesCounter = resourceCounterInit.Instance; } catch { gameResourcesCounter = null; }
+        });
 
-        LayerMask gnomeLayerMask = LayerMask.GetMask(gameData.GnomeLayerName);
-        IEnemyDetector knightDetector = new UnitDetector(gameData.WorldSize, LayerMask.GetMask(gameData.EnemyLayerName), 1f, gameData.DefaultStoppingDistance);
-        var gnomesFactory = new UnitsFactory(new List<FightingUnit>() { gameData.GnomeUnit }, knightDetector, gnomeLayerMask, gameData.GnomeTag);
+        try
+        {
+            LayerMask gnomeLayerMask = LayerMask.GetMask(gameData.GnomeLayerName);
+            IEnemyDetector knightDetector = new UnitDetector(gameData.WorldSize, LayerMask.GetMask(gameData.EnemyLayerName), 1f, gameData.DefaultStoppingDistance);
+            gnomesFactory = new UnitsFactory(new List<FightingUnit>() { gameData.GnomeUnit }, knightDetector, gnomeLayerMask, gameData.GnomeTag);
+        }
+        catch { gnomesFactory = null; }
 
-        var resourcesStatisticInit = new ResourcesStatisticInitializer(gameData, gameResourcesCounter, gnomesFactory);
-        yield return resourcesStatisticInit.Initialize();
-        var incomeDifferenceTextConverter = resourcesStatisticInit.IncomeConverter;
+        ResourcesStatisticInitializer resourcesStatisticInit = new ResourcesStatisticInitializer(gameData, gameResourcesCounter, gnomesFactory);
+        yield return SafeStep("ResourcesStatisticInitializer", () => resourcesStatisticInit.Initialize(), () =>
+        {
+            try { incomeDifferenceTextConverter = resourcesStatisticInit.IncomeConverter; } catch { incomeDifferenceTextConverter = null; }
+        });
 
-        var resourceChangeMediatorInit = new ResourceChangeMediatorInitializer(gameData);
-        yield return resourceChangeMediatorInit.Initialize();
-        var resourceChangeMediator = resourceChangeMediatorInit.Mediator;
-        disposables.Add(resourceChangeMediatorInit);
-
-        yield return null;
-
-        var uiObjectShowerInit = new UIObjectShowerInitializer(uiGameObjectShowerPrefab);
-        yield return uiObjectShowerInit.Initialize();
-
-        var enemyDeathManagerInit = new EnemyDeathManagerInitializer(initializedObjectsParent);
-        yield return enemyDeathManagerInit.Initialize();
-
-        var dialogCameraInit = new DialogCameraInitializer(cameraData);
-        yield return dialogCameraInit.Initialize();
-
-        var cameraMovementInit = new CameraMovementInitializer(virtualCameraPrefab, initializedObjectsParent, input, cameraData);
-        yield return cameraMovementInit.Initialize();
+        ResourceChangeMediatorInitializer resourceChangeMediatorInit = new ResourceChangeMediatorInitializer(gameData);
+        yield return SafeStep("ResourceChangeMediatorInitializer", () => resourceChangeMediatorInit.Initialize(), () =>
+        {
+            try { resourceChangeMediator = resourceChangeMediatorInit.Mediator; disposables.Add(resourceChangeMediatorInit); } catch { resourceChangeMediator = null; }
+        });
 
         yield return null;
 
-        var buildingSpawnerInit = new BuildingSpawnerInitializer(initializedObjectsParent);
-        yield return buildingSpawnerInit.Initialize();
-        BuildingSpawner buildingSpawner = buildingSpawnerInit.Instance;
+        UIObjectShowerInitializer uiObjectShowerInit = new UIObjectShowerInitializer(uiGameObjectShowerPrefab);
+        yield return SafeStep("UIObjectShowerInitializer", () => uiObjectShowerInit.Initialize());
 
-        var worldGridInit = new WorldGridInitializer(initializedObjectsParent, worldGenerationData, buildingSpawner, this);
-        yield return worldGridInit.Initialize();
-        yield return new WaitUntil(() => worldGridInit.IsWorldReady());
-        GroundBlocksSpawner worldCreator = worldGridInit.WorldCreator;
-        CellsGrid worldGrid = worldGridInit.Grid;
+        EnemyDeathManagerInitializer enemyDeathManagerInit = new EnemyDeathManagerInitializer(initializedObjectsParent);
+        yield return SafeStep("EnemyDeathManagerInitializer", () => enemyDeathManagerInit.Initialize());
 
-        buildingSpawner.Initialize(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration);
+        DialogCameraInitializer dialogCameraInit = new DialogCameraInitializer(cameraData);
+        yield return SafeStep("DialogCameraInitializer", () => dialogCameraInit.Initialize());
+
+        CameraMovementInitializer cameraMovementInit = new CameraMovementInitializer(virtualCameraPrefab, initializedObjectsParent, input, cameraData);
+        yield return SafeStep("CameraMovementInitializer", () => cameraMovementInit.Initialize());
+
+        yield return null;
+
+        BuildingSpawnerInitializer buildingSpawnerInit = new BuildingSpawnerInitializer(initializedObjectsParent);
+        yield return SafeStep("BuildingSpawnerInitializer", () => buildingSpawnerInit.Initialize(), () =>
+        {
+            try { buildingSpawner = buildingSpawnerInit.Instance; } catch { buildingSpawner = null; }
+        });
+
+        WorldGridInitializer worldGridInit = new WorldGridInitializer(initializedObjectsParent, worldGenerationData, buildingSpawner, this);
+        yield return SafeStep("WorldGridInitializer", () => worldGridInit.Initialize(), () =>
+        {
+            try { worldCreator = worldGridInit.WorldCreator; worldGrid = worldGridInit.Grid; } catch { worldCreator = null; worldGrid = null; }
+        });
+
+        if (worldGridInit != null)
+            yield return SafeWaitUntil(() => worldGridInit.IsWorldReady(), 20f, "WorldGridReady");
+
+        if (buildingSpawner != null && worldGrid != null && worldGenerationData?.BuildingsData != null)
+        {
+            try { buildingSpawner.Initialize(worldGrid, worldGenerationData.BuildingsData, gameData.UpgradeStateDuration); }
+            catch (Exception e) { Debug.LogError($"buildingSpawner.Initialize failed: {e}"); }
+        }
 
         yield return null;
         yield return null;
 
-        var upgradeCanvasInit = new UpgradeCanvasInitializer(gameplayCanvasPrefab, worldGenerationData);
-        yield return upgradeCanvasInit.Initialize();
-        GameplayCanvas upgradeCanvas = upgradeCanvasInit.CanvasInstance;
-        upgradeCanvas.EnemiesCountIndicator.Initiallize(gameData.BattleWavesParameters);
+        UpgradeCanvasInitializer upgradeCanvasInit = new UpgradeCanvasInitializer(gameplayCanvasPrefab, worldGenerationData);
+        yield return SafeStep("UpgradeCanvasInitializer", () => upgradeCanvasInit.Initialize(), () =>
+        {
+            try { upgradeCanvas = upgradeCanvasInit.CanvasInstance; } catch { upgradeCanvas = null; }
+        });
 
-        yield return null;
+        try
+        {
+            if (upgradeCanvas != null)
+                upgradeCanvas.EnemiesCountIndicator.Initiallize(gameData.BattleWavesParameters);
+        }
+        catch (Exception e) { Debug.LogError($"EnemiesCountIndicator initialization failed: {e}"); }
 
-        var spellCanvasInit = new SpellCanvasInitializer(spellCanvas, input, spellCastData);
-        yield return spellCanvasInit.Initialize();
-        GameObject spellCanvasObj = spellCanvasInit.Instance;
+        SpellCanvasInitializer spellCanvasInit = new SpellCanvasInitializer(spellCanvas, input, spellCastData);
+        yield return SafeStep("SpellCanvasInitializer", () => spellCanvasInit.Initialize(), () =>
+        {
+            try { spellCanvasObj = spellCanvasInit.Instance; } catch { spellCanvasObj = null; }
+        });
 
-        var debugCanvasInit = new DebugCanvasInitializer(debugCanvas, addCoinsOnStart, gameResourcesCounter, gameData.GemsResource);
-        yield return debugCanvasInit.Initialize();
+        DebugCanvasInitializer debugCanvasInit = new DebugCanvasInitializer(debugCanvas, addCoinsOnStart, gameResourcesCounter, gameData.GemsResource);
+        yield return SafeStep("DebugCanvasInitializer", () => debugCanvasInit.Initialize());
 
-        var battleCanvasInit = new BattleCanvasInitializer(waypointUIManager, waypointData, Camera.main);
-        yield return battleCanvasInit.Initialize();
+        BattleCanvasInitializer battleCanvasInit = new BattleCanvasInitializer(waypointUIManager, waypointData, Camera.main);
+        yield return SafeStep("BattleCanvasInitializer", () => battleCanvasInit.Initialize());
 
-        List<AudioSource> upgradeSources = upgradeEffectPlayer.GetSources();
+        List<AudioSource> upgradeSources = new List<AudioSource>();
+        try { upgradeSources = upgradeEffectPlayer?.GetSources() ?? new List<AudioSource>(); } catch { }
         var startAudioSources = new List<AudioSource>();
-        startAudioSources.Add(backgroundMusicPlayer.GetSource());
-        startAudioSources.AddRange(upgradeSources);
+        try
+        {
+            var bgSource = backgroundMusicPlayer?.GetSource();
+            if (bgSource != null) startAudioSources.Add(bgSource);
+            if (upgradeSources != null) startAudioSources.AddRange(upgradeSources.FindAll(s => s != null));
+        }
+        catch { }
 
-        var infoCanvasInit = new InfoCanvasInitializer(infoCanvas, upgradeCanvas);
-        yield return infoCanvasInit.Initialize();
+        InfoCanvasInitializer infoCanvasInit = new InfoCanvasInitializer(infoCanvas, upgradeCanvas);
+        yield return SafeStep("InfoCanvasInitializer", () => infoCanvasInit.Initialize());
 
-        var volumeChangerInit = new VolumeChangerInitializer(upgradeCanvas, startAudioSources, musicData.StartValue);
-        yield return volumeChangerInit.Initialize();
+        VolumeChangerInitializer volumeChangerInit = new VolumeChangerInitializer(upgradeCanvas, startAudioSources, musicData.StartValue);
+        yield return SafeStep("VolumeChangerInitializer", () => volumeChangerInit.Initialize());
 
-        IEnemyDetector gnomeDetector = new UnitDetector(gameData.WorldSize, LayerMask.GetMask(gameData.GnomeLayerName), 1f, gameData.DefaultStoppingDistance);
+        IEnemyDetector gnomeDetector = null;
+        try { gnomeDetector = new UnitDetector(gameData.WorldSize, LayerMask.GetMask(gameData.GnomeLayerName), 1f, gameData.DefaultStoppingDistance); } catch { gnomeDetector = null; }
 
-        var shopSkinInit = new ShopSkinWindowInitializer(shopSkinWindow, upgradeCanvas.transform, input);
-        yield return shopSkinInit.Initialize();
+        ShopSkinWindowInitializer shopSkinInit = new ShopSkinWindowInitializer(shopSkinWindow, upgradeCanvas != null ? upgradeCanvas.transform : null, input);
+        yield return SafeStep("ShopSkinWindowInitializer", () => shopSkinInit.Initialize());
 
         yield return null;
 
-        var stateMachineInit = new StateMachineInitializer(gameData, enemiesData, upgradeCanvas, spellCanvasObj, worldCreator, worldGrid, disableableInput, gnomeDetector);
-        yield return stateMachineInit.Initialize();
-        gameStateMachine = stateMachineInit.Instance;
-        
-        int centerIndex = worldGrid.Size / 2 - 1;
-        Vector3 playerSpawnPosition = worldGrid.GetWorldPositionByCoordinates(centerIndex, centerIndex) 
-                                      + gameData.GnomeSpawnOffset;
+        StateMachineInitializer stateMachineInit = new StateMachineInitializer(gameData, enemiesData, upgradeCanvas, spellCanvasObj, worldCreator, worldGrid, disableableInput, gnomeDetector);
+        yield return SafeStep("StateMachineInitializer", () => stateMachineInit.Initialize(), () =>
+        {
+            try { gameStateMachine = stateMachineInit.Instance; } catch { gameStateMachine = null; }
+        });
+
+        Vector3 playerSpawnPosition = Vector3.zero;
+        try
+        {
+            int centerIndex = worldGrid != null ? (worldGrid.Size / 2 - 1) : 0;
+            playerSpawnPosition = (worldGrid != null ? worldGrid.GetWorldPositionByCoordinates(Mathf.Max(0, centerIndex), Mathf.Max(0, centerIndex)) : Vector3.zero) + (gameData != null ? gameData.GnomeSpawnOffset : Vector3.zero);
+        }
+        catch { playerSpawnPosition = Vector3.zero; }
+
         BattleEvents battleEvents = new BattleEvents();
         PlayerControllerInitializer.PlayerControllerInitializerData playerInitializeData =
             new PlayerControllerInitializer.PlayerControllerInitializerData(
@@ -190,66 +320,57 @@ public class GameInitializer : MonoBehaviour
                 playerSpawnPosition,
                 battleEvents);
         PlayerControllerInitializer playerInitializer = new PlayerControllerInitializer(playerInitializeData);
-        positionForTestOrb = playerSpawnPosition;
-        yield return playerInitializer.Initialize();
+        yield return SafeStep("PlayerControllerInitializer", () => playerInitializer.Initialize(), () =>
+        {
+            try { positionForTestOrb = playerSpawnPosition; } catch { }
+        });
 
-        battleNotifier.Subscribe();
+        try { battleNotifier?.Subscribe(); } catch { }
 
-        var rewardSpawnerInit = new RewardSpawnerInitializer(initializedObjectsParent, gameData);
-        yield return rewardSpawnerInit.Initialize();
+        RewardSpawnerInitializer rewardSpawnerInit = new RewardSpawnerInitializer(initializedObjectsParent, gameData);
+        yield return SafeStep("RewardSpawnerInitializer", () => rewardSpawnerInit.Initialize());
 
-        var tutorialInit = new TutorialInitializer(tutorialManagerPrefab, upgradeCanvas.GetComponent<Canvas>());
-        yield return tutorialInit.Initialize();
-        
-        var tutorialSpotlightMask = new TutorialMaskInitializer(tutorialMaskPrefab, upgradeCanvas.GetComponent<Canvas>());
-        yield return tutorialSpotlightMask.Initialize();
+        TutorialInitializer tutorialInit = new TutorialInitializer(tutorialManagerPrefab, upgradeCanvas != null ? upgradeCanvas.GetComponent<Canvas>() : null);
+        yield return SafeStep("TutorialInitializer", () => tutorialInit.Initialize());
+
+        TutorialMaskInitializer tutorialSpotlightMask = new TutorialMaskInitializer(tutorialMaskPrefab, upgradeCanvas != null ? upgradeCanvas.GetComponent<Canvas>() : null);
+        yield return SafeStep("TutorialMaskInitializer", () => tutorialSpotlightMask.Initialize());
 
         yield return null;
 
-        GameInitialized?.Invoke();
+        try { GameInitialized?.Invoke(); } catch { }
         isSerializationCompleted = true;
-        Destroy(spawnedLoadingCanvas.gameObject);
+
+        if (spawnedLoadingCanvas != null)
+        {
+            try { Destroy(spawnedLoadingCanvas.gameObject); } catch { Destroy(spawnedLoadingCanvas); }
+        }
     }
 
     private void Update()
     {
         if (!isSerializationCompleted) return;
-
-        gameStateMachine?.Update();
-        gameStateMachine?.HandleInput();
-        input?.Update();
+        try { gameStateMachine?.Update(); } catch { }
+        try { gameStateMachine?.HandleInput(); } catch { }
+        try { input?.Update(); } catch { }
     }
 
     private void LateUpdate()
     {
-        input?.LateUpdate();
+        try { input?.LateUpdate(); } catch { }
     }
 
     private void FixedUpdate()
     {
         if (!isSerializationCompleted) return;
-
-        gameStateMachine?.PhysicsUpdate();
+        try { gameStateMachine?.PhysicsUpdate(); } catch { }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (positionForTestOrb != null)
-            Gizmos.DrawCube(positionForTestOrb, Vector3.one * 10);
-    }
-    
     private void OnDestroy()
     {
         foreach (var disposable in disposables)
         {
-            try
-            {
-                disposable.Dispose();
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Dispose error: {disposable.GetType().Name} - {e}");
-            }
+            try { disposable.Dispose(); } catch (Exception e) { Debug.LogError($"Dispose error: {disposable.GetType().Name} - {e}"); }
         }
         disposables.Clear();
     }
