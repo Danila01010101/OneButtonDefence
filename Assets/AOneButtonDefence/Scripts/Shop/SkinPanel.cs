@@ -57,12 +57,15 @@ public class SkinPanel : MonoBehaviour
         if (buyButtonAudio != null && skinOpenSoundPlayer == null)
             skinOpenSoundPlayer = new SkinOpenSoundPlayer(buyButtonAudio);
 
-        // Ensure UI initial state
         SafeInitializeUI();
     }
 
     private void Start()
     {
+        #if !UNITY_EDITOR
+            ClearSavedSkins();
+        #endif
+        
         if (buyButtonAudio == null)
             buyButtonAudio = GetComponent<AudioSource>();
         if (skinOpenSoundPlayer == null && buyButtonAudio != null)
@@ -274,7 +277,6 @@ public class SkinPanel : MonoBehaviour
 
             var json = File.ReadAllText(path);
             saveData = JsonUtility.FromJson<SkinsSave>(json) ?? new SkinsSave();
-            // Ensure entries for new skins
             SeedSaveFromSO();
             SaveToDisk();
         }
@@ -313,6 +315,25 @@ public class SkinPanel : MonoBehaviour
     {
         if (skin == null) return null;
         return skin.name ?? skin.SkinName ?? Guid.NewGuid().ToString();
+    }
+    
+    private void ClearSavedSkins()
+    {
+        PlayerPrefs.DeleteAll();
+        
+        try
+        {
+            var path = Path.Combine(Application.persistentDataPath, SaveFileName);
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+                Debug.Log("Скины: сохранение очищено при старте билда.");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Не удалось очистить сохранение скинов: " + e.Message);
+        }
     }
 
     #endregion
