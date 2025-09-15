@@ -39,8 +39,10 @@ public class GnomeSkinChanger
 
     public void ChangeSkin(SkinData data)
     {
-        bool unlocked = data != null && data.Unlocked;
+        if (data == null) return;
+        bool unlocked = data.Unlocked;
         ChangeSkin(data, unlocked);
+        ApplyPivotOffset();
     }
 
     public void ChangeSkin(SkinData data, bool unlocked)
@@ -63,7 +65,26 @@ public class GnomeSkinChanger
         {
             Material matToApply = (unlocked && data.Material != null) ? data.Material : lockedMaterial;
             if (matToApply != null)
-                renderer.sharedMaterial = matToApply; // <-- ключевой момент
+                renderer.sharedMaterial = matToApply;
+        }
+
+        ApplyPivotOffset();
+    }
+
+    private void ApplyPivotOffset()
+    {
+        if (pivotTarget == null || meshFilters == null || meshFilters.Count == 0 || meshFilters[0].sharedMesh == null)
+            return;
+
+        var bounds = meshFilters[0].sharedMesh.bounds;
+        Vector3 localBottom = new Vector3(bounds.center.x, bounds.min.y, bounds.center.z);
+
+        foreach (var mf in meshFilters)
+        {
+            if (mf == null) continue;
+            Vector3 worldBottom = mf.transform.TransformPoint(localBottom);
+            Vector3 offset = pivotTarget.position - worldBottom;
+            mf.transform.position += offset;
         }
     }
 
