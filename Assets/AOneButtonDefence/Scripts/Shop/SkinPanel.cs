@@ -62,9 +62,7 @@ public class SkinPanel : MonoBehaviour
 
     private void Start()
     {
-        #if !UNITY_EDITOR
-            ClearSavedSkins();
-        #endif
+        ClearSavedSkins();
         
         if (buyButtonAudio == null)
             buyButtonAudio = GetComponent<AudioSource>();
