@@ -43,6 +43,10 @@ public class SkinPanel : MonoBehaviour
     {
         spawnedShopSkinShower = UIGameObjectShower.Instance.RenderPrefab(exampleSkinShowerPrefab, exampleSkinChangerPosition, Quaternion.Euler(exampleSkinChangerEulerAngles));
         spawnedShopSkinShower.Initialize(input);
+    }
+
+    private void Start()
+    {
         buyButtonAudio = GetComponent<AudioSource>();
         ChangeCurrentChose(0);
         SelectSkin(0);
