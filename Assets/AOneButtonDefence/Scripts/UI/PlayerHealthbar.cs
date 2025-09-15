@@ -7,7 +7,6 @@ public class PlayerHealthbar : MonoBehaviour
     [SerializeField] private Image healthBar;
     [SerializeField] private Image flashOverlay;
     [SerializeField] private BillboardCanvas billboardCanvas;
-    [SerializeField] private int healthIconsAmount = 10;
     [SerializeField] private float minFill = 0.1f;
     [SerializeField] private float maxFill = 0.98f;
     [SerializeField] private float scaleFactor = 1f;
@@ -15,7 +14,7 @@ public class PlayerHealthbar : MonoBehaviour
     [SerializeField] private float flashDuration = 0.15f;
     [SerializeField] private int flashCount = 2;
 
-    private Camera camera;
+    private Camera playerHealthBarCamera;
     private Health health;
     private Coroutine fillCoroutine;
 
@@ -23,12 +22,12 @@ public class PlayerHealthbar : MonoBehaviour
     {
         if (camera != null)
         {
-            this.camera = camera;
+            this.playerHealthBarCamera = camera;
             billboardCanvas.SetCamera(camera);
         }
         else
         {
-            this.camera = Camera.main;
+            this.playerHealthBarCamera = Camera.main;
         }
 
         this.health = health;
@@ -41,9 +40,9 @@ public class PlayerHealthbar : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (camera == null) return;
+        if (playerHealthBarCamera == null) return;
 
-        float distance = Vector3.Distance(transform.position, camera.transform.position);
+        float distance = Vector3.Distance(transform.position, playerHealthBarCamera.transform.position);
         transform.localScale = Vector3.one * distance * scaleFactor;
     }
 

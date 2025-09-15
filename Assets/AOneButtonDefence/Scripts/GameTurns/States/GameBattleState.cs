@@ -46,13 +46,13 @@ public class GameBattleState : IState
             {
                 runtimeWavesParameters = result;
 
-                for (int i = 0; i < Mathf.Min(5, runtimeWavesParameters.waves.Count); i++)
+                for (int i = 0; i < Mathf.Min(5, runtimeWavesParameters.Waves.Count); i++)
                 {
-                    var wave = runtimeWavesParameters.waves[i];
-                    Debug.Log($"Wave {i + 1}, interval: {wave.spawnInterval}");
-                    foreach (var enemy in wave.enemiesToSpawn)
+                    var wave = runtimeWavesParameters.Waves[i];
+                    Debug.Log($"Wave {i + 1}, interval: {wave.SpawnInterval}");
+                    foreach (var enemy in wave.EnemiesToSpawn)
                     {
-                        Debug.Log($"Enemy: {enemy.EnemyPrefab.name}, Amount: {enemy.Amount}, Interval: {enemy.spawnInterval}");
+                        Debug.Log($"Enemy: {enemy.EnemyPrefab.name}, Amount: {enemy.Amount}, Interval: {enemy.SpawnInterval}");
                     }
                 }
             },
@@ -106,17 +106,17 @@ public class GameBattleState : IState
 
     private void StartWave()
     {
-        WaveGenerator.RuntimeWaveData waveParameters = runtimeWavesParameters.waves[currentWaveIndex];
+        WaveGenerator.RuntimeWaveData waveParameters = runtimeWavesParameters.Waves[currentWaveIndex];
         spawnCoroutine = coroutineStarter.StartCoroutine(StartEnemiesSpawn(waveParameters));
     }
     
     private IEnumerator StartEnemiesSpawn(WaveGenerator.RuntimeWaveData waveData)
     {
-        foreach (var enemyData in waveData.enemiesToSpawn)
+        foreach (var enemyData in waveData.EnemiesToSpawn)
         {
             for (int i = 0; i < enemyData.Amount; i++)
             {
-                yield return new WaitForSeconds(waveData.spawnInterval);
+                yield return new WaitForSeconds(waveData.SpawnInterval);
                 unitsFactory.SpawnSpecificUnit(enemyData.EnemyPrefab, grid.GetRandomEmptyCellPosition(spawnSpread) + enemiesSpawnOffset);
             }
         }

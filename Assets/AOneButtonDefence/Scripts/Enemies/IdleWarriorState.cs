@@ -7,7 +7,6 @@ public class IdleWarriorState : IState
 	private NavMeshAgent agent;
 	private IStateChanger stateMachine;
 	private Vector3 startPosition;
-	private bool isBattleGoing = true;
 
 	public IdleWarriorState(IStateChanger stateChanger, Vector3 startPosition, WalkingAnimation walkingAnimation, NavMeshAgent agent)
 	{

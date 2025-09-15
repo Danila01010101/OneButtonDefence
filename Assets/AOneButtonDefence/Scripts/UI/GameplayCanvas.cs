@@ -32,7 +32,6 @@ public class GameplayCanvas : MonoBehaviour
     private int lastKey = -1;
     private int beforLastKey = -1;
     private int howManyChois = 0;
-    private bool isShopWindowSetted = false;
 
     [field : SerializeField] public AudioSettings AudioSettings { get; private set; }
 

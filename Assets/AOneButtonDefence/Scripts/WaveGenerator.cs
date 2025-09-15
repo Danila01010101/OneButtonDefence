@@ -8,84 +8,96 @@ public class WaveGenerator
     {
         public FightingUnit EnemyPrefab;
         public int Amount;
-        public float spawnInterval;
+        public float SpawnInterval;
     }
 
     public class RuntimeWaveData
     {
-        public List<RuntimeEnemySpawnData> enemiesToSpawn;
-        public float spawnInterval;
+        public List<RuntimeEnemySpawnData> EnemiesToSpawn;
+        public float SpawnInterval;
     }
 
     public class RuntimeWavesParameters
     {
-        public List<RuntimeWaveData> waves;
+        public List<RuntimeWaveData> Waves;
     }
 
     public static async Task<RuntimeWavesParameters> GenerateWaves(
         BattleWavesParameters source, int countWaves)
     {
-        var runtime = new RuntimeWavesParameters
+        return await Task.Run(() =>
         {
-            waves = new List<RuntimeWaveData>()
-        };
-
-        for (int waveIndex = 0; waveIndex < countWaves; waveIndex++)
-        {
-            float waveSpawnInterval = (source.waves.Count > 0) ? source.waves[0].spawnInterval : 3f;
-
-            var newWave = new RuntimeWaveData
+            var runtime = new RuntimeWavesParameters
             {
-                spawnInterval = waveSpawnInterval,
-                enemiesToSpawn = new List<RuntimeEnemySpawnData>()
+                Waves = new List<RuntimeWaveData>()
             };
 
-            if (source.waves.Count > 0)
+            for (int waveIndex = 0; waveIndex < countWaves; waveIndex++)
             {
-                foreach (var enemy in source.waves[0].enemiesToGenerate)
+                float waveSpawnInterval = (source.waves.Count > 0) 
+                    ? source.waves[0].spawnInterval 
+                    : 3f;
+
+                var newWave = new RuntimeWaveData
                 {
-                    if (!enemy.isEnabled) continue;
-                    if (waveIndex + 1 < enemy.startWave) continue;
+                    SpawnInterval = waveSpawnInterval,
+                    EnemiesToSpawn = new List<RuntimeEnemySpawnData>()
+                };
 
-                    int baseAmount = 0;
-
-                    switch (enemy.growthType)
+                if (source.waves.Count > 0)
+                {
+                    foreach (var enemy in source.waves[0].enemiesToGenerate)
                     {
-                        case BattleWavesParameters.GrowthType.Linear:
-                            baseAmount = enemy.startAmount + (waveIndex + 1 - enemy.startWave) * enemy.growthPerWave;
-                            break;
+                        if (!enemy.isEnabled) continue;
+                        if (waveIndex + 1 < enemy.startWave) continue;
 
-                        case BattleWavesParameters.GrowthType.Exponential:
-                            baseAmount = Mathf.RoundToInt(enemy.startAmount * Mathf.Pow(1 + enemy.growthPerWave / 100f, waveIndex + 1 - enemy.startWave));
-                            break;
-                    }
+                        int baseAmount = 0;
 
-                    if (waveIndex + 1 > enemy.maxWave)
-                        baseAmount = Mathf.Max(enemy.startAmount, 1);
+                        switch (enemy.growthType)
+                        {
+                            case BattleWavesParameters.GrowthType.Linear:
+                                baseAmount = enemy.startAmount +
+                                    (waveIndex + 1 - enemy.startWave) * enemy.growthPerWave;
+                                break;
 
-                    baseAmount = Mathf.Max(baseAmount, 1);
+                            case BattleWavesParameters.GrowthType.Exponential:
+                                baseAmount = Mathf.RoundToInt(
+                                    enemy.startAmount * Mathf.Pow(
+                                        1 + enemy.growthPerWave / 100f,
+                                        waveIndex + 1 - enemy.startWave));
+                                break;
+                        }
 
-                    if (enemy.randomVariancePercent > 0f)
-                    {
-                        float variance = baseAmount * (enemy.randomVariancePercent / 100f);
-                        baseAmount = Mathf.RoundToInt(baseAmount + Random.Range(-variance, variance));
+                        if (waveIndex + 1 > enemy.maxWave)
+                            baseAmount = Mathf.Max(enemy.startAmount, 1);
+
                         baseAmount = Mathf.Max(baseAmount, 1);
+
+                        if (enemy.randomVariancePercent > 0f)
+                        {
+                            float variance = baseAmount * (enemy.randomVariancePercent / 100f);
+                            baseAmount = Mathf.RoundToInt(
+                                baseAmount + Random.Range(-variance, variance));
+                            baseAmount = Mathf.Max(baseAmount, 1);
+                        }
+
+                        float spawnInterval = (enemy.customSpawnInterval > 0) 
+                            ? enemy.customSpawnInterval 
+                            : waveSpawnInterval;
+
+                        newWave.EnemiesToSpawn.Add(new RuntimeEnemySpawnData
+                        {
+                            EnemyPrefab = enemy.EnemyPrefab,
+                            Amount = baseAmount,
+                            SpawnInterval = spawnInterval
+                        });
                     }
-
-                    float spawnInterval = (enemy.customSpawnInterval > 0) ? enemy.customSpawnInterval : waveSpawnInterval;
-
-                    newWave.enemiesToSpawn.Add(new RuntimeEnemySpawnData
-                    {
-                        EnemyPrefab = enemy.EnemyPrefab,
-                        Amount = baseAmount,
-                        spawnInterval = spawnInterval
-                    });
                 }
+
+                runtime.Waves.Add(newWave);
             }
 
-            runtime.waves.Add(newWave);
-        }
-
-        return runtime;
+            return runtime;
+        });
     }
 }
