@@ -50,35 +50,20 @@ public class GnomeSkinChanger
         if (audioSource != null)
             audioSource.clip = data.DeathSound;
 
-        if (meshFilters != null && meshFilters.Count > 0)
+        if (meshFilters != null)
         {
             foreach (var mf in meshFilters)
             {
                 if (mf == null) continue;
                 mf.sharedMesh = data.Mesh;
             }
-
-            if (pivotTarget != null && meshFilters[0].sharedMesh != null)
-            {
-                var bounds = meshFilters[0].sharedMesh.bounds;
-                Vector3 localBottom = new Vector3(bounds.center.x, bounds.min.y, bounds.center.z);
-
-                foreach (var mf in meshFilters)
-                {
-                    if (mf == null) continue;
-                    Vector3 worldBottom = mf.transform.TransformPoint(localBottom);
-                    Vector3 offset = pivotTarget.position - worldBottom;
-                    mf.transform.position += offset;
-                }
-            }
         }
 
         if (renderer != null)
         {
-            if (unlocked && data.Material != null)
-                renderer.material = data.Material;
-            else
-                renderer.material = lockedMaterial;
+            Material matToApply = (unlocked && data.Material != null) ? data.Material : lockedMaterial;
+            if (matToApply != null)
+                renderer.sharedMaterial = matToApply; // <-- ключевой момент
         }
     }
 
