@@ -338,7 +338,7 @@ public class GameInitializer : MonoBehaviour
 
         try { GameInitialized?.Invoke(); } catch { }
         isSerializationCompleted = true;
-
+        
         if (spawnedLoadingCanvas != null)
         {
             try { Destroy(spawnedLoadingCanvas.gameObject); } catch { Destroy(spawnedLoadingCanvas); }
