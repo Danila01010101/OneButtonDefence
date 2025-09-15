@@ -146,11 +146,7 @@ public class GameInitializer : MonoBehaviour
         CoroutineStarterInitializer coroutineStarterInit = new CoroutineStarterInitializer(initializedObjectsParent);
         yield return SafeStep("CoroutineStarterInitializer", () => coroutineStarterInit.Initialize());
 
-        SkinDetectorInitializer skinDetectorInit = new SkinDetectorInitializer();
-        yield return SafeStep("SkinDetectorInitializer", () => skinDetectorInit.Initialize(), () =>
-        {
-            try { disposables.Add(skinDetectorInit.Instance); } catch { }
-        });
+        disposables.Add(SkinChangeDetector.Instance);
 
         MusicPlayerInitializer musicPlayerInit = new MusicPlayerInitializer(initializedObjectsParent, musicData);
         yield return SafeStep("MusicPlayerInitializer", () => musicPlayerInit.Initialize(), () =>

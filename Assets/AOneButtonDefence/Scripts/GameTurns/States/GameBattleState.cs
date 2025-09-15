@@ -46,7 +46,7 @@ public class GameBattleState : IState
             {
                 runtimeWavesParameters = result;
 
-                for (int i = 0; i < Mathf.Min(5, runtimeWavesParameters.Waves.Count); i++)
+                for (int i = 0; i < Math.Min(5, runtimeWavesParameters.Waves.Count); i++)
                 {
                     var wave = runtimeWavesParameters.Waves[i];
                     Debug.Log($"Wave {i + 1}, interval: {wave.SpawnInterval}");

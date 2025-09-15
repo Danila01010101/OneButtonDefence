@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
 
 public class WaveGenerator
 {
@@ -61,24 +61,24 @@ public class WaveGenerator
                                 break;
 
                             case BattleWavesParameters.GrowthType.Exponential:
-                                baseAmount = Mathf.RoundToInt(
-                                    enemy.startAmount * Mathf.Pow(
+                                baseAmount = (int)Math.Round(
+                                    enemy.startAmount * (float)Math.Pow(
                                         1 + enemy.growthPerWave / 100f,
                                         waveIndex + 1 - enemy.startWave));
                                 break;
                         }
 
                         if (waveIndex + 1 > enemy.maxWave)
-                            baseAmount = Mathf.Max(enemy.startAmount, 1);
+                            baseAmount = Math.Max(enemy.startAmount, 1);
 
-                        baseAmount = Mathf.Max(baseAmount, 1);
+                        baseAmount = Math.Max(baseAmount, 1);
 
                         if (enemy.randomVariancePercent > 0f)
                         {
                             float variance = baseAmount * (enemy.randomVariancePercent / 100f);
-                            baseAmount = Mathf.RoundToInt(
-                                baseAmount + Random.Range(-variance, variance));
-                            baseAmount = Mathf.Max(baseAmount, 1);
+                            baseAmount = (int)Math.Round(
+                                baseAmount + RandomRange(-variance, variance));
+                            baseAmount = Math.Max(baseAmount, 1);
                         }
 
                         float spawnInterval = (enemy.customSpawnInterval > 0) 
@@ -99,5 +99,17 @@ public class WaveGenerator
 
             return runtime;
         });
+    }
+    
+    private static Random sysRand = new System.Random();
+
+    private static int RandomRange(int min, int max)
+    {
+        return sysRand.Next(min, max);
+    }
+
+    private static float RandomRange(float min, float max)
+    {
+        return (float)(sysRand.NextDouble() * (max - min) + min);
     }
 }
