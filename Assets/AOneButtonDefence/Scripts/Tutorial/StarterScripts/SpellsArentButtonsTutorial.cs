@@ -49,9 +49,14 @@ public class SpellsArentButtonsTutorial : TutorialObject
         spellBackground.raycastTarget = false;
         Color newColor = spellBackground.color;
         newColor.a = 0.5f;
-        spellBackground.color = newColor;
+        
+        if (spellBackground!= null)
+            spellBackground.color = newColor;
+        
+        if (spellButtonComponent!= null)
+            spellButtonComponent.onClick.RemoveListener(handler);
+        
         TimeManager.SetTimeScale(1f);
-        spellButtonComponent.onClick.RemoveListener(handler);
         Destroy(spellButtonComponent);
         Destroy(this);
     }

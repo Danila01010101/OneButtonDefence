@@ -83,5 +83,6 @@ public class TutorialMessage : MonoBehaviour
         OnClosed?.Invoke();
         OnClosed = null;
         TutorialWindowDestroyed?.Invoke();
+        TimeManager.SetTimeScale(1f);
     }
 }

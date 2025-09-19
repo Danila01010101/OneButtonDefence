@@ -43,4 +43,9 @@ public class TutorialForBattle : TutorialObject
 		TutorialMessage.TutorialWindowDestroyed -= ResetGameTime;
 		Destroy(this);
 	}
+
+	private void OnDestroy()
+	{
+		GameBattleState.BattleStarted -= handler;
+	}
 }
