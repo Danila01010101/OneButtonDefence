@@ -62,7 +62,7 @@ public class SkinPanel : MonoBehaviour
     {
         ClearSavedSkins();
         
-        if (buyButtonAudio == null)
+        if (buyButtonAudio == null && buyButtonAudio != null)
             buyButtonAudio = GetComponent<AudioSource>();
         if (skinOpenSoundPlayer == null && buyButtonAudio != null)
             skinOpenSoundPlayer = new SkinOpenSoundPlayer(buyButtonAudio);
