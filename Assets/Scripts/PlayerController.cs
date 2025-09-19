@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         if (controller != null) controller.enabled = true;
         if (playerInput != null) playerInput.enabled = true;
+        health.Heal(100000);
         enabled = true;
         gameObject.SetActive(true);
         CharacterEnabled?.Invoke(transform);

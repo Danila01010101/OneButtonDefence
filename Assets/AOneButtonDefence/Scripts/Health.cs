@@ -34,7 +34,14 @@ public class Health
     {
         if (amount < 0)
             throw new ArgumentOutOfRangeException();
-
-        this.Amount += amount;
+        
+        if (amount + Amount > maxHealth)
+        {
+            Amount = maxHealth;
+        }        
+        else
+        {
+            Amount += amount;
+        }
     }
 }
