@@ -116,6 +116,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9093223511969433305}
+  - component: {fileID: 2840874448231797747}
   m_Layer: 6
   m_Name: Parent
   m_TagString: Untagged
@@ -142,6 +143,21 @@ Transform:
   m_Father: {fileID: 5249670650694018168}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2840874448231797747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7182158524861818584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a3fdcdcef15ca04990e14d33c01df13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 275
+  smoothTime: 0.21
+  targetTransform: {fileID: 5249670650694018168}
 --- !u!1 &7584960979404655581
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +168,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5249670650694018168}
   - component: {fileID: 1339259819600190380}
-  - component: {fileID: 571560495256723443}
   - component: {fileID: 15840815795303960}
   m_Layer: 6
   m_Name: ShopSkinShower
@@ -189,28 +204,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddc01e27a32db2e4aa6a879bfd558dd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SkinRotator>k__BackingField: {fileID: 571560495256723443}
+  <SkinRotator>k__BackingField: {fileID: 2840874448231797747}
   meshFilter:
   - {fileID: 4358322904163232469}
   skinRenderer: {fileID: 963319202959724097}
   SkinParticles: {fileID: 2497543958473705868}
   skinOffsetTransform: {fileID: 4236081752069928542}
   parentGameObject: {fileID: 7182158524861818584}
---- !u!114 &571560495256723443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7584960979404655581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a3fdcdcef15ca04990e14d33c01df13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 5
-  smoothTime: 0.1
-  targetTransform: {fileID: 5249670650694018168}
 --- !u!82 &15840815795303960
 AudioSource:
   m_ObjectHideFlags: 0

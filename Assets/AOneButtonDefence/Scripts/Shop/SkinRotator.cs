@@ -26,22 +26,22 @@ public class SkinRotator : MonoBehaviour
         targetTransform.rotation = Quaternion.Euler(0, currentRotationZ, 0);
     }
 
-    private void Rotate(Vector3 direction)
+    private void Rotate(Vector2 direction)
     {
         if (targetTransform == null) return;
 
-        targetRotationZ += direction.x * rotationSpeed;
+        targetRotationZ -= direction.x * rotationSpeed;
     }
 
     private void OnEnable()
     {
-        if (isInitialized) 
-            input.Moved += Rotate;
+        if (isInitialized)
+            input.Rotated += Rotate;
     }
 
     private void OnDisable()
     {
         if (isInitialized) 
-            input.Moved -= Rotate;
+            input.Rotated -= Rotate;
     }
 }
