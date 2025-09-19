@@ -68,6 +68,8 @@ public class PlayerHealthbar : MonoBehaviour
 
     private IEnumerator FlashThenFill(float targetFill)
     {
+        yield return new WaitUntil(() => gameObject.activeSelf);
+        
         if (flashOverlay != null)
         {
             for (int i = 0; i < flashCount; i++)
