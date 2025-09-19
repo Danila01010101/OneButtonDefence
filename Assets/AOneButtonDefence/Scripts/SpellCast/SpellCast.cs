@@ -65,22 +65,25 @@ public class SpellCast
     }
 
     private void RandomModeCast(Vector2 position)
-    {   
+    {
         Ray ray = Camera.main.ScreenPointToRay(position);
-        RaycastHit hit;
+        RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity);
         
         if (randomSpell[0] == null || CanCastSpell == false)
-        {
             return;
-        }
-        
-        if (Physics.Raycast(ray, out hit, spellSurfaceLayer)) 
+
+        foreach (var h in hits)
         {
-            GameObject spell = GameObject.Instantiate(randomSpell[0].BaseMagicCircle, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.identity);
-            spell.GetComponent<Spell>().Initialize(randomSpell[0], damagableTargetLayer);
-            randomSpell[0] = null;
-            AddNextSpell();
-            CoroutineStarter.Instance.StartCoroutine(Reload());
+            if (((1 << h.collider.gameObject.layer) & spellSurfaceLayer) != 0)
+            {
+                Vector3 spawnPos = new Vector3(h.point.x, 1.01f, h.point.z);
+                GameObject spell = GameObject.Instantiate(randomSpell[0].BaseMagicCircle, spawnPos, Quaternion.identity);
+                spell.GetComponent<Spell>().Initialize(randomSpell[0], damagableTargetLayer);
+                randomSpell[0] = null;
+                AddNextSpell();
+                CoroutineStarter.Instance.StartCoroutine(Reload());
+                break;
+            }
         }
     }
     
