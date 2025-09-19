@@ -42,7 +42,7 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer, IDi
 
     private void OnShopDisabled()
     {
-        if (currentStopCoroutine != null)
+        if (currentStopCoroutine != null && CoroutineStarter.Instance != null)
         {
             CoroutineStarter.Instance.StopCoroutine(currentStopCoroutine);
             currentStopCoroutine = null;
