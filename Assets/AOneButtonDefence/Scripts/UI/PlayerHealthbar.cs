@@ -63,7 +63,7 @@ public class PlayerHealthbar : MonoBehaviour
         float targetFill = Mathf.Lerp(minFill, maxFill, normalized);
 
         if (fillCoroutine != null) StopCoroutine(fillCoroutine);
-        fillCoroutine = StartCoroutine(FlashThenFill(targetFill));
+        fillCoroutine = CoroutineStarter.Instance.StartCoroutine(FlashThenFill(targetFill));
     }
 
     private IEnumerator FlashThenFill(float targetFill)
