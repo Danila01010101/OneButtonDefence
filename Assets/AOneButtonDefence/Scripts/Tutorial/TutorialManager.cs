@@ -30,9 +30,18 @@ public class TutorialManager : MonoBehaviour
     public void ShowTutorial(ITutorialGO tutorialObject, Action onComplete = null)
     {
         TriggerTutorial();
+
         var tutorial = Instantiate(tutorialPrefab, canvas.transform);
-        PositionTutorial(tutorial.GetComponent<RectTransform>(), tutorialObject.PointerTarget, tutorial.Spacing, tutorial.EngePadding);
+
         tutorial.Setup(tutorialObject.PointerTarget, tutorialObject.Message, onComplete);
+
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(tutorial.GetComponent<RectTransform>());
+
+        PositionTutorial(tutorial.GetComponent<RectTransform>(), tutorialObject.PointerTarget, tutorial.Spacing, tutorial.EngePadding);
+
+        tutorial.InitializePointer();
+
         SpotlightTutorialMask.SetNewTarget(tutorialObject.PointerTarget.GetComponent<RectTransform>());
 
         if (tutorialObject.Duration > 0)
@@ -78,24 +87,14 @@ public class TutorialManager : MonoBehaviour
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(tutorialRect);
 
-        // Получаем локальную позицию в координатах канвы
-        Vector2 localPoint;
-        if (canvas.renderMode == RenderMode.WorldSpace)
-        {
-            Vector3 worldPos = target.transform.position;
-            Vector3 local3 = canvas.transform.InverseTransformPoint(worldPos);
-            localPoint = new Vector2(local3.x, local3.y);
-        }
-        else
-        {
-            Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, target.transform.position);
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPos, cam, out localPoint);
-        }
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, target.transform.position);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPos, cam, out Vector2 targetLocal);
+
+        float halfCanvasWidth = canvasRect.rect.width * 0.5f;
+        float halfCanvasHeight = canvasRect.rect.height * 0.5f;
 
         float halfWidth = tutorialRect.rect.width * 0.5f;
         float halfHeight = tutorialRect.rect.height * 0.5f;
-        float halfCanvasWidth = canvasRect.rect.width * 0.5f;
-        float halfCanvasHeight = canvasRect.rect.height * 0.5f;
 
         float minX = -halfCanvasWidth + edgePadding + halfWidth;
         float maxX = halfCanvasWidth - edgePadding - halfWidth;
@@ -103,12 +102,13 @@ public class TutorialManager : MonoBehaviour
         float maxY = halfCanvasHeight - edgePadding - halfHeight;
 
         Vector2[] candidates = new Vector2[4];
-        candidates[0] = new Vector2(localPoint.x + spacing + halfWidth, localPoint.y);
-        candidates[1] = new Vector2(localPoint.x - spacing - halfWidth, localPoint.y);
-        candidates[2] = new Vector2(localPoint.x, localPoint.y + spacing + halfHeight);
-        candidates[3] = new Vector2(localPoint.x, localPoint.y - spacing - halfHeight);
+        candidates[0] = new Vector2(targetLocal.x + spacing + halfWidth, targetLocal.y);
+        candidates[1] = new Vector2(targetLocal.x - spacing - halfWidth, targetLocal.y);
+        candidates[2] = new Vector2(targetLocal.x, targetLocal.y + spacing + halfHeight);
+        candidates[3] = new Vector2(targetLocal.x, targetLocal.y - spacing - halfHeight);
 
         Vector2 chosenPos = candidates[0];
+
         foreach (var candidate in candidates)
         {
             if (candidate.x >= minX && candidate.x <= maxX &&
