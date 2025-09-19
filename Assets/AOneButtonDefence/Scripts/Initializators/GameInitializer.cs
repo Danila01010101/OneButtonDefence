@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using AOneButtonDefence.Scripts;
 using AOneButtonDefence.Scripts.Initializators;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class GameInitializer : MonoBehaviour
 {
@@ -347,6 +349,7 @@ public class GameInitializer : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.R) && addCoinsOnStart) SceneManager.LoadScene(0);
         if (!isSerializationCompleted) return;
         try { gameStateMachine?.Update(); } catch { }
         try { gameStateMachine?.HandleInput(); } catch { }

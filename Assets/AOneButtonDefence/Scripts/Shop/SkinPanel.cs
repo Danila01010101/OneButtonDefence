@@ -54,8 +54,6 @@ public class SkinPanel : MonoBehaviour
         LoadOrCreateSave();
         CurrentShopWindow = GetComponent<ClosableWindow>();
         ShopInitialized?.Invoke(CurrentShopWindow);
-        if (buyButtonAudio != null && skinOpenSoundPlayer == null)
-            skinOpenSoundPlayer = new SkinOpenSoundPlayer(buyButtonAudio);
 
         SafeInitializeUI();
     }
