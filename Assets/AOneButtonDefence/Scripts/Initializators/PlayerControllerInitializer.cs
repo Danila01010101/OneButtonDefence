@@ -1,10 +1,12 @@
+using System;
 using System.Collections;
 using AOneButtonDefence.Scripts.Data;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace AOneButtonDefence.Scripts
 {
-    public class PlayerControllerInitializer
+    public class PlayerControllerInitializer : IDisposable
     {
         private PlayerController playerControllerInstance;
         private CharacterVisibilityToggler visibilityToggler;

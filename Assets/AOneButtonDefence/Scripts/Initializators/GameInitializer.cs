@@ -318,6 +318,7 @@ public class GameInitializer : MonoBehaviour
         {
             try { positionForTestOrb = playerSpawnPosition; } catch { }
         });
+        disposables.Add(playerInitializer);
 
         try { battleNotifier?.Subscribe(); } catch { }
 
