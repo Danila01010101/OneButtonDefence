@@ -48,7 +48,7 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer, IDi
             currentStopCoroutine = null;
         }
         
-        if (!backgroundAudioSource.isPlaying)
+        if (backgroundAudioSource != null && !backgroundAudioSource.isPlaying)
         {
             backgroundAudioSource.UnPause();
         }
