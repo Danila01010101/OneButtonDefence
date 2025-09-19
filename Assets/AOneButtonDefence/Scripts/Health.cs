@@ -6,7 +6,7 @@ public class Health
     public float Amount { get; private set; }
     
     public Action<Transform> DamagReceivedFromTarget;
-    public Action<float, float> DamageReceived;
+    public Action<float, float> HealthChanged;
     public Action Death;
 
     private float maxHealth;
@@ -23,7 +23,7 @@ public class Health
             throw new ArgumentOutOfRangeException();
 
         Amount -= damage;
-        DamageReceived?.Invoke(Amount, maxHealth);
+        HealthChanged?.Invoke(Amount, maxHealth);
         DamagReceivedFromTarget?.Invoke(damagerTransform);
 
         if (Amount <= 0)
@@ -43,5 +43,7 @@ public class Health
         {
             Amount += amount;
         }
+        
+        HealthChanged?.Invoke(Amount, maxHealth);
     }
 }

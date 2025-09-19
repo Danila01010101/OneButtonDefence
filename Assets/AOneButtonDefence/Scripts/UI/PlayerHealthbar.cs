@@ -32,7 +32,7 @@ public class PlayerHealthbar : MonoBehaviour
 
         this.health = health;
         SetHealthImmediate(health.Amount, health.Amount);
-        health.DamageReceived += SetHealth;
+        health.HealthChanged += SetHealth;
 
         if (flashOverlay != null)
             flashOverlay.color = new Color(1f, 1f, 1f, 0f);
@@ -113,6 +113,6 @@ public class PlayerHealthbar : MonoBehaviour
     private void OnDestroy()
     {
         if (health != null)
-            health.DamageReceived -= SetHealth;
+            health.HealthChanged -= SetHealth;
     }
 }
