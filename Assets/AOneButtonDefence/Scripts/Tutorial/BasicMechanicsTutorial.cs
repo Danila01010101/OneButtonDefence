@@ -41,7 +41,8 @@ public class BasicMechanicsTutorial : IDisposable
 
     private void ShowNextStep()
     {
-        runningCoroutine = CoroutineStarter.Instance.StartCoroutine(WaitForNextStep());
+        if (CoroutineStarter.Instance != null)
+            runningCoroutine = CoroutineStarter.Instance.StartCoroutine(WaitForNextStep());
     }
 
     private IEnumerator WaitForNextStep()
