@@ -71,7 +71,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
     }
-
+    
     private void PositionTutorial(RectTransform tutorialRect, GameObject target, float spacing, float edgePadding)
     {
         if (tutorialRect == null || target == null || canvas == null)
@@ -80,14 +80,15 @@ public class TutorialManager : MonoBehaviour
         var cam = canvas.worldCamera != null ? canvas.worldCamera : Camera.main;
         var canvasRect = canvas.GetComponent<RectTransform>();
 
-        Vector2 originalAnchorMin = tutorialRect.anchorMin;
-        Vector2 originalAnchorMax = tutorialRect.anchorMax;
-        tutorialRect.anchorMin = tutorialRect.anchorMax = new Vector2(0.5f, 0.5f);
+        Vector2 canvasCenter = Vector2.zero;
 
-        Canvas.ForceUpdateCanvases();
-        LayoutRebuilder.ForceRebuildLayoutImmediate(tutorialRect);
+        RectTransform targetRect = target.GetComponent<RectTransform>();
+        Vector2 screenPos;
+        if (targetRect != null)
+            screenPos = RectTransformUtility.WorldToScreenPoint(cam, targetRect.position);
+        else
+            screenPos = RectTransformUtility.WorldToScreenPoint(cam, target.transform.position);
 
-        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, target.transform.position);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPos, cam, out Vector2 targetLocal);
 
         float halfCanvasWidth = canvasRect.rect.width * 0.5f;
@@ -101,31 +102,18 @@ public class TutorialManager : MonoBehaviour
         float minY = -halfCanvasHeight + edgePadding + halfHeight;
         float maxY = halfCanvasHeight - edgePadding - halfHeight;
 
-        Vector2[] candidates = new Vector2[4];
-        candidates[0] = new Vector2(targetLocal.x + spacing + halfWidth, targetLocal.y);
-        candidates[1] = new Vector2(targetLocal.x - spacing - halfWidth, targetLocal.y);
-        candidates[2] = new Vector2(targetLocal.x, targetLocal.y + spacing + halfHeight);
-        candidates[3] = new Vector2(targetLocal.x, targetLocal.y - spacing - halfHeight);
+        Vector2 dirToCenter = (canvasCenter - targetLocal).normalized;
 
-        Vector2 chosenPos = candidates[0];
+        Vector2 candidate = targetLocal + dirToCenter * spacing;
 
-        foreach (var candidate in candidates)
-        {
-            if (candidate.x >= minX && candidate.x <= maxX &&
-                candidate.y >= minY && candidate.y <= maxY)
-            {
-                chosenPos = candidate;
-                break;
-            }
-        }
+        Vector2 offset = new Vector2(dirToCenter.x * halfWidth, dirToCenter.y * halfHeight);
+        candidate += offset;
 
-        chosenPos.x = Mathf.Clamp(chosenPos.x, minX, maxX);
-        chosenPos.y = Mathf.Clamp(chosenPos.y, minY, maxY);
+        candidate.x = Mathf.Clamp(candidate.x, minX, maxX);
+        candidate.y = Mathf.Clamp(candidate.y, minY, maxY);
 
-        tutorialRect.anchoredPosition = chosenPos;
-
-        tutorialRect.anchorMin = originalAnchorMin;
-        tutorialRect.anchorMax = originalAnchorMax;
+        tutorialRect.anchorMin = tutorialRect.anchorMax = new Vector2(0.5f, 0.5f);
+        tutorialRect.anchoredPosition = candidate;
     }
 
     private static void TriggerTutorial()
