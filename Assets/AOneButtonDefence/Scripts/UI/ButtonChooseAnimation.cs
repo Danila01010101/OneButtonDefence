@@ -1,15 +1,19 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonChooseAnimation : MonoBehaviour
 {
-    [SerializeField] private Image icon;
+    [SerializeField] private List<Image> icons;
     [SerializeField] private Image onImage;
     [SerializeField] private Image offImage;
 
     public void SetIcon(Sprite sprite)
     {
-        icon.sprite = sprite;
+        foreach (var icon in icons)
+        {
+            icon.sprite = sprite;
+        }
     }
     
     public void SwapSprites()
