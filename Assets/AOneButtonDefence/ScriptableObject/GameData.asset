@@ -26,6 +26,8 @@ MonoBehaviour:
     <Amount>k__BackingField: 0
   - <Resource>k__BackingField: {fileID: 11400000, guid: 7bfd3351b5f6b8e46888ebe1d995ba71, type: 2}
     <Amount>k__BackingField: 0
+  - <Resource>k__BackingField: {fileID: 11400000, guid: ccaec83cf32542b4bbb5470b547ea562, type: 2}
+    <Amount>k__BackingField: 0
   <GemsResource>k__BackingField: {fileID: 11400000, guid: f338b09ada9bdde4cbf8129f1ff59968, type: 2}
   <GnomeDeathSpiritFine>k__BackingField:
     <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}

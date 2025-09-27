@@ -17,7 +17,7 @@ public class ResourceData : ScriptableObject
         Gem,
         StrengthBuff,
         DefenceTower,
-        CurrentUpgradeBuff,
+        CurrentResourcesBuff,
         RangeWarrior,
         HealingTower,
         WarriorSpeed,

@@ -8,6 +8,8 @@ public class GameResourcesCounter : MonoBehaviour
     private ResourcesKeeper resourcesKeeper;
 
     public static Action ResourceAdded;
+    
+    private int ResourcesBuffMultiplier => 1 + instance.resourcesKeeper.GetResourceAmount(ResourceData.ResourceType.CurrentResourcesBuff) / 100;
 
     public void Initialize(List<ResourceAmount> resources)
     {
@@ -17,7 +19,9 @@ public class GameResourcesCounter : MonoBehaviour
     
     public void ChangeResourceAmount(ResourceAmount resourceAmount)
     {
-        resourcesKeeper.AddResource(resourceAmount);
+        var resourceWithBuff = new ResourceAmount(resourceAmount.Resource,
+            resourceAmount.Amount * ResourcesBuffMultiplier);
+        resourcesKeeper.AddResource(resourceWithBuff);
         ResourceAdded?.Invoke();
     }
 

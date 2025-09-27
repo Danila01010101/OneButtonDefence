@@ -94,8 +94,14 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer, IDi
             case BasicBuildingData.Upgrades.SpiritBuilding: return data.UpgradeChurchSoundEffect;
             case BasicBuildingData.Upgrades.MilitaryCamp: return data.UpgradeCampSoundEffect;
             case BasicBuildingData.Upgrades.Factory: return data.UpgradeFactorySoundEffect;
+            case BasicBuildingData.Upgrades.BuildingEffectiveness: return data.UpgradeFactorySoundEffect;
             case BasicBuildingData.Upgrades.WarriorStrength: return data.WarriorBuffSoundEffect;
             case BasicBuildingData.Upgrades.SpellStrength: return data.SpellBuffSoundEffect;
+            case BasicBuildingData.Upgrades.ArmorTower: return data.WarriorBuffSoundEffect;
+            case BasicBuildingData.Upgrades.WarriorSpeed: return data.WarriorBuffSoundEffect;
+            case BasicBuildingData.Upgrades.RangeWarriors: return data.UpgradeRangeWarriorsSoundEffect;
+            case BasicBuildingData.Upgrades.HealingTower: return data.UpgradeHealingTowerSoundEffect;
+            case BasicBuildingData.Upgrades.DefenceTower: return data.UpgradeDefenceTowerSoundEffect;
             default: throw new NotImplementedException();
         }
     }
