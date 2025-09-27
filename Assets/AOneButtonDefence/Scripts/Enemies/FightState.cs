@@ -12,7 +12,7 @@ public class FightState : IState, ITargetAttacker
     protected readonly int DamageUpgradeValue;
     protected readonly float DefaultDistanceToLoseTarget = 1.2f;
 
-    protected int Damage => BasicDamage + DamageUpgradeValue * GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.StrenghtBuff);
+    protected int Damage => BasicDamage + DamageUpgradeValue * GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.StrengthBuff);
     protected bool IsTargetSetted;
     
     private IDamagable Target;
@@ -74,7 +74,7 @@ public class FightState : IState, ITargetAttacker
     protected virtual void Attack()
     {
         Debug.Log(string.Format("Damage dealed is {0}, buff damage is {1}. Target name is ", Damage,
-            GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.StrenghtBuff) * DamageUpgradeValue) + Target.GetName());
+            GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.StrengthBuff) * DamageUpgradeValue) + Target.GetName());
 
         if (IsTargetSetted)
             Target.TakeDamage(SelfDamageable.GetSelfDamagable(), Damage);

@@ -15,6 +15,12 @@ public class ResourceData : ScriptableObject
         Spirit,
         Material,
         Gem,
-        StrenghtBuff
+        StrengthBuff,
+        DefenceTower,
+        CurrentUpgradeBuff,
+        RangeWarrior,
+        HealingTower,
+        WarriorSpeed,
+        WarriorHealth
     }
 }
