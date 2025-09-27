@@ -9,14 +9,12 @@ public class BasicMechanicsTutorial : IDisposable
     private TutorialManager tutorialManager;
     private List<ITutorialGO> objectsForTutorial;
     private int currentTutorialObjectIndex;
-    private bool isActivated;
     private Coroutine runningCoroutine;
 
     public BasicMechanicsTutorial(TutorialManager tutorialManager)
     {
         this.tutorialManager = tutorialManager;
         TutorialStartState.TutorialStarted += StartTutorial;
-        TutorialManager.TutorialStepStarted += ActivateNextTutorial;
         TutorialMessage.OnSkipButtonPressed += SkipTutorial;
         SetTutorialObjects(TutorialManager.GetTutorialObjects());
     }
@@ -40,12 +38,11 @@ public class BasicMechanicsTutorial : IDisposable
 
         ShowNextStep();
     }
-    
-    private void ActivateNextTutorial() => isActivated = true;
 
     private void ShowNextStep()
     {
-        runningCoroutine = CoroutineStarter.Instance.StartCoroutine(WaitForNextStep());
+        if (CoroutineStarter.Instance != null)
+            runningCoroutine = CoroutineStarter.Instance.StartCoroutine(WaitForNextStep());
     }
 
     private IEnumerator WaitForNextStep()
@@ -86,7 +83,6 @@ public class BasicMechanicsTutorial : IDisposable
     public void Dispose()
     {
         TutorialStartState.TutorialStarted -= StartTutorial;
-        TutorialManager.TutorialStepStarted -= ActivateNextTutorial;
         TutorialMessage.OnSkipButtonPressed -= SkipTutorial;
     }
 }

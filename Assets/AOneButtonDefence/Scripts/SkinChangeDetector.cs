@@ -1,20 +1,23 @@
 using System;
-using UnityEngine;
 
 public class SkinChangeDetector : IDisposable
 {
-    private static SkinChangeDetector instance;
-    
+    private static SkinChangeDetector _instance;
+    public static SkinChangeDetector Instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = new SkinChangeDetector();
+            return _instance;
+        }
+    }
+
     public SkinData CurrentSkinData { get; private set; }
     public bool IsSkinChanged { get; private set; }
-    public static SkinChangeDetector Instance;
 
-    public SkinChangeDetector()
+    private SkinChangeDetector()
     {
-        if (Instance != null)
-            return;
-            
-        Instance = this;
         SkinPanel.SkinChanged += DetectSkinChanged;
     }
     

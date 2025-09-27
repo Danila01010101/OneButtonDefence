@@ -41,6 +41,7 @@ public class StateMachineInitializer : IGameInitializerStep
             _detector
         );
         Instance = new GameStateMachine(stateData, _enemiesData, _gameData.EnemiesSpawnOffset, LayerMask.GetMask(_gameData.EnemyLayerName));
+        
         yield break;
     }
 }

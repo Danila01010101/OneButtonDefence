@@ -4,68 +4,93 @@ using UnityEngine;
 public class GnomeSkinChanger
 {
     public Transform ModelTransform => modelTransform;
-    
+
     private readonly List<MeshFilter> meshFilters;
     private readonly Renderer renderer;
     private readonly AudioSource audioSource;
     private readonly Transform modelTransform;
     private readonly Transform pivotTarget;
 
-    private readonly Material lockedMaterial;
+    private Material lockedMaterial;
 
-    public GnomeSkinChanger(List<MeshFilter> meshFilters, Renderer renderer, Transform pivotTarget, AudioSource audioSource = null)
+    public GnomeSkinChanger(List<MeshFilter> meshFilters, Renderer renderer, Transform pivotTarget, AudioSource audioSource = null, Material customLockedMaterial = null)
     {
-        this.meshFilters = meshFilters;
+        this.meshFilters = meshFilters ?? new List<MeshFilter>();
         this.renderer = renderer;
         this.audioSource = audioSource;
-        modelTransform = meshFilters[0].transform;
+        this.modelTransform = (this.meshFilters.Count > 0) ? this.meshFilters[0].transform : null;
         this.pivotTarget = pivotTarget;
 
-        lockedMaterial = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-        lockedMaterial.color = Color.black;
-        lockedMaterial.SetColor("_BaseColor", Color.black);
-        lockedMaterial.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Background;
-        
-        SkinPanel.SkinChanged += ChangeSkin;
-
-        if (SkinChangeDetector.Instance.IsSkinChanged)
-            ChangeSkin(SkinChangeDetector.Instance.CurrentSkinData);
+        if (customLockedMaterial != null)
+        {
+            lockedMaterial = customLockedMaterial;
+        }
+        else
+        {
+            var shader = Shader.Find("Universal Render Pipeline/Unlit");
+            lockedMaterial = shader != null ? new Material(shader) : new Material(Shader.Find("Sprites/Default"));
+            lockedMaterial.SetColor("_BaseColor", Color.black);
+            lockedMaterial.color = Color.black;
+            lockedMaterial.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Geometry;
+        }
     }
 
-    public void Unsubscribe() => SkinPanel.SkinChanged -= ChangeSkin;
+    public void Unsubscribe() { }
 
     public void ChangeSkin(SkinData data)
     {
+        if (data == null) return;
+        bool unlocked = data.Unlocked;
+        ChangeSkin(data, unlocked);
+        ApplyPivotOffset();
+    }
+
+    public void ChangeSkin(SkinData data, bool unlocked)
+    {
+        if (data == null) return;
+
+        if (audioSource != null)
+            audioSource.clip = data.DeathSound;
+
         if (meshFilters != null)
         {
-            foreach (var meshRenderer in meshFilters)
+            foreach (var mf in meshFilters)
             {
-                meshRenderer.mesh = data.Mesh;
-            }
-
-            if (pivotTarget != null && meshFilters.Count > 0)
-            {
-                var bounds = meshFilters[0].sharedMesh.bounds;
-                Vector3 localBottom = new Vector3(bounds.center.x, bounds.min.y, bounds.center.z);
-                
-                foreach (var meshRenderer in meshFilters)
-                {
-                    Vector3 worldBottom = meshRenderer.transform.TransformPoint(localBottom);
-                    Vector3 offset = pivotTarget.position - worldBottom;
-                    meshRenderer.transform.position += offset;
-                }
+                if (mf == null) continue;
+                mf.sharedMesh = data.Mesh;
             }
         }
 
         if (renderer != null)
         {
-            if (data.Unlocked)
-                renderer.material = data.Material;
-            else
-                renderer.material = lockedMaterial;
+            Material matToApply = (unlocked && data.Material != null) ? data.Material : lockedMaterial;
+            if (matToApply != null)
+                renderer.sharedMaterial = matToApply;
         }
 
-        if (audioSource != null)
-            audioSource.clip = data.DeathSound;
+        ApplyPivotOffset();
+    }
+
+    private void ApplyPivotOffset()
+    {
+        if (pivotTarget == null || meshFilters == null || meshFilters.Count == 0 || meshFilters[0].sharedMesh == null)
+            return;
+
+        var bounds = meshFilters[0].sharedMesh.bounds;
+        Vector3 localBottom = new Vector3(bounds.center.x, bounds.min.y, bounds.center.z);
+
+        foreach (var mf in meshFilters)
+        {
+            if (mf == null) continue;
+            Vector3 worldBottom = mf.transform.TransformPoint(localBottom);
+            Vector3 offset = pivotTarget.position - worldBottom;
+            mf.transform.position += offset;
+        }
+    }
+
+    public void SetLockedMaterial(Material mat)
+    {
+        if (mat == null) return;
+        lockedMaterial = mat;
     }
 }

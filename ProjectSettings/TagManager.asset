@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Gnome
   - InfoPanel
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Knight
   - SpellTarget
   - 
-  - 
+  - Spell
   - 
   - 
   - 

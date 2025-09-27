@@ -127,7 +127,7 @@ public class TargetFollowingState : IState, ITargetFollower
 
     private void OnDamageReceived(IDamagable attacker)
     {
-        if (attacker != null)
+        if (attacker != null && attacker.GetTransform().gameObject.name != "BaseMageCircle")
         {
             SetTarget(attacker.GetTransform());
         }

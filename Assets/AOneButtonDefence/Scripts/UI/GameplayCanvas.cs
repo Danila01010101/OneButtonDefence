@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -31,7 +32,6 @@ public class GameplayCanvas : MonoBehaviour
     private int lastKey = -1;
     private int beforLastKey = -1;
     private int howManyChois = 0;
-    private bool isShopWindowSetted = false;
 
     [field : SerializeField] public AudioSettings AudioSettings { get; private set; }
 
@@ -81,6 +81,9 @@ public class GameplayCanvas : MonoBehaviour
             parts[i].Button.onClick.AddListener(delegate { ChoosePart(currentBuildingData.UpgradeType); });
             partsAnimators[i].SetIcon(currentBuildingData.Icon);
         }
+        
+        if (spawnedShopWindow != null)
+            SetShopWindowActive(false);
     }
     
     public void DetectSettingsWindow(ClosableWindow window)
@@ -89,10 +92,10 @@ public class GameplayCanvas : MonoBehaviour
         settingsOpenButton.onClick.RemoveAllListeners();
         settingsWindowHandler = () => { SetSettingsWindowActive(true); };
         settingsOpenButton.onClick.AddListener(settingsWindowHandler);
-        spawnedSettingsWindow.AddCloseListener(() => { SetShopWindowActive(false); });
+        spawnedSettingsWindow.AddCloseListener(() => { SetSettingsWindowActive(false); });
     }
 
-    private void DetectShopWindow(ClosableWindow window)
+    public void DetectShopWindow(ClosableWindow window)
     {
         spawnedShopWindow = window;
         shopOpenButton.onClick.RemoveAllListeners();
@@ -103,11 +106,9 @@ public class GameplayCanvas : MonoBehaviour
     
     private void SetShopWindowActive(bool value)
     {
-        if (spawnedShopWindow != null)
-        {
-            spawnedShopWindow.gameObject.SetActive(value);
-            SetGameplayUIActive(!value);
-        }
+        if (spawnedShopWindow == null) return;
+        spawnedShopWindow.gameObject.SetActive(value);
+        SetGameplayUIActive(!value);
     }
     
     private void SetSettingsWindowActive(bool value)
@@ -171,7 +172,7 @@ public class GameplayCanvas : MonoBehaviour
                 upgradeButton.Deactivate();
                 break;
             case 2:
-                iconsText.text = "0ба здания выбраны. 0жидаем приказа!";
+                iconsText.text = "Оба здания выбраны. Ожидаем приказа!";
                 upgradeButton.Activate();
                 break;
         } 
@@ -191,11 +192,11 @@ public class GameplayCanvas : MonoBehaviour
         partsAnimators.Add(buttonAnimation);
         parts.Add(spawnedButton);
     }
-
+    
     private void SetGameplayUIActive(bool value)
     {
-        UpgradeWindow.gameObject.SetActive(value);
-        ResourceInfo.gameObject.SetActive(value);
+        if (UpgradeWindow != null) UpgradeWindow.SetActive(value);
+        if (ResourceInfo != null) ResourceInfo.SetActive(value);
     }
 
     private void DisableOpenableWindowButtons()
@@ -223,7 +224,6 @@ public class GameplayCanvas : MonoBehaviour
 
     private void OnEnable()
     {
-        SkinPanel.ShopInitialized += DetectShopWindow;
         UpgradeButton.UpgradesChoosen += DisableOpenableWindowButtons;
         UpgradeState.UpgradeStateStarted += EnableOpenableWindowButton;
         UpgradeState.UpgradeStateStarted += UpdateUpgradeView;
@@ -231,7 +231,6 @@ public class GameplayCanvas : MonoBehaviour
 
     private void OnDisable()
     {
-        SkinPanel.ShopInitialized -= DetectShopWindow;
         UpgradeButton.UpgradesChoosen -= DisableOpenableWindowButtons;
         UpgradeState.UpgradeStateStarted -= EnableOpenableWindowButton;
         UpgradeState.UpgradeStateStarted -= UpdateUpgradeView;

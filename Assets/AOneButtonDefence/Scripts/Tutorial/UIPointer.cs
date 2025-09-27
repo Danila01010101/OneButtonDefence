@@ -6,7 +6,7 @@ public class UIPointer : MonoBehaviour
     [Header("Animation Settings")]
     [SerializeField] private float approachDuration = 1f;
     [SerializeField] private float retreatDuration = 0.3f;
-    [SerializeField] private float retreatLenght = 125;
+    [SerializeField] private float retreatLenght = 305;
 
     private RectTransform target;
     private RectTransform pointer;
@@ -64,11 +64,11 @@ public class UIPointer : MonoBehaviour
         
         Vector2 direction = (targetAnchoredPos - startAnchoredPosition).normalized;
 
-        Vector2 retreatPos = direction * (oneThirdDistance * 2.75f);
+        Vector2 retreatPos = direction * (oneThirdDistance * 2f);
 
-        Vector2 approachPos = retreatPos - direction * retreatLenght;
+        Vector2 approachPos = (retreatPos - direction * retreatLenght * 0.75f);
 
-        pointer.anchoredPosition = direction * (oneThirdDistance * 2.75f);
+        pointer.anchoredPosition = direction * (oneThirdDistance * 2f);
 
         pointerSequence = DOTween.Sequence()
             .Append(pointer.DOAnchorPos(approachPos, approachDuration).SetEase(Ease.OutSine))

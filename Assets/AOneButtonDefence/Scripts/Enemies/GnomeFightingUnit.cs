@@ -30,5 +30,9 @@ public class GnomeFightingUnit : FightingUnit
         gnomeSkinChanger = null;
     }
 
-    public void ChangeSkin(SkinData data) => gnomeSkinChanger.ChangeSkin(data);
+    public void ChangeSkin(SkinData data)
+    {
+        currentDeathSound = data.DeathSound;
+        gnomeSkinChanger.ChangeSkin(data, true);
+    }
 }

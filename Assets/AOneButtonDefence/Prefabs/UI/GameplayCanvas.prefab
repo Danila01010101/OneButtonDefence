@@ -242,7 +242,7 @@ MonoBehaviour:
     \u0432 \u0447\u0435\u043C \u0435\u0433\u043E \u043F\u0440\u0438\u043A\u043E\u043B.
     \u041D\u0430\u0443\u0433\u0430\u0434 \u0442\u044B\u043A\u0430\u0442\u044C \u043D\u0435
     \u0441\u043E\u0432\u0435\u0442\u0443\u044E."
-  duration: 6
+  duration: 60
   index: 3
   IsActivatedFromStart: 1
 --- !u!1 &1090493062586017055
@@ -844,7 +844,7 @@ MonoBehaviour:
     \u0436\u0435\u0432\u0430\u0442\u044C \u2014 \u043D\u0435 \u043F\u043E\u043B\u0443\u0447\u0438\u043B\u043E\u0441\u044C,
     \u0442\u0435\u043F\u0435\u0440\u044C \u0442\u0435\u0431\u0435 \u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C
     \u043D\u0435 \u043F\u0440\u0438\u0434\u0435\u0442\u0441\u044F."
-  duration: 14
+  duration: 60
   index: 0
   IsActivatedFromStart: 1
 --- !u!1 &4343948189355866096
@@ -978,7 +978,7 @@ MonoBehaviour:
   message: "\u041D\u0443 \u0442\u0435\u043F\u0435\u0440\u044C \u0434\u0430\u0432\u0430\u0439,
     \u0432\u044B\u0431\u0438\u0440\u0430\u0439 \u0414\u0412\u0410 \u0437\u0434\u0430\u043D\u0438\u044F.
     \u041D\u0435 \u0442\u0440\u0438. \u041D\u0435 \u043E\u0434\u043D\u043E. \u0414\u0412\u0410!"
-  duration: 8
+  duration: 60
   index: 2
   IsActivatedFromStart: 1
 --- !u!1 &5345905945791567303
@@ -2119,7 +2119,7 @@ MonoBehaviour:
     \u043A\u0430\u043A \u043F\u0440\u0430\u0432\u0438\u0442\u044C \u043A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E\u043C.
     \u0418 \u0432\u0441\u044F\u043A\u0443\u044E \u043C\u0435\u043B\u043E\u0447\u044C
     \u0442\u043E\u0436\u0435. \u0427\u0442\u043E\u0431 \u043D\u0435 \u0437\u0430\u0431\u044B\u043B"
-  duration: 8
+  duration: 60
   index: 1
   IsActivatedFromStart: 1
 --- !u!1 &7640259230245781148
@@ -3248,6 +3248,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 74d1f080f1cabb44482e03205a6761a7, type: 3}
+    - target: {fileID: 3846159439031107344, guid: d216736fb6c2d764f95b2e5c097419c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3935530555756663565, guid: d216736fb6c2d764f95b2e5c097419c0, type: 3}
       propertyPath: m_SizeDelta.x
       value: 75
@@ -3271,6 +3275,18 @@ PrefabInstance:
     - target: {fileID: 3935530555756663565, guid: d216736fb6c2d764f95b2e5c097419c0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 16.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4557542646818936907, guid: d216736fb6c2d764f95b2e5c097419c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5801906713129686768, guid: d216736fb6c2d764f95b2e5c097419c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5947765612533431689, guid: d216736fb6c2d764f95b2e5c097419c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6595466599821677289, guid: d216736fb6c2d764f95b2e5c097419c0, type: 3}
       propertyPath: m_text
@@ -3307,7 +3323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6954369538466259699, guid: d216736fb6c2d764f95b2e5c097419c0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7106639819548246451, guid: d216736fb6c2d764f95b2e5c097419c0, type: 3}
       propertyPath: m_Pivot.x

@@ -23,8 +23,8 @@ MonoBehaviour:
   secondaryColor: {r: 0.65450424, g: 0.33990744, b: 0.8301887, a: 1}
   effectParticles: {fileID: 0}
   fineTuning: 0
-  circleColor: {r: 0, g: 0, b: 0, a: 1}
-  sidesColor: {r: 0, g: 0, b: 0, a: 1}
-  lightColor: {r: 0, g: 0, b: 0, a: 1}
-  sparksColor: {r: 0, g: 0, b: 0, a: 1}
-  flakesColor: {r: 0, g: 0, b: 0, a: 1}
+  circleColor: {r: 0.43529412, g: 0.18039216, b: 0.69803923, a: 1}
+  sidesColor: {r: 0.654902, g: 0.34117648, b: 0.83137256, a: 1}
+  lightColor: {r: 0.654902, g: 0.34117648, b: 0.83137256, a: 1}
+  sparksColor: {r: 0.43529412, g: 0.18039216, b: 0.69803923, a: 1}
+  flakesColor: {r: 0.654902, g: 0.34117648, b: 0.83137256, a: 1}

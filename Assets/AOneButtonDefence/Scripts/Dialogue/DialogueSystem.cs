@@ -25,8 +25,6 @@ public class DialogueSystem : MonoBehaviour
     private bool ASPlayingNeed;
 
     private string showReplic;
-    private int countReplic;
-    // Корутины
     private Coroutine replicaCoroutine;
     private Coroutine skipReplica;
 
@@ -127,7 +125,6 @@ public class DialogueSystem : MonoBehaviour
         activeChangeReplic = true;
         numLabel = DialogueData.Label[numLabel].Answers[num].MoveTo;
         numReplic = 0;
-        countReplic = 0;
 
         showReplic = "";
 
