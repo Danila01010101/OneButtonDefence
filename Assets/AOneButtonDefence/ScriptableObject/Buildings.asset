@@ -270,7 +270,7 @@ MonoBehaviour:
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: ccaec83cf32542b4bbb5470b547ea562, type: 2}
-        <Amount>k__BackingField: 5
+        <Amount>k__BackingField: 10
       <ResourceDescription>k__BackingField: "\u042D\u0444\u0444\u0435\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u044C
         \u0437\u0434\u0430\u043D\u0438\u0439 \u0443\u0432\u0435\u043B\u0438\u0447\u0435\u043D\u0430"
     - <ResourceAmount>k__BackingField:

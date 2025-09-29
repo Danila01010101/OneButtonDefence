@@ -49,11 +49,13 @@ public class GameBattleState : IState
                 for (int i = 0; i < Math.Min(5, runtimeWavesParameters.Waves.Count); i++)
                 {
                     var wave = runtimeWavesParameters.Waves[i];
-                    Debug.Log($"Wave {i + 1}, interval: {wave.SpawnInterval}");
+                    //Debug.Log($"Wave {i + 1}, interval: {wave.SpawnInterval}");
+                    /*
                     foreach (var enemy in wave.EnemiesToSpawn)
                     {
                         Debug.Log($"Enemy: {enemy.EnemyPrefab.name}, Amount: {enemy.Amount}, Interval: {enemy.SpawnInterval}");
                     }
+                    */
                 }
             },
             error =>
