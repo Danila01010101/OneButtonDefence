@@ -73,8 +73,8 @@ public class FightState : IState, ITargetAttacker
 
     protected virtual void Attack()
     {
-        Debug.Log(string.Format("Damage dealed is {0}, buff damage is {1}. Target name is ", Damage,
-            GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.StrengthBuff) * DamageUpgradeValue) + Target.GetName());
+        //Debug.Log(string.Format("Damage dealed is {0}, buff damage is {1}. Target name is ", Damage,
+        //    GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.StrengthBuff) * DamageUpgradeValue) + Target.GetName());
 
         if (IsTargetSetted)
             Target.TakeDamage(SelfDamageable.GetSelfDamagable(), Damage);

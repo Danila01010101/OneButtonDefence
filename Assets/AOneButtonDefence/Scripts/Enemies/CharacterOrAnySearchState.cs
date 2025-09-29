@@ -48,7 +48,6 @@ public class CharacterOrAnySearchState : TargetSearchState
         if (detectedEnemy == null)
             return;
 
-        Debug.Log("Found enemy, switching to " + detectedEnemy.gameObject.name);
         targetFollower.SetTarget(detectedEnemy, stoppingDistance);
         stateMachine.ChangeState<TargetFollowingState>();
     }
