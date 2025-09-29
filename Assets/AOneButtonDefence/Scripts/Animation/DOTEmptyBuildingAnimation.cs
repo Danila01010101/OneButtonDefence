@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DOTWeenStrenghtAnimation : MonoBehaviour, IAnimatable
+public class DOTEmptyBuildingAnimation : MonoBehaviour, IAnimatable
 {
     public void InteruptAnimation()
     {

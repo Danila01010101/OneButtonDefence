@@ -16,7 +16,7 @@ public class UpgradeCanvasInitializer : IGameInitializerStep
     public IEnumerator Initialize()
     {
         CanvasInstance = Object.Instantiate(_prefab);
-        CanvasInstance.Initialize(5, _data.BuildingsData);
+        CanvasInstance.Initialize(_data.BuildingsData.Buildings.Count, _data.BuildingsData);
         yield break;
     }
 }

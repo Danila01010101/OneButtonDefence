@@ -22,6 +22,6 @@ public class BasicBuildingData
         [field: SerializeField] public string ResourceDescription { get; private set; }
     }
 
-    public enum Upgrades { Farm = 0, SpiritBuilding = 1, MilitaryCamp = 2, Factory = 3, WarriorStrength = 4, SpellStrength = 5, BuildingEffectiveness = 6, 
+    public enum Upgrades { Farm = 0, SpiritBuilding = 1, MilitaryCamp = 2, Factory = 3, WarriorStrength = 4, SpellStrength = 6, BuildingEffectiveness = 5, 
         RangeWarriors = 7, DefenceTower = 8, HealingTower = 9, ArmorTower = 10, WarriorSpeed = 11 }
 }

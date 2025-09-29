@@ -191,6 +191,7 @@ public class GameplayCanvas : MonoBehaviour
         var buttonAnimation = spawnedButton.GetComponent<ButtonChooseAnimation>();
         partsAnimators.Add(buttonAnimation);
         parts.Add(spawnedButton);
+        Debug.Log("Button added");
     }
     
     private void SetGameplayUIActive(bool value)

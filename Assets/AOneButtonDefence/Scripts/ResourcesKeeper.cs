@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class ResourcesKeeper
 {
@@ -44,10 +45,16 @@ public class ResourcesKeeper
     public int GetResourceAmount(ResourceData.ResourceType type)
     {
         var foundResources = resources.FindAll(r => r.Resource.Type == type);
-        int resourceAmount = foundResources.Sum(r => r.Amount);
 
         if (foundResources == null)
             throw new Exception("No such resource registered.");
+        
+        int resourceAmount = foundResources.Sum(r => r.Amount);
+
+        if (type == ResourceData.ResourceType.CurrentResourcesBuff)
+        {
+            return resourceAmount;
+        }
         
         return resourceAmount;
     }

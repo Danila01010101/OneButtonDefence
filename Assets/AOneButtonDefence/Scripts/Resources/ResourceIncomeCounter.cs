@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ResourceIncomeCounter
@@ -6,24 +7,29 @@ public class ResourceIncomeCounter
     public static ResourceIncomeCounter Instance { get; private set; }
     
     private readonly GameResourcesCounter gameResourcesCounter;
-    private ResourcesKeeper resourcesKeeper;
+    private ResourcesKeeper resourcesTurnIncomeKeeper;
     private Dictionary<ResourceData.ResourceType, IResourceEffect> resourceEffects;
 
     public ResourceIncomeCounter(GameResourcesCounter counter, List<ResourceAmount> startResourcesPerTurn, Dictionary<ResourceData.ResourceType, IResourceEffect> resourceEffects)
     {
-        resourcesKeeper = new ResourcesKeeper();
-        resourcesKeeper.Initialize(startResourcesPerTurn);
+        resourcesTurnIncomeKeeper = new ResourcesKeeper();
+        resourcesTurnIncomeKeeper.Initialize(startResourcesPerTurn);
         this.resourceEffects = resourceEffects;
         gameResourcesCounter = counter;
         Instance = this;
         Subscribe();
     }
 
-    public int GetResourceIncome(ResourceData.ResourceType resourceType) => resourcesKeeper.GetResourceAmount(resourceType);
+    public int GetResourceIncome(ResourceData.ResourceType resourceType) => (int)(resourcesTurnIncomeKeeper.GetResourceAmount(resourceType) * GameResourcesCounter.ResourcesBuffMultiplier);
 
     public void InstantResourceChange(ResourceAmount startResourceAmount, Vector3? spawnPosition = null)
     {
-        gameResourcesCounter.ChangeResourceAmount(startResourceAmount);
+        ResourceAmount resourceWithBuff = startResourceAmount;
+        
+        if (startResourceAmount.Amount > 0)
+            resourceWithBuff = new ResourceAmount(startResourceAmount.Resource, (int)(startResourceAmount.Amount * GameResourcesCounter.ResourcesBuffMultiplier));
+        
+        gameResourcesCounter.ChangeResourceAmount(resourceWithBuff);
         
         if (resourceEffects.TryGetValue(startResourceAmount.Resource.Type, out IResourceEffect effect))
         {
@@ -39,11 +45,22 @@ public class ResourceIncomeCounter
     }
 
     public void RegisterResourcePerTurnChange(ResourceAmount startResourceAmount) =>
-        resourcesKeeper.AddResource(startResourceAmount);
+        resourcesTurnIncomeKeeper.AddResource(startResourceAmount);
 
     private void ActivateIncome()
     {
-        foreach (var resource in resourcesKeeper.Resources)
+        var groupedResources = resourcesTurnIncomeKeeper.Resources
+            .GroupBy(r => new { r.Resource.Type, r.ResourceSpawnPositon })
+            .Select(g =>
+            {
+                var resource = g.First().Resource;
+                var totalAmount = g.Sum(r => r.Amount);
+                var combined = new ResourceAmount(resource, totalAmount);
+                combined.SetResourceSpawnPosition(g.Key.ResourceSpawnPositon);
+                return combined;
+            });
+
+        foreach (var resource in groupedResources)
         {
             InstantResourceChange(resource, resource.ResourceSpawnPositon);
         }
