@@ -29,9 +29,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         playerInput = GetComponent<PlayerInput>();
         if (cameraTransform == null) Debug.Log("No camera have been assigned for character movement, used main camera.");
         cameraTransform = cameraTransform == null ? Camera.main.transform : cameraTransform;
-
-        playerInput.actions["Move"].performed += OnMove;
-        playerInput.actions["Move"].canceled += OnMove;
     }
 
     public void Initialize(PlayerControllerData data, Camera camera)
@@ -83,8 +80,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void OnDestroy()
     {
-        playerInput.actions["Move"].performed -= OnMove;
-        playerInput.actions["Move"].canceled -= OnMove;
         health.Death -= NotifyOfPlayerDeath;
     }
 
@@ -116,5 +111,33 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         controller.Move(moveDirection.normalized * (data.MoveSpeed * Time.deltaTime));
         controller.SimpleMove(gravityDirection * (Physics.gravity.y * Time.deltaTime));
+    }
+    
+    private void OnEnable()
+    {
+        playerInput.ActivateInput();
+        var moveAction = playerInput.actions.FindAction("Move");
+        
+        if (moveAction != null)
+        {
+            moveAction.performed += OnMove;
+            moveAction.canceled += OnMove;
+        }
+        else
+        {
+            Debug.LogError("Move action not found in Input Actions!");
+        }
+    }
+
+    private void OnDisable()
+    {
+        playerInput.DeactivateInput();
+        var moveAction = playerInput.actions.FindAction("Move");
+        
+        if (moveAction != null)
+        {
+            moveAction.performed -= OnMove;
+            moveAction.canceled -= OnMove;
+        }
     }
 }
