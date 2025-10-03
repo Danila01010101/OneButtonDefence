@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2823204485177942126}
   - component: {fileID: 613688463014360728}
   - component: {fileID: 4719140362342731964}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: BaseMageCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4982,7 +4982,7 @@ GameObject:
   - component: {fileID: 1603446675346992054}
   - component: {fileID: 8191539626123301078}
   - component: {fileID: 702027532804563285}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9879,7 +9879,7 @@ GameObject:
   - component: {fileID: 1688404738550939994}
   - component: {fileID: 8547968890410263644}
   - component: {fileID: 4480194241860710525}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14913,7 +14913,7 @@ GameObject:
   - component: {fileID: 7513009982066595611}
   - component: {fileID: 462247948153770567}
   - component: {fileID: 7490737009465235498}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Flakes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19808,7 +19808,7 @@ GameObject:
   - component: {fileID: 7533108362304906034}
   - component: {fileID: 3821581455131735974}
   - component: {fileID: 1544919329398506988}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Sides
   m_TagString: Untagged
   m_Icon: {fileID: 0}

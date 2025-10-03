@@ -139,7 +139,7 @@ public class TargetFollowingState : IState, ITargetFollower
 
     private void OnDamageReceived(IDamagable attacker)
     {
-        if (attacker != null && attacker.GetTransform().gameObject.name != "BaseMageCircle")
+        if (attacker != null && attacker.GetTransform().gameObject.layer != LayerMask.NameToLayer("Spell"))
         {
             SetTarget(attacker.GetTransform());
         }
