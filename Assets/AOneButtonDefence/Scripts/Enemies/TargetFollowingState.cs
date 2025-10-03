@@ -15,6 +15,11 @@ public class TargetFollowingState : IState, ITargetFollower
     private readonly WalkingAnimation animation;
     private readonly float defaultChaseRange;
     private readonly ISelfDamageable selfDamageable;
+    
+    protected float UnitSpeedWithBuff => DefaultSpeed * Mathf.Pow(1.01f, GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.WarriorSpeed));
+
+    protected readonly bool IsPlayerControlled;
+    protected readonly float DefaultSpeed;
 
     public TargetFollowingState(
         IStateChanger stateMachine,
@@ -24,17 +29,20 @@ public class TargetFollowingState : IState, ITargetFollower
         LayerMask targetMask,
         WalkingAnimation animation,
         IEnemyDetector detector,
-        ISelfDamageable selfDamageable)
+        ISelfDamageable selfDamageable,
+        bool isPlayerControlled)
     {
         this.stateMachine = stateMachine;
         this.agent = agent;
         defaultChaseRange = stats.ChaseRange;
+        DefaultSpeed = stats.Speed;
         transform = agent.transform;
         this.targetAttacker = targetAttacker;
         this.targetMask = targetMask;
         this.animation = animation;
         this.detector = detector;
         this.selfDamageable = selfDamageable;
+        IsPlayerControlled = isPlayerControlled;
     }
 
     public void Enter()
@@ -42,6 +50,7 @@ public class TargetFollowingState : IState, ITargetFollower
         animation.StartAnimation();
         detector.NewEnemiesDetected += CheckIfTargetChanged;
         selfDamageable.DamageRecieved += OnDamageReceived;
+        agent.speed = IsPlayerControlled ? UnitSpeedWithBuff : DefaultSpeed;
     }
 
     public void Exit()

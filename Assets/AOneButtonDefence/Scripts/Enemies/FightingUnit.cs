@@ -39,7 +39,6 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
         materialChanger = new MaterialChanger(this);
         materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration, characterStats.Delay);
         AudioSettings.AddAudioSource(audioSource);
-        navMeshComponent.speed = characterStats.Speed;
         currentDeathSound = characterStats.DeathSound;
     }
 

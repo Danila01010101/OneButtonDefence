@@ -10,15 +10,20 @@ public class FightState : IState, ITargetAttacker
     protected readonly float AttackDelay;
     protected readonly int BasicDamage;
     protected readonly int DamageUpgradeValue;
+    protected readonly bool IsPlayerControlled;
     protected readonly float DefaultDistanceToLoseTarget = 1.2f;
 
+    protected float CalculatedAttackDelay { get; private set; }
+
+    protected float AttackDelayWithBuff => AttackDelay * Mathf.Pow(0.99f, GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.WarriorSpeed));
     protected int Damage => BasicDamage + DamageUpgradeValue * GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.StrengthBuff);
     protected bool IsTargetSetted;
     
     private IDamagable Target;
     private float LastTimeAttacked;
 
-    public FightState(IStateChanger stateChanger, float attackDelay, int damage, int damageUpgradeValue, IAttackAnimator animation, ISelfDamageable selfDamageable)
+    public FightState(IStateChanger stateChanger, float attackDelay, int damage, int damageUpgradeValue, IAttackAnimator animation, ISelfDamageable selfDamageable,
+        bool isPlayerControlled)
     {
         StateMachine = stateChanger;
         AttackDelay = attackDelay;
@@ -26,6 +31,7 @@ public class FightState : IState, ITargetAttacker
         DamageUpgradeValue = damageUpgradeValue;
         Animation = animation;
         SelfDamageable = selfDamageable;
+        IsPlayerControlled = isPlayerControlled;
     }
 
     public void SetTarget(IDamagable target)
@@ -37,6 +43,7 @@ public class FightState : IState, ITargetAttacker
     public virtual void Enter()
     {
         Animation.CharacterAttacked += Attack;
+        CalculatedAttackDelay = IsPlayerControlled ? AttackDelayWithBuff : AttackDelay;
     }
 
     public virtual void Exit() 
@@ -63,7 +70,7 @@ public class FightState : IState, ITargetAttacker
 
     public virtual void Update()
     {
-        if (LastTimeAttacked + AttackDelay >= Time.time)
+        if (LastTimeAttacked + CalculatedAttackDelay >= Time.time)
             return;
 
         CheckTarget();
@@ -76,8 +83,7 @@ public class FightState : IState, ITargetAttacker
         //Debug.Log(string.Format("Damage dealed is {0}, buff damage is {1}. Target name is ", Damage,
         //    GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.StrengthBuff) * DamageUpgradeValue) + Target.GetName());
 
-        if (IsTargetSetted)
-            Target.TakeDamage(SelfDamageable.GetSelfDamagable(), Damage);
+        Target.TakeDamage(SelfDamageable.GetSelfDamagable(), Damage);
     }
 
     private void CheckTarget()
