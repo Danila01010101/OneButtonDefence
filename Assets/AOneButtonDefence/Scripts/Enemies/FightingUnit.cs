@@ -45,13 +45,26 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
     protected virtual void Update()
     {
         if (isDead) return;
-        stateMachine.Update();
+        stateMachine?.Update();
     }
 
     protected virtual void FixedUpdate() 
     {
         if (isDead) return;
-        stateMachine.PhysicsUpdate();
+        stateMachine?.PhysicsUpdate();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.name);
+        if (isDead) return;
+        stateMachine?.OnTriggerEnter(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (isDead) return;
+        stateMachine?.OnTriggerExit(other);
     }
 
     public virtual void TakeDamage(IDamagable damagerTransform, int damage)
@@ -65,10 +78,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
 
     public Transform GetTransform() => transform;
     
-    public string GetName()
-    {
-        return gameObject.name;
-    }
+    public string GetName() => gameObject.name;
 
     public bool IsAlive() => health.Amount > 0;
 

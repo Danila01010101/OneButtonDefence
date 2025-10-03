@@ -80,9 +80,9 @@ public class Building : MonoBehaviour, IEffectActivator
     public class EffectCastInfo
     {
         public Vector3 CastPosition { get; private set; }
-        public ResourceAmount BuffResource { get; private set; }
+        public StartResourceAmount BuffResource { get; private set; }
             
-        public EffectCastInfo(ResourceAmount buffResource, Vector3 position)
+        public EffectCastInfo(StartResourceAmount buffResource, Vector3 position)
         {
             CastPosition = position;
             BuffResource = buffResource;

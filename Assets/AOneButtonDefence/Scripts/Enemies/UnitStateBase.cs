@@ -28,12 +28,10 @@ public abstract class UnitStateBase : IState
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        if (other == null) return;
-        var machine = StateMachine as IUnitStateMachineWithEffects;
-        if (machine == null) return;
+        if (other == null || !IsPlayerControlled) return;
+        if (!(StateMachine is IUnitStateMachineWithEffects machine)) return;
 
         if (!other.TryGetComponent<IEffectActivator>(out var activator)) return;
-
         Building.EffectCastInfo info = activator.GetEffectInfo();
 
         if (!machine.OriginalScaleInitialized)
@@ -44,28 +42,26 @@ public abstract class UnitStateBase : IState
 
         float multiplier = CalculateScaleMultiplier(info);
 
-        var activeEffect = new ActiveEffect(info, activator, multiplier);
-
         var prefab = info.BuffResource?.Resource?.ResourceEffect;
+        ActiveEffect activeEffect = null;
         if (prefab != null)
         {
             var instance = Object.Instantiate(prefab, SelfTransform);
             instance.transform.localPosition = Vector3.zero;
-            activeEffect.EffectInstance = instance;
+            activeEffect = new ActiveEffect(info, activator, multiplier, instance);
         }
 
         machine.AddEffect(activeEffect);
-        RecalculateScale(machine);
+        machine.RecalculateScale();
     }
 
     public virtual void OnTriggerExit(Collider other)
     {
         if (other == null) return;
-        var machine = StateMachine as IUnitStateMachineWithEffects;
-        if (machine == null || machine.CurrentEffects.Count == 0) return;
+        if (!(StateMachine is IUnitStateMachineWithEffects machine)) return;
+        if (machine.CurrentEffects.Count == 0) return;
 
         if (!other.TryGetComponent<IEffectActivator>(out var activator)) return;
-
         var existing = machine.CurrentEffects.FirstOrDefault(e => ReferenceEquals(e.OriginActivator, activator));
         if (existing == null) return;
 
@@ -73,7 +69,7 @@ public abstract class UnitStateBase : IState
             Object.Destroy(existing.EffectInstance.gameObject);
 
         machine.RemoveEffect(existing);
-        RecalculateScale(machine);
+        machine.RecalculateScale();
     }
 
     protected virtual float CalculateScaleMultiplier(Building.EffectCastInfo info)

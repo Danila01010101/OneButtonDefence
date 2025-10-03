@@ -27,6 +27,10 @@ MonoBehaviour:
     <BuildingLore>k__BackingField: "\u0425\u043B\u0435\u0431 \u0432\u0441\u0435\u043C\u0443
       \u0433\u043E\u043B\u043E\u0432\u0430. \u041E\u0441\u043E\u0431\u0435\u043D\u043D\u043E,
       \u0435\u0441\u043B\u0438 \u043E\u043D \u0441\u043B\u0430\u0434\u043A\u0438\u0439."
+    <buffResource>k__BackingField:
+      <Resource>k__BackingField: {fileID: 0}
+      <Amount>k__BackingField: 0
+    buffEffectInfo: 
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
@@ -70,6 +74,10 @@ MonoBehaviour:
       \u043E\u0441\u043A\u043E\u0440\u0431\u0438\". \u0425\u0440\u0430\u043C \u0432\u0440\u0435\u0434\u043D\u044B\u0445
       \u0441\u0435\u0440\u0434\u0438\u0442\u044B\u0445 \u0440\u0443\u0431\u0430\u043A
       \u0444\u0438\u0445\u0442\u043E\u0432\u0430\u043B\u044C\u0449\u0438\u043A\u043E\u0432."
+    <buffResource>k__BackingField:
+      <Resource>k__BackingField: {fileID: 0}
+      <Amount>k__BackingField: 0
+    buffEffectInfo: 
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
@@ -119,6 +127,10 @@ MonoBehaviour:
       \u0410 \u043D\u0430\u0448 \u0431\u043E\u0435\u0432\u043E\u0439 \u043A\u043B\u0438\u0447
       \u0434\u043E \u0441\u0438\u0445 \u043F\u043E\u0440 \u0432 \u0443\u0448\u0430\u0445
       \u0437\u0432\u0435\u043D\u0438\u0442, \u0413\u043E\u0439-\u0434\u0430\u0439!!!"
+    <buffResource>k__BackingField:
+      <Resource>k__BackingField: {fileID: 0}
+      <Amount>k__BackingField: 0
+    buffEffectInfo: 
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: a7a7003b21a1e244eb4249ac18a4c39d, type: 2}
@@ -174,6 +186,10 @@ MonoBehaviour:
       \u043D\u0430\u0448\u0435 \u0432\u0440\u0435\u043C\u044F, \u043F\u0440\u0438
       \u0441\u043E\u0446\u0438\u0430\u043B\u0438\u0437\u043C\u0435, \u0444\u0430\u0431\u0440\u0438\u043A
       \u0428\u0440\u0435\u043A\u0441\u0430 \u043D\u0435 \u0431\u044B\u043B\u043E."
+    <buffResource>k__BackingField:
+      <Resource>k__BackingField: {fileID: 0}
+      <Amount>k__BackingField: 0
+    buffEffectInfo: 
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
@@ -218,6 +234,12 @@ MonoBehaviour:
       \u043F\u043E\u0447\u0435\u0442 \u0432\u043E\u0438\u043D\u0430\u043C, \u0442\u043E\u0447\u043D\u043E
       \u0434\u0430\u0441\u0442 \u043E\u0447\u043A\u0438 \u0441\u043E\u0446\u0438\u0430\u043B\u044C\u043D\u044B\u0445
       \u043A\u0440\u0435\u0434\u0438\u0442\u043E\u0432!"
+    <buffResource>k__BackingField:
+      <Resource>k__BackingField: {fileID: 11400000, guid: 7bfd3351b5f6b8e46888ebe1d995ba71, type: 2}
+      <Amount>k__BackingField: 10
+    buffEffectInfo: "\u0423\u0441\u0438\u043B\u044F\u0435\u0442 \u0432\u043E\u0438\u043D\u043E\u0432
+      \u043D\u0430 10 \u043F\u0440\u043E\u0446\u0435\u0442\u043E\u0432 \u0441\u0438\u043B\u044B
+      \u0443\u0434\u0430\u0440\u0430"
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 7bfd3351b5f6b8e46888ebe1d995ba71, type: 2}
@@ -275,6 +297,10 @@ MonoBehaviour:
     <BuildingLore>k__BackingField: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442
       \u043F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C
       \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0445 \u0437\u0434\u0430\u043D\u0438\u0439"
+    <buffResource>k__BackingField:
+      <Resource>k__BackingField: {fileID: 0}
+      <Amount>k__BackingField: 0
+    buffEffectInfo: 
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: ccaec83cf32542b4bbb5470b547ea562, type: 2}
@@ -317,6 +343,10 @@ MonoBehaviour:
     - {x: 0, y: 270, z: 0}
     <BuildingLore>k__BackingField: "\u0421\u043F\u0438\u0434\u0440\u0430\u043D \u043F\u043E
       \u0440\u044B\u0446\u0430\u0440\u044F\u043C, \u043F\u043E\u0433\u043D\u0430\u043B\u0438! "
+    <buffResource>k__BackingField:
+      <Resource>k__BackingField: {fileID: 0}
+      <Amount>k__BackingField: 0
+    buffEffectInfo: 
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: cd223a14dafc18144ad81dbc48c6fad7, type: 2}

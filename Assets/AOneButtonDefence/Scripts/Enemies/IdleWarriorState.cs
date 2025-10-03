@@ -15,13 +15,21 @@ public class IdleWarriorState : IState
         this.startPosition = startPosition;
         this.walkingAnimation = walkingAnimation;
 	}
-
+	
 	public void Enter()
-    {
-        GoToStartPosition();
+	{
+		if (stateMachine is WarriorStateMachine sm)
+			sm.DisableEffects();
+
+		GoToStartPosition();
 	}
 
-	public void Exit() { }
+	public void Exit()
+	{
+		if (stateMachine is WarriorStateMachine sm)
+			sm.EnableEffects();
+	}
+
 
 	public void HandleInput() { }
 
