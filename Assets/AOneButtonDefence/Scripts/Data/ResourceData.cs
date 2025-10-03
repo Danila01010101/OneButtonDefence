@@ -7,6 +7,8 @@ public class ResourceData : ScriptableObject
     [field: SerializeField] public ResourceType Type { get; private set; }
     [field: SerializeField] public bool IsSpawnable { get; private set; }
     [field: SerializeField] public Sprite Icon { get; private set; }
+    
+    [field: SerializeField] public ParticleSystem ResourceEffect { get; private set; }
 
     public enum ResourceType
     {

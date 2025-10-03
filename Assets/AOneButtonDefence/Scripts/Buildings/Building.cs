@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(IAnimatable))]
 [RequireComponent(typeof(BuildAnimation))]
-public class Building : MonoBehaviour
+public class Building : MonoBehaviour, IBuffActivator
 {
+    [SerializeField] private Transform castPositionTransform;
+    
     public Vector3 BuildingOffset => data.SpawnOffset;
 
     protected BasicBuildingData data;
@@ -62,10 +65,27 @@ public class Building : MonoBehaviour
             ResourceIncomeCounter.Instance.RegisterResourcePerTurnChange(resourceAmount);
         }
     }
+    
+    public BuffEffectCastInfo GetBuffEffect()
+    {
+        return new BuffEffectCastInfo(data.buffResource, castPositionTransform.position);
+    }
 
     protected virtual void OnDisable()
     {
         UpgradeState.UpgradeStateStarted -= animator.StartAnimation;
         UpgradeState.UpgradeStateEnding -= animator.InteruptAnimation;
+    }
+    
+    public class BuffEffectCastInfo
+    {
+        public Vector3 CastPosition { get; private set; }
+        public ResourceData BuffResource { get; private set; }
+            
+        public BuffEffectCastInfo(ResourceData buffResource, Vector3 position)
+        {
+            CastPosition = position;
+            BuffResource = buffResource;
+        }
     }
 }

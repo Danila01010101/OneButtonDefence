@@ -12,7 +12,7 @@ public class FightWithUltimateState : FightState
     
     public FightWithUltimateState(FightWithUltimateStateData unitWithUltimateData) 
         : base(unitWithUltimateData.StateMachine, unitWithUltimateData.AttackDelay, unitWithUltimateData.Damage, 
-            unitWithUltimateData.DamageUpgradeValue, unitWithUltimateData.Animation, unitWithUltimateData.SelfDamageable)
+            unitWithUltimateData.DamageUpgradeValue, unitWithUltimateData.Animation, unitWithUltimateData.SelfDamageable, false)
     {
         this.unitWithUltimateData = unitWithUltimateData;
         spellsPositionTransform = unitWithUltimateData.Animation.Transform;

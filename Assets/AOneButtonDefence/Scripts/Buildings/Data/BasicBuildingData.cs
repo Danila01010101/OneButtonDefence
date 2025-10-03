@@ -12,6 +12,8 @@ public class BasicBuildingData
     [field: SerializeField] public Vector3 SpawnOffset { get; private set; }
     [field: SerializeField] public List<Vector3> SpawnRotations { get; private set; }
     [field: SerializeField] public string BuildingLore { get; private set; }
+    [field: SerializeField] public ResourceData buffResource;
+    [field: SerializeField] public string buffEffectInfo;
     [field: SerializeField] public ResourceChangeInfo[] buildResourceChange { get; private set; }
     [field: SerializeField] public ResourceChangeInfo[] resourcePerTurnChange { get; private set; }
 

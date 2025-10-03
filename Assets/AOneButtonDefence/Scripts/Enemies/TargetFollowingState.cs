@@ -69,7 +69,10 @@ public class TargetFollowingState : IState, ITargetFollower
 
     public void OnAnimationTransitionEvent() { }
 
-    public void OnTriggerEnter(Collider collider) { }
+    public void OnTriggerEnter(Collider collider)
+    {
+        //Добавляем реакцию на коллайдер бафа здания 
+    }
 
     public void OnTriggerExit(Collider collider) { }
 
