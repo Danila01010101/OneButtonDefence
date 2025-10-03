@@ -15,7 +15,7 @@ public class WarriorStateMachine : StateMachine
 
         states = new List<IState>()
         {
-            new TargetSearchState(targetSearchStateData),
+            new TargetSearchState(targetSearchStateData, true),
             new IdleWarriorState(this, data.SelfTransform.position, data.WalkingAnimation, data.Agent),
             fightState,
             targetFollowingState

@@ -18,6 +18,7 @@ public class Spell : MonoBehaviour, IDamagable
     private float leftTime;
     private LayerMask targetLayer;
     private SpellData spell;
+    private IDamagable selfDamageable;
     private HashSet<IDamagable> targets = new HashSet<IDamagable>();
 
     public void Initialize(SpellData spellData, LayerMask damagableTargetLayer)
@@ -30,6 +31,7 @@ public class Spell : MonoBehaviour, IDamagable
         ChangeParticles(spellData);
         ChangeLifeTime(spellData.Time);
         StartParticlesSystem();
+        selfDamageable = this;
         Invoke(nameof(Destroy), spell.Time);
     }
 
@@ -140,7 +142,7 @@ public class Spell : MonoBehaviour, IDamagable
             {
                 if (target != null && target.IsAlive())
                 {
-                    target.TakeDamage(this, spell.Damage);
+                    target.TakeDamage(selfDamageable, spell.Damage);
                 }
                 else 
                 {

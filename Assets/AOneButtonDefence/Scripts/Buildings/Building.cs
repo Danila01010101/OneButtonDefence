@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(IAnimatable))]
 [RequireComponent(typeof(BuildAnimation))]
-public class Building : MonoBehaviour, IBuffActivator
+public class Building : MonoBehaviour, IEffectActivator
 {
     [SerializeField] private Transform castPositionTransform;
     
@@ -66,9 +66,9 @@ public class Building : MonoBehaviour, IBuffActivator
         }
     }
     
-    public BuffEffectCastInfo GetBuffEffect()
+    public EffectCastInfo GetEffectInfo()
     {
-        return new BuffEffectCastInfo(data.buffResource, castPositionTransform.position);
+        return new EffectCastInfo(data.buffResource, castPositionTransform.position);
     }
 
     protected virtual void OnDisable()
@@ -77,12 +77,12 @@ public class Building : MonoBehaviour, IBuffActivator
         UpgradeState.UpgradeStateEnding -= animator.InteruptAnimation;
     }
     
-    public class BuffEffectCastInfo
+    public class EffectCastInfo
     {
         public Vector3 CastPosition { get; private set; }
-        public ResourceData BuffResource { get; private set; }
+        public ResourceAmount BuffResource { get; private set; }
             
-        public BuffEffectCastInfo(ResourceData buffResource, Vector3 position)
+        public EffectCastInfo(ResourceAmount buffResource, Vector3 position)
         {
             CastPosition = position;
             BuffResource = buffResource;

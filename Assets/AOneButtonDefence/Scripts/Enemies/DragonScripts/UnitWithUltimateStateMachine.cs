@@ -30,7 +30,7 @@ public class UnitWithUltimateStateMachine : StateMachine
 
         states = new List<IState>()
         {
-            new TargetSearchState(targetSearchStateData),
+            new TargetSearchState(targetSearchStateData, false),
             new IdleWarriorState(this, data.SelfTransform.position, data.WalkingAnimation, data.Agent),
             fightState,
             targetFollowingState

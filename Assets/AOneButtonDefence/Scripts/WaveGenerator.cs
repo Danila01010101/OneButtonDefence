@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
 public class WaveGenerator
 {
+    private static readonly System.Random rng = new System.Random();
+
     public class RuntimeEnemySpawnData
     {
         public FightingUnit EnemyPrefab;
@@ -26,6 +29,7 @@ public class WaveGenerator
         BattleWavesParameters source, int countWaves)
     {
 #if UNITY_WEBGL
+        // В WebGL запрещён Task.Run, возвращаем сразу
         return Task.FromResult(GenerateWavesSync(source, countWaves));
 #else
         return Task.Run(() => GenerateWavesSync(source, countWaves));
@@ -77,16 +81,16 @@ public class WaveGenerator
                     }
 
                     if (waveIndex + 1 > enemy.maxWave)
-                        baseAmount = Mathf.Max(enemy.startAmount, 1);
+                        baseAmount = Math.Max(enemy.startAmount, 1);
 
-                    baseAmount = Mathf.Max(baseAmount, 1);
+                    baseAmount = Math.Max(baseAmount, 1);
 
                     if (enemy.randomVariancePercent > 0f)
                     {
                         float variance = baseAmount * (enemy.randomVariancePercent / 100f);
                         baseAmount = Mathf.RoundToInt(
                             baseAmount + RandomRange(-variance, variance));
-                        baseAmount = Mathf.Max(baseAmount, 1);
+                        baseAmount = Math.Max(baseAmount, 1);
                     }
 
                     float spawnInterval = (enemy.customSpawnInterval > 0)
@@ -110,11 +114,17 @@ public class WaveGenerator
 
     private static int RandomRange(int min, int max)
     {
-        return UnityEngine.Random.Range(min, max);
+        lock (rng)
+        {
+            return rng.Next(min, max);
+        }
     }
 
     private static float RandomRange(float min, float max)
     {
-        return UnityEngine.Random.Range(min, max);
+        lock (rng)
+        {
+            return (float)(min + (rng.NextDouble() * (max - min)));
+        }
     }
 }

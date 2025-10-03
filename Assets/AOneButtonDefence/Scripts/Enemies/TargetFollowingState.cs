@@ -1,25 +1,23 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class TargetFollowingState : IState, ITargetFollower
+public class TargetFollowingState : UnitStateBase, ITargetFollower
 {
     private Transform target;
-    private IEnemyDetector detector;
-    private float chaseRange;
-    
-    private readonly IStateChanger stateMachine;
     private readonly ITargetAttacker targetAttacker;
-    private readonly NavMeshAgent agent;
-    private readonly Transform transform;
     private readonly LayerMask targetMask;
     private readonly WalkingAnimation animation;
-    private readonly float defaultChaseRange;
+    private readonly IEnemyDetector detector;
     private readonly ISelfDamageable selfDamageable;
-    
-    protected float UnitSpeedWithBuff => DefaultSpeed * Mathf.Pow(1.01f, GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.WarriorSpeed));
+    private readonly NavMeshAgent agent;
+
+    private readonly float defaultChaseRange;
+    private float chaseRange;
 
     protected readonly bool IsPlayerControlled;
     protected readonly float DefaultSpeed;
+
+    protected float UnitSpeedWithBuff => DefaultSpeed * Mathf.Pow(1.01f, GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.WarriorSpeed));
 
     public TargetFollowingState(
         IStateChanger stateMachine,
@@ -31,21 +29,20 @@ public class TargetFollowingState : IState, ITargetFollower
         IEnemyDetector detector,
         ISelfDamageable selfDamageable,
         bool isPlayerControlled)
+        : base(stateMachine, agent.transform, isPlayerControlled)
     {
-        this.stateMachine = stateMachine;
-        this.agent = agent;
-        defaultChaseRange = stats.ChaseRange;
-        DefaultSpeed = stats.Speed;
-        transform = agent.transform;
         this.targetAttacker = targetAttacker;
         this.targetMask = targetMask;
         this.animation = animation;
         this.detector = detector;
+        this.agent = agent;
         this.selfDamageable = selfDamageable;
-        IsPlayerControlled = isPlayerControlled;
+        this.defaultChaseRange = stats.ChaseRange;
+        this.DefaultSpeed = stats.Speed;
+        this.IsPlayerControlled = isPlayerControlled;
     }
 
-    public void Enter()
+    public override void Enter()
     {
         animation.StartAnimation();
         detector.NewEnemiesDetected += CheckIfTargetChanged;
@@ -53,7 +50,7 @@ public class TargetFollowingState : IState, ITargetFollower
         agent.speed = IsPlayerControlled ? UnitSpeedWithBuff : DefaultSpeed;
     }
 
-    public void Exit()
+    public override void Exit()
     {
         animation.StopAnimation();
         target = null;
@@ -61,49 +58,34 @@ public class TargetFollowingState : IState, ITargetFollower
         selfDamageable.DamageRecieved -= OnDamageReceived;
     }
 
-    public void HandleInput() { }
-
-    public void OnAnimationEnterEvent() { }
-
-    public void OnAnimationExitEvent() { }
-
-    public void OnAnimationTransitionEvent() { }
-
-    public void OnTriggerEnter(Collider collider)
-    {
-        //Добавляем реакцию на коллайдер бафа здания 
-    }
-
-    public void OnTriggerExit(Collider collider) { }
-
-    public void PhysicsUpdate()
+    public override void PhysicsUpdate()
     {
         if (IsTargetGone())
         {
-            stateMachine.ChangeState<TargetSearchState>();
+            StateMachine.ChangeState<TargetSearchState>();
             return;
         }
 
-        float distanceToEnemy = Vector3.Distance(transform.position, target.position);
+        float distanceToEnemy = Vector3.Distance(SelfTransform.position, target.position);
 
         if (distanceToEnemy < chaseRange)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, chaseRange, targetMask);
+            Collider[] colliders = Physics.OverlapSphere(SelfTransform.position, chaseRange, targetMask);
             IDamagable foundTarget = FindTarget(colliders);
 
             if (foundTarget != null)
             {
                 targetAttacker.SetTarget(foundTarget);
-                stateMachine.ChangeState<FightState>();
+                StateMachine.ChangeState<FightState>();
             }
         }
     }
 
-    public void Update()
+    public override void Update()
     {
         if (IsTargetGone())
         {
-            stateMachine.ChangeState<TargetSearchState>();
+            StateMachine.ChangeState<TargetSearchState>();
             return;
         }
 
@@ -112,29 +94,26 @@ public class TargetFollowingState : IState, ITargetFollower
 
     public void SetTarget(Transform transform) => target = transform;
 
+    public void SetTarget(Transform transform, float enemyStoppingDistance)
+    {
+        target = transform;
+        chaseRange = enemyStoppingDistance > defaultChaseRange ? enemyStoppingDistance : defaultChaseRange;
+    }
+
     private bool IsTargetGone() => target == null;
 
-    private void CheckIfTargetChanged() => stateMachine.ChangeState<TargetSearchState>();
+    private void CheckIfTargetChanged() => StateMachine.ChangeState<TargetSearchState>();
 
     private IDamagable FindTarget(Collider[] colliders)
     {
         foreach (Collider collider in colliders)
         {
-            IDamagable foundTarget;
-
-            if (collider.transform != transform && collider.gameObject.TryGetComponent(out foundTarget))
+            if (collider.transform != SelfTransform && collider.TryGetComponent(out IDamagable foundTarget))
             {
                 return foundTarget;
             }
         }
-
         return null;
-    }
-
-    public void SetTarget(Transform transform, float enemyStoppingDistance)
-    {
-        target = transform;
-        chaseRange = enemyStoppingDistance > defaultChaseRange ? enemyStoppingDistance : defaultChaseRange;
     }
 
     private void OnDamageReceived(IDamagable attacker)
