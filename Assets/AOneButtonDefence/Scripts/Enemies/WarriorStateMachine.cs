@@ -112,14 +112,13 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
         foreach (var effect in CurrentEffects)
             DisableEffect(effect);
 
-        SelfTransform.localScale = OriginalScale; // возвращаем базовый размер
+        SelfTransform.localScale = OriginalScale;
     }
 
     private void EnableEffect(ActiveEffect effect)
     {
         if (effect.EffectInstance != null)
         {
-            effect.EffectInstance.transform.localScale = Vector3.one; // нормализуем
             effect.EffectInstance.Play();
         }
     }
@@ -132,7 +131,7 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
             effect.EffectInstance.transform.localScale = Vector3.zero;
         }
     }
-    
+
     public void RecalculateScale()
     {
         if (!OriginalScaleInitialized && SelfTransform != null)
@@ -148,6 +147,8 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
             product *= e.ScaleMultiplier;
 
         Vector3 targetScale = Vector3.Scale(OriginalScale, new Vector3(product, product, product));
+
+        SelfTransform.DOKill();
 
         SelfTransform.DOScale(targetScale, 0.25f).SetEase(Ease.OutQuad);
     }
