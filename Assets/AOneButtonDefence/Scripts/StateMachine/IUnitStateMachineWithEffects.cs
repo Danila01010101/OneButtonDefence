@@ -18,7 +18,7 @@ namespace AOneButtonDefence.Scripts.StateMachine
         public ParticleSystem EffectInstance { get; set; }
         public Vector3 OriginalScale { get; set; }
         
-        public readonly float ScaleMultiplier = 0.5f;
+        public readonly float ScaleMultiplier = 0.2f;
 
         public ActiveEffect(Building.EffectCastInfo info, IEffectActivator originActivator, ParticleSystem instance)
         {

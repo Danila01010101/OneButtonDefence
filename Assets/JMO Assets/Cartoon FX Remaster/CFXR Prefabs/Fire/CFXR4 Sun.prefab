@@ -4868,7 +4868,7 @@ Transform:
   m_GameObject: {fileID: 1206498299807332555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1206498299248906753}
@@ -6151,9 +6151,9 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 0.7058824}
-        key1: {r: 1, g: 0.80558854, b: 0.305, a: 0.6039216}
-        key2: {r: 0.7372549, g: 0.38244438, b: 0.20784314, a: 1}
+        key0: {r: 1, g: 1, b: 1, a: 0.654902}
+        key1: {r: 1, g: 0.80558854, b: 0.305, a: 0.8980392}
+        key2: {r: 0.7372549, g: 0.38244438, b: 0.20784314, a: 0.5686275}
         key3: {r: 0.1882353, g: 0.10617304, b: 0, a: 1}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -9845,7 +9845,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4627149569080146888
 Transform:
   m_ObjectHideFlags: 0
@@ -9868,13 +9868,13 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7747002053765534775}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.6207441, b: 0.20392156, a: 0.6156863}
-  m_Intensity: 25.254707
-  m_Range: 8
+  m_Intensity: 35.257717
+  m_Range: 1
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
