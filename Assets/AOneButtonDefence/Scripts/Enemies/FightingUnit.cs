@@ -44,7 +44,9 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
 
     protected virtual void Update()
     {
-        if (isDead) return;
+        if (isDead || stateMachine == null)
+            return;
+        
         stateMachine?.Update();
     }
 
@@ -56,7 +58,6 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
         if (isDead) return;
         stateMachine?.OnTriggerEnter(other);
     }
@@ -108,6 +109,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
         deathAnimation.StartAnimation();
         materialChanger.ChangeMaterialColour(render, characterStats.EndColor, characterStats.StartColor, 0.5f, characterStats.Delay);
         stateMachine?.Exit();
+        stateMachine = null;
 
         if (audioSource != null && audioSource.clip != null)
         {

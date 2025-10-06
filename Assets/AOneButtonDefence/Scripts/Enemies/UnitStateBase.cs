@@ -34,25 +34,16 @@ public abstract class UnitStateBase : IState
         if (!other.TryGetComponent<IEffectActivator>(out var activator)) return;
         Building.EffectCastInfo info = activator.GetEffectInfo();
 
-        if (!machine.OriginalScaleInitialized)
-        {
-            machine.OriginalScale = SelfTransform.localScale;
-            machine.OriginalScaleInitialized = true;
-        }
-
-        float multiplier = CalculateScaleMultiplier(info);
-
         var prefab = info.BuffResource?.Resource?.ResourceEffect;
         ActiveEffect activeEffect = null;
         if (prefab != null)
         {
             var instance = Object.Instantiate(prefab, SelfTransform);
             instance.transform.localPosition = Vector3.zero;
-            activeEffect = new ActiveEffect(info, activator, multiplier, instance);
+            activeEffect = new ActiveEffect(info, activator, instance);
         }
 
         machine.AddEffect(activeEffect);
-        machine.RecalculateScale();
     }
 
     public virtual void OnTriggerExit(Collider other)
@@ -65,27 +56,6 @@ public abstract class UnitStateBase : IState
         var existing = machine.CurrentEffects.FirstOrDefault(e => ReferenceEquals(e.OriginActivator, activator));
         if (existing == null) return;
 
-        if (existing.EffectInstance != null)
-            Object.Destroy(existing.EffectInstance.gameObject);
-
         machine.RemoveEffect(existing);
-        machine.RecalculateScale();
-    }
-
-    protected virtual float CalculateScaleMultiplier(Building.EffectCastInfo info)
-    {
-        if (info == null || info.BuffResource == null) return 1f;
-        return 1f + info.BuffResource.Amount * ScalePercentPerResourceAmount;
-    }
-
-    private void RecalculateScale(IUnitStateMachineWithEffects machine)
-    {
-        if (!machine.OriginalScaleInitialized) return;
-
-        float product = 1f;
-        foreach (var e in machine.CurrentEffects)
-            product *= e.ScaleMultiplier;
-
-        SelfTransform.localScale = Vector3.Scale(machine.OriginalScale, new Vector3(product, product, product));
     }
 }

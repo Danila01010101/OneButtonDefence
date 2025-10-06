@@ -128,11 +128,10 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
         if (effect.EffectInstance != null)
         {
             effect.EffectInstance.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            effect.EffectInstance.transform.localScale = Vector3.zero;
         }
     }
 
-    public void RecalculateScale()
+    private void RecalculateScale()
     {
         if (!OriginalScaleInitialized && SelfTransform != null)
         {
@@ -144,7 +143,10 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
 
         float product = 1f;
         foreach (var e in CurrentEffects)
-            product *= e.ScaleMultiplier;
+            product += e.ScaleMultiplier;
+        
+        foreach (var effect in CurrentEffects)
+            effect.ApplyScale();
 
         Vector3 targetScale = Vector3.Scale(OriginalScale, new Vector3(product, product, product));
 

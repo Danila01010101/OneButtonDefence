@@ -44,11 +44,6 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
 
     public override void Enter()
     {
-        if (agent == null)
-        {
-            Debug.Log("Unit has no agent, exiting follow state");
-            Exit();
-        }
         animation.StartAnimation();
         detector.NewEnemiesDetected += CheckIfTargetChanged;
         selfDamageable.DamageRecieved += OnDamageReceived;

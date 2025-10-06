@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class IdleWarriorState : IState
+public class IdleWarriorState : UnitStateBase, IState
 {
 	private WalkingAnimation walkingAnimation;
 	private NavMeshAgent agent;
 	private IStateChanger stateMachine;
 	private Vector3 startPosition;
 
-	public IdleWarriorState(IStateChanger stateChanger, Vector3 startPosition, WalkingAnimation walkingAnimation, NavMeshAgent agent)
+	public IdleWarriorState(IStateChanger stateChanger, Vector3 startPosition, WalkingAnimation walkingAnimation, NavMeshAgent agent) : 
+		base(stateChanger, agent.transform, true)
 	{
         stateMachine = stateChanger;
 		this.agent = agent;

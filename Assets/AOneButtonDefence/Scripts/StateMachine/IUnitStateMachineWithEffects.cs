@@ -5,14 +5,10 @@ namespace AOneButtonDefence.Scripts.StateMachine
 {
     public interface IUnitStateMachineWithEffects : IStateChanger
     {
-        bool OriginalScaleInitialized { get; set; }
-        Vector3 OriginalScale { get; set; }
         List<ActiveEffect> CurrentEffects { get; }
 
         void AddEffect(ActiveEffect effect);
         void RemoveEffect(ActiveEffect effect);
-
-        void RecalculateScale();
     }
     
     public class ActiveEffect
@@ -20,14 +16,14 @@ namespace AOneButtonDefence.Scripts.StateMachine
         public Building.EffectCastInfo Info { get; }
         public IEffectActivator OriginActivator { get; }
         public ParticleSystem EffectInstance { get; set; }
-        public float ScaleMultiplier { get; }
         public Vector3 OriginalScale { get; set; }
+        
+        public readonly float ScaleMultiplier = 0.5f;
 
-        public ActiveEffect(Building.EffectCastInfo info, IEffectActivator originActivator, float scaleMultiplier, ParticleSystem instance)
+        public ActiveEffect(Building.EffectCastInfo info, IEffectActivator originActivator, ParticleSystem instance)
         {
             Info = info;
             OriginActivator = originActivator;
-            ScaleMultiplier = scaleMultiplier;
             EffectInstance = instance;
 
             if (EffectInstance != null)
@@ -40,7 +36,7 @@ namespace AOneButtonDefence.Scripts.StateMachine
         public void ApplyScale()
         {
             if (EffectInstance != null)
-                EffectInstance.transform.localScale = OriginalScale * ScaleMultiplier;
+                EffectInstance.transform.localScale = OriginalScale * ScaleMultiplier * Info.BuffResource.Amount;
         }
 
         public void Enable()
