@@ -65,8 +65,13 @@ public class DialogueSystem : MonoBehaviour
         if (Input.GetKeyUp(KeyCodePerSkip))
         {
             Slider.value = 0;
-            StopCoroutine(skipReplica);
+            if (skipReplica != null)
+            {
+                StopCoroutine(skipReplica);
+                skipReplica = null;
+            }
         }
+
     }
 
     public void StartDialog()
