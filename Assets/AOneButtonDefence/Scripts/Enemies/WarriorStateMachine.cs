@@ -48,6 +48,7 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
         CurrentEffects = new List<ActiveEffect>();
         SelfTransform = data.SelfTransform;
         OriginalScale = SelfTransform.localScale;
+        scaleTween = null;
         ChangeState<TargetSearchState>();
     }
 
@@ -73,30 +74,47 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
     public Vector3 OriginalScale { get; set; }
     public Transform SelfTransform { get; private set; }
 
+    private Tween scaleTween;
+
+    public override void Exit()
+    {
+        if (scaleTween != null) scaleTween.Kill();
+        SelfTransform.DOKill();
+        base.Exit();
+    }
+
     public void AddEffect(ActiveEffect effect)
     {
-        if (effect == null) return;
-        if (!CurrentEffects.Contains(effect))
-        {
-            CurrentEffects.Add(effect);
-            EnableEffect(effect);
-            RecalculateScale();
-        }
+        if (effect == null || effect.EffectInstance == null)
+            return;
+
+        bool alreadyHas = CurrentEffects.Exists(e =>
+            e == effect || e.EffectInstance == effect.EffectInstance);
+
+        if (alreadyHas)
+            return;
+
+        CurrentEffects.Add(effect);
+        EnableEffect(effect);
+        RecalculateScale();
     }
 
     public void RemoveEffect(ActiveEffect effect)
     {
         if (effect == null) return;
-        if (CurrentEffects.Contains(effect))
-        {
-            DisableEffect(effect);
-            CurrentEffects.Remove(effect);
 
-            if (effect.EffectInstance != null)
-                GameObject.Destroy(effect.EffectInstance.gameObject);
+        var existing = CurrentEffects.Find(e =>
+            e == effect || e.EffectInstance == effect.EffectInstance);
 
-            RecalculateScale();
-        }
+        if (existing == null) return;
+
+        DisableEffect(existing);
+        CurrentEffects.Remove(existing);
+
+        if (existing.EffectInstance != null)
+            GameObject.Destroy(existing.EffectInstance.gameObject);
+
+        RecalculateScale();
     }
 
     public void EnableEffects()
@@ -112,6 +130,9 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
         foreach (var effect in CurrentEffects)
             DisableEffect(effect);
 
+        CurrentEffects.Clear();
+
+        if (scaleTween != null) scaleTween.Kill();
         SelfTransform.localScale = OriginalScale;
     }
 
@@ -133,22 +154,17 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
 
     private void RecalculateScale()
     {
-        float product = 0f;
+        float totalMultiplier = 0f;
         foreach (var e in CurrentEffects)
-            product += e.ScaleMultiplier;
-        
+            totalMultiplier += e.ScaleMultiplier;
+
         foreach (var effect in CurrentEffects)
             effect.ApplyScale();
 
-        Vector3 targetScale = OriginalScale + new Vector3(product, product, product);
+        Vector3 targetScale = OriginalScale + Vector3.one * totalMultiplier;
 
-        SelfTransform.DOKill();
+        if (scaleTween != null && scaleTween.IsActive()) scaleTween.Kill();
 
-        SelfTransform.DOScale(targetScale, 0.25f).SetEase(Ease.OutQuad);
-
-        if (targetScale == Vector3.zero)
-        {
-            int a = 1 + 1;
-        }
+        scaleTween = SelfTransform.DOScale(targetScale, 0.25f).SetEase(Ease.OutQuad).SetLink(SelfTransform.gameObject);
     }
 }
