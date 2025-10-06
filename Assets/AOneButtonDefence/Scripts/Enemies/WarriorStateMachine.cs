@@ -47,6 +47,7 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
 
         CurrentEffects = new List<ActiveEffect>();
         SelfTransform = data.SelfTransform;
+        OriginalScale = SelfTransform.localScale;
         ChangeState<TargetSearchState>();
     }
 
@@ -70,7 +71,6 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
 
     public List<ActiveEffect> CurrentEffects { get; private set; }
     public Vector3 OriginalScale { get; set; }
-    public bool OriginalScaleInitialized { get; set; }
     public Transform SelfTransform { get; private set; }
 
     public void AddEffect(ActiveEffect effect)
@@ -133,25 +133,22 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
 
     private void RecalculateScale()
     {
-        if (!OriginalScaleInitialized && SelfTransform != null)
-        {
-            OriginalScale = SelfTransform.localScale;
-            OriginalScaleInitialized = true;
-        }
-
-        if (!OriginalScaleInitialized) return;
-
-        float product = 1f;
+        float product = 0f;
         foreach (var e in CurrentEffects)
             product += e.ScaleMultiplier;
         
         foreach (var effect in CurrentEffects)
             effect.ApplyScale();
 
-        Vector3 targetScale = Vector3.Scale(OriginalScale, new Vector3(product, product, product));
+        Vector3 targetScale = OriginalScale + new Vector3(product, product, product);
 
         SelfTransform.DOKill();
 
         SelfTransform.DOScale(targetScale, 0.25f).SetEase(Ease.OutQuad);
+
+        if (targetScale == Vector3.zero)
+        {
+            int a = 1 + 1;
+        }
     }
 }
