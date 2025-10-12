@@ -21,6 +21,8 @@ public class SkinPanel : MonoBehaviour
     public TMP_Text SkinLore;
     public TMP_Text SkinCost;
     public TMP_Text BuyButtonText;
+    public TMP_Text RewardButtonText;
+    public Button RewardButton;
     public Image CurrentSkinSprite;
     public Image NextSkinSprite;
     public Image PrevSkinSprite;
@@ -37,6 +39,7 @@ public class SkinPanel : MonoBehaviour
 
     public static ClosableWindow CurrentShopWindow { get; private set; }
 
+    private bool firstRewardTaken;
     private ShopSkinShower spawnedShopSkinShower;
     private SkinsSave saveData;
     private const string SaveFileName = "skins_save.json";
@@ -191,20 +194,45 @@ public class SkinPanel : MonoBehaviour
 
         if (unlocked)
         {
+            if (RewardButtonText != null)
+            {
+                if (firstRewardTaken == false && CurrentChose == ChosenSkin)
+                {
+                    RewardButtonText.text = "Этот облик уже доступен";
+                }
+                else
+                {
+                    RewardButtonText.text = "Получить 150 кристаллов за рекламу";
+                }
+            }
+                
             if (BuyButtonText != null)
                 BuyButtonText.text = (CurrentChose == ChosenSkin) ? "Выбрано" : "Применить";
             if (SkinCost != null) SkinCost.text = "";
         }
         else
         {
-            if (SkinCost != null) SkinCost.text = "стоит " + skin.Cost + " алмазов";
+            int gems = GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.Gem);
+            RewardButtonText.text = firstRewardTaken ? "Получить 150 кристаллов за рекламу" : "Получить без кристаллов!\n (Просмотр рекламы)";
+            
+            if (SkinCost != null) SkinCost.text = gems > skin.Cost ?  "" : "Не хватает " + (skin.Cost - gems) + " алмазов";
             if (BuyButtonText != null) BuyButtonText.text = "купить";
         }
     }
+    
+    private void DetectFirstRewardTaken() => firstRewardTaken = true;
 
-    private void OnEnable() => EnablePanel();
+    private void OnEnable()
+    {
+        RewardGemsActivator.FirstRewardActivated += DetectFirstRewardTaken;
+        EnablePanel();
+    }
 
-    private void OnDisable() => DisablePanel();
+    private void OnDisable()
+    {
+        RewardGemsActivator.FirstRewardActivated -= DetectFirstRewardTaken;
+        DisablePanel();
+    }
 
     private void OnDestroy()
     {
