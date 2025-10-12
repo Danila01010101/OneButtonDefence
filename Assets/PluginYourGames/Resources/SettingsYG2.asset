@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: SettingsYG2
   m_EditorClassIdentifier: 
   Basic:
-    platform: {fileID: 0}
+    platform: {fileID: 11400000, guid: c2a303d33a9fd394bae4c4b88b9a1c44, type: 2}
     autoApplySettings: 1
     autoPauseGame: 1
     editEventSystem: 1
     autoGRA: 1
     logInEditor: 1
-    archivingBuild: 1
+    archivingBuild: 0
     syncInitSDK: 0
     loadSceneIfSDKLate: 0
     loadSceneIndex: 0
