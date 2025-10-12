@@ -121,6 +121,11 @@ public class GameInitializer : MonoBehaviour
         GameplayCanvas upgradeCanvas = null;
         GameObject spellCanvasObj = null;
         BattleNotifier battleNotifier = null;
+        
+#if UNITY_WEBGL
+        var yourGamesIntegration = new GnomesYGIntegration();
+        disposables.Add(yourGamesIntegration);
+#endif
 
         ParentObjectsInitializer parentInit = new ParentObjectsInitializer(transform);
         yield return SafeStep("ParentObjectsInitializer", () => parentInit.Initialize(), () =>

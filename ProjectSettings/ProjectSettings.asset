@@ -859,22 +859,22 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2
+    Android: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;InterstitialAdv_yg
     EmbeddedLinux: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2
     GameCoreScarlett: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2
     GameCoreXboxOne: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2
-    LinuxHeadlessSimulation: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2
-    Nintendo Switch: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2
-    PS4: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2
-    PS5: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2
+    LinuxHeadlessSimulation: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;InterstitialAdv_yg
+    Nintendo Switch: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;InterstitialAdv_yg
+    PS4: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;InterstitialAdv_yg
+    PS5: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;InterstitialAdv_yg
     QNX: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2
     Stadia: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2
-    Standalone: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg
-    WebGL: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg
-    Windows Store Apps: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2
-    XboxOne: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2
-    iPhone: DOTWEEN;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2
-    tvOS: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2
+    Standalone: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg;InterstitialAdv_yg
+    WebGL: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg;InterstitialAdv_yg
+    Windows Store Apps: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;InterstitialAdv_yg
+    XboxOne: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;InterstitialAdv_yg
+    iPhone: DOTWEEN;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;InterstitialAdv_yg
+    tvOS: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;InterstitialAdv_yg
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
