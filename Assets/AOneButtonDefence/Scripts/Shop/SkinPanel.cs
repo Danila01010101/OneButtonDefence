@@ -202,7 +202,7 @@ public class SkinPanel : MonoBehaviour
                 }
                 else
                 {
-                    RewardButtonText.text = "Получить 150 кристаллов за рекламу";
+                    RewardButtonText.text = "Получить 25 кристаллов за рекламу";
                 }
             }
                 
@@ -213,7 +213,7 @@ public class SkinPanel : MonoBehaviour
         else
         {
             int gems = GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.Gem);
-            RewardButtonText.text = firstRewardTaken ? "Получить 150 кристаллов за рекламу" : "Получить без кристаллов!\n (Просмотр рекламы)";
+            RewardButtonText.text = firstRewardTaken ? "Получить 25 кристаллов за рекламу" : "Получить без кристаллов!\n (Просмотр рекламы)";
             
             if (SkinCost != null) SkinCost.text = gems > skin.Cost ?  "" : "Не хватает " + (skin.Cost - gems) + " алмазов";
             if (BuyButtonText != null) BuyButtonText.text = "купить";
