@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee0ec7ec97224fa4284c6644fe1e2569, type: 3}
+  m_Name: BaseSkin
+  m_EditorClassIdentifier: 
+  Mesh: {fileID: -2432090755550338912, guid: 0653a931a83397c42b156288f82dbf44, type: 3}
+  Material: {fileID: 2100000, guid: 69a342d2231d0ec4bb8c032e00180359, type: 2}
+  DeathSound: {fileID: 8300000, guid: 460092be8e083c24d84da62779389368, type: 3}
+  UnlockMusic: {fileID: 8300000, guid: 41af26ddc361322429891b077adbf071, type: 3}
+  Icon: {fileID: 958641318, guid: 722c7c4f9a32da448ac411d971e435a8, type: 3}
+  Cost: 0
+  SkinName: "\u0413\u043D\u043E\u043C"
+  SkinLore: "\u0417\u043E\u043B\u043E\u0442\u043E! \u041D\u0443\u0436\u043D\u043E
+    \u0431\u043E\u043B\u044C\u0448\u0435 \u0437\u043E\u043B\u043E\u0442\u0430!\n\u0410,
+    \u0447\u0442\u043E? \u041F\u043E\u0447\u0435\u043C\u0443 \u043E\u043D \u0437\u0435\u043B\u0435\u043D\u044B\u0439?
+    \u041D\u0443, \u0441\u043A\u0430\u0436\u0438\u043C \u0447\u0442\u043E \u044D\u0442\u043E
+    \u043D\u0435 \u0431\u0430\u0433, \u0430 \u0444\u0438\u0447\u0430!"
+  Unlocked: 1

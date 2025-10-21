@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd5889ea615b9ec4fae436a7b9ca102e, type: 3}
+  m_Name: Poison
+  m_EditorClassIdentifier: 
+  time: 20
+  timePerDamage: 1
+  damage: 20
+  baseMagicCircle: {fileID: 544068497971431647, guid: 77a593e24f4d2e440bf31c2ee3b5b88d, type: 3}
+  iconForUI: {fileID: -1019100004, guid: 42d0bd423fc50354e84d64ac783a4cd1, type: 3}
+  background: {fileID: 21300000, guid: fe80c36164e0d244c9bedc02ba0b2e54, type: 3}
+  miniIcon: {fileID: 21300000, guid: 9cf83a33e9a4ecd4781b7f1b6d4a229b, type: 3}
+  mainColor: {r: 0.43720308, g: 0.18045564, b: 0.6981132, a: 1}
+  secondaryColor: {r: 0.65450424, g: 0.33990744, b: 0.8301887, a: 1}
+  effectParticles: {fileID: 0}
+  fineTuning: 0
+  circleColor: {r: 0.43529412, g: 0.18039216, b: 0.69803923, a: 1}
+  sidesColor: {r: 0.654902, g: 0.34117648, b: 0.83137256, a: 1}
+  lightColor: {r: 0.654902, g: 0.34117648, b: 0.83137256, a: 1}
+  sparksColor: {r: 0.43529412, g: 0.18039216, b: 0.69803923, a: 1}
+  flakesColor: {r: 0.654902, g: 0.34117648, b: 0.83137256, a: 1}

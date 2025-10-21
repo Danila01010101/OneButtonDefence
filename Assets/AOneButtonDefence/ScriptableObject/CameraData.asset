@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8839f9aa92ee6e44db41b619c60b7d2b, type: 3}
+  m_Name: CameraData
+  m_EditorClassIdentifier: 
+  <StartCameraTargetPosition>k__BackingField: {x: 156.8828, y: 1, z: 155.74223}
+  <DialogCameraPrefab>k__BackingField: {fileID: 4628187216870136747, guid: 9d5b8bbf672665043a78c246f712a482, type: 3}
+  <DialogCameraPosition>k__BackingField: {x: 151.57, y: 10.02, z: 162.89}
+  <DialogCameraEulerAngles>k__BackingField: {x: 49.99998, y: 144.81525, z: -0.0000013282353}
+  <MinimumCameraDistance>k__BackingField: 3
+  <MaximumCameraDistance>k__BackingField: 10
+  <CameraMovementSpeed>k__BackingField: 0.35
+  <CameraRotateSpeed>k__BackingField: 100
+  <CameraRotationSmooth>k__BackingField: 20
+  <MinimumXAngle>k__BackingField: 5
+  <MaximumXAngle>k__BackingField: 75
+  <CameraZoomSpeed>k__BackingField: 10

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee0ec7ec97224fa4284c6644fe1e2569, type: 3}
+  m_Name: TunTunSahur
+  m_EditorClassIdentifier: 
+  Mesh: {fileID: -2432090755550338912, guid: 3d348aa04b1c12b499cab472ba138bb8, type: 3}
+  Material: {fileID: 2100000, guid: 69a342d2231d0ec4bb8c032e00180359, type: 2}
+  DeathSound: {fileID: 8300000, guid: ad1ed7de3f9f0fc4593fc3200d728529, type: 3}
+  UnlockMusic: {fileID: 8300000, guid: 84350858de3d94f45bd8c43a71f566ed, type: 3}
+  Icon: {fileID: 2134172381, guid: 43124476387dcd34c87aecb1ee64c847, type: 3}
+  Cost: 90
+  SkinName: "\u0422\u0443\u043D \u0442\u0443\u043D \u0421\u0430\u0445\u0443\u0440"
+  SkinLore: 
+  Unlocked: 0

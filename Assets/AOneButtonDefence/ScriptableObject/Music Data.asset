@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 056d0604181917d4a84251a73d05323f, type: 3}
+  m_Name: Music Data
+  m_EditorClassIdentifier: 
+  <StartValue>k__BackingField: 0.25
+  <LoadingSound>k__BackingField: {fileID: 8300000, guid: 48fda7944ce7b6349a54d8aaaf1256f6, type: 3}
+  <StartDialogueMusic>k__BackingField: {fileID: 8300000, guid: 52b8f78070ff5bc46877cd6306ef9f60, type: 3}
+  <BattleMusic>k__BackingField: {fileID: 8300000, guid: a5b726661d1fd3847898579d0f432f8e, type: 3}
+  <BattleWinSoundEffect>k__BackingField: {fileID: 8300000, guid: a6ad613b48a3252498255c595a118707, type: 3}
+  <BattleLostSoundEffect>k__BackingField: {fileID: 8300000, guid: 460092be8e083c24d84da62779389368, type: 3}
+  <UpgradeMusic>k__BackingField: {fileID: 8300000, guid: 78098e2d2cc99864e90dc35d048f8946, type: 3}
+  <WarriorBuffSoundEffect>k__BackingField: {fileID: 8300000, guid: c15b104ca21820249b47b2fe5f5de554, type: 3}
+  <UpgradeFactorySoundEffect>k__BackingField: {fileID: 8300000, guid: 95f5f00d6e23b194f9303ae5b29215cd, type: 3}
+  <UpgradeChurchSoundEffect>k__BackingField: {fileID: 8300000, guid: 95f5f00d6e23b194f9303ae5b29215cd, type: 3}
+  <UpgradeCampSoundEffect>k__BackingField: {fileID: 8300000, guid: c15b104ca21820249b47b2fe5f5de554, type: 3}
+  <UpgradeFarmSoundEffect>k__BackingField: {fileID: 8300000, guid: 95f5f00d6e23b194f9303ae5b29215cd, type: 3}

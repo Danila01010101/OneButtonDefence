@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee0ec7ec97224fa4284c6644fe1e2569, type: 3}
+  m_Name: OhahaSkin
+  m_EditorClassIdentifier: 
+  Mesh: {fileID: -2432090755550338912, guid: c634a749d90b14d4ba8f26ad4bcd744c, type: 3}
+  Material: {fileID: 2100000, guid: 69a342d2231d0ec4bb8c032e00180359, type: 2}
+  DeathSound: {fileID: 8300000, guid: 460092be8e083c24d84da62779389368, type: 3}
+  UnlockMusic: {fileID: 8300000, guid: 41af26ddc361322429891b077adbf071, type: 3}
+  Icon: {fileID: -1327375105, guid: c03170ccc42af7b40af3020f872d71d0, type: 3}
+  Cost: 10
+  SkinName: "\u0413\u043D\u043E\u043C \u0410\u0440\u0438\u0441\u0442\u043E\u043A\u0440\u0430\u0442"
+  SkinLore: "\u0413\u043E\u043B\u044B\u0435 \u043C\u0443\u0436\u0447\u0438\u043D\u044B
+    \u0431\u0435\u0433\u0430\u044E\u0442 \n\u0418 \"\u041E\u0445\u0430\u0445\u0430\u0445\u0438\u0445\u0438\""
+  Unlocked: 0
