@@ -39,6 +39,7 @@ public class GameInitializer : MonoBehaviour
     private IInput input;
     private IDisableableInput disableableInput;
     private GameStateMachine gameStateMachine;
+    private RendererDisabler rendererDisabler;
     private readonly List<IDisposable> disposables = new List<IDisposable>();
 
     private IEnumerator SafeStep(string name, Func<IEnumerator> step, Action onComplete = null)
@@ -149,6 +150,11 @@ public class GameInitializer : MonoBehaviour
         yield return SafeStep("CoroutineStarterInitializer", () => coroutineStarterInit.Initialize());
 
         disposables.Add(SkinChangeDetector.Instance);
+        
+        rendererDisabler = new RendererDisabler();
+        yield return SafeStep("RendererDisabler", () => rendererDisabler.Initialize());
+        
+        disposables.Add(rendererDisabler);
 
         MusicPlayerInitializer musicPlayerInit = new MusicPlayerInitializer(initializedObjectsParent, musicData);
         yield return SafeStep("MusicPlayerInitializer", () => musicPlayerInit.Initialize(), () =>
@@ -359,6 +365,7 @@ public class GameInitializer : MonoBehaviour
 
     private void LateUpdate()
     {
+        try { rendererDisabler?.LateUpdate(); } catch { }
         try { input?.LateUpdate(); } catch { }
     }
 

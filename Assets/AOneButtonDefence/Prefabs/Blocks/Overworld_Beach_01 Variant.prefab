@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 546a27a66330b4c49b1216d6376539e6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -39.99888
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 546a27a66330b4c49b1216d6376539e6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 546a27a66330b4c49b1216d6376539e6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 49.2461
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 546a27a66330b4c49b1216d6376539e6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -59,6 +59,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 546a27a66330b4c49b1216d6376539e6, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 546a27a66330b4c49b1216d6376539e6, type: 3}
+      propertyPath: m_TagString
+      value: RenderDisableable
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 546a27a66330b4c49b1216d6376539e6, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -126,3 +130,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf01eedf573660498e24c49912d413e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourceData: {fileID: 0}

@@ -9,6 +9,7 @@ TagManager:
   - Gnome
   - InfoPanel
   - FxTemporaire
+  - RenderDisableable
   layers:
   - Default
   - TransparentFX
