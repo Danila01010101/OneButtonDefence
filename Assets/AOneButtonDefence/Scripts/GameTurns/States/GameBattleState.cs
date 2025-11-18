@@ -40,8 +40,8 @@ public class GameBattleState : IState
             ? data.WavesParameters.waves[0].enemiesToGenerate 
             : new List<BattleWavesParameters.EnemyGenerationData>();
         
-#if UNITY_WEBGL
-runtimeWavesParameters = WaveGenerator.GenerateWaves(data.WavesParameters, 100);
+#if UNITY_WEBGL 
+runtimeWavesParameters = WaveGenerator.GenerateWaves(data.WavesParameters, 100).Result;
 #else
         AsyncHelper.Instance.RunAsyncWithResult(
             () => WaveGenerator.GenerateWaves(data.WavesParameters, 100),
