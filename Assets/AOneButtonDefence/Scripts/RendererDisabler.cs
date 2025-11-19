@@ -8,12 +8,13 @@ public class RendererDisabler : IDisposable
     private readonly List<Renderer> renderers = new List<Renderer>();
     private Camera mainCamera;
     private bool isActivated = false;
-    private float margin = 0.4f;
+    private float nearDistanceMargin = 8f;
+    private float margin = 6f;
     private float renderDistance = 75f;
 
     private List<Renderer> nearbyRenderers = new List<Renderer>();
     private float updateNearbyInterval = 0.5f;
-    private float lastNearbyUpdateTime = 0f;
+    private float lastNearbyUpdateTime = 0.3f;
 
     public IEnumerator Initialize()
     {
@@ -93,7 +94,7 @@ public class RendererDisabler : IDisposable
     {
         Vector3 p = mainCamera.WorldToViewportPoint(r.bounds.center);
 
-        if (p.z < 0f) return false;
+        if (p.z < -nearDistanceMargin) return false;
 
         return p.x >= -margin && p.x <= 1f + margin &&
                p.y >= -margin && p.y <= 1f + margin;
