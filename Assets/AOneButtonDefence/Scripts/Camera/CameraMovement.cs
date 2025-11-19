@@ -11,6 +11,7 @@ public class CameraMovement : MonoBehaviour
 
     private CinemachineVirtualCamera virtualCamera;
     private IInput input;
+    private float maxRotationSpeed;
     private float currentDistance;
     private float currentX;
     private float currentY;
@@ -31,6 +32,7 @@ public class CameraMovement : MonoBehaviour
 
         currentDistance = data.MaximumCameraDistance;
         target.position = data.StartCameraTargetPosition;
+        maxRotationSpeed = data.CameraRotateSpeed;
 
         Vector3 angles = transform.eulerAngles;
         currentX = angles.x;
@@ -78,8 +80,14 @@ public class CameraMovement : MonoBehaviour
 
         direction *= data.CameraRotateSpeed;
         direction.y = -direction.y;
-        currentY += direction.x;
-        currentX = Mathf.Clamp(currentX + direction.y, data.MinimumXAngle, data.MaximumXAngle);
+
+        float maxDelta = data.MaxRotationSpeed * Time.deltaTime;
+
+        float deltaY = Mathf.Clamp(direction.x, -maxDelta, maxDelta);
+        float deltaX = Mathf.Clamp(direction.y, -maxDelta, maxDelta);
+
+        currentY += deltaY;
+        currentX = Mathf.Clamp(currentX + deltaX, data.MinimumXAngle, data.MaximumXAngle);
     }
 
     private void MoveCamera(Vector3 moveDirection)
