@@ -6,15 +6,16 @@ using UnityEngine;
 public class RendererDisabler : IDisposable
 {
     private readonly List<Renderer> renderers = new List<Renderer>();
+    private readonly List<Renderer> nearbyRenderers = new List<Renderer>();
+
     private Camera mainCamera;
     private bool isActivated = false;
-    private float nearDistanceMargin = 8f;
-    private float margin = 6f;
-    private float renderDistance = 75f;
 
-    private List<Renderer> nearbyRenderers = new List<Renderer>();
-    private float updateNearbyInterval = 0.5f;
-    private float lastNearbyUpdateTime = 0.3f;
+    private float renderDistance = 75f;
+    private float updateNearbyInterval = 0.4f;
+    private float lastNearbyUpdateTime = -1f;
+
+    private Plane[] cameraPlanes;
 
     public IEnumerator Initialize()
     {
@@ -22,14 +23,14 @@ public class RendererDisabler : IDisposable
         yield break;
     }
 
-    private void StartFindingObjects() => CoroutineStarter.Instance.StartCoroutine(FindObjects());
+    private void StartFindingObjects()
+        => CoroutineStarter.Instance.StartCoroutine(FindObjects());
 
     private IEnumerator FindObjects()
     {
         yield return new WaitForSeconds(0.1f);
 
         mainCamera = Camera.main;
-
         GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("RenderDisableable");
 
         renderers.Clear();
@@ -40,10 +41,7 @@ public class RendererDisabler : IDisposable
         }
 
         foreach (var r in renderers)
-        {
-            if (r != null)
-                r.enabled = false;
-        }
+            if (r != null) r.enabled = false;
 
         isActivated = true;
     }
@@ -53,6 +51,7 @@ public class RendererDisabler : IDisposable
         if (!isActivated || mainCamera == null) return;
 
         Vector3 camPos = mainCamera.transform.position;
+        cameraPlanes = GeometryUtility.CalculateFrustumPlanes(mainCamera);
 
         if (Time.time - lastNearbyUpdateTime > updateNearbyInterval)
         {
@@ -63,17 +62,7 @@ public class RendererDisabler : IDisposable
         foreach (var r in nearbyRenderers)
         {
             if (r == null) continue;
-
-            bool visible = IsVisible(r);
-            r.enabled = visible;
-        }
-
-        foreach (var r in renderers)
-        {
-            if (r == null) continue;
-            float distance = Vector3.Distance(camPos, r.transform.position);
-            if (distance > renderDistance)
-                r.enabled = false;
+            r.enabled = GeometryUtility.TestPlanesAABB(cameraPlanes, r.bounds);
         }
     }
 
@@ -84,20 +73,13 @@ public class RendererDisabler : IDisposable
         foreach (var r in renderers)
         {
             if (r == null) continue;
-            float distance = Vector3.Distance(camPos, r.transform.position);
-            if (distance <= renderDistance)
+
+            float d = Vector3.Distance(camPos, r.transform.position);
+            if (d <= renderDistance)
                 nearbyRenderers.Add(r);
+            else
+                r.enabled = false;
         }
-    }
-
-    private bool IsVisible(Renderer r)
-    {
-        Vector3 p = mainCamera.WorldToViewportPoint(r.bounds.center);
-
-        if (p.z < -nearDistanceMargin) return false;
-
-        return p.x >= -margin && p.x <= 1f + margin &&
-               p.y >= -margin && p.y <= 1f + margin;
     }
 
     public void Dispose()
@@ -105,5 +87,6 @@ public class RendererDisabler : IDisposable
         GameInitializer.GameInitialized -= StartFindingObjects;
     }
 
-    public void SetRenderDistance(float distance) => renderDistance = distance;
+    public void SetRenderDistance(float distance)
+        => renderDistance = distance;
 }
