@@ -31,7 +31,7 @@ public class PlayerHealthbar : MonoBehaviour
         }
 
         this.health = health;
-        SetHealthImmediate(health.Amount, health.Amount);
+        SetHealthImmediate(health.Value, health.Value);
         health.HealthChanged += SetHealth;
 
         if (flashOverlay != null)

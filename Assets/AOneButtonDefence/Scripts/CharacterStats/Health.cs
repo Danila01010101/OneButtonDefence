@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-public class Health
+public class Health : ICharacterStat
 {
-    public float Amount { get; private set; }
+    public float Value { get; private set; }
     
     public Action<Transform> DamagReceivedFromTarget;
     public Action<float, float> HealthChanged;
@@ -13,37 +13,43 @@ public class Health
 
     public Health(float startHealth)
     {
-        Amount = startHealth;
+        Value = startHealth;
         maxHealth = startHealth;
     }
 
-    public void TakeDamage(Transform damagerTransform, int damage)
+    public void TakeDamage(Transform damagerTransform, float damage)
     {
         if (damage < 0)
             throw new ArgumentOutOfRangeException();
 
-        Amount -= damage;
-        HealthChanged?.Invoke(Amount, maxHealth);
+        Value -= damage;
+        HealthChanged?.Invoke(Value, maxHealth);
         DamagReceivedFromTarget?.Invoke(damagerTransform);
 
-        if (Amount <= 0)
+        if (Value <= 0)
             Death?.Invoke();
     }
 
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
         if (amount < 0)
             throw new ArgumentOutOfRangeException();
         
-        if (amount + Amount > maxHealth)
+        if (amount + Value > maxHealth)
         {
-            Amount = maxHealth;
+            Value = maxHealth;
         }        
         else
         {
-            Amount += amount;
+            Value += amount;
         }
         
-        HealthChanged?.Invoke(Amount, maxHealth);
+        HealthChanged?.Invoke(Value, maxHealth);
+    }
+
+    public void Upgrade(float amount)
+    {
+        maxHealth += amount;
+        Heal(amount);
     }
 }

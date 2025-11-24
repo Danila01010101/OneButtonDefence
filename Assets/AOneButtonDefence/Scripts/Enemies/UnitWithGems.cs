@@ -20,7 +20,7 @@ public class UnitWithGems : FightingUnit
     protected override void InitializeStateMachine(IEnemyDetector detector)
     {
         var data = new WarriorStateMachine.WarriorStateMachineData(
-            transform, characterStats, navMeshComponent,
+            transform, statsCounter, characterStats.ChaseRange, characterStats.EnemyLayerMask, navMeshComponent,
             walkingAnimation, fightAnimation, detector, this);
         stateMachine = new EnemyStateMachine(data);
     }

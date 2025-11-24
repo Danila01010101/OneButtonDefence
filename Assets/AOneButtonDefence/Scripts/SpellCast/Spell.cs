@@ -159,7 +159,7 @@ public class Spell : MonoBehaviour, IDamagable
 
     public bool IsAlive() => false;
 
-    public void TakeDamage(IDamagable damagerTransform, int damage) { }
+    public void TakeDamage(IDamagable damagerTransform, float damage) { }
 
     public Transform GetTransform() => transform;
 

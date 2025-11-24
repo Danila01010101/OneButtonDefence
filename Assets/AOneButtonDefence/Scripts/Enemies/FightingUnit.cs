@@ -1,4 +1,5 @@
-using System; 
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
@@ -23,6 +24,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
     protected DeathAnimation deathAnimation;
     protected MaterialChanger materialChanger;
     protected AudioSource audioSource;
+    protected CharacterStatsCounter statsCounter;
 
     private bool isDead;
 
@@ -33,13 +35,23 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
         audioSource = GetComponent<AudioSource>();
         InitializeAnimationComponents();
         navMeshComponent = GetComponent<NavMeshAgent>();
-        health = new Health(characterStats.Health);
+        InitializeStats();
         health.Death += Die;
         InitializeStateMachine(detector);
         materialChanger = new MaterialChanger(this);
         materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration, characterStats.Delay);
         AudioSettings.AddAudioSource(audioSource);
         currentDeathSound = characterStats.DeathSound;
+    }
+
+    protected void InitializeStats()
+    {
+        statsCounter = new CharacterStatsCounter();
+        statsCounter.AddStat(CharacterStats.StatValues.Health, new Health(characterStats.Health));
+        health = statsCounter.GetStat<Health>(CharacterStats.StatValues.Health);
+        statsCounter.AddStat(CharacterStats.StatValues.Damage, new DefaultStat(characterStats.Damage));
+        statsCounter.AddStat(CharacterStats.StatValues.Speed, new DefaultStat(characterStats.Speed));
+        statsCounter.AddStat(CharacterStats.StatValues.AttackDelayRate, new DefaultStat(characterStats.AttackDelay));
     }
 
     protected virtual void Update()
@@ -68,7 +80,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
         stateMachine?.OnTriggerExit(other);
     }
 
-    public virtual void TakeDamage(IDamagable damagerTransform, int damage)
+    public virtual void TakeDamage(IDamagable damagerTransform, float damage)
     {
         if (isDead) return;
         health.TakeDamage(damagerTransform.GetTransform(), damage);
@@ -81,7 +93,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
     
     public string GetName() => gameObject.name;
 
-    public bool IsAlive() => health.Amount > 0;
+    public bool IsAlive() => health.Value > 0;
 
     protected virtual void InitializeAnimationComponents()
     {
@@ -93,7 +105,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
     protected virtual void InitializeStateMachine(IEnemyDetector detector)
     {
         var data = new WarriorStateMachine.WarriorStateMachineData(
-            transform, characterStats, navMeshComponent,
+            transform, statsCounter, characterStats.ChaseRange, characterStats.EnemyLayerMask, navMeshComponent,
             walkingAnimation, fightAnimation, detector, this);
         stateMachine = new WarriorStateMachine(data);
     }

@@ -5,14 +5,11 @@ public class FightState : UnitStateBase, ITargetAttacker
 {
     protected readonly IAttackAnimator Animation;
     protected readonly ISelfDamageable SelfDamageable;
-    protected readonly float AttackDelay;
-    protected readonly int BasicDamage;
-    protected readonly int DamageUpgradeValue;
+    protected readonly CharacterStatsCounter CharacterStatsCounter;
     protected readonly float DefaultDistanceToLoseTarget = 1.2f;
 
-    protected float CalculatedAttackDelay { get; private set; }
-    protected float AttackDelayWithBuff => AttackDelay * Mathf.Pow(0.99f, GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.WarriorSpeed));
-    protected int Damage => BasicDamage + DamageUpgradeValue * GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.StrengthBuff);
+    protected float AttackDelay => CharacterStatsCounter.GetStat(CharacterStats.StatValues.AttackDelayRate);
+    protected float Damage => CharacterStatsCounter.GetStat(CharacterStats.StatValues.Damage);
     protected bool IsTargetSetted;
 
     private IDamagable Target;
@@ -20,17 +17,13 @@ public class FightState : UnitStateBase, ITargetAttacker
 
     public FightState(
         IStateChanger stateChanger,
-        float attackDelay,
-        int damage,
-        int damageUpgradeValue,
+        CharacterStatsCounter statsCounter,
         IAttackAnimator animation,
         ISelfDamageable selfDamageable,
         bool isPlayerControlled)
-        : base(stateChanger, selfDamageable.GetSelfDamagable().GetTransform(), isPlayerControlled)
+        : base(stateChanger, selfDamageable.GetSelfDamagable().GetTransform())
     {
-        AttackDelay = attackDelay;
-        BasicDamage = damage;
-        DamageUpgradeValue = damageUpgradeValue;
+        CharacterStatsCounter = statsCounter;
         Animation = animation;
         SelfDamageable = selfDamageable;
     }
@@ -44,7 +37,6 @@ public class FightState : UnitStateBase, ITargetAttacker
     public override void Enter()
     {
         Animation.CharacterAttacked += Attack;
-        CalculatedAttackDelay = IsPlayerControlled ? AttackDelayWithBuff : AttackDelay;
     }
 
     public override void Exit()
@@ -57,7 +49,7 @@ public class FightState : UnitStateBase, ITargetAttacker
 
     public override void Update()
     {
-        if (LastTimeAttacked + CalculatedAttackDelay >= Time.time)
+        if (LastTimeAttacked + AttackDelay >= Time.time)
             return;
 
         CheckTarget();

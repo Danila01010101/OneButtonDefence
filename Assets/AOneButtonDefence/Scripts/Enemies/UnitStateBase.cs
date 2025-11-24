@@ -6,15 +6,13 @@ public abstract class UnitStateBase : IState
 {
     protected readonly IStateChanger StateMachine;
     protected readonly Transform SelfTransform;
-    protected readonly bool IsPlayerControlled;
 
     protected virtual float ScalePercentPerResourceAmount => 0.1f;
 
-    protected UnitStateBase(IStateChanger stateMachine, Transform selfTransform, bool isPlayerControlled)
+    protected UnitStateBase(IStateChanger stateMachine, Transform selfTransform)
     {
         StateMachine = stateMachine;
         SelfTransform = selfTransform;
-        IsPlayerControlled = isPlayerControlled;
     }
 
     public virtual void Enter() { }
@@ -28,7 +26,7 @@ public abstract class UnitStateBase : IState
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        if (other == null || !IsPlayerControlled) return;
+        if (other == null) return;
         if (!(StateMachine is IUnitStateMachineWithEffects machine)) return;
 
         if (!other.TryGetComponent<IEffectActivator>(out var activator)) return;

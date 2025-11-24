@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,26 +12,22 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
     private readonly IEnemyDetector detector;
     private readonly ISelfDamageable selfDamageable;
     private readonly NavMeshAgent agent;
+    private readonly CharacterStatsCounter statsCounter;
 
     private readonly float defaultChaseRange;
     private float chaseRange;
 
-    protected readonly bool IsPlayerControlled;
-    protected readonly float DefaultSpeed;
-
-    protected float UnitSpeedWithBuff => DefaultSpeed * Mathf.Pow(1.01f, GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.WarriorSpeed));
-
     public TargetFollowingState(
         IStateChanger stateMachine,
         NavMeshAgent agent,
-        CharacterStats stats,
+        CharacterStatsCounter stats,
+        float chaseRange,
         ITargetAttacker targetAttacker,
         LayerMask targetMask,
         WalkingAnimation animation,
         IEnemyDetector detector,
-        ISelfDamageable selfDamageable,
-        bool isPlayerControlled)
-        : base(stateMachine, agent.transform, isPlayerControlled)
+        ISelfDamageable selfDamageable)
+        : base(stateMachine, agent.transform)
     {
         this.targetAttacker = targetAttacker;
         this.targetMask = targetMask;
@@ -37,9 +35,8 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
         this.detector = detector;
         this.agent = agent;
         this.selfDamageable = selfDamageable;
-        this.defaultChaseRange = stats.ChaseRange;
-        this.DefaultSpeed = stats.Speed;
-        this.IsPlayerControlled = isPlayerControlled;
+        defaultChaseRange = chaseRange;
+        statsCounter = stats;
     }
 
     public override void Enter()
@@ -47,7 +44,7 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
         animation.StartAnimation();
         detector.NewEnemiesDetected += CheckIfTargetChanged;
         selfDamageable.DamageRecieved += OnDamageReceived;
-        agent.speed = IsPlayerControlled ? UnitSpeedWithBuff : DefaultSpeed;
+        agent.speed = statsCounter.GetStat(CharacterStats.StatValues.Speed);
     }
 
     public override void Exit()
@@ -79,6 +76,18 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
                 StateMachine.ChangeState<FightState>();
             }
         }
+    }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+        CoroutineStarter.Instance.StartCoroutine(UpdateSpeed());
+    }
+
+    public override void OnTriggerExit(Collider other)
+    {
+        base.OnTriggerExit(other);
+        CoroutineStarter.Instance.StartCoroutine(UpdateSpeed());
     }
 
     public override void Update()
@@ -122,5 +131,11 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
         {
             SetTarget(attacker.GetTransform());
         }
+    }
+
+    private IEnumerator UpdateSpeed()
+    {
+        yield return new WaitForSeconds(0.1f);
+        agent.speed = statsCounter.GetStat(CharacterStats.StatValues.Speed);
     }
 }

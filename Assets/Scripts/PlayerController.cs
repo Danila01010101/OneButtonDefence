@@ -40,9 +40,9 @@ public class PlayerController : MonoBehaviour, IDamagable
         health.Death += NotifyOfPlayerDeath;
     }
 
-    public bool IsAlive() => health.Amount > 0;
+    public bool IsAlive() => health.Value > 0;
 
-    public void TakeDamage(IDamagable damagerTransform, int damage) => health.TakeDamage(damagerTransform.GetTransform(), damage);
+    public void TakeDamage(IDamagable damagerTransform, float damage) => health.TakeDamage(damagerTransform.GetTransform(), damage);
     
     public Transform GetTransform() => transform;
     

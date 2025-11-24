@@ -7,12 +7,12 @@ public class FightWithUltimateState : FightState
 {
     private readonly FightWithUltimateStateData unitWithUltimateData;
     
+    private static CharacterStatsCounter characterStatsCounter;
     private Transform spellsPositionTransform;
     private float LastTimeUltimateUsed;
     
     public FightWithUltimateState(FightWithUltimateStateData unitWithUltimateData) 
-        : base(unitWithUltimateData.StateMachine, unitWithUltimateData.AttackDelay, unitWithUltimateData.Damage, 
-            unitWithUltimateData.DamageUpgradeValue, unitWithUltimateData.Animation, unitWithUltimateData.SelfDamageable, false)
+        : base(unitWithUltimateData.StateMachine, characterStatsCounter, unitWithUltimateData.Animation, unitWithUltimateData.SelfDamageable, false)
     {
         this.unitWithUltimateData = unitWithUltimateData;
         spellsPositionTransform = unitWithUltimateData.Animation.Transform;

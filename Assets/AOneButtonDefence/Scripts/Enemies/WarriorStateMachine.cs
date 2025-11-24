@@ -11,9 +11,7 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
     {
         var fightState = new FightState(
             this,
-            data.CharacterStats.AttackDelay,
-            data.CharacterStats.Damage,
-            data.CharacterStats.DamageUpgradeValue,
+            data.CharacterStatsCounter,
             data.FightAnimation,
             data.SelfDamageable,
             true);
@@ -21,13 +19,13 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
         var targetFollowingState = new TargetFollowingState(
             this,
             data.Agent,
-            data.CharacterStats,
+            data.CharacterStatsCounter,
+            data.EnemyChaseRange,
             fightState,
-            data.CharacterStats.EnemyLayerMask,
+            data.EnemyLayerMask,
             data.WalkingAnimation,
             data.EnemyDetector,
-            data.SelfDamageable,
-            true);
+            data.SelfDamageable);
 
         var targetSearchStateData = new TargetSearchState.TargetSearchStateData(
             this,
@@ -54,11 +52,15 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
 
     public class WarriorStateMachineData : UnitStateMachineDataBaseClass
     {
-        public readonly CharacterStats CharacterStats;
+        public readonly CharacterStatsCounter CharacterStatsCounter;
+        public readonly LayerMask EnemyLayerMask;
+        public readonly float EnemyChaseRange;
         
         public WarriorStateMachineData(
             Transform selfTransform,
-            CharacterStats characterStats,
+            CharacterStatsCounter statsCounterCounter,
+            float enemyChaseRange,
+            LayerMask enemyLayerMask,
             NavMeshAgent agent,
             WalkingAnimation walkingAnimation,
             FightAnimation fightAnimation,
@@ -66,7 +68,9 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
             ISelfDamageable selfDamagable) 
             : base(selfTransform, agent, walkingAnimation, fightAnimation, detector, selfDamagable)
         {
-            CharacterStats = characterStats;
+            EnemyLayerMask = enemyLayerMask;
+            CharacterStatsCounter = statsCounterCounter;
+            EnemyChaseRange = enemyChaseRange;
         }
     }
 

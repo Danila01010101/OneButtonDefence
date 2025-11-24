@@ -9,7 +9,7 @@ public class TargetSearchState : UnitStateBase
     private readonly NavMeshAgent agent;
 
     public TargetSearchState(TargetSearchStateData data, bool isPlayerControlled) 
-        : base(data.StateMachine, data.SelfTransform, isPlayerControlled)
+        : base(data.StateMachine, data.SelfTransform)
     {
         targetFollower = data.TargetFollower;
         detector = data.Detector;

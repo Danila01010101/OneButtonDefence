@@ -9,7 +9,7 @@ public class IdleWarriorState : UnitStateBase, IState
 	private Vector3 startPosition;
 
 	public IdleWarriorState(IStateChanger stateChanger, Vector3 startPosition, WalkingAnimation walkingAnimation, NavMeshAgent agent) : 
-		base(stateChanger, agent.transform, true)
+		base(stateChanger, agent.transform)
 	{
         stateMachine = stateChanger;
 		this.agent = agent;
