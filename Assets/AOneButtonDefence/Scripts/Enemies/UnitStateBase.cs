@@ -7,14 +7,16 @@ public abstract class UnitStateBase : IState
     protected readonly IStateChanger StateMachine;
     protected readonly Transform SelfTransform;
     protected readonly CharacterStatsCounter StatsCounter;
+    protected bool IsControlledByPlayer { get; private set; }
 
     protected virtual float ScalePercentPerResourceAmount => 0.1f;
 
-    protected UnitStateBase(IStateChanger stateMachine, Transform selfTransform, CharacterStatsCounter statsCounter)
+    protected UnitStateBase(IStateChanger stateMachine, Transform selfTransform, CharacterStatsCounter statsCounter, bool isControlledByPlayer)
     {
         StateMachine = stateMachine;
         SelfTransform = selfTransform;
         StatsCounter = statsCounter;
+        IsControlledByPlayer = isControlledByPlayer;
     }
 
     public virtual void Enter() { }
@@ -28,6 +30,9 @@ public abstract class UnitStateBase : IState
 
     public virtual void OnTriggerEnter(Collider other)
     {
+        if (IsControlledByPlayer == false)
+            return;
+        
         if (other == null) return;
         if (!(StateMachine is IUnitStateMachineWithEffects machine)) return;
 
@@ -48,6 +53,9 @@ public abstract class UnitStateBase : IState
 
     public virtual void OnTriggerExit(Collider other)
     {
+        if (IsControlledByPlayer == false)
+            return;
+        
         if (other == null) return;
         if (!(StateMachine is IUnitStateMachineWithEffects machine)) return;
         if (machine.CurrentEffects.Count == 0) return;

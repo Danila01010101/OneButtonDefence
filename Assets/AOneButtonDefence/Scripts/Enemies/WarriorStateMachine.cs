@@ -25,7 +25,8 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
             data.EnemyLayerMask,
             data.WalkingAnimation,
             data.EnemyDetector,
-            data.SelfDamageable);
+            data.SelfDamageable,
+            true);
 
         var targetSearchStateData = new TargetSearchState.TargetSearchStateData(
             this,
@@ -38,7 +39,7 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
         states = new List<IState>()
         {
             new TargetSearchState(targetSearchStateData, true, data.CharacterStatsCounter),
-            new IdleWarriorState(this, data.SelfTransform.position, data.WalkingAnimation, data.Agent, data.CharacterStatsCounter),
+            new IdleWarriorState(this, data.SelfTransform.position, data.WalkingAnimation, data.Agent, data.CharacterStatsCounter, true),
             fightState,
             targetFollowingState
         };
