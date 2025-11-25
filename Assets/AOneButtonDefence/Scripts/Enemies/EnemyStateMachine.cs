@@ -13,8 +13,8 @@ public class EnemyStateMachine : WarriorStateMachine
 
         states = new List<IState>()
         {
-            new CharacterOrAnySearchState(targetSearchStateData, false),
-            new IdleWarriorState(this, data.SelfTransform.position, data.WalkingAnimation, data.Agent),
+            new CharacterOrAnySearchState(targetSearchStateData, false, data.CharacterStatsCounter),
+            new IdleWarriorState(this, data.SelfTransform.position, data.WalkingAnimation, data.Agent, data.CharacterStatsCounter),
             fightState,
             targetFollowingState
         };

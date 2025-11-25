@@ -8,8 +8,8 @@ public class CharacterOrAnySearchState : TargetSearchState
     private readonly Transform transform;
     private readonly IEnemyDetector detector;
 
-    public CharacterOrAnySearchState(TargetSearchStateData data, bool isPlayerControlled) 
-        : base(data, isPlayerControlled)
+    public CharacterOrAnySearchState(TargetSearchStateData data, bool isPlayerControlled, CharacterStatsCounter statsCounter) 
+        : base(data, isPlayerControlled, statsCounter)
     {
         var character = Object.FindObjectOfType<CharacterController>();
         

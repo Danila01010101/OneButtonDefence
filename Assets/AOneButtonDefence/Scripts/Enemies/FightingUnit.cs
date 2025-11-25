@@ -47,11 +47,11 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
     protected void InitializeStats()
     {
         statsCounter = new CharacterStatsCounter();
-        statsCounter.AddStat(CharacterStats.StatValues.Health, new Health(characterStats.Health));
-        health = statsCounter.GetStat<Health>(CharacterStats.StatValues.Health);
-        statsCounter.AddStat(CharacterStats.StatValues.Damage, new DefaultStat(characterStats.Damage));
-        statsCounter.AddStat(CharacterStats.StatValues.Speed, new DefaultStat(characterStats.Speed));
-        statsCounter.AddStat(CharacterStats.StatValues.AttackDelayRate, new DefaultStat(characterStats.AttackDelay));
+        statsCounter.AddStat(ResourceData.ResourceType.WarriorHealth, new Health(characterStats.Health));
+        health = statsCounter.GetStat<Health>(ResourceData.ResourceType.WarriorHealth);
+        statsCounter.AddStat(ResourceData.ResourceType.StrengthBuff, new DefaultStat(characterStats.Damage));
+        statsCounter.AddStat(ResourceData.ResourceType.WarriorSpeed, new DefaultStat(characterStats.Speed));
+        statsCounter.AddStat(ResourceData.ResourceType.WarriorAttackSpeed, new DefaultStat(characterStats.AttackDelay));
     }
 
     protected virtual void Update()

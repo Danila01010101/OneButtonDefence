@@ -1,5 +1,5 @@
 public interface IStatUpgrader
 {
-    void AddStat(CharacterStats.StatValues keyForStat, ICharacterStat stat);
-    void UpgradeStat(CharacterStats.StatValues stat, float value);
+    void AddStat(ResourceData.ResourceType keyForStat, ICharacterStat stat);
+    void UpgradeStat(ResourceData.ResourceType stat, float value);
 }

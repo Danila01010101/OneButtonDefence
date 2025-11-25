@@ -27,7 +27,7 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
         WalkingAnimation animation,
         IEnemyDetector detector,
         ISelfDamageable selfDamageable)
-        : base(stateMachine, agent.transform)
+        : base(stateMachine, agent.transform, stats)
     {
         this.targetAttacker = targetAttacker;
         this.targetMask = targetMask;
@@ -44,7 +44,7 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
         animation.StartAnimation();
         detector.NewEnemiesDetected += CheckIfTargetChanged;
         selfDamageable.DamageRecieved += OnDamageReceived;
-        agent.speed = statsCounter.GetStat(CharacterStats.StatValues.Speed);
+        agent.speed = statsCounter.GetStat(ResourceData.ResourceType.WarriorSpeed);
     }
 
     public override void Exit()
@@ -136,6 +136,6 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
     private IEnumerator UpdateSpeed()
     {
         yield return new WaitForSeconds(0.1f);
-        agent.speed = statsCounter.GetStat(CharacterStats.StatValues.Speed);
+        agent.speed = statsCounter.GetStat(ResourceData.ResourceType.WarriorSpeed);
     }
 }

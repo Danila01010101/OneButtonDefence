@@ -9,7 +9,7 @@ public abstract class UnitStateBase : IState
 
     protected virtual float ScalePercentPerResourceAmount => 0.1f;
 
-    protected UnitStateBase(IStateChanger stateMachine, Transform selfTransform)
+    protected UnitStateBase(IStateChanger stateMachine, Transform selfTransform, CharacterStatsCounter statsCounter)
     {
         StateMachine = stateMachine;
         SelfTransform = selfTransform;

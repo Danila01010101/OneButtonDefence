@@ -8,8 +8,8 @@ public class TargetSearchState : UnitStateBase
     private readonly IEnemyDetector detector;
     private readonly NavMeshAgent agent;
 
-    public TargetSearchState(TargetSearchStateData data, bool isPlayerControlled) 
-        : base(data.StateMachine, data.SelfTransform)
+    public TargetSearchState(TargetSearchStateData data, bool isPlayerControlled, CharacterStatsCounter statsCounter) 
+        : base(data.StateMachine, data.SelfTransform, statsCounter)
     {
         targetFollower = data.TargetFollower;
         detector = data.Detector;

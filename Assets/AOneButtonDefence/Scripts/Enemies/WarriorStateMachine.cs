@@ -37,8 +37,8 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
 
         states = new List<IState>()
         {
-            new TargetSearchState(targetSearchStateData, true),
-            new IdleWarriorState(this, data.SelfTransform.position, data.WalkingAnimation, data.Agent),
+            new TargetSearchState(targetSearchStateData, true, data.CharacterStatsCounter),
+            new IdleWarriorState(this, data.SelfTransform.position, data.WalkingAnimation, data.Agent, data.CharacterStatsCounter),
             fightState,
             targetFollowingState
         };

@@ -8,8 +8,8 @@ public class FightState : UnitStateBase, ITargetAttacker
     protected readonly CharacterStatsCounter CharacterStatsCounter;
     protected readonly float DefaultDistanceToLoseTarget = 1.2f;
 
-    protected float AttackDelay => CharacterStatsCounter.GetStat(CharacterStats.StatValues.AttackDelayRate);
-    protected float Damage => CharacterStatsCounter.GetStat(CharacterStats.StatValues.Damage);
+    protected float AttackDelay => CharacterStatsCounter.GetStat(ResourceData.ResourceType.WarriorAttackSpeed);
+    protected float Damage => CharacterStatsCounter.GetStat(ResourceData.ResourceType.StrengthBuff);
     protected bool IsTargetSetted;
 
     private IDamagable Target;
@@ -21,7 +21,7 @@ public class FightState : UnitStateBase, ITargetAttacker
         IAttackAnimator animation,
         ISelfDamageable selfDamageable,
         bool isPlayerControlled)
-        : base(stateChanger, selfDamageable.GetSelfDamagable().GetTransform())
+        : base(stateChanger, selfDamageable.GetSelfDamagable().GetTransform(), statsCounter)
     {
         CharacterStatsCounter = statsCounter;
         Animation = animation;

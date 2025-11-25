@@ -12,7 +12,7 @@ public class ResourceData : ScriptableObject
 
     public enum ResourceType
     {
-        Food, 
+        Food,
         Warrior,
         Spirit,
         Material,
@@ -23,6 +23,7 @@ public class ResourceData : ScriptableObject
         RangeWarrior,
         HealingTower,
         WarriorSpeed,
+        WarriorAttackSpeed,
         WarriorHealth
     }
 }
