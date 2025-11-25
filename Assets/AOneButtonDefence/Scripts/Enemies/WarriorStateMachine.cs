@@ -144,7 +144,7 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
     {
         if (effect.EffectInstance != null)
         {
-            effect.EffectInstance.Play();
+            effect.Enable();
         }
     }
 
@@ -153,6 +153,7 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
         if (effect.EffectInstance != null)
         {
             effect.EffectInstance.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            effect.Disable();
         }
     }
 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public class CharacterStatsCounter : IStatGetter, IStatUpgrader
+public class CharacterStatsCounter : IStatGetter, IStatChanger
 {
     private Dictionary<ResourceData.ResourceType, ICharacterStat> stats = new Dictionary<ResourceData.ResourceType, ICharacterStat>();
 
@@ -16,8 +17,7 @@ public class CharacterStatsCounter : IStatGetter, IStatUpgrader
         return stats[key] as T;
     }
 
-
-    public void UpgradeStat(ResourceData.ResourceType stat, float value)
+    public void ChangeStat(ResourceData.ResourceType stat, float value)
     {
         stats[stat].Upgrade(value);
     }

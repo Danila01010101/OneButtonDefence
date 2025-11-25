@@ -16,15 +16,17 @@ namespace AOneButtonDefence.Scripts.StateMachine
         public Building.EffectCastInfo Info { get; }
         public IEffectActivator OriginActivator { get; }
         public ParticleSystem EffectInstance { get; set; }
+        public CharacterStatsCounter StatsToChange { get; }
         public Vector3 OriginalScale { get; set; }
         
         public readonly float ScaleMultiplier = 0.2f;
 
-        public ActiveEffect(Building.EffectCastInfo info, IEffectActivator originActivator, ParticleSystem instance)
+        public ActiveEffect(Building.EffectCastInfo info, IEffectActivator originActivator, ParticleSystem instance, CharacterStatsCounter statsToChange)
         {
             Info = info;
             OriginActivator = originActivator;
             EffectInstance = instance;
+            StatsToChange = statsToChange;
 
             if (EffectInstance != null)
             {
@@ -43,6 +45,7 @@ namespace AOneButtonDefence.Scripts.StateMachine
         {
             if (EffectInstance != null)
             {
+                StatsToChange.ChangeStat(Info.BuffResource.Resource.Type, Info.BuffResource.Amount);
                 ApplyScale();
                 EffectInstance.Play();
             }
@@ -54,6 +57,7 @@ namespace AOneButtonDefence.Scripts.StateMachine
             {
                 EffectInstance.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 EffectInstance.transform.localScale = Vector3.zero;
+                StatsToChange.ChangeStat(Info.BuffResource.Resource.Type, -Info.BuffResource.Amount);
             }
         }
 

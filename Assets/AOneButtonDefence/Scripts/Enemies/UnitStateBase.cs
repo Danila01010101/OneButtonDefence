@@ -6,6 +6,7 @@ public abstract class UnitStateBase : IState
 {
     protected readonly IStateChanger StateMachine;
     protected readonly Transform SelfTransform;
+    protected readonly CharacterStatsCounter StatsCounter;
 
     protected virtual float ScalePercentPerResourceAmount => 0.1f;
 
@@ -13,6 +14,7 @@ public abstract class UnitStateBase : IState
     {
         StateMachine = stateMachine;
         SelfTransform = selfTransform;
+        StatsCounter = statsCounter;
     }
 
     public virtual void Enter() { }
@@ -38,7 +40,7 @@ public abstract class UnitStateBase : IState
         {
             var instance = Object.Instantiate(prefab, SelfTransform);
             instance.transform.localPosition = Vector3.zero;
-            activeEffect = new ActiveEffect(info, activator, instance);
+            activeEffect = new ActiveEffect(info, activator, instance, StatsCounter);
         }
 
         machine.AddEffect(activeEffect);
