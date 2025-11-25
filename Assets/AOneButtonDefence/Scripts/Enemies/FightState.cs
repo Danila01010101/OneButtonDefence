@@ -61,8 +61,6 @@ public class FightState : UnitStateBase, ITargetAttacker
     {
         if (Target == null) return;
         Target.TakeDamage(SelfDamageable.GetSelfDamagable(), Damage);
-        
-        Debug.Log(SelfDamageable.GetSelfDamagable().GetName() + " attacked by dmg " + Damage);
     }
 
     private void CheckTarget()
