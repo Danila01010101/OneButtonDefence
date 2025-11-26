@@ -19,6 +19,7 @@ public class CharacterStatsCounter : IStatGetter, IStatChanger
 
     public void ChangeStat(ResourceData.ResourceType stat, float value)
     {
-        stats[stat].Upgrade(value);
+        if (stats.ContainsKey(stat))
+            stats[stat].Upgrade(value);
     }
 }
