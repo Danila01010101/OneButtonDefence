@@ -45,6 +45,24 @@ public class PlayerEffectsHandler : MonoBehaviour, IEffectsHandler
         if (e != null)
             RemoveEffect(e);
     }
+    
+    public void ResetAllEffects()
+    {
+        foreach (var e in CurrentEffects)
+        {
+            e.Disable();
+
+            if (e.EffectInstance != null)
+                Destroy(e.EffectInstance.gameObject);
+        }
+
+        CurrentEffects.Clear();
+
+        if (scaleTween != null)
+            scaleTween.Kill();
+
+        transform.localScale = OriginalScale;
+    }
 
     private void RecalcScale()
     {

@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     private CharacterStatsCounter stats;
     private EffectReceiver effectReceiver;
     private PlayerEffectsHandler effectsHandler;
+    private CapsuleCollider capsuleCollider;
     
     private readonly Vector3 gravityDirection = Vector3.down;
 
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void Awake()
     {
+        capsuleCollider = GetComponent<CapsuleCollider>();
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         if (cameraTransform == null) Debug.Log("No camera have been assigned for character movement, used main camera.");
@@ -156,6 +158,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void OnDisable()
     {
+        effectsHandler.ResetAllEffects();
         playerInput.DeactivateInput();
         var moveAction = playerInput.actions.FindAction("Move");
         
