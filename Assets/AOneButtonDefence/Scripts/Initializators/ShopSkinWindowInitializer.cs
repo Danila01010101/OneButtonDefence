@@ -27,5 +27,5 @@ public class ShopSkinWindowInitializer : IGameInitializerStep
         yield break;
     }
     
-    public void SetWindowsConnection(GameplayCanvas gameplayCanvas) => gameplayCanvas.DetectShopWindow(shopWindow.GetComponent<ClosableWindow>());
+    public void SetWindowsConnection(GameplayCanvas gameplayCanvas) => gameplayCanvas.DetectSettingsWindow(shopWindow.GetComponent<ClosableWindow>());
 }
