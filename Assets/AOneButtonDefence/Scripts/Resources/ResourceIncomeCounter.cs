@@ -29,11 +29,6 @@ public class ResourceIncomeCounter
         if (startResourceAmount.Amount > 0)
             resourceWithBuff = new ResourceAmount(startResourceAmount.Resource, (int)(startResourceAmount.Amount * GameResourcesCounter.ResourcesBuffMultiplier), startResourceAmount.ResourceSpawnPositon);
         
-        if (startResourceAmount.Resource.Type == ResourceData.ResourceType.Warrior)
-        {
-            var a = 1 + 1;
-            Debug.Log("Warrior amount to spawn " + resourceWithBuff.Amount);
-        }        
         gameResourcesCounter.ChangeResourceAmount(resourceWithBuff);
         
         if (resourceEffects.TryGetValue(startResourceAmount.Resource.Type, out IResourceEffect effect))
