@@ -16,13 +16,15 @@ public class Spell : MonoBehaviour, IDamagable
     private ParticleSystem.MainModule _flakesMain;
 
     private float leftTime;
+    private float damageModificator;
     private LayerMask targetLayer;
     private SpellData spell;
     private IDamagable selfDamageable;
     private HashSet<IDamagable> targets = new HashSet<IDamagable>();
 
-    public void Initialize(SpellData spellData, LayerMask damagableTargetLayer)
+    public void Initialize(SpellData spellData, LayerMask damagableTargetLayer, float damageModificator)
     {
+        this.damageModificator = damageModificator;
         targetLayer = damagableTargetLayer;
         spell = spellData;
         GetPrivateComponents();
@@ -142,7 +144,7 @@ public class Spell : MonoBehaviour, IDamagable
             {
                 if (target != null && target.IsAlive())
                 {
-                    target.TakeDamage(selfDamageable, spell.Damage);
+                    target.TakeDamage(selfDamageable, spell.Damage * ((100 + damageModificator)/100));
                 }
                 else 
                 {

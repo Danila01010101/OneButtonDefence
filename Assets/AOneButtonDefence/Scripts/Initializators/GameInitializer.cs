@@ -262,12 +262,6 @@ public class GameInitializer : MonoBehaviour
         }
         catch (Exception e) { Debug.LogError($"EnemiesCountIndicator initialization failed: {e}"); }
 
-        SpellCanvasInitializer spellCanvasInit = new SpellCanvasInitializer(spellCanvas, input, spellCastData);
-        yield return SafeStep("SpellCanvasInitializer", () => spellCanvasInit.Initialize(), () =>
-        {
-            try { spellCanvasObj = spellCanvasInit.Instance; } catch { spellCanvasObj = null; }
-        });
-
         DebugCanvasInitializer debugCanvasInit = new DebugCanvasInitializer(debugCanvas, addCoinsOnStart, gameResourcesCounter, gameData.GemsResource);
         yield return SafeStep("DebugCanvasInitializer", () => debugCanvasInit.Initialize());
 
@@ -296,12 +290,6 @@ public class GameInitializer : MonoBehaviour
 
         yield return null;
 
-        StateMachineInitializer stateMachineInit = new StateMachineInitializer(gameData, enemiesData, upgradeCanvas, spellCanvasObj, worldCreator, worldGrid, disableableInput, gnomeDetector);
-        yield return SafeStep("StateMachineInitializer", () => stateMachineInit.Initialize(), () =>
-        {
-            try { gameStateMachine = stateMachineInit.Instance; } catch { gameStateMachine = null; }
-        });
-
         Vector3 playerSpawnPosition = Vector3.zero;
         try
         {
@@ -309,6 +297,8 @@ public class GameInitializer : MonoBehaviour
             playerSpawnPosition = (worldGrid != null ? worldGrid.GetWorldPositionByCoordinates(Mathf.Max(0, centerIndex), Mathf.Max(0, centerIndex)) : Vector3.zero) + (gameData != null ? gameData.GnomeSpawnOffset : Vector3.zero);
         }
         catch { playerSpawnPosition = Vector3.zero; }
+
+        SpellCanvasInitializer spellCanvasInit = new SpellCanvasInitializer(spellCanvas, input, spellCastData);
 
         BattleEvents battleEvents = new BattleEvents();
         PlayerControllerInitializer.PlayerControllerInitializerData playerInitializeData =
@@ -319,13 +309,24 @@ public class GameInitializer : MonoBehaviour
                 playerSpawnPosition,
                 battleEvents);
         PlayerControllerInitializer playerInitializer = new PlayerControllerInitializer(playerInitializeData);
-        yield return SafeStep("PlayerControllerInitializer", () => playerInitializer.Initialize(), () =>
+        yield return SafeStep("PlayerControllerInitializer", () => playerInitializer.Initialize(spellCanvasInit), () =>
         {
             try { positionForTestOrb = playerSpawnPosition; } catch { }
         });
         disposables.Add(playerInitializer);
 
         try { battleNotifier?.Subscribe(); } catch { }
+        
+        yield return SafeStep("SpellCanvasInitializer", () => spellCanvasInit.Initialize(), () =>
+        {
+            try { spellCanvasObj = spellCanvasInit.Instance; } catch { spellCanvasObj = null; }
+        });
+        
+        StateMachineInitializer stateMachineInit = new StateMachineInitializer(gameData, enemiesData, upgradeCanvas, spellCanvasObj, worldCreator, worldGrid, disableableInput, gnomeDetector);
+        yield return SafeStep("StateMachineInitializer", () => stateMachineInit.Initialize(), () =>
+        {
+            try { gameStateMachine = stateMachineInit.Instance; } catch { gameStateMachine = null; }
+        });
 
         RewardSpawnerInitializer rewardSpawnerInit = new RewardSpawnerInitializer(initializedObjectsParent, gameData);
         yield return SafeStep("RewardSpawnerInitializer", () => rewardSpawnerInit.Initialize());

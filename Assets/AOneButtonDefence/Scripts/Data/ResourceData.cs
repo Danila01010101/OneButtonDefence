@@ -24,6 +24,7 @@ public class ResourceData : ScriptableObject
         HealingTower,
         WarriorSpeed,
         WarriorAttackSpeed,
-        WarriorHealth
+        WarriorHealth,
+        SpellsStrength
     }
 }

@@ -122,6 +122,15 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
         RecalculateScale();
     }
 
+    public void RemoveEffectByActivator(IEffectActivator activator)
+    {
+        var existing = CurrentEffects
+            .Find(e => ReferenceEquals(e.OriginActivator, activator));
+
+        if (existing != null)
+            RemoveEffect(existing);
+    }
+
     public void EnableEffects()
     {
         foreach (var effect in CurrentEffects)

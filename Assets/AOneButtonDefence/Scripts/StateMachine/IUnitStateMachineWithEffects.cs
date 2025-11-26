@@ -3,12 +3,9 @@ using UnityEngine;
 
 namespace AOneButtonDefence.Scripts.StateMachine
 {
-    public interface IUnitStateMachineWithEffects : IStateChanger
+    public interface IUnitStateMachineWithEffects : IStateChanger, IEffectsHandler
     {
         List<ActiveEffect> CurrentEffects { get; }
-
-        void AddEffect(ActiveEffect effect);
-        void RemoveEffect(ActiveEffect effect);
     }
     
     public class ActiveEffect

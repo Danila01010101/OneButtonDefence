@@ -47,7 +47,7 @@ public class FightWithUltimateState : FightState
         SpellData randomSpell = unitWithUltimateData.SpellsData[randomSpellIndex];
         
         if (IsTargetSetted)
-            SpellCaster.Cast(randomSpell.BaseMagicCircle, randomSpell, spellsPositionTransform.position, unitWithUltimateData.TargetLayer);
+            SpellCaster.Cast(randomSpell.BaseMagicCircle, randomSpell, spellsPositionTransform.position, unitWithUltimateData.TargetLayer, 0);
     }
 
     public class FightWithUltimateStateData

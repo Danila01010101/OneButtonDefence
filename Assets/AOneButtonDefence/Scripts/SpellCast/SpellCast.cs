@@ -14,13 +14,16 @@ public class SpellCast
     [Header("Graphic")]
     private SpellCanvas spellCanvas;
 
+    private ICharacterStat stat;
+
     private IInput input;
     private List<SpellData> randomSpell = new List<SpellData>();
     
     private bool CanCastSpell => isBattleGoing && isReloading == false;
 
-    public SpellCast(IInput input, SpellCanvas spellCanvas, SpellCastData spellCastData)
+    public SpellCast(IInput input, SpellCanvas spellCanvas, SpellCastData spellCastData, ICharacterStat spellStat)
     {
+        stat = spellStat;
         damagableTargetLayer = spellCastData.spellTargetLayer;
         this.spellCanvas = spellCanvas;
         this.input = input;
@@ -60,7 +63,7 @@ public class SpellCast
         if (spellStorage[currentChose].Count > 0 && Physics.Raycast(ray, out hit)) 
         {
             spellStorage[currentChose].Count--;
-            SpellCaster.Cast(spellStorage[currentChose].Spell.BaseMagicCircle, spellStorage[currentChose].Spell, new Vector3(hit.point.x, 1, hit.point.z), damagableTargetLayer);
+            SpellCaster.Cast(spellStorage[currentChose].Spell.BaseMagicCircle, spellStorage[currentChose].Spell, new Vector3(hit.point.x, 1, hit.point.z), damagableTargetLayer, stat.Value);
         }
     }
 
@@ -78,7 +81,7 @@ public class SpellCast
             {
                 Vector3 spawnPos = new Vector3(h.point.x, 1.01f, h.point.z);
                 GameObject spell = GameObject.Instantiate(randomSpell[0].BaseMagicCircle, spawnPos, Quaternion.identity);
-                spell.GetComponent<Spell>().Initialize(randomSpell[0], damagableTargetLayer);
+                spell.GetComponent<Spell>().Initialize(randomSpell[0], damagableTargetLayer, stat.Value);
                 randomSpell[0] = null;
                 AddNextSpell();
                 CoroutineStarter.Instance.StartCoroutine(Reload());
@@ -90,7 +93,7 @@ public class SpellCast
     private IEnumerator Reload()
     {
         isReloading = true;
-        yield return new WaitForSeconds(reloadDuration);
+        yield return new WaitForSeconds(reloadDuration * ((100 - stat.Value) / 100));
         isReloading = false;
     }
 

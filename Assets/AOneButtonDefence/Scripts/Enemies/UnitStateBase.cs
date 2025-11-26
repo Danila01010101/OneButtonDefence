@@ -7,6 +7,8 @@ public abstract class UnitStateBase : IState
     protected readonly IStateChanger StateMachine;
     protected readonly Transform SelfTransform;
     protected readonly CharacterStatsCounter StatsCounter;
+    protected readonly EffectReceiver effectReceiver;
+
     protected bool IsControlledByPlayer { get; private set; }
 
     protected virtual float ScalePercentPerResourceAmount => 0.1f;
@@ -17,6 +19,15 @@ public abstract class UnitStateBase : IState
         SelfTransform = selfTransform;
         StatsCounter = statsCounter;
         IsControlledByPlayer = isControlledByPlayer;
+        
+        if (stateMachine is IEffectsHandler machine)
+        {
+            effectReceiver = new EffectReceiver(
+                machine,
+                selfTransform,
+                statsCounter
+            );
+        }
     }
 
     public virtual void Enter() { }
@@ -30,40 +41,13 @@ public abstract class UnitStateBase : IState
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        if (IsControlledByPlayer == false)
-            return;
-        
-        if (other == null) return;
-        if (!(StateMachine is IUnitStateMachineWithEffects machine)) return;
-
-        if (!other.TryGetComponent<IEffectActivator>(out var activator)) return;
-        Building.EffectCastInfo info = activator.GetEffectInfo();
-
-        var prefab = info.BuffResource?.Resource?.ResourceEffect;
-        ActiveEffect activeEffect = null;
-        if (prefab != null)
-        {
-            var instance = Object.Instantiate(prefab, SelfTransform);
-            instance.transform.localPosition = Vector3.zero;
-            activeEffect = new ActiveEffect(info, activator, instance, StatsCounter);
-        }
-
-        machine.AddEffect(activeEffect);
+        if (!IsControlledByPlayer) return;
+        effectReceiver?.OnTriggerEnter(other);
     }
 
     public virtual void OnTriggerExit(Collider other)
     {
-        if (IsControlledByPlayer == false)
-            return;
-        
-        if (other == null) return;
-        if (!(StateMachine is IUnitStateMachineWithEffects machine)) return;
-        if (machine.CurrentEffects.Count == 0) return;
-
-        if (!other.TryGetComponent<IEffectActivator>(out var activator)) return;
-        var existing = machine.CurrentEffects.FirstOrDefault(e => ReferenceEquals(e.OriginActivator, activator));
-        if (existing == null) return;
-
-        machine.RemoveEffect(existing);
+        if (!IsControlledByPlayer) return;
+        effectReceiver?.OnTriggerExit(other);
     }
 }
