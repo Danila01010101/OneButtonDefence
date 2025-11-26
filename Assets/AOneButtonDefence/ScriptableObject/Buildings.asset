@@ -331,7 +331,7 @@ MonoBehaviour:
       <ResourceDescription>k__BackingField: "\u041D\u0430 \u0441\u0442\u043E\u043B\u044C\u043A\u043E
         \u044D\u0444\u0444\u0435\u043A\u0442\u0438\u0432\u043D\u044B\u0435 \u0440\u0430\u0431\u043E\u0442\u043D\u0438\u043A\u0438
         \u0447\u0442\u043E \u0437\u0430\u0431\u044B\u0432\u0430\u044E\u0442 \u043F\u043E\u043A\u0443\u0448\u0430\u0442\u044C."
-  - <Icon>k__BackingField: {fileID: 21300000, guid: addcb58acc72d6a4ab6ee905c74ad728, type: 3}
+  - <Icon>k__BackingField: {fileID: 21300000, guid: c4c548a339b4d41a590928c0c98934a7, type: 3}
     <BuildingName>k__BackingField: "\u042F\u0434\u0440\u0435\u043D\u044B\u0439 \u043A\u043E\u043B\u043B\u0430\u0439\u0434\u0435\u0440."
     <UpgradeType>k__BackingField: 6
     <Prefab>k__BackingField: {fileID: 4363163895983638128, guid: 0a3f05a3286e5674d8b7aca51ce606d7, type: 3}
@@ -377,7 +377,7 @@ MonoBehaviour:
         <Amount>k__BackingField: 5
       <ResourceDescription>k__BackingField: "\u041F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0438\u043C
         \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B."
-  - <Icon>k__BackingField: {fileID: 21300000, guid: addcb58acc72d6a4ab6ee905c74ad728, type: 3}
+  - <Icon>k__BackingField: {fileID: 21300000, guid: c4c548a339b4d41a590928c0c98934a7, type: 3}
     <BuildingName>k__BackingField: "\u0423\u0441\u0438\u043B\u0438\u0442\u0435\u043B\u044C
       \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0439"
     <UpgradeType>k__BackingField: 7
