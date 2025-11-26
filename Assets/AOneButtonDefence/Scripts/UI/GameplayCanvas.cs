@@ -39,49 +39,42 @@ public class GameplayCanvas : MonoBehaviour
 
     public void Initialize(int partsAmount, BuildingsData buildingsData)
     {
-        statisticViewInitializer.Initialize(ResourceData.ResourceType.Food, ResourceData.ResourceType.Warrior, ResourceData.ResourceType.Spirit, ResourceData.ResourceType.Material, ResourceData.ResourceType.Gem);
+        statisticViewInitializer.Initialize(
+            ResourceData.ResourceType.Food,
+            ResourceData.ResourceType.Warrior,
+            ResourceData.ResourceType.Spirit,
+            ResourceData.ResourceType.Material,
+            ResourceData.ResourceType.Gem);
+
         iconsText.text = "Выберите 2 здания для строительства.";
-        
-        if (partsAmount % 2 == 0)
-        {
-            partPlacingInterval = 50;
-            startButtonsAmount = partsAmount / 2;
 
-            for (int i = 0; i < startButtonsAmount; i++)
-            {
-                SpawnButton(partPlacingInterval);
-                partPlacingInterval = partPlacingInterval + buttonsDistance / 2;
-                
-                SpawnButton(-partPlacingInterval);
-                partPlacingInterval = partPlacingInterval + buttonsDistance / 2;
-            }
-        }
-        else
-        {
-            SpawnButton(0);
+        var spawner = new BuildingButtonsSpawner(
+            partPrefab,
+            cellsSpawnParent.transform,
+            buttonsDistance);
 
-            startButtonsAmount = (partsAmount - 1) / 2;
-            partPlacingInterval = buttonsDistance;
+        var spawned = spawner.Spawn(partsAmount);
 
-            for (int i = 0; i < startButtonsAmount; i++)
-            {
-                SpawnButton(partPlacingInterval);
-                SpawnButton(-partPlacingInterval);
-                partPlacingInterval += buttonsDistance;
-            }
-        }
+        parts = new List<UIInfoButton>(spawned);
+        partsAnimators = new List<ButtonChooseAnimation>();
 
-        parts = parts.OrderBy(part => part.transform.position.x).ToList();
-        partsAnimators = partsAnimators.OrderBy(animator => animator.transform.position.x).ToList();
-        
         for (int i = 0; i < parts.Count; i++)
         {
-            BasicBuildingData currentBuildingData = buildingsData.Buildings[i];
-            parts[i].Initialize(currentBuildingData, infoPanel);
-            parts[i].Button.onClick.AddListener(delegate { ChoosePart(currentBuildingData.UpgradeType); });
-            partsAnimators[i].SetIcon(currentBuildingData.Icon);
+            var anim = parts[i].GetComponent<ButtonChooseAnimation>();
+            partsAnimators.Add(anim);
+
+            var data = buildingsData.Buildings[i];
+            parts[i].Initialize(data, infoPanel);
+
+            int captured = i;
+            parts[i].Button.onClick.AddListener(() =>
+            {
+                ChoosePart(data.UpgradeType);
+            });
+
+            anim.SetIcon(data.Icon);
         }
-        
+
         if (spawnedShopWindow != null)
             SetShopWindowActive(false);
     }
@@ -176,21 +169,6 @@ public class GameplayCanvas : MonoBehaviour
                 upgradeButton.Activate();
                 break;
         } 
-    }
-
-    private void SpawnButton(int placingInterval)
-    {
-        var spawnedButton = Instantiate(partPrefab, cellsSpawnParent.transform);
-    
-        var rect = spawnedButton.GetComponent<RectTransform>();
-        rect.anchorMin = new Vector2(0.5f, 0f);
-        rect.anchorMax = new Vector2(0.5f, 0f);
-        rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.anchoredPosition = new Vector2(placingInterval, 0f);
-
-        var buttonAnimation = spawnedButton.GetComponent<ButtonChooseAnimation>();
-        partsAnimators.Add(buttonAnimation);
-        parts.Add(spawnedButton);
     }
     
     private void SetGameplayUIActive(bool value)
