@@ -97,7 +97,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 8843ac5b5283e464fb800c1f55c0506d, type: 2}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: d6d8dd586d2e5614499cf7d1b643232a, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -651,7 +651,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1222,6 +1222,67 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4753327444002381911
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 656520954374703591, guid: 3d4b0b8b227f7904bbda67a16ca3d1fa, type: 3}
+      propertyPath: targetCamera
+      value: 
+      objectReference: {fileID: 325010438}
+    - target: {fileID: 5806967149582454150, guid: 3d4b0b8b227f7904bbda67a16ca3d1fa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 167.24533
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806967149582454150, guid: 3d4b0b8b227f7904bbda67a16ca3d1fa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806967149582454150, guid: 3d4b0b8b227f7904bbda67a16ca3d1fa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 154.47571
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806967149582454150, guid: 3d4b0b8b227f7904bbda67a16ca3d1fa, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806967149582454150, guid: 3d4b0b8b227f7904bbda67a16ca3d1fa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806967149582454150, guid: 3d4b0b8b227f7904bbda67a16ca3d1fa, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806967149582454150, guid: 3d4b0b8b227f7904bbda67a16ca3d1fa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806967149582454150, guid: 3d4b0b8b227f7904bbda67a16ca3d1fa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806967149582454150, guid: 3d4b0b8b227f7904bbda67a16ca3d1fa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806967149582454150, guid: 3d4b0b8b227f7904bbda67a16ca3d1fa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284897682249488584, guid: 3d4b0b8b227f7904bbda67a16ca3d1fa, type: 3}
+      propertyPath: m_Name
+      value: FogMover
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3d4b0b8b227f7904bbda67a16ca3d1fa, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1235,3 +1296,4 @@ SceneRoots:
   - {fileID: 29436170}
   - {fileID: 1192069277}
   - {fileID: 322008701}
+  - {fileID: 4753327444002381911}
