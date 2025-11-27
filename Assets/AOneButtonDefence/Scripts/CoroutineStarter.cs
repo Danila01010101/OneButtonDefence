@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CoroutineStarter : MonoBehaviour
@@ -14,5 +15,10 @@ public class CoroutineStarter : MonoBehaviour
         {
             Destroy(this);
         }
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 }

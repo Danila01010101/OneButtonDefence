@@ -136,6 +136,7 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
     private IEnumerator UpdateSpeed()
     {
         yield return new WaitForSeconds(0.1f);
-        agent.speed = statsCounter.GetStat(ResourceData.ResourceType.WarriorSpeed);
+        if (statsCounter != null && agent != null)
+            agent.speed = statsCounter.GetStat(ResourceData.ResourceType.WarriorSpeed);
     }
 }
