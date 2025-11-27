@@ -1,5 +1,3 @@
-using System.Linq;
-using AOneButtonDefence.Scripts.StateMachine;
 using UnityEngine;
 
 public abstract class UnitStateBase : IState
@@ -9,16 +7,13 @@ public abstract class UnitStateBase : IState
     protected readonly CharacterStatsCounter StatsCounter;
     protected readonly EffectReceiver effectReceiver;
 
-    protected bool IsControlledByPlayer { get; private set; }
-
     protected virtual float ScalePercentPerResourceAmount => 0.1f;
 
-    protected UnitStateBase(IStateChanger stateMachine, Transform selfTransform, CharacterStatsCounter statsCounter, bool isControlledByPlayer)
+    protected UnitStateBase(IStateChanger stateMachine, Transform selfTransform, CharacterStatsCounter statsCounter)
     {
         StateMachine = stateMachine;
         SelfTransform = selfTransform;
         StatsCounter = statsCounter;
-        IsControlledByPlayer = isControlledByPlayer;
         
         if (stateMachine is IEffectsHandler machine)
         {
@@ -41,13 +36,11 @@ public abstract class UnitStateBase : IState
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        if (!IsControlledByPlayer) return;
         effectReceiver?.OnTriggerEnter(other);
     }
 
     public virtual void OnTriggerExit(Collider other)
     {
-        if (!IsControlledByPlayer) return;
         effectReceiver?.OnTriggerExit(other);
     }
 }

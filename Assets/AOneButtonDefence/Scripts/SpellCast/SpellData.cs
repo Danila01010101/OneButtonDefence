@@ -8,6 +8,7 @@ public class SpellData : ScriptableObject
     [SerializeField] private float time;
     [SerializeField] private float timePerDamage;
     [SerializeField] private int damage;
+    [SerializeField] private StartResourceAmount effect;
     [Header("BaseGraphic")]
     [SerializeField] private GameObject baseMagicCircle;
     [SerializeField] private Sprite iconForUI;
@@ -31,6 +32,7 @@ public class SpellData : ScriptableObject
     public float Time => time;
     public float TimePerDamage => timePerDamage;
     public int Damage => damage;
+    public StartResourceAmount Effect => effect;
     public GameObject BaseMagicCircle => baseMagicCircle;
     public Sprite IconForUI => iconForUI;
     public Sprite Background => background;

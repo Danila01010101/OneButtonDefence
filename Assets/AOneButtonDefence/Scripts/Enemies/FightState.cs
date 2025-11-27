@@ -21,7 +21,7 @@ public class FightState : UnitStateBase, ITargetAttacker
         IAttackAnimator animation,
         ISelfDamageable selfDamageable,
         bool isPlayerControlled)
-        : base(stateChanger, selfDamageable.GetSelfDamagable().GetTransform(), statsCounter, isPlayerControlled)
+        : base(stateChanger, selfDamageable.GetSelfDamagable().GetTransform(), statsCounter)
     {
         CharacterStatsCounter = statsCounter;
         Animation = animation;

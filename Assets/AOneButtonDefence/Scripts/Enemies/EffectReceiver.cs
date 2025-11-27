@@ -20,6 +20,10 @@ public class EffectReceiver
             return;
 
         var info = activator.GetEffectInfo();
+        
+        if (info.BuffResource == null)
+            return;
+        
         var prefab = info.BuffResource?.Resource?.ResourceEffect;
 
         ActiveEffect activeEffect = null;
@@ -32,6 +36,7 @@ public class EffectReceiver
         }
 
         EffectsHandler?.AddEffect(activeEffect);
+        Debug.Log(selfTransform.gameObject.name + " object effect " + info.BuffResource.Resource + " changed on " + info.BuffResource.Amount);
     }
 
     public void OnTriggerExit(Collider other)
