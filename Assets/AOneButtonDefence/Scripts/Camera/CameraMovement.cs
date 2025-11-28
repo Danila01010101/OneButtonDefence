@@ -120,7 +120,6 @@ public class CameraMovement : MonoBehaviour
 
         target.position += movement;
 
-        // Применяем ограничения
         ClampTargetPosition();
     }
 
@@ -152,10 +151,6 @@ public class CameraMovement : MonoBehaviour
     private void EnableCameraTargetMovement() => canMove = true;
     private void DisableCameraTargetMovement() => canMove = false;
 
-    // -------------------------------------------
-    //         Ограничение позиции камеры
-    // -------------------------------------------
-
     private void ClampTargetPosition()
     {
         Vector3 pos = target.position;
@@ -165,8 +160,6 @@ public class CameraMovement : MonoBehaviour
 
         target.position = pos;
     }
-
-    // -------------------------------------------
 
     private void Subscribe()
     {
