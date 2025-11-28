@@ -42,6 +42,9 @@ public class BossfightInitializer : MonoBehaviour
         CameraMovementInitializer cameraMovementInit = new CameraMovementInitializer(virtualCameraPrefab, null, input, cameraData);
         yield return cameraMovementInit.Initialize();
         
+        DialogCameraInitializer dialogCameraInit = new DialogCameraInitializer(cameraData);
+        yield return dialogCameraInit.Initialize();
+        
         var musicInit = new MusicPlayerInitializer(transform, musicData);
         yield return musicInit.Initialize();
         backgroundMusic = musicInit.BackgroundPlayer;
@@ -56,7 +59,8 @@ public class BossfightInitializer : MonoBehaviour
         yield return spellInit.Initialize();
         spellCanvasInstance = spellInit.Instance.GetComponent<SpellCanvas>();
 
-        var battleEvents = new BattleEvents();
+        var battleEvents = new BattleEvents(BossFightBattleState.BattleStarted, BossFightBattleState.EnemiesDefeated);
+        disposables.Add(battleEvents);
 
         var playerData = new PlayerControllerInitializer.PlayerControllerInitializerData(
             gameData.PlayerUnit,
@@ -70,6 +74,9 @@ public class BossfightInitializer : MonoBehaviour
         playerInitializerObj = playerInitializer;
         yield return playerInitializer.Initialize(spellInit);
         disposables.Add(playerInitializer);
+
+        var bossFightStateMachineData = new BossFightStateMachine.BossFightStateMachineData(gameData, input as IDisableableInput);
+        BossFightStateMachine stateMachine = new BossFightStateMachine(bossFightStateMachineData);
 
         initialized = true;
         OnBossSceneReady?.Invoke();

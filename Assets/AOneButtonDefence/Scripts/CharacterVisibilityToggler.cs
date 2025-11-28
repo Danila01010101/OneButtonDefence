@@ -35,18 +35,56 @@ namespace AOneButtonDefence.Scripts
         }
     }
 
-    public class BattleEvents
+    public class BattleEvents : IDisposable
     {
+        private Action battleStartTrigger;
+        private Action battleEndTrigger;
+
+        private event Action OnBattleStart;
+        private event Action OnBattleEnd;
+
+        private bool disposed;
+
+        public BattleEvents(Action battleStartAction, Action battleEndAction)
+        {
+            battleStartTrigger = battleStartAction;
+            battleEndTrigger = battleEndAction;
+
+            battleStartTrigger += TriggerStartHandlers;
+            battleEndTrigger += TriggerEndHandlers;
+
+            OnBattleStart += battleStartAction;
+            OnBattleEnd += battleEndAction;
+        }
+
         public void Subscribe(Action startHandler, Action endHandler)
         {
-            GameBattleState.BattleStarted += startHandler;
-            GameBattleState.BattleWon += endHandler;
+            OnBattleStart += startHandler;
+            OnBattleEnd += endHandler;
         }
 
         public void Unsubscribe(Action startHandler, Action endHandler)
         {
-            GameBattleState.BattleStarted -= startHandler;
-            GameBattleState.BattleWon -= endHandler;
+            OnBattleStart -= startHandler;
+            OnBattleEnd -= endHandler;
+        }
+
+        private void TriggerStartHandlers() => OnBattleStart?.Invoke();
+        private void TriggerEndHandlers() => OnBattleEnd?.Invoke();
+
+        public void Dispose()
+        {
+            if (disposed) return;
+            disposed = true;
+
+            battleStartTrigger -= TriggerStartHandlers;
+            battleEndTrigger -= TriggerEndHandlers;
+
+            foreach (var d in OnBattleStart?.GetInvocationList() ?? Array.Empty<Delegate>())
+                OnBattleStart -= (Action)d;
+
+            foreach (var d in OnBattleEnd?.GetInvocationList() ?? Array.Empty<Delegate>())
+                OnBattleEnd -= (Action)d;
         }
     }
 }

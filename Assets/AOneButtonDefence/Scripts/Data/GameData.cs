@@ -16,6 +16,7 @@ public class GameData : ScriptableObject
     [field: SerializeField] public Gem EnemyRewardPrefab { get; private set; }
     [field: Header("Dialogs prefabs")]
     [field: SerializeField] public DialogueSystem StartDialogCanvas { get; private set; }
+    [field: SerializeField] public DialogueSystem StartDragonDialogCanvas { get; private set; }
     [field: SerializeField] public DialogueSystem EndTurnWinDialogCanvas { get; private set; }
     [field: SerializeField] public DialogueSystem BattleLoseDialogCanvas { get; private set; }
     [field: SerializeField] public DialogueSystem FoodLoseDialogCanvas { get; private set; }
