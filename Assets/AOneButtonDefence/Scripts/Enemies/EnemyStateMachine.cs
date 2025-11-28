@@ -7,14 +7,14 @@ public class EnemyStateMachine : WarriorStateMachine
     {
         var fightState = new FightState(this, data.CharacterStatsCounter, data.FightAnimation, data.SelfDamageable, false);
         var targetFollowingState = new TargetFollowingState(this, data.Agent, data.CharacterStatsCounter, data.EnemyChaseRange, fightState, data.EnemyLayerMask,
-            data.WalkingAnimation, data.EnemyDetector, data.SelfDamageable, false);
+            data.WalkingAnimation, data.EnemyDetector, data.SelfDamageable);
         var targetSearchStateData = new TargetSearchState.TargetSearchStateData(
             this, data.SelfTransform, targetFollowingState, data.Agent, data.WalkingAnimation, data.EnemyDetector);
 
         states = new List<IState>()
         {
-            new CharacterOrAnySearchState(targetSearchStateData, false, data.CharacterStatsCounter),
-            new IdleWarriorState(this, data.SelfTransform.position, data.WalkingAnimation, data.Agent, data.CharacterStatsCounter, false),
+            new CharacterOrAnySearchState(targetSearchStateData, data.CharacterStatsCounter),
+            new IdleWarriorState(this, data.SelfTransform.position, data.WalkingAnimation, data.Agent, data.CharacterStatsCounter),
             fightState,
             targetFollowingState
         };

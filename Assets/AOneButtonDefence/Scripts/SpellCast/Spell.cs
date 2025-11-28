@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spell : MonoBehaviour, IDamagable
+public class Spell : MonoBehaviour, IDamagable, IEffectActivator
 {
-    private ParticleSystem _circle;
-    private ParticleSystem _sides;
-    private ParticleSystem _light;
-    private ParticleSystem _sparks;
-    private ParticleSystem _flakes;
+    [SerializeField] private ParticleSystem _circle;
+    [SerializeField] private ParticleSystem _sides;
+    [SerializeField] private ParticleSystem _light;
+    [SerializeField] private ParticleSystem _sparks;
+    [SerializeField] private ParticleSystem _flakes;
 
     private ParticleSystem.MainModule _circleMain;
     private ParticleSystem.MainModule _sidesMain;
@@ -17,6 +17,7 @@ public class Spell : MonoBehaviour, IDamagable
 
     private float leftTime;
     private float damageModificator;
+    private StartResourceAmount effect;
     private LayerMask targetLayer;
     private SpellData spell;
     private IDamagable selfDamageable;
@@ -24,6 +25,7 @@ public class Spell : MonoBehaviour, IDamagable
 
     public void Initialize(SpellData spellData, LayerMask damagableTargetLayer, float damageModificator)
     {
+        effect = spellData.Effect;
         this.damageModificator = damageModificator;
         targetLayer = damagableTargetLayer;
         spell = spellData;
@@ -59,11 +61,11 @@ public class Spell : MonoBehaviour, IDamagable
 
     private void GetPrivateComponents()
     {
-        _circle = GetComponent<ParticleSystem>();
-        _sides = transform.GetChild(0).GetComponent<ParticleSystem>();
-        _light = transform.GetChild(1).GetComponent<ParticleSystem>();
-        _sparks = transform.GetChild(2).GetComponent<ParticleSystem>();
-        _flakes = transform.GetChild(3).GetComponent<ParticleSystem>();
+        if (_circle == null) _circle = GetComponent<ParticleSystem>();
+        if (_sides == null) _sides = transform.GetChild(0).GetComponent<ParticleSystem>();
+        if (_light == null) _light = transform.GetChild(1).GetComponent<ParticleSystem>();
+        if (_sparks == null) _sparks = transform.GetChild(2).GetComponent<ParticleSystem>();
+        if (_flakes == null) _flakes = transform.GetChild(3).GetComponent<ParticleSystem>();
 
         _circleMain = _circle.main;
         _sidesMain = _sides.main;
@@ -100,7 +102,6 @@ public class Spell : MonoBehaviour, IDamagable
     }
 
     private void ChangeLifeTime(float time)
-
     {
         _circleMain.startLifetime = time;
         _sidesMain.startLifetime = time;
@@ -144,6 +145,8 @@ public class Spell : MonoBehaviour, IDamagable
             {
                 if (target != null && target.IsAlive())
                 {
+                    if (spell.EffectForEveryEnemy != null)
+                        Instantiate(spell.EffectForEveryEnemy, target.GetTransform().position + spell.EffectForEveryEnemy.transform.localPosition, Quaternion.identity);
                     target.TakeDamage(selfDamageable, spell.Damage * ((100 + damageModificator)/100));
                 }
                 else 
@@ -166,4 +169,9 @@ public class Spell : MonoBehaviour, IDamagable
     public Transform GetTransform() => transform;
 
     public string GetName() => gameObject.name;
+
+    public Building.EffectCastInfo GetEffectInfo()
+    {
+        return new Building.EffectCastInfo(effect, transform.position);
+    }
 }

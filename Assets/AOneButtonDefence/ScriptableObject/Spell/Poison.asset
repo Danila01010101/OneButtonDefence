@@ -15,7 +15,11 @@ MonoBehaviour:
   time: 20
   timePerDamage: 1
   damage: 20
-  baseMagicCircle: {fileID: 544068497971431647, guid: 77a593e24f4d2e440bf31c2ee3b5b88d, type: 3}
+  effect:
+    <Resource>k__BackingField: {fileID: 11400000, guid: fde2e599e5d594c429ac4784be12eb0b, type: 2}
+    <Amount>k__BackingField: -30
+  effectForEveryEnemy: {fileID: 5985634496115995770, guid: 463cf9f7af4680240898f6aeba3fe3e6, type: 3}
+  baseMagicCircle: {fileID: 544068497971431647, guid: 5062f45c25ad80448bae2af196350121, type: 3}
   iconForUI: {fileID: -1019100004, guid: 42d0bd423fc50354e84d64ac783a4cd1, type: 3}
   background: {fileID: 21300000, guid: fe80c36164e0d244c9bedc02ba0b2e54, type: 3}
   miniIcon: {fileID: 21300000, guid: 9cf83a33e9a4ecd4781b7f1b6d4a229b, type: 3}

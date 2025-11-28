@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd5889ea615b9ec4fae436a7b9ca102e, type: 3}
   m_Name: Fire
   m_EditorClassIdentifier: 
-  time: 7
-  timePerDamage: 1.5
-  damage: 50
-  baseMagicCircle: {fileID: 544068497971431647, guid: 77a593e24f4d2e440bf31c2ee3b5b88d, type: 3}
+  time: 2
+  timePerDamage: 1.1
+  damage: 150
+  effect:
+    <Resource>k__BackingField: {fileID: 0}
+    <Amount>k__BackingField: 0
+  effectForEveryEnemy: {fileID: 8194992990867289333, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
+  baseMagicCircle: {fileID: 8378648546881499446, guid: 867c572a5be680d42a042d2349f10143, type: 3}
   iconForUI: {fileID: 1552578911, guid: fc746076b82fe2348941c2263d5408b1, type: 3}
   background: {fileID: 21300000, guid: 2051ce00c7d7f214dad6776b73ec8121, type: 3}
   miniIcon: {fileID: 21300000, guid: 5895d3bb85bb25949b2c9ab629ae1ab2, type: 3}

@@ -16,6 +16,8 @@ MonoBehaviour:
   <DialogCameraPrefab>k__BackingField: {fileID: 4628187216870136747, guid: 9d5b8bbf672665043a78c246f712a482, type: 3}
   <DialogCameraPosition>k__BackingField: {x: 151.57, y: 10.02, z: 162.89}
   <DialogCameraEulerAngles>k__BackingField: {x: 49.99998, y: 144.81525, z: -0.0000013282353}
+  <LimitX>k__BackingField: {x: 30, y: 270}
+  <LimitZ>k__BackingField: {x: 30, y: 270}
   <MinimumCameraDistance>k__BackingField: 6
   <MaximumCameraDistance>k__BackingField: 12
   <CameraMovementSpeed>k__BackingField: 0.35
