@@ -145,6 +145,8 @@ public class Spell : MonoBehaviour, IDamagable, IEffectActivator
             {
                 if (target != null && target.IsAlive())
                 {
+                    if (spell.EffectForEveryEnemy != null)
+                        Instantiate(spell.EffectForEveryEnemy, target.GetTransform().position + spell.EffectForEveryEnemy.transform.localPosition, Quaternion.identity);
                     target.TakeDamage(selfDamageable, spell.Damage * ((100 + damageModificator)/100));
                 }
                 else 
