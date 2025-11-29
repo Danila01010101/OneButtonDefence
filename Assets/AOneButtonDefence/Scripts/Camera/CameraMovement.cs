@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
@@ -148,8 +150,19 @@ public class CameraMovement : MonoBehaviour
         targetChanged = false;
     }
 
-    private void EnableCameraTargetMovement() => canMove = true;
-    private void DisableCameraTargetMovement() => canMove = false;
+    private void EnableCameraTargetMovement() => CoroutineStarter.Instance.StartCoroutine(EnableWithDelay());
+    private void DisableCameraTargetMovement()
+    {
+        virtualCamera.enabled = false;
+        canMove = false;
+    }
+
+    private IEnumerator EnableWithDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        virtualCamera.enabled = true;
+        canMove = true;
+    }
 
     private void ClampTargetPosition()
     {

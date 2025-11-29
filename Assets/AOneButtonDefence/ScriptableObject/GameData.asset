@@ -37,7 +37,7 @@ MonoBehaviour:
     <Amount>k__BackingField: -1
   <EnemyRewardPrefab>k__BackingField: {fileID: -8478916999206495534, guid: cd34118c604e29141afea74caecd70f2, type: 3}
   <StartDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
-  <StartDragonDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 9fed88bd60bc9424f84ce5892f38dbf3, type: 3}
+  <StartDragonDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: ea0ec9cf4d2758b4e993120dcbf2731d, type: 3}
   <EndTurnWinDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 74c79feccf7219947a413935ec7bbaae, type: 3}
   <BattleLoseDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 5865bc8095bd9d548a1a9eb55e70d6b1, type: 3}
   <FoodLoseDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: c123dfa5a0fce6443a870eabc57f1038, type: 3}

@@ -17,7 +17,7 @@ MonoBehaviour:
   <DialogCameraPosition>k__BackingField: {x: 0, y: 3.33, z: 5.37}
   <DialogCameraEulerAngles>k__BackingField: {x: 25, y: 180, z: 0}
   <LimitX>k__BackingField: {x: -14, y: 14}
-  <LimitZ>k__BackingField: {x: 20, y: -20}
+  <LimitZ>k__BackingField: {x: -20, y: 20}
   <MinimumCameraDistance>k__BackingField: 6
   <MaximumCameraDistance>k__BackingField: 12
   <CameraMovementSpeed>k__BackingField: 0.35
