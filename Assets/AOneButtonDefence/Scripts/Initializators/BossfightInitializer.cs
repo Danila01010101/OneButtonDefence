@@ -12,6 +12,7 @@ public class BossfightInitializer : MonoBehaviour
     [SerializeField] private CameraData cameraData;
     [SerializeField] private MusicData musicData;
     [SerializeField] private Transform playerSpawnPoint;
+    [SerializeField] private SpellCanvas spellCanvas;
 
     [Header("Prefabs")]
     [SerializeField] private Cinemachine.CinemachineVirtualCamera virtualCameraPrefab;
@@ -55,9 +56,8 @@ public class BossfightInitializer : MonoBehaviour
         yield return mediator.Initialize();
         if (mediator is IDisposable md) disposables.Add(md);
 
-        var spellInit = new SpellCanvasInitializer(spellCanvasPrefab, input, spellCastData);
-        yield return spellInit.Initialize();
-        spellCanvasInstance = spellInit.Instance.GetComponent<SpellCanvas>();
+        SpellCanvasInitializer spellCanvasInit = new SpellCanvasInitializer(spellCanvas, input, spellCastData);
+        disposables.Add(spellCanvasInit);
 
         var battleEvents = new BattleEventsForBossFight();
 
@@ -71,8 +71,10 @@ public class BossfightInitializer : MonoBehaviour
 
         var playerInitializer = new PlayerControllerInitializer(playerData);
         playerInitializerObj = playerInitializer;
-        yield return playerInitializer.Initialize(spellInit);
+        yield return playerInitializer.Initialize(spellCanvasInit);
         disposables.Add(playerInitializer);
+        yield return spellCanvasInit.Initialize();
+        spellCanvasInstance = spellCanvasInit.Instance.GetComponent<SpellCanvas>();
         
         CameraMovementInitializer cameraMovementInit = new CameraMovementInitializer(virtualCameraPrefab, null, input, cameraData);
         yield return cameraMovementInit.Initialize();
@@ -80,7 +82,7 @@ public class BossfightInitializer : MonoBehaviour
         DialogCameraInitializer dialogCameraInit = new DialogCameraInitializer(cameraData);
         yield return dialogCameraInit.Initialize();
 
-        var bossFightStateMachineData = new BossFightStateMachine.BossFightStateMachineData(gameData, input as IDisableableInput);
+        var bossFightStateMachineData = new BossFightStateMachine.BossFightStateMachineData(gameData, input as IDisableableInput, spellCanvasInit.Instance);
         BossFightStateMachine stateMachine = new BossFightStateMachine(bossFightStateMachineData);
 
         initialized = true;

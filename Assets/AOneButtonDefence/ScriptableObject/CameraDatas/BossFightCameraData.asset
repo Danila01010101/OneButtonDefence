@@ -20,7 +20,7 @@ MonoBehaviour:
   <LimitZ>k__BackingField: {x: -20, y: 20}
   <MinimumCameraDistance>k__BackingField: 6
   <MaximumCameraDistance>k__BackingField: 12
-  <CameraMovementSpeed>k__BackingField: 0.35
+  <CameraMovementSpeed>k__BackingField: 0.2
   <CameraRotateSpeed>k__BackingField: 100
   <MaxRotationSpeed>k__BackingField: 200
   <CameraRotationSmooth>k__BackingField: 20

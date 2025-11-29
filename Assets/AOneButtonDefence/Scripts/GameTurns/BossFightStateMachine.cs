@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class BossFightStateMachine : StateMachine, IStringStateChanger
 {
@@ -10,7 +11,7 @@ public class BossFightStateMachine : StateMachine, IStringStateChanger
         {
             { GameStateNames.StartDialog, new DialogState(this, null, data.GameTurnsData.StartDragonDialogCanvas, GameStateNames.BattleState, data.Input, true) },
             { GameStateNames.Reload, new ReloadingState() },
-            { GameStateNames.BattleState, new BossFightBattleState() },
+            { GameStateNames.BattleState, new BossFightBattleState(data.BattleCanvas) },
         };
         
         ChangeStateWithString(GameStateNames.StartDialog);
@@ -22,11 +23,13 @@ public class BossFightStateMachine : StateMachine, IStringStateChanger
     {
         public readonly GameData GameTurnsData;
         public readonly IDisableableInput Input;
+        public readonly GameObject BattleCanvas;
 
-        public BossFightStateMachineData(GameData gameTurnsData, IDisableableInput input)
+        public BossFightStateMachineData(GameData gameTurnsData, IDisableableInput input, GameObject battleCanvas)
         {
             GameTurnsData = gameTurnsData;
             Input = input;
+            BattleCanvas = battleCanvas;
         }
     }
 }

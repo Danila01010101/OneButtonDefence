@@ -299,6 +299,7 @@ public class GameInitializer : MonoBehaviour
         catch { playerSpawnPosition = Vector3.zero; }
 
         SpellCanvasInitializer spellCanvasInit = new SpellCanvasInitializer(spellCanvas, input, spellCastData);
+        disposables.Add(spellCanvasInit);
 
         BattleEvents battleEvents = new BattleEvents();
         

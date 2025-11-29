@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class SpellCast
+public class SpellCast : IDisposable
 {
     private List<SpellStorage> spellStorage;
     private LayerMask spellSurfaceLayer;
@@ -31,14 +33,12 @@ public class SpellCast
         spellStorage = spellCastData.SpellStorage;
         reloadDuration = spellCastData.reloadDuration;
         
-        if (true)
-        {
-            input.Clicked += RandomModeCast;
-            GameBattleState.BattleWon += Disable;
-            GameBattleState.BattleLost += Disable;
-            GameBattleState.BattleStarted += Enable;
-            InitilizeRandomMode();
-        }
+        input.Clicked += RandomModeCast;
+        GameBattleState.BattleWon += Disable;
+        GameBattleState.BattleLost += Disable;
+        GameBattleState.BattleStarted += Enable;
+        BossFightBattleState.BattleStarted += Enable;
+        InitilizeRandomMode();
         
         Physics.queriesHitTriggers = false;
     }
@@ -102,5 +102,14 @@ public class SpellCast
         randomSpell[0] = randomSpell[1];
         randomSpell[1] = spellStorage[Random.Range(0, spellStorage.Count)].Spell;
         spellCanvas.ChangeUI(randomSpell[0].IconForUI, randomSpell[1].IconForUI, randomSpell[0].Background, randomSpell[1].MiniIcon, reloadDuration);
+    }
+
+    public void Dispose()
+    {
+        input.Clicked -= RandomModeCast;
+        GameBattleState.BattleWon -= Disable;
+        GameBattleState.BattleLost -= Disable;
+        GameBattleState.BattleStarted -= Enable;
+        BossFightBattleState.BattleStarted -= Enable;
     }
 }

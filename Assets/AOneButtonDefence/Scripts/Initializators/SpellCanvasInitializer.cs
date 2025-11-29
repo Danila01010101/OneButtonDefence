@@ -1,12 +1,15 @@
+using System;
 using UnityEngine;
 using System.Collections;
+using Object = UnityEngine.Object;
 
-public class SpellCanvasInitializer : IGameInitializerStep
+public class SpellCanvasInitializer : IGameInitializerStep, IDisposable
 {
     private SpellCanvas _prefab;
     private IInput _input;
     private SpellCastData _data;
     private ICharacterStat _spellStat;
+    private SpellCast spellCastScript;
     public GameObject Instance { get; private set; }
 
     public SpellCanvasInitializer(SpellCanvas prefab, IInput input, SpellCastData data)
@@ -24,9 +27,14 @@ public class SpellCanvasInitializer : IGameInitializerStep
     public IEnumerator Initialize()
     {
         var spellCanvasWindow = Object.Instantiate(_prefab);
-        var spellCastScript = new SpellCast(_input, spellCanvasWindow, _data, _spellStat);
+        spellCastScript = new SpellCast(_input, spellCanvasWindow, _data, _spellStat);
         spellCanvasWindow.gameObject.SetActive(false);
         Instance = spellCanvasWindow.gameObject;
         yield break;
+    }
+    
+    public void Dispose()
+    {
+        spellCastScript?.Dispose();
     }
 }
