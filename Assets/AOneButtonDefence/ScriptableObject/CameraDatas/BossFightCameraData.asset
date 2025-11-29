@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8839f9aa92ee6e44db41b619c60b7d2b, type: 3}
   m_Name: BossFightCameraData
   m_EditorClassIdentifier: 
-  <StartCameraTargetPosition>k__BackingField: {x: 156.8828, y: 1, z: 155.74223}
+  <StartCameraTargetPosition>k__BackingField: {x: 0, y: 3.33, z: 5.37}
   <DialogCameraPrefab>k__BackingField: {fileID: 4628187216870136747, guid: 9d5b8bbf672665043a78c246f712a482, type: 3}
   <DialogCameraPosition>k__BackingField: {x: 0, y: 3.33, z: 5.37}
   <DialogCameraEulerAngles>k__BackingField: {x: 25, y: 180, z: 0}

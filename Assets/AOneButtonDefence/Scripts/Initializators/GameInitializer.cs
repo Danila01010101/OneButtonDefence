@@ -300,8 +300,8 @@ public class GameInitializer : MonoBehaviour
 
         SpellCanvasInitializer spellCanvasInit = new SpellCanvasInitializer(spellCanvas, input, spellCastData);
 
-        BattleEvents battleEvents = new BattleEvents(GameBattleState.BattleStarted, GameBattleState.EnemiesDefeated);
-        disposables.Add(battleEvents);
+        BattleEvents battleEvents = new BattleEvents();
+        
         PlayerControllerInitializer.PlayerControllerInitializerData playerInitializeData =
             new PlayerControllerInitializer.PlayerControllerInitializerData(
                 gameData.PlayerUnit,

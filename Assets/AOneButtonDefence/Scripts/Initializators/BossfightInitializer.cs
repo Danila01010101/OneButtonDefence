@@ -53,8 +53,7 @@ public class BossfightInitializer : MonoBehaviour
         yield return spellInit.Initialize();
         spellCanvasInstance = spellInit.Instance.GetComponent<SpellCanvas>();
 
-        var battleEvents = new BattleEvents(BossFightBattleState.BattleStarted, BossFightBattleState.EnemiesDefeated);
-        disposables.Add(battleEvents);
+        var battleEvents = new BattleEventsForBossFight();
 
         var playerData = new PlayerControllerInitializer.PlayerControllerInitializerData(
             gameData.PlayerUnit,
