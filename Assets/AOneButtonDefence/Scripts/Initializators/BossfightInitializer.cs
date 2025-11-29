@@ -76,11 +76,11 @@ public class BossfightInitializer : MonoBehaviour
         yield return spellCanvasInit.Initialize();
         spellCanvasInstance = spellCanvasInit.Instance.GetComponent<SpellCanvas>();
         
-        CameraMovementInitializer cameraMovementInit = new CameraMovementInitializer(virtualCameraPrefab, null, input, cameraData);
-        yield return cameraMovementInit.Initialize();
-        
         DialogCameraInitializer dialogCameraInit = new DialogCameraInitializer(cameraData);
         yield return dialogCameraInit.Initialize();
+        
+        CameraMovementInitializer cameraMovementInit = new CameraMovementInitializer(virtualCameraPrefab, initializedObjectsParent, input, cameraData);
+        yield return cameraMovementInit.Initialize();
 
         var bossFightStateMachineData = new BossFightStateMachine.BossFightStateMachineData(gameData, input as IDisableableInput, spellCanvasInit.Instance);
         BossFightStateMachine stateMachine = new BossFightStateMachine(bossFightStateMachineData);

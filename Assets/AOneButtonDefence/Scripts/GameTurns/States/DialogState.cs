@@ -42,7 +42,6 @@ public class DialogState : IState
         input.Enable();
         RemoveDialogCanvas();
         
-        
         if (isDialogAnimatable)
         {
             resourceWindow?.gameObject.SetActive(true);

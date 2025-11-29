@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BossFightBattleState : IState
@@ -18,7 +20,7 @@ public class BossFightBattleState : IState
     
     public void Enter()
     {
-        BattleStarted?.Invoke();
+        CoroutineStarter.Instance.StartCoroutine(NotifyBattleStartedWithDelay());
         battleCanvas.gameObject.SetActive(true);
     }
 
@@ -48,4 +50,10 @@ public class BossFightBattleState : IState
     public void OnAnimationExitEvent() { }
 
     public void OnAnimationTransitionEvent() { }
+
+    private IEnumerator NotifyBattleStartedWithDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        BattleStarted?.Invoke();
+    }
 }
