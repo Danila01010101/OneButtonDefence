@@ -34,6 +34,12 @@ public class BossfightInitializer : MonoBehaviour
 
     private IEnumerator Initialize()
     {
+        var initializedObjectsParent = new GameObject("Spawned Objects").transform;
+        initializedObjectsParent.position = Vector3.zero;
+        
+        CoroutineStarterInitializer coroutineStarterInit = new CoroutineStarterInitializer(initializedObjectsParent);
+        yield return coroutineStarterInit.Initialize();
+        
         var inputInit = new InputInitializer(gameData);
         yield return inputInit.Initialize();
         input = inputInit.Input;
