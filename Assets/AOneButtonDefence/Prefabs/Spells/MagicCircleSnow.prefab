@@ -4974,7 +4974,7 @@ MonoBehaviour:
   _circle: {fileID: 8882113704686617758}
   _sides: {fileID: 7930555515864218120}
   _light: {fileID: 4740997105069076455}
-  _sparks: {fileID: 2847536582546483101}
+  _sparks: {fileID: 4740997105069076455}
   _flakes: {fileID: 5796981705856913094}
 --- !u!1 &752924527410124756
 GameObject:
@@ -19700,7 +19700,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068397828190230244}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -63887,8 +63887,8 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6118975762399359572}
   serializedVersion: 8
-  lengthInSec: 5
-  simulationSpeed: 1
+  lengthInSec: 2
+  simulationSpeed: 8
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
