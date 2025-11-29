@@ -39,12 +39,6 @@ public class BossfightInitializer : MonoBehaviour
         input = inputInit.Input;
         disableableInput = inputInit.DisableableInput;
         
-        CameraMovementInitializer cameraMovementInit = new CameraMovementInitializer(virtualCameraPrefab, null, input, cameraData);
-        yield return cameraMovementInit.Initialize();
-        
-        DialogCameraInitializer dialogCameraInit = new DialogCameraInitializer(cameraData);
-        yield return dialogCameraInit.Initialize();
-        
         var musicInit = new MusicPlayerInitializer(transform, musicData);
         yield return musicInit.Initialize();
         backgroundMusic = musicInit.BackgroundPlayer;
@@ -74,6 +68,12 @@ public class BossfightInitializer : MonoBehaviour
         playerInitializerObj = playerInitializer;
         yield return playerInitializer.Initialize(spellInit);
         disposables.Add(playerInitializer);
+        
+        CameraMovementInitializer cameraMovementInit = new CameraMovementInitializer(virtualCameraPrefab, null, input, cameraData);
+        yield return cameraMovementInit.Initialize();
+        
+        DialogCameraInitializer dialogCameraInit = new DialogCameraInitializer(cameraData);
+        yield return dialogCameraInit.Initialize();
 
         var bossFightStateMachineData = new BossFightStateMachine.BossFightStateMachineData(gameData, input as IDisableableInput);
         BossFightStateMachine stateMachine = new BossFightStateMachine(bossFightStateMachineData);
