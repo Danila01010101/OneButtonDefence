@@ -9,13 +9,16 @@ public class BossFightBattleState : IState
     private string enemyTag;
     private string gnomeTag;
     private GameObject battleCanvas;
+    private UnitsFactory unitsFactory;
     
     public static Action BattleStarted;
     public static Action EnemiesDefeated;
 
-    public BossFightBattleState(GameObject battleCanvas)
+    public BossFightBattleState(BossFightBattleStateData battleStateData)
     {
-        this.battleCanvas = battleCanvas;
+        battleCanvas = battleStateData.BattleCanvas;
+        unitsFactory = new UnitsFactory(battleStateData.EnemiesData.enemies, battleStateData.Detector, battleStateData.EnemyLayer, battleStateData.EnemyTag);
+        unitsFactory.SpawnUnit<DragonUnit>(battleStateData.DragonSpawnPosition);
     }
     
     public void Enter()

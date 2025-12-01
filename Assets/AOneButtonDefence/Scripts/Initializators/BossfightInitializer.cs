@@ -8,11 +8,13 @@ public class BossfightInitializer : MonoBehaviour
 {
     [Header("Data")]
     [SerializeField] private GameData gameData;
+    [SerializeField] private EnemiesData enemiesData;
     [SerializeField] private SpellCastData spellCastData;
     [SerializeField] private CameraData cameraData;
     [SerializeField] private MusicData musicData;
     [SerializeField] private Transform playerSpawnPoint;
     [SerializeField] private SpellCanvas spellCanvas;
+    [SerializeField] private Vector3 bossSpawnPoint;
 
     [Header("Prefabs")]
     [SerializeField] private Cinemachine.CinemachineVirtualCamera virtualCameraPrefab;
@@ -51,6 +53,14 @@ public class BossfightInitializer : MonoBehaviour
         backgroundMusic = musicInit.BackgroundPlayer;
         upgradeEffectPlayer = musicInit.UpgradeEffectPlayer;
         backgroundMusic?.StartLoadingMusic();
+        
+        var startAudioSources = new List<AudioSource>();
+        
+        var bgSource = backgroundMusic?.GetSource();
+        if (bgSource != null) startAudioSources.Add(bgSource);
+        
+        VolumeChangerInitializer volumeChangerInit = new VolumeChangerInitializer(null, startAudioSources, musicData.StartValue);
+        yield return volumeChangerInit.Initialize();
 
         var mediator = new MusicMediatorInitializer(backgroundMusic, upgradeEffectPlayer);
         yield return mediator.Initialize();
@@ -81,8 +91,12 @@ public class BossfightInitializer : MonoBehaviour
         
         CameraMovementInitializer cameraMovementInit = new CameraMovementInitializer(virtualCameraPrefab, initializedObjectsParent, input, cameraData);
         yield return cameraMovementInit.Initialize();
+        
+        IEnemyDetector gnomeDetector = null;
+        gnomeDetector = new UnitDetector(gameData.WorldSize, LayerMask.GetMask(gameData.GnomeLayerName), 1f, gameData.DefaultStoppingDistance);
 
-        var bossFightStateMachineData = new BossFightStateMachine.BossFightStateMachineData(gameData, input as IDisableableInput, spellCanvasInit.Instance);
+        var bossFightStateMachineData = new BossFightStateMachine.BossFightStateMachineData(gameData, input as IDisableableInput, spellCanvasInit.Instance, enemiesData, 
+            gameData.EnemyTag, gnomeDetector, LayerMask.GetMask(gameData.EnemyLayerName), bossSpawnPoint);
         BossFightStateMachine stateMachine = new BossFightStateMachine(bossFightStateMachineData);
 
         initialized = true;
