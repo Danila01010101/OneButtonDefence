@@ -2091,7 +2091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd70eafa6c4c4a49a86763df9e5ef68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sequenceConfig: {fileID: 0}
+  sequenceConfig: {fileID: 11400000, guid: be45fd422b20de545b66fa03013b67b9, type: 2}
   pointerTarget: {fileID: 7271215697860120901}
   message: "\u0412\u043E\u0442 \u0442\u0443\u0442 \u0433\u043B\u044F\u043D\u0435\u0448\u044C,
     \u043A\u0430\u043A \u043F\u0440\u0430\u0432\u0438\u0442\u044C \u043A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E\u043C.

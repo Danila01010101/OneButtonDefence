@@ -195,7 +195,18 @@ public class GameplayCanvas : MonoBehaviour
         spawnedSettingsWindow.gameObject.SetActive(value);
         SetGameplayUIActive(!value);
     }
+    
+    public void DetectShopWindow(ClosableWindow window)
+    {
+        spawnedShopWindow = window;
 
+        shopOpenButton.onClick.RemoveAllListeners();
+        shopOpenButton.onClick.AddListener(() => SetShopWindowActive(true));
+
+        if (spawnedShopWindow != null)
+            spawnedShopWindow.AddCloseListener(() => SetShopWindowActive(false));
+    }
+    
     private void SetShopWindowActive(bool value)
     {
         if (spawnedShopWindow == null) return;
