@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fire
   m_EditorClassIdentifier: 
   time: 2
-  timePerDamage: 1.3
+  timePerDamage: 1.15
   damage: 150
   effect:
     <Resource>k__BackingField: {fileID: 0}
