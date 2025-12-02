@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour, IDamagable
 {
     [SerializeField] private PlayerHealthbar healthbar;
+    [SerializeField] private float floorYPosition;
     
     private PlayerControllerData data;
     private Transform cameraTransform;
@@ -134,6 +135,11 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         controller.Move(moveDirection.normalized * (data.MoveSpeed * Time.deltaTime));
         controller.SimpleMove(gravityDirection * (Physics.gravity.y * Time.deltaTime));
+        
+        if (transform.position.y < floorYPosition)
+        {
+            transform.position = new Vector3(transform.position.x, floorYPosition, transform.position.z);
+        }
     }
 
     private void OnTriggerEnter(Collider other) => effectReceiver.OnTriggerEnter(other);
