@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 public class SpellCast : IDisposable
@@ -69,6 +70,9 @@ public class SpellCast : IDisposable
 
     private void RandomModeCast(Vector2 position)
     {
+        if (IsClickOnUI())
+            return;
+        
         Ray ray = Camera.main.ScreenPointToRay(position);
         RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity);
         
@@ -95,6 +99,20 @@ public class SpellCast : IDisposable
         isReloading = true;
         yield return new WaitForSeconds(reloadDuration * ((100 - stat.Value) / 100));
         isReloading = false;
+    }
+
+    private bool IsClickOnUI()
+    {
+        if (EventSystem.current == null)
+            return false;
+
+        if (EventSystem.current.IsPointerOverGameObject())
+            return true;
+
+        if (EventSystem.current.IsPointerOverGameObject(0))
+            return true;
+
+        return false;
     }
 
     public void AddNextSpell()
