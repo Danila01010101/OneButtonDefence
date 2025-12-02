@@ -282,9 +282,6 @@ public class GameInitializer : MonoBehaviour
         InfoCanvasInitializer infoCanvasInit = new InfoCanvasInitializer(infoCanvas, upgradeCanvas);
         yield return SafeStep("InfoCanvasInitializer", () => infoCanvasInit.Initialize());
 
-        VolumeChangerInitializer volumeChangerInit = new VolumeChangerInitializer(upgradeCanvas, startAudioSources, musicData.StartValue);
-        yield return SafeStep("VolumeChangerInitializer", () => volumeChangerInit.Initialize());
-
         IEnemyDetector gnomeDetector = null;
         try { gnomeDetector = new UnitDetector(gameData.WorldSize, LayerMask.GetMask(gameData.GnomeLayerName), 1f, gameData.DefaultStoppingDistance); } catch { gnomeDetector = null; }
 
@@ -344,8 +341,12 @@ public class GameInitializer : MonoBehaviour
         ShopSkinWindowInitializer shopSkinInit = new ShopSkinWindowInitializer(shopSkinWindow, upgradeCanvas != null ? upgradeCanvas.transform : null, input);
         yield return SafeStep("ShopSkinWindowInitializer", () => shopSkinInit.Initialize());
         shopSkinInit.SetWindowsConnection(upgradeCanvasInit.CanvasInstance);
+        startAudioSources.Add(shopSkinInit.ShopWindowInstance.SkinsAudioSource);
 
         yield return null;
+
+        VolumeChangerInitializer volumeChangerInit = new VolumeChangerInitializer(upgradeCanvas, startAudioSources, musicData.StartValue);
+        yield return SafeStep("VolumeChangerInitializer", () => volumeChangerInit.Initialize());
 
         try { GameInitialized?.Invoke(); } catch { }
         isSerializationCompleted = true;

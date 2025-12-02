@@ -9,6 +9,8 @@ public class ShopSkinWindowInitializer : IGameInitializerStep
     private Transform _parent;
     private IInput _input;
 
+    public SkinPanel ShopWindowInstance => shopWindow;
+
     public ShopSkinWindowInitializer(SkinPanel prefab, Transform parent, IInput input)
     {
         _prefab = prefab;
