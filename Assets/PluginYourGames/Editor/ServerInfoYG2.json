@@ -8,20 +8,20 @@
     "modules": [
         {
             "name": "PluginYG2",
-            "version": "2.005",
+            "version": "2.007",
             "download": "https://max-games.ru/public/pluginYG2/other/PluginYG2.unitypackage",
             "doc": "https://max-games.ru/plugin-yg/doc/"
         },
         {
             "name": "YandexGames",
-            "version": "1.004",
+            "version": "1.007",
             "download": "https://max-games.ru/public/pluginYG2/platforms/YandexGames.unitypackage",
             "doc": "https://max-games.ru/plugin-yg/yandexgames/",
             "platform": true
         },
         {
             "name": "CrazyGames",
-            "version": "1.03",
+            "version": "1.041",
             "download": "https://boosty.to/maximalist/posts/75f8b5d7-6d88-4de7-a94d-e27750bc445d?share=post_link",
             "noLoad": true,
             "doc": "https://max-games.ru/crazy/",
@@ -44,6 +44,14 @@
             "platform": true
         },
         {
+            "name": "GameDistribution",
+            "version": "1.0",
+            "download": "https://boosty.to/maximalist/posts/fb6407c1-b9f3-45f2-997c-db05fa36c0c9",
+            "noLoad": true,
+            "doc": "https://max-games.ru/game-distribution/",
+            "platform": true
+        },
+        {
             "name": "InterstitialAdv",
             "version": "1.01",
             "download": "https://max-games.ru/public/pluginYG2/modules/InterstitialAdv.unitypackage",
@@ -51,7 +59,7 @@
         },
         {
             "name": "RewardedAdv",
-            "version": "1.01",
+            "version": "1.011",
             "download": "https://max-games.ru/public/pluginYG2/modules/RewardedAdv.unitypackage",
             "doc": "https://max-games.ru/plugin-yg/doc/reward-ad/"
         },
@@ -96,7 +104,7 @@
         },
         {
             "name": "Localization",
-            "version": "1.0011",
+            "version": "1.01",
             "download": "https://max-games.ru/public/pluginYG2/modules/Localization.unitypackage",
             "doc": "https://max-games.ru/plugin-yg/doc/lang/"
         },
@@ -115,7 +123,7 @@
         },
         {
             "name": "Metrica",
-            "version": "1.01",
+            "version": "1.02",
             "download": "https://max-games.ru/public/pluginYG2/modules/Metrica.unitypackage",
             "doc": "https://max-games.ru/plugin-yg/doc/metrica/"
         },
