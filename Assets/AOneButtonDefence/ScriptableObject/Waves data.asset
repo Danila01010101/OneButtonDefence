@@ -21,231 +21,84 @@ MonoBehaviour:
       startAmount: 2
       growthPerWave: 1
       growthType: 0
-      maxWave: 60
+      maxWave: 200
       customSpawnInterval: 0.2
-      randomVariancePercent: 45.5
-  - spawnInterval: 0.8
+      randomVariancePercent: 50
+    - isEnabled: 1
+      EnemyPrefab: {fileID: -4759624641507810172, guid: 185a3dbff5ad8eb4d85b94761469bdc0, type: 3}
+      startWave: 3
+      startAmount: 2
+      growthPerWave: 0
+      growthType: 0
+      maxWave: 200
+      customSpawnInterval: 0.2
+      randomVariancePercent: 35.8
+  - spawnInterval: 0.3
     enemiesToGenerate:
     - isEnabled: 1
       EnemyPrefab: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
-      startWave: 0
-      startAmount: 1
+      startWave: 7
+      startAmount: 5
+      growthPerWave: 2
+      growthType: 0
+      maxWave: 200
+      customSpawnInterval: 0.6
+      randomVariancePercent: 35.8
+    - isEnabled: 1
+      EnemyPrefab: {fileID: -4759624641507810172, guid: 185a3dbff5ad8eb4d85b94761469bdc0, type: 3}
+      startWave: 7
+      startAmount: 2
+      growthPerWave: 2
+      growthType: 0
+      maxWave: 200
+      customSpawnInterval: 0.6
+      randomVariancePercent: 35.8
+  - spawnInterval: 1
+    enemiesToGenerate:
+    - isEnabled: 1
+      EnemyPrefab: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+      startWave: 12
+      startAmount: 5
+      growthPerWave: 2
+      growthType: 0
+      maxWave: 200
+      customSpawnInterval: 0.8
+      randomVariancePercent: 40
+    - isEnabled: 1
+      EnemyPrefab: {fileID: -4759624641507810172, guid: 185a3dbff5ad8eb4d85b94761469bdc0, type: 3}
+      startWave: 12
+      startAmount: 4
+      growthPerWave: 2
+      growthType: 0
+      maxWave: 200
+      customSpawnInterval: 2
+      randomVariancePercent: 30
+  - spawnInterval: 1
+    enemiesToGenerate:
+    - isEnabled: 1
+      EnemyPrefab: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+      startWave: 16
+      startAmount: 2
       growthPerWave: 1
       growthType: 0
-      maxWave: 60
-      customSpawnInterval: 0.2
-      randomVariancePercent: 45.5
-  - spawnInterval: 0.8
-    enemiesToGenerate:
+      maxWave: 200
+      customSpawnInterval: 0.8
+      randomVariancePercent: 60
     - isEnabled: 1
-      EnemyPrefab: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
-      startWave: 0
-      startAmount: 1
-      growthPerWave: 1
+      EnemyPrefab: {fileID: -4759624641507810172, guid: 185a3dbff5ad8eb4d85b94761469bdc0, type: 3}
+      startWave: 16
+      startAmount: 2
+      growthPerWave: 2
       growthType: 0
-      maxWave: 60
-      customSpawnInterval: 0.2
-      randomVariancePercent: 45.5
-  - spawnInterval: 0.8
-    enemiesToGenerate:
+      maxWave: 200
+      customSpawnInterval: 2
+      randomVariancePercent: 20
     - isEnabled: 1
-      EnemyPrefab: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
-      startWave: 0
-      startAmount: 15
-      growthPerWave: 10
+      EnemyPrefab: {fileID: -4759624641507810172, guid: 8feedc3c226413845bce325d81c7a675, type: 3}
+      startWave: 16
+      startAmount: 3
+      growthPerWave: 2
       growthType: 0
-      maxWave: 60
-      customSpawnInterval: 0.2
-      randomVariancePercent: 45.5
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
-  - spawnInterval: 0.8
-    enemiesToGenerate: []
+      maxWave: 200
+      customSpawnInterval: 5
+      randomVariancePercent: 40
