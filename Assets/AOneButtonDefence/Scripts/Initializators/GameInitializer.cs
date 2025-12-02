@@ -5,8 +5,7 @@ using AOneButtonDefence.Scripts;
 using AOneButtonDefence.Scripts.Initializators;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
+using UnityEngine.Serialization; 
 
 public class GameInitializer : MonoBehaviour
 {
@@ -39,6 +38,7 @@ public class GameInitializer : MonoBehaviour
     private IInput input;
     private IDisableableInput disableableInput;
     private GameStateMachine gameStateMachine;
+    private RendererDisabler rendererDisabler;
     private readonly List<IDisposable> disposables = new List<IDisposable>();
 
     private IEnumerator SafeStep(string name, Func<IEnumerator> step, Action onComplete = null)
@@ -154,6 +154,11 @@ public class GameInitializer : MonoBehaviour
         yield return SafeStep("CoroutineStarterInitializer", () => coroutineStarterInit.Initialize());
 
         disposables.Add(SkinChangeDetector.Instance);
+        
+        rendererDisabler = new RendererDisabler();
+        yield return SafeStep("RendererDisabler", () => rendererDisabler.Initialize());
+        
+        disposables.Add(rendererDisabler);
 
         MusicPlayerInitializer musicPlayerInit = new MusicPlayerInitializer(initializedObjectsParent, musicData);
         yield return SafeStep("MusicPlayerInitializer", () => musicPlayerInit.Initialize(), () =>
@@ -262,12 +267,6 @@ public class GameInitializer : MonoBehaviour
         }
         catch (Exception e) { Debug.LogError($"EnemiesCountIndicator initialization failed: {e}"); }
 
-        SpellCanvasInitializer spellCanvasInit = new SpellCanvasInitializer(spellCanvas, input, spellCastData);
-        yield return SafeStep("SpellCanvasInitializer", () => spellCanvasInit.Initialize(), () =>
-        {
-            try { spellCanvasObj = spellCanvasInit.Instance; } catch { spellCanvasObj = null; }
-        });
-
         DebugCanvasInitializer debugCanvasInit = new DebugCanvasInitializer(debugCanvas, addCoinsOnStart, gameResourcesCounter, gameData.GemsResource);
         yield return SafeStep("DebugCanvasInitializer", () => debugCanvasInit.Initialize());
 
@@ -288,19 +287,10 @@ public class GameInitializer : MonoBehaviour
         InfoCanvasInitializer infoCanvasInit = new InfoCanvasInitializer(infoCanvas, upgradeCanvas);
         yield return SafeStep("InfoCanvasInitializer", () => infoCanvasInit.Initialize());
 
-        VolumeChangerInitializer volumeChangerInit = new VolumeChangerInitializer(upgradeCanvas, startAudioSources, musicData.StartValue);
-        yield return SafeStep("VolumeChangerInitializer", () => volumeChangerInit.Initialize());
-
         IEnemyDetector gnomeDetector = null;
         try { gnomeDetector = new UnitDetector(gameData.WorldSize, LayerMask.GetMask(gameData.GnomeLayerName), 1f, gameData.DefaultStoppingDistance); } catch { gnomeDetector = null; }
 
         yield return null;
-
-        StateMachineInitializer stateMachineInit = new StateMachineInitializer(gameData, enemiesData, upgradeCanvas, spellCanvasObj, worldCreator, worldGrid, disableableInput, gnomeDetector);
-        yield return SafeStep("StateMachineInitializer", () => stateMachineInit.Initialize(), () =>
-        {
-            try { gameStateMachine = stateMachineInit.Instance; } catch { gameStateMachine = null; }
-        });
 
         Vector3 playerSpawnPosition = Vector3.zero;
         try
@@ -310,7 +300,11 @@ public class GameInitializer : MonoBehaviour
         }
         catch { playerSpawnPosition = Vector3.zero; }
 
+        SpellCanvasInitializer spellCanvasInit = new SpellCanvasInitializer(spellCanvas, input, spellCastData);
+        disposables.Add(spellCanvasInit);
+
         BattleEvents battleEvents = new BattleEvents();
+        
         PlayerControllerInitializer.PlayerControllerInitializerData playerInitializeData =
             new PlayerControllerInitializer.PlayerControllerInitializerData(
                 gameData.PlayerUnit,
@@ -319,13 +313,24 @@ public class GameInitializer : MonoBehaviour
                 playerSpawnPosition,
                 battleEvents);
         PlayerControllerInitializer playerInitializer = new PlayerControllerInitializer(playerInitializeData);
-        yield return SafeStep("PlayerControllerInitializer", () => playerInitializer.Initialize(), () =>
+        yield return SafeStep("PlayerControllerInitializer", () => playerInitializer.Initialize(spellCanvasInit), () =>
         {
             try { positionForTestOrb = playerSpawnPosition; } catch { }
         });
         disposables.Add(playerInitializer);
 
         try { battleNotifier?.Subscribe(); } catch { }
+        
+        yield return SafeStep("SpellCanvasInitializer", () => spellCanvasInit.Initialize(), () =>
+        {
+            try { spellCanvasObj = spellCanvasInit.Instance; } catch { spellCanvasObj = null; }
+        });
+        
+        StateMachineInitializer stateMachineInit = new StateMachineInitializer(gameData, enemiesData, upgradeCanvas, spellCanvasObj, worldCreator, worldGrid, disableableInput, gnomeDetector);
+        yield return SafeStep("StateMachineInitializer", () => stateMachineInit.Initialize(), () =>
+        {
+            try { gameStateMachine = stateMachineInit.Instance; } catch { gameStateMachine = null; }
+        });
 
         RewardSpawnerInitializer rewardSpawnerInit = new RewardSpawnerInitializer(initializedObjectsParent, gameData);
         yield return SafeStep("RewardSpawnerInitializer", () => rewardSpawnerInit.Initialize());
@@ -343,8 +348,12 @@ public class GameInitializer : MonoBehaviour
         ShopSkinWindowInitializer shopSkinInit = new ShopSkinWindowInitializer(shopSkinWindow, upgradeCanvas != null ? upgradeCanvas.transform : null, input, rewardGemsActivator);
         yield return SafeStep("ShopSkinWindowInitializer", () => shopSkinInit.Initialize());
         shopSkinInit.SetWindowsConnection(upgradeCanvasInit.CanvasInstance);
+        startAudioSources.Add(shopSkinInit.ShopWindowInstance.SkinsAudioSource);
 
         yield return null;
+
+        VolumeChangerInitializer volumeChangerInit = new VolumeChangerInitializer(upgradeCanvas, startAudioSources, musicData.StartValue);
+        yield return SafeStep("VolumeChangerInitializer", () => volumeChangerInit.Initialize());
 
         try { GameInitialized?.Invoke(); } catch { }
         isSerializationCompleted = true;
@@ -366,6 +375,7 @@ public class GameInitializer : MonoBehaviour
 
     private void LateUpdate()
     {
+        try { rendererDisabler?.LateUpdate(); } catch { }
         try { input?.LateUpdate(); } catch { }
     }
 

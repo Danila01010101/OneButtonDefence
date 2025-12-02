@@ -3,7 +3,7 @@ using UnityEngine;
 public interface IDamagable
 {
     bool IsAlive();
-    void TakeDamage(IDamagable damagerTransform, int damage);
+    void TakeDamage(IDamagable damagerTransform, float damage);
     Transform GetTransform();
     string GetName();
 }

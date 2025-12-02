@@ -39,28 +39,16 @@ public class GameBattleState : IState
         List<BattleWavesParameters.EnemyGenerationData> enemyConfigs = (data.WavesParameters.waves.Count > 0) 
             ? data.WavesParameters.waves[0].enemiesToGenerate 
             : new List<BattleWavesParameters.EnemyGenerationData>();
-
+        
+#if UNITY_WEBGL 
+runtimeWavesParameters = WaveGenerator.GenerateWaves(data.WavesParameters, 100).Result;
+#else
         AsyncHelper.Instance.RunAsyncWithResult(
             () => WaveGenerator.GenerateWaves(data.WavesParameters, 100),
-            result =>
-            {
-                runtimeWavesParameters = result;
-
-                for (int i = 0; i < Math.Min(5, runtimeWavesParameters.Waves.Count); i++)
-                {
-                    var wave = runtimeWavesParameters.Waves[i];
-                    Debug.Log($"Wave {i + 1}, interval: {wave.SpawnInterval}");
-                    foreach (var enemy in wave.EnemiesToSpawn)
-                    {
-                        Debug.Log($"Enemy: {enemy.EnemyPrefab.name}, Amount: {enemy.Amount}, Interval: {enemy.SpawnInterval}");
-                    }
-                }
-            },
-            error =>
-            {
-                Debug.LogError("Ошибка генерации волн: " + error);
-            }
+            result => { runtimeWavesParameters = result; },
+            error => { Debug.LogError("Ошибка генерации волн: " + error); }
         );
+#endif
     }
 
     public void Enter()

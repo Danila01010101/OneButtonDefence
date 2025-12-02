@@ -8,10 +8,13 @@ public class BasicBuildingData
     [field: SerializeField] public Sprite Icon { get; private set; }
     [field: SerializeField] public string BuildingName { get; private set; }
     [field: SerializeField] public Upgrades UpgradeType { get; private set; }
+    [field: SerializeField] public bool IsRandomisable { get; private set; }
     [field: SerializeField] public Building Prefab { get; private set; }
     [field: SerializeField] public Vector3 SpawnOffset { get; private set; }
     [field: SerializeField] public List<Vector3> SpawnRotations { get; private set; }
     [field: SerializeField] public string BuildingLore { get; private set; }
+    [field: SerializeField] public StartResourceAmount buffResource { get; private set; }
+    [field: SerializeField] public string buffEffectInfo; 
     [field: SerializeField] public ResourceChangeInfo[] buildResourceChange { get; private set; }
     [field: SerializeField] public ResourceChangeInfo[] resourcePerTurnChange { get; private set; }
 
@@ -22,5 +25,6 @@ public class BasicBuildingData
         [field: SerializeField] public string ResourceDescription { get; private set; }
     }
 
-    public enum Upgrades { Farm = 0, SpiritBuilding = 1, MilitaryCamp = 2, Factory = 3, WarriorStrength = 4, SpellStrength = 5, BuildingEffectiveness = 6 }
+    public enum Upgrades { Farm = 0, SpiritBuilding = 1, MilitaryCamp = 2, Factory = 3, WarriorStrength = 4, WarriorSpeed = 6, SpellStrength = 7, BuildingEffectiveness = 5, 
+        RangeWarriors = 11, DefenceTower = 8, HealingTower = 9, ArmorTower = 10 }
 }

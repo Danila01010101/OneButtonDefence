@@ -9,8 +9,8 @@ public class DragonUnit : UnitWithGems
     protected override void InitializeStateMachine(IEnemyDetector detector)
     {
         var data = new UnitWithUltimateStateMachine.UnitWithUltimateStateMachineData(
-            transform, ultimateStats, characterStats, ultimateAnimation, navMeshComponent,
-            walkingAnimation, fightAnimation, detector, this);
+            transform, ultimateStats, statsCounter, ultimateAnimation, navMeshComponent,
+            walkingAnimation, fightAnimation, detector, this, characterStats.EnemyLayerMask);
         stateMachine = new UnitWithUltimateStateMachine(data);
     }
 }

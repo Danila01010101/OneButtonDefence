@@ -1,4 +1,5 @@
-using System; 
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
@@ -23,6 +24,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
     protected DeathAnimation deathAnimation;
     protected MaterialChanger materialChanger;
     protected AudioSource audioSource;
+    protected CharacterStatsCounter statsCounter;
 
     private bool isDead;
 
@@ -33,29 +35,52 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
         audioSource = GetComponent<AudioSource>();
         InitializeAnimationComponents();
         navMeshComponent = GetComponent<NavMeshAgent>();
-        health = new Health(characterStats.Health);
+        InitializeStats();
         health.Death += Die;
         InitializeStateMachine(detector);
         materialChanger = new MaterialChanger(this);
         materialChanger.ChangeMaterialColour(render, characterStats.StartColor, characterStats.EndColor, characterStats.FadeDuration, characterStats.Delay);
         AudioSettings.AddAudioSource(audioSource);
-        navMeshComponent.speed = characterStats.Speed;
         currentDeathSound = characterStats.DeathSound;
+    }
+
+    protected void InitializeStats()
+    {
+        statsCounter = new CharacterStatsCounter();
+        statsCounter.AddStat(ResourceData.ResourceType.WarriorHealth, new Health(characterStats.Health));
+        health = statsCounter.GetStat<Health>(ResourceData.ResourceType.WarriorHealth);
+        statsCounter.AddStat(ResourceData.ResourceType.StrengthBuff, new DefaultStat(characterStats.Damage));
+        statsCounter.AddStat(ResourceData.ResourceType.WarriorSpeed, new DefaultStat(characterStats.Speed));
+        statsCounter.AddStat(ResourceData.ResourceType.WarriorAttackSpeed, new DefaultStat(characterStats.AttackDelay));
     }
 
     protected virtual void Update()
     {
-        if (isDead) return;
-        stateMachine.Update();
+        if (isDead || stateMachine == null)
+            return;
+        
+        stateMachine?.Update();
     }
 
     protected virtual void FixedUpdate() 
     {
         if (isDead) return;
-        stateMachine.PhysicsUpdate();
+        stateMachine?.PhysicsUpdate();
     }
 
-    public virtual void TakeDamage(IDamagable damagerTransform, int damage)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isDead) return;
+        stateMachine?.OnTriggerEnter(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (isDead) return;
+        stateMachine?.OnTriggerExit(other);
+    }
+
+    public virtual void TakeDamage(IDamagable damagerTransform, float damage)
     {
         if (isDead) return;
         health.TakeDamage(damagerTransform.GetTransform(), damage);
@@ -66,12 +91,9 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
 
     public Transform GetTransform() => transform;
     
-    public string GetName()
-    {
-        return gameObject.name;
-    }
+    public string GetName() => gameObject.name;
 
-    public bool IsAlive() => health.Amount > 0;
+    public bool IsAlive() => health.Value > 0;
 
     protected virtual void InitializeAnimationComponents()
     {
@@ -83,7 +105,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
     protected virtual void InitializeStateMachine(IEnemyDetector detector)
     {
         var data = new WarriorStateMachine.WarriorStateMachineData(
-            transform, characterStats, navMeshComponent,
+            transform, statsCounter, characterStats.ChaseRange, characterStats.EnemyLayerMask, navMeshComponent,
             walkingAnimation, fightAnimation, detector, this);
         stateMachine = new WarriorStateMachine(data);
     }
@@ -99,6 +121,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
         deathAnimation.StartAnimation();
         materialChanger.ChangeMaterialColour(render, characterStats.EndColor, characterStats.StartColor, 0.5f, characterStats.Delay);
         stateMachine?.Exit();
+        stateMachine = null;
 
         if (audioSource != null && audioSource.clip != null)
         {

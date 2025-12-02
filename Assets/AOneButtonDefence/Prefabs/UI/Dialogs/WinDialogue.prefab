@@ -2001,6 +2001,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bg Win
       objectReference: {fileID: 0}
+    - target: {fileID: 5275321846587228902, guid: 7edca349b1cdb804cae95e57d79752e5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

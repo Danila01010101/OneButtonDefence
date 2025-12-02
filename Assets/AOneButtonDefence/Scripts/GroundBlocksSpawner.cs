@@ -23,7 +23,8 @@ public class GroundBlocksSpawner : MonoBehaviour
 
     private IEnumerator GenerateWorld(BuildingSpawner cellsChanger)
     {
-        blocksParent = new GameObject("Earth blocks").transform;
+        GameObject blocksParentGameObject = new GameObject("Earth blocks");
+        blocksParent = blocksParentGameObject.transform;
 
         for (int i = 0; i < grid.Size; i++)
         {

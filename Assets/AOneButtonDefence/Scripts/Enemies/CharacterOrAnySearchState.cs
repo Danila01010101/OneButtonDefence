@@ -8,8 +8,8 @@ public class CharacterOrAnySearchState : TargetSearchState
     private readonly Transform transform;
     private readonly IEnemyDetector detector;
 
-    public CharacterOrAnySearchState(TargetSearchStateData data) 
-        : base(data)
+    public CharacterOrAnySearchState(TargetSearchStateData data, CharacterStatsCounter statsCounter) 
+        : base(data, statsCounter)
     {
         var character = Object.FindObjectOfType<CharacterController>();
         
@@ -48,7 +48,6 @@ public class CharacterOrAnySearchState : TargetSearchState
         if (detectedEnemy == null)
             return;
 
-        Debug.Log("Found enemy, switching to " + detectedEnemy.gameObject.name);
         targetFollower.SetTarget(detectedEnemy, stoppingDistance);
         stateMachine.ChangeState<TargetFollowingState>();
     }

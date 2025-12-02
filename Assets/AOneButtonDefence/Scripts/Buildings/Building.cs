@@ -3,8 +3,10 @@ using UnityEngine;
 
 [RequireComponent(typeof(IAnimatable))]
 [RequireComponent(typeof(BuildAnimation))]
-public class Building : MonoBehaviour
+public class Building : MonoBehaviour, IEffectActivator
 {
+    [SerializeField] private Transform castPositionTransform;
+    
     public Vector3 BuildingOffset => data.SpawnOffset;
 
     protected BasicBuildingData data;
@@ -62,10 +64,27 @@ public class Building : MonoBehaviour
             ResourceIncomeCounter.Instance.RegisterResourcePerTurnChange(resourceAmount);
         }
     }
+    
+    public EffectCastInfo GetEffectInfo()
+    {
+        return new EffectCastInfo(data.buffResource, castPositionTransform.position);
+    }
 
     protected virtual void OnDisable()
     {
         UpgradeState.UpgradeStateStarted -= animator.StartAnimation;
         UpgradeState.UpgradeStateEnding -= animator.InteruptAnimation;
+    }
+    
+    public class EffectCastInfo
+    {
+        public Vector3 CastPosition { get; private set; }
+        public StartResourceAmount BuffResource { get; private set; }
+            
+        public EffectCastInfo(StartResourceAmount buffResource, Vector3 position)
+        {
+            CastPosition = position;
+            BuffResource = buffResource;
+        }
     }
 }

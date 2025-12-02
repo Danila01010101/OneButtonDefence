@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d1e93efdc044daa4ead7d7d766f5bf4b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -35.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d1e93efdc044daa4ead7d7d766f5bf4b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d1e93efdc044daa4ead7d7d766f5bf4b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 48
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d1e93efdc044daa4ead7d7d766f5bf4b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -59,6 +59,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d1e93efdc044daa4ead7d7d766f5bf4b, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d1e93efdc044daa4ead7d7d766f5bf4b, type: 3}
+      propertyPath: m_TagString
+      value: RenderDisableable
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d1e93efdc044daa4ead7d7d766f5bf4b, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -100,6 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3375e75a8e12ee1409c3b416e41b8c54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourceData: {fileID: 0}
 --- !u!1 &8591333710575159354 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: d1e93efdc044daa4ead7d7d766f5bf4b, type: 3}

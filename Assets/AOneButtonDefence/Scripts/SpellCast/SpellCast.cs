@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
 
-public class SpellCast
+public class SpellCast : IDisposable
 {
     private List<SpellStorage> spellStorage;
     private LayerMask spellSurfaceLayer;
@@ -14,13 +17,16 @@ public class SpellCast
     [Header("Graphic")]
     private SpellCanvas spellCanvas;
 
+    private ICharacterStat stat;
+
     private IInput input;
     private List<SpellData> randomSpell = new List<SpellData>();
     
     private bool CanCastSpell => isBattleGoing && isReloading == false;
 
-    public SpellCast(IInput input, SpellCanvas spellCanvas, SpellCastData spellCastData)
+    public SpellCast(IInput input, SpellCanvas spellCanvas, SpellCastData spellCastData, ICharacterStat spellStat)
     {
+        stat = spellStat;
         damagableTargetLayer = spellCastData.spellTargetLayer;
         this.spellCanvas = spellCanvas;
         this.input = input;
@@ -28,14 +34,12 @@ public class SpellCast
         spellStorage = spellCastData.SpellStorage;
         reloadDuration = spellCastData.reloadDuration;
         
-        if (true)
-        {
-            input.Clicked += RandomModeCast;
-            GameBattleState.BattleWon += Disable;
-            GameBattleState.BattleLost += Disable;
-            GameBattleState.BattleStarted += Enable;
-            InitilizeRandomMode();
-        }
+        input.Clicked += RandomModeCast;
+        GameBattleState.BattleWon += Disable;
+        GameBattleState.BattleLost += Disable;
+        GameBattleState.BattleStarted += Enable;
+        BossFightBattleState.BattleStarted += Enable;
+        InitilizeRandomMode();
         
         Physics.queriesHitTriggers = false;
     }
@@ -60,12 +64,15 @@ public class SpellCast
         if (spellStorage[currentChose].Count > 0 && Physics.Raycast(ray, out hit)) 
         {
             spellStorage[currentChose].Count--;
-            SpellCaster.Cast(spellStorage[currentChose].Spell.BaseMagicCircle, spellStorage[currentChose].Spell, new Vector3(hit.point.x, 1, hit.point.z), damagableTargetLayer);
+            SpellCaster.Cast(spellStorage[currentChose].Spell.BaseMagicCircle, spellStorage[currentChose].Spell, new Vector3(hit.point.x, 1, hit.point.z), damagableTargetLayer, stat.Value);
         }
     }
 
     private void RandomModeCast(Vector2 position)
     {
+        if (IsClickOnUI())
+            return;
+        
         Ray ray = Camera.main.ScreenPointToRay(position);
         RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity);
         
@@ -78,7 +85,7 @@ public class SpellCast
             {
                 Vector3 spawnPos = new Vector3(h.point.x, 1.01f, h.point.z);
                 GameObject spell = GameObject.Instantiate(randomSpell[0].BaseMagicCircle, spawnPos, Quaternion.identity);
-                spell.GetComponent<Spell>().Initialize(randomSpell[0], damagableTargetLayer);
+                spell.GetComponent<Spell>().Initialize(randomSpell[0], damagableTargetLayer, stat.Value);
                 randomSpell[0] = null;
                 AddNextSpell();
                 CoroutineStarter.Instance.StartCoroutine(Reload());
@@ -90,8 +97,22 @@ public class SpellCast
     private IEnumerator Reload()
     {
         isReloading = true;
-        yield return new WaitForSeconds(reloadDuration);
+        yield return new WaitForSeconds(reloadDuration * ((100 - stat.Value) / 100));
         isReloading = false;
+    }
+
+    private bool IsClickOnUI()
+    {
+        if (EventSystem.current == null)
+            return false;
+
+        if (EventSystem.current.IsPointerOverGameObject())
+            return true;
+
+        if (EventSystem.current.IsPointerOverGameObject(0))
+            return true;
+
+        return false;
     }
 
     public void AddNextSpell()
@@ -99,5 +120,14 @@ public class SpellCast
         randomSpell[0] = randomSpell[1];
         randomSpell[1] = spellStorage[Random.Range(0, spellStorage.Count)].Spell;
         spellCanvas.ChangeUI(randomSpell[0].IconForUI, randomSpell[1].IconForUI, randomSpell[0].Background, randomSpell[1].MiniIcon, reloadDuration);
+    }
+
+    public void Dispose()
+    {
+        input.Clicked -= RandomModeCast;
+        GameBattleState.BattleWon -= Disable;
+        GameBattleState.BattleLost -= Disable;
+        GameBattleState.BattleStarted -= Enable;
+        BossFightBattleState.BattleStarted -= Enable;
     }
 }

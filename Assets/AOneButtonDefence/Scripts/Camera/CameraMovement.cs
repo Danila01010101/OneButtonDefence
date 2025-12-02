@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
@@ -11,9 +13,12 @@ public class CameraMovement : MonoBehaviour
 
     private CinemachineVirtualCamera virtualCamera;
     private IInput input;
+
+    private float maxRotationSpeed;
     private float currentDistance;
     private float currentX;
     private float currentY;
+
     private bool isInitialized;
     private bool canMove = true;
     private bool targetChanged = false;
@@ -22,6 +27,7 @@ public class CameraMovement : MonoBehaviour
     {
         targetObject = new GameObject("CameraTarget").transform;
         target = targetObject;
+
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
         virtualCamera.Follow = target;
         virtualCamera.LookAt = targetObject;
@@ -31,6 +37,7 @@ public class CameraMovement : MonoBehaviour
 
         currentDistance = data.MaximumCameraDistance;
         target.position = data.StartCameraTargetPosition;
+        maxRotationSpeed = data.CameraRotateSpeed;
 
         Vector3 angles = transform.eulerAngles;
         currentX = angles.x;
@@ -50,8 +57,9 @@ public class CameraMovement : MonoBehaviour
             targetObject.position = Vector3.Lerp(
                 targetObject.position,
                 followTarget.position,
-                data.CameraRotationSmooth * Time.deltaTime
-            );
+                data.CameraRotationSmooth * Time.deltaTime);
+
+            ClampTargetPosition();
         }
 
         UpdateCameraPosition();
@@ -60,14 +68,23 @@ public class CameraMovement : MonoBehaviour
 
     private void UpdateCameraPosition()
     {
-        Vector3 targetPosition = target.position - (Quaternion.Euler(currentX, currentY, 0) * Vector3.forward * currentDistance);
-        transform.position = Vector3.Lerp(transform.position, targetPosition, data.CameraRotationSmooth * Time.deltaTime);
+        Vector3 targetPosition =
+            target.position - (Quaternion.Euler(currentX, currentY, 0) *
+            Vector3.forward * currentDistance);
+
+        transform.position = Vector3.Lerp(
+            transform.position,
+            targetPosition,
+            data.CameraRotationSmooth * Time.deltaTime);
     }
 
     private void UpdateCameraRotation()
     {
         Quaternion targetRotation = Quaternion.Euler(currentX, currentY, 0f);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, data.CameraRotationSmooth * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation,
+            targetRotation,
+            data.CameraRotationSmooth * Time.deltaTime);
 
         targetObject.rotation = transform.rotation;
     }
@@ -78,8 +95,14 @@ public class CameraMovement : MonoBehaviour
 
         direction *= data.CameraRotateSpeed;
         direction.y = -direction.y;
-        currentY += direction.x;
-        currentX = Mathf.Clamp(currentX + direction.y, data.MinimumXAngle, data.MaximumXAngle);
+
+        float maxDelta = data.MaxRotationSpeed * Time.deltaTime;
+
+        float deltaY = Mathf.Clamp(direction.x, -maxDelta, maxDelta);
+        float deltaX = Mathf.Clamp(direction.y, -maxDelta, maxDelta);
+
+        currentY += deltaY;
+        currentX = Mathf.Clamp(currentX + deltaX, data.MinimumXAngle, data.MaximumXAngle);
     }
 
     private void MoveCamera(Vector3 moveDirection)
@@ -96,7 +119,10 @@ public class CameraMovement : MonoBehaviour
         right.Normalize();
 
         Vector3 movement = (forward * moveDirection.z + right * moveDirection.x) * data.CameraMovementSpeed;
+
         target.position += movement;
+
+        ClampTargetPosition();
     }
 
     private void ChangeHeight(float heightAxis)
@@ -127,15 +153,28 @@ public class CameraMovement : MonoBehaviour
     private void EnableCameraTargetMovement() => canMove = true;
     private void DisableCameraTargetMovement() => canMove = false;
 
+    private void ClampTargetPosition()
+    {
+        Vector3 pos = target.position;
+
+        pos.x = Mathf.Clamp(pos.x, data.LimitX.x, data.LimitX.y);
+        pos.z = Mathf.Clamp(pos.z, data.LimitZ.x, data.LimitZ.y);
+
+        target.position = pos;
+    }
+
     private void Subscribe()
     {
         input.Moved += MoveCamera;
         input.Rotated += RotateCamera;
         input.Scroll += ChangeHeight;
+
         DialogState.AnimatableDialogueStarted += DisableCameraTargetMovement;
         DialogState.AnimatableDialogueEnded += EnableCameraTargetMovement;
+
         SkinPanel.ShopEnabled += DisableCameraTargetMovement;
         SkinPanel.ShopDisabled += EnableCameraTargetMovement;
+
         PlayerController.CharacterEnabled += ChangeTarget;
         PlayerController.CharacterDisabled += ResetTarget;
     }
@@ -145,10 +184,13 @@ public class CameraMovement : MonoBehaviour
         input.Moved -= MoveCamera;
         input.Rotated -= RotateCamera;
         input.Scroll -= ChangeHeight;
+
         DialogState.AnimatableDialogueStarted -= DisableCameraTargetMovement;
         DialogState.AnimatableDialogueEnded -= EnableCameraTargetMovement;
+
         SkinPanel.ShopEnabled -= DisableCameraTargetMovement;
         SkinPanel.ShopDisabled -= EnableCameraTargetMovement;
+
         PlayerController.CharacterEnabled -= ChangeTarget;
         PlayerController.CharacterDisabled -= ResetTarget;
     }

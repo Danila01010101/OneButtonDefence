@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ResourceCounterInitializer : IGameInitializerStep
+public class ResourceCounterInitializer : IGameInitializerStep 
 {
     private Transform _parent;
     private GameData _gameData;

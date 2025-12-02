@@ -12,6 +12,7 @@ public class SkinPanel : MonoBehaviour
     [SerializeField] private ShopSkinShower exampleSkinShowerPrefab;
     [SerializeField] private Vector3 exampleSkinChangerPosition;
     [SerializeField] private Vector3 exampleSkinChangerEulerAngles;
+    [SerializeField] private AudioSource audioSource;
     [Header("Скины")]
     public List<SkinData> SkinList = new List<SkinData>();
     public int CurrentChose;
@@ -38,6 +39,7 @@ public class SkinPanel : MonoBehaviour
     public static Action ShopDisabled;
 
     public static ClosableWindow CurrentShopWindow { get; private set; }
+    public AudioSource SkinsAudioSource => audioSource;
 
     private bool firstRewardTaken;
     private ShopSkinShower spawnedShopSkinShower;

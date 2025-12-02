@@ -2,13 +2,13 @@ using System;
 using AOneButtonDefence.Scripts.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour, IDamagable
 {
     [SerializeField] private PlayerHealthbar healthbar;
+    [SerializeField] private float floorYPosition;
     
     private PlayerControllerData data;
     private Transform cameraTransform;
@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour, IDamagable
     private PlayerInput playerInput;
     private Vector2 moveInput;
     private Health health;
+    private CharacterStatsCounter stats;
+    private EffectReceiver effectReceiver;
+    private PlayerEffectsHandler effectsHandler;
+    private CapsuleCollider capsuleCollider;
     
     private readonly Vector3 gravityDirection = Vector3.down;
 
@@ -25,27 +29,44 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void Awake()
     {
+        capsuleCollider = GetComponent<CapsuleCollider>();
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         if (cameraTransform == null) Debug.Log("No camera have been assigned for character movement, used main camera.");
         cameraTransform = cameraTransform == null ? Camera.main.transform : cameraTransform;
+    }
 
-        playerInput.actions["Move"].performed += OnMove;
-        playerInput.actions["Move"].canceled += OnMove;
+    public void BindSpellStat(SpellCanvasInitializer spellCanvasInitializer)
+    {
+        spellCanvasInitializer.SetSpellStat(stats.GetStat<ICharacterStat>(ResourceData.ResourceType.SpellsStrength));
     }
 
     public void Initialize(PlayerControllerData data, Camera camera)
     {
         this.data = data;
         cameraTransform = camera.transform;
-        health = new Health(data.StartHealth);
+        InitializeStats();
+        health = stats.GetStat<Health>(ResourceData.ResourceType.WarriorHealth);
+        
+        effectsHandler = gameObject.AddComponent<PlayerEffectsHandler>();
+        effectsHandler.Initialize(stats);
+
+        effectReceiver = new EffectReceiver(effectsHandler, transform, stats);
+        
         healthbar.Initialize(health, camera);
         health.Death += NotifyOfPlayerDeath;
     }
 
-    public bool IsAlive() => health.Amount > 0;
+    private void InitializeStats()
+    {
+        stats = new CharacterStatsCounter();
+        stats.AddStat(ResourceData.ResourceType.WarriorHealth, new Health(data.StartHealth));
+        stats.AddStat(ResourceData.ResourceType.SpellsStrength, new DefaultStat(0));
+    }
 
-    public void TakeDamage(IDamagable damagerTransform, int damage) => health.TakeDamage(damagerTransform.GetTransform(), damage);
+    public bool IsAlive() => health.Value > 0;
+
+    public void TakeDamage(IDamagable damagerTransform, float damage) => health.TakeDamage(damagerTransform.GetTransform(), damage);
     
     public Transform GetTransform() => transform;
     
@@ -83,8 +104,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void OnDestroy()
     {
-        playerInput.actions["Move"].performed -= OnMove;
-        playerInput.actions["Move"].canceled -= OnMove;
         health.Death -= NotifyOfPlayerDeath;
     }
 
@@ -116,5 +135,43 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         controller.Move(moveDirection.normalized * (data.MoveSpeed * Time.deltaTime));
         controller.SimpleMove(gravityDirection * (Physics.gravity.y * Time.deltaTime));
+        
+        if (transform.position.y < floorYPosition)
+        {
+            transform.position = new Vector3(transform.position.x, floorYPosition, transform.position.z);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) => effectReceiver.OnTriggerEnter(other);
+
+    private void OnTriggerExit(Collider other) => effectReceiver.OnTriggerExit(other);
+
+    private void OnEnable()
+    {
+        playerInput.ActivateInput();
+        var moveAction = playerInput.actions.FindAction("Move");
+        
+        if (moveAction != null)
+        {
+            moveAction.performed += OnMove;
+            moveAction.canceled += OnMove;
+        }
+        else
+        {
+            Debug.LogError("Move action not found in Input Actions!");
+        }
+    }
+
+    private void OnDisable()
+    {
+        effectsHandler.ResetAllEffects();
+        playerInput.DeactivateInput();
+        var moveAction = playerInput.actions.FindAction("Move");
+        
+        if (moveAction != null)
+        {
+            moveAction.performed -= OnMove;
+            moveAction.canceled -= OnMove;
+        }
     }
 }

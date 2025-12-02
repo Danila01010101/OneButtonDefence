@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,9 +6,10 @@ using UnityEngine.UI;
 
 public class GameplayCanvas : MonoBehaviour
 {
-    [field : SerializeField] public GameObject ResourceInfo { get; private set; }
-    [field : SerializeField] public GameObject UpgradeWindow { get; private set; }
-    [field : SerializeField] public EnemiesCountIndicator EnemiesCountIndicator { get; private set; }
+    [field: SerializeField] public GameObject ResourceInfo { get; private set; }
+    [field: SerializeField] public GameObject UpgradeWindow { get; private set; }
+    [field: SerializeField] public EnemiesCountIndicator EnemiesCountIndicator { get; private set; }
+
     [SerializeField] private UIInfoButton partPrefab;
     [SerializeField] private UIInfoPanel infoPanel;
     [SerializeField] private TextMeshProUGUI iconsText;
@@ -20,109 +19,54 @@ public class GameplayCanvas : MonoBehaviour
     [SerializeField] private Button shopOpenButton;
     [SerializeField] private Button settingsOpenButton;
     [SerializeField] private StatisticViewInitializer statisticViewInitializer;
+    [SerializeField] private int randomBuildingsCount = 2;
 
     private UnityAction shopWindowHandler;
     private UnityAction settingsWindowHandler;
     private ClosableWindow spawnedShopWindow;
     private ClosableWindow spawnedSettingsWindow;
-    private int partPlacingInterval = 0;
-    private float startButtonsAmount;
+    private RandomBuildingsSelector buildingsSelector;
+
     private List<UIInfoButton> parts = new List<UIInfoButton>();
     private List<ButtonChooseAnimation> partsAnimators = new List<ButtonChooseAnimation>();
+    private List<BasicBuildingData> currentSelection = new List<BasicBuildingData>();
+
     private int lastKey = -1;
     private int beforLastKey = -1;
     private int howManyChois = 0;
 
-    [field : SerializeField] public AudioSettings AudioSettings { get; private set; }
+    [field: SerializeField] public AudioSettings AudioSettings { get; private set; }
 
     public UpgradeButton UpgradeButton => upgradeButton;
 
     public void Initialize(int partsAmount, BuildingsData buildingsData)
     {
-        statisticViewInitializer.Initialize(ResourceData.ResourceType.Food, ResourceData.ResourceType.Warrior, ResourceData.ResourceType.Spirit, ResourceData.ResourceType.Material, ResourceData.ResourceType.Gem);
+        statisticViewInitializer.Initialize(
+            ResourceData.ResourceType.Food,
+            ResourceData.ResourceType.Warrior,
+            ResourceData.ResourceType.Spirit,
+            ResourceData.ResourceType.Material,
+            ResourceData.ResourceType.Gem);
+
         iconsText.text = "Выберите 2 здания для строительства.";
+        buildingsSelector = new RandomBuildingsSelector(buildingsData.Buildings);
+
+        SpawnNewBuildingsSet();
+    }
+
+    private void ChoosePart(int index)
+    {
+        if (index < 0 || index >= partsAnimators.Count) return;
         
-        if (partsAmount % 2 == 0)
-        {
-            partPlacingInterval = 50;
-            startButtonsAmount = partsAmount / 2;
-
-            for (int i = 0; i < startButtonsAmount; i++)
-            {
-                SpawnButton(partPlacingInterval);
-                partPlacingInterval = partPlacingInterval + buttonsDistance / 2;
-                
-                SpawnButton(-partPlacingInterval);
-                partPlacingInterval = partPlacingInterval + buttonsDistance / 2;
-            }
-        }
-        else
-        {
-            SpawnButton(0);
-
-            startButtonsAmount = (partsAmount - 1) / 2;
-            partPlacingInterval = buttonsDistance;
-
-            for (int i = 0; i < startButtonsAmount; i++)
-            {
-                SpawnButton(partPlacingInterval);
-                SpawnButton(-partPlacingInterval);
-                partPlacingInterval += buttonsDistance;
-            }
-        }
-
-        parts = parts.OrderBy(part => part.transform.position.x).ToList();
-        partsAnimators = partsAnimators.OrderBy(animator => animator.transform.position.x).ToList();
+        var data = currentSelection[index];
         
-        for (int i = 0; i < parts.Count; i++)
+        if (!HasEnoughResourcesToChoose(data))
         {
-            BasicBuildingData currentBuildingData = buildingsData.Buildings[i];
-            parts[i].Initialize(currentBuildingData, infoPanel);
-            parts[i].Button.onClick.AddListener(delegate { ChoosePart(currentBuildingData.UpgradeType); });
-            partsAnimators[i].SetIcon(currentBuildingData.Icon);
+            iconsText.text = $"Недостаточно ресурсов для выбора: {data.BuildingName}";
+            return;
         }
-        
-        if (spawnedShopWindow != null)
-            SetShopWindowActive(false);
-    }
-    
-    public void DetectSettingsWindow(ClosableWindow window)
-    {
-        spawnedSettingsWindow = window;
-        settingsOpenButton.onClick.RemoveAllListeners();
-        settingsWindowHandler = () => { SetSettingsWindowActive(true); };
-        settingsOpenButton.onClick.AddListener(settingsWindowHandler);
-        spawnedSettingsWindow.AddCloseListener(() => { SetSettingsWindowActive(false); });
-    }
 
-    public void DetectShopWindow(ClosableWindow window)
-    {
-        spawnedShopWindow = window;
-        shopOpenButton.onClick.RemoveAllListeners();
-        shopWindowHandler = () => { SetShopWindowActive(true); };
-        shopOpenButton.onClick.AddListener(shopWindowHandler);
-        spawnedShopWindow.AddCloseListener(() => { SetShopWindowActive(false); });
-    }
-    
-    private void SetShopWindowActive(bool value)
-    {
-        if (spawnedShopWindow == null) return;
-        spawnedShopWindow.gameObject.SetActive(value);
-        SetGameplayUIActive(!value);
-    }
-    
-    private void SetSettingsWindowActive(bool value)
-    {
-        if (spawnedSettingsWindow != null)
-        {
-            spawnedSettingsWindow.gameObject.SetActive(value);
-            SetGameplayUIActive(!value);
-        }
-    }
-
-    private void ChoosePart(BasicBuildingData.Upgrades index)
-    {
-        if (beforLastKey == (int)index)
+        if (beforLastKey == index)
         {
             partsAnimators[beforLastKey].SwapSprites();
             beforLastKey = -1;
@@ -130,8 +74,8 @@ public class GameplayCanvas : MonoBehaviour
             UpdateUpgradeView();
             return;
         }
-        
-        if (lastKey == (int)index)
+
+        if (lastKey == index)
         {
             partsAnimators[lastKey].SwapSprites();
             lastKey = -1;
@@ -142,21 +86,18 @@ public class GameplayCanvas : MonoBehaviour
 
         if (howManyChois >= 2)
         {
-            Debug.Log("All parts are choosen");
+            return;
         }
-        else
-        {
-            howManyChois++;
-            partsAnimators[(int)index].SwapSprites();
 
-            if (lastKey != -1)
-            {
-                beforLastKey = lastKey;
-            }
+        howManyChois++;
+        partsAnimators[index].SwapSprites();
 
-            lastKey = (int)index;
-            UpdateUpgradeView();
-        }
+        if (lastKey != -1)
+            beforLastKey = lastKey;
+
+        lastKey = index;
+
+        UpdateUpgradeView();
     }
 
     private void UpdateUpgradeView()
@@ -175,24 +116,121 @@ public class GameplayCanvas : MonoBehaviour
                 iconsText.text = "Оба здания выбраны. Ожидаем приказа!";
                 upgradeButton.Activate();
                 break;
-        } 
+        }
     }
 
-    private void SpawnButton(int placingInterval)
+    private void SpawnNewBuildingsSet()
     {
-        var spawnedButton = Instantiate(partPrefab, cellsSpawnParent.transform);
-    
-        var rect = spawnedButton.GetComponent<RectTransform>();
-        rect.anchorMin = new Vector2(0.5f, 0f);
-        rect.anchorMax = new Vector2(0.5f, 0f);
-        rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.anchoredPosition = new Vector2(placingInterval, 0f);
+        ClearPreviousButtons();
 
-        var buttonAnimation = spawnedButton.GetComponent<ButtonChooseAnimation>();
-        partsAnimators.Add(buttonAnimation);
-        parts.Add(spawnedButton);
+        currentSelection = buildingsSelector.GetSelection(randomBuildingsCount);
+
+        var spawner = new BuildingButtonsSpawner(
+            partPrefab,
+            cellsSpawnParent.transform,
+            buttonsDistance);
+
+        var spawned = spawner.Spawn(currentSelection.Count);
+
+        parts = new List<UIInfoButton>(spawned);
+        partsAnimators = new List<ButtonChooseAnimation>();
+
+        for (int i = 0; i < parts.Count; i++)
+        {
+            var data = currentSelection[i];
+            var anim = parts[i].GetComponent<ButtonChooseAnimation>();
+
+            partsAnimators.Add(anim);
+            parts[i].Initialize(data, infoPanel);
+
+            int capturedIndex = i;
+            parts[i].Button.onClick.AddListener(() => ChoosePart(capturedIndex));
+
+            anim.SetIcon(data.Icon);
+        }
+
+        UpdateUpgradeView();
+    }
+
+    private void ClearPreviousButtons()
+    {
+        foreach (Transform child in cellsSpawnParent.transform)
+            Destroy(child.gameObject);
+
+        parts.Clear();
+        partsAnimators.Clear();
+        currentSelection.Clear();
+
+        lastKey = -1;
+        beforLastKey = -1;
+        howManyChois = 0;
+    }
+
+    public void WhenButtonClicked()
+    {
+        if (lastKey == -1 || beforLastKey == -1)
+            return;
+
+        var first = currentSelection[lastKey].UpgradeType;
+        var second = currentSelection[beforLastKey].UpgradeType;
+
+        upgradeButton.UpgradeChosenPart(first, second);
     }
     
+    public void DetectSettingsWindow(ClosableWindow window)
+    {
+        spawnedSettingsWindow = window;
+
+        settingsOpenButton.onClick.RemoveAllListeners();
+        settingsOpenButton.onClick.AddListener(() => SetSettingsWindowActive(true));
+
+        if (spawnedSettingsWindow != null)
+            spawnedSettingsWindow.AddCloseListener(() => SetSettingsWindowActive(false));
+    }
+    
+    private void SetSettingsWindowActive(bool value)
+    {
+        if (spawnedSettingsWindow == null) return;
+
+        spawnedSettingsWindow.gameObject.SetActive(value);
+        SetGameplayUIActive(!value);
+    }
+    
+    public void DetectShopWindow(ClosableWindow window)
+    {
+        spawnedShopWindow = window;
+
+        shopOpenButton.onClick.RemoveAllListeners();
+        shopOpenButton.onClick.AddListener(() => SetShopWindowActive(true));
+
+        if (spawnedShopWindow != null)
+            spawnedShopWindow.AddCloseListener(() => SetShopWindowActive(false));
+    }
+    
+    private void SetShopWindowActive(bool value)
+    {
+        if (spawnedShopWindow == null) return;
+
+        spawnedShopWindow.gameObject.SetActive(value);
+        SetGameplayUIActive(!value);
+    }
+
+    private void OnEnable()
+    {
+        UpgradeButton.UpgradesChoosen += DisableOpenableWindowButtons;
+        UpgradeState.UpgradeStateStarted += EnableOpenableWindowButton;
+        UpgradeState.UpgradeStateStarted += UpdateUpgradeView;
+        UpgradeState.UpgradeStateStarted += SpawnNewBuildingsSet;
+    }
+
+    private void OnDisable()
+    {
+        UpgradeButton.UpgradesChoosen -= DisableOpenableWindowButtons;
+        UpgradeState.UpgradeStateStarted -= EnableOpenableWindowButton;
+        UpgradeState.UpgradeStateStarted -= UpdateUpgradeView;
+        UpgradeState.UpgradeStateStarted -= SpawnNewBuildingsSet;
+    }
+
     private void SetGameplayUIActive(bool value)
     {
         if (UpgradeWindow != null) UpgradeWindow.SetActive(value);
@@ -211,28 +249,21 @@ public class GameplayCanvas : MonoBehaviour
         settingsOpenButton.interactable = true;
     }
     
-    public void WhenButtonClicked()
+    private bool HasEnoughResourcesToChoose(BasicBuildingData data)
     {
-        if (lastKey == -1 || beforLastKey == -1)
+        if (data.buildResourceChange != null)
         {
-            Debug.Log("No upgrades choosen");
-            return;
+            foreach (var cost in data.buildResourceChange)
+            {
+                var type = cost.ResourceAmount.Resource.Type;
+                var buildAmount = cost.ResourceAmount.Amount;
+                var currentAmount = GameResourcesCounter.GetResourceAmount(type);
+
+                if (currentAmount + buildAmount <= 0)
+                    return false;
+            }
         }
 
-        upgradeButton.UpgradeChosenPart((BasicBuildingData.Upgrades) lastKey, (BasicBuildingData.Upgrades) beforLastKey);
-    }
-
-    private void OnEnable()
-    {
-        UpgradeButton.UpgradesChoosen += DisableOpenableWindowButtons;
-        UpgradeState.UpgradeStateStarted += EnableOpenableWindowButton;
-        UpgradeState.UpgradeStateStarted += UpdateUpgradeView;
-    }
-
-    private void OnDisable()
-    {
-        UpgradeButton.UpgradesChoosen -= DisableOpenableWindowButtons;
-        UpgradeState.UpgradeStateStarted -= EnableOpenableWindowButton;
-        UpgradeState.UpgradeStateStarted -= UpdateUpgradeView;
+        return true;
     }
 }

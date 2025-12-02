@@ -32,7 +32,7 @@ public class DialogState : IState
         
         if (isDialogAnimatable)
         {
-            resourceWindow.gameObject.SetActive(false);
+            resourceWindow?.gameObject.SetActive(false);
             AnimatableDialogueStarted.Invoke();
         }
     }
@@ -42,10 +42,9 @@ public class DialogState : IState
         input.Enable();
         RemoveDialogCanvas();
         
-        
         if (isDialogAnimatable)
         {
-            resourceWindow.gameObject.SetActive(true);
+            resourceWindow?.gameObject.SetActive(true);
             AnimatableDialogueEnded.Invoke();
         }
     }

@@ -1,50 +1,53 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class TargetFollowingState : IState, ITargetFollower
+public class TargetFollowingState : UnitStateBase, ITargetFollower
 {
     private Transform target;
-    private IEnemyDetector detector;
-    private float chaseRange;
-    
-    private readonly IStateChanger stateMachine;
     private readonly ITargetAttacker targetAttacker;
-    private readonly NavMeshAgent agent;
-    private readonly Transform transform;
     private readonly LayerMask targetMask;
     private readonly WalkingAnimation animation;
-    private readonly float defaultChaseRange;
+    private readonly IEnemyDetector detector;
     private readonly ISelfDamageable selfDamageable;
+    private readonly NavMeshAgent agent;
+    private readonly CharacterStatsCounter statsCounter;
+
+    private readonly float defaultChaseRange;
+    private float chaseRange;
 
     public TargetFollowingState(
         IStateChanger stateMachine,
         NavMeshAgent agent,
-        CharacterStats stats,
+        CharacterStatsCounter stats,
+        float chaseRange,
         ITargetAttacker targetAttacker,
         LayerMask targetMask,
         WalkingAnimation animation,
         IEnemyDetector detector,
         ISelfDamageable selfDamageable)
+        : base(stateMachine, agent.transform, stats)
     {
-        this.stateMachine = stateMachine;
-        this.agent = agent;
-        defaultChaseRange = stats.ChaseRange;
-        transform = agent.transform;
         this.targetAttacker = targetAttacker;
         this.targetMask = targetMask;
         this.animation = animation;
         this.detector = detector;
+        this.agent = agent;
         this.selfDamageable = selfDamageable;
+        defaultChaseRange = chaseRange;
+        statsCounter = stats;
     }
 
-    public void Enter()
+    public override void Enter()
     {
         animation.StartAnimation();
         detector.NewEnemiesDetected += CheckIfTargetChanged;
         selfDamageable.DamageRecieved += OnDamageReceived;
+        agent.speed = statsCounter.GetStat(ResourceData.ResourceType.WarriorSpeed);
     }
 
-    public void Exit()
+    public override void Exit()
     {
         animation.StopAnimation();
         target = null;
@@ -52,46 +55,46 @@ public class TargetFollowingState : IState, ITargetFollower
         selfDamageable.DamageRecieved -= OnDamageReceived;
     }
 
-    public void HandleInput() { }
-
-    public void OnAnimationEnterEvent() { }
-
-    public void OnAnimationExitEvent() { }
-
-    public void OnAnimationTransitionEvent() { }
-
-    public void OnTriggerEnter(Collider collider) { }
-
-    public void OnTriggerExit(Collider collider) { }
-
-    public void PhysicsUpdate()
+    public override void PhysicsUpdate()
     {
         if (IsTargetGone())
         {
-            stateMachine.ChangeState<TargetSearchState>();
+            StateMachine.ChangeState<TargetSearchState>();
             return;
         }
 
-        float distanceToEnemy = Vector3.Distance(transform.position, target.position);
+        float distanceToEnemy = Vector3.Distance(SelfTransform.position, target.position);
 
         if (distanceToEnemy < chaseRange)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, chaseRange, targetMask);
+            Collider[] colliders = Physics.OverlapSphere(SelfTransform.position, chaseRange, targetMask);
             IDamagable foundTarget = FindTarget(colliders);
 
             if (foundTarget != null)
             {
                 targetAttacker.SetTarget(foundTarget);
-                stateMachine.ChangeState<FightState>();
+                StateMachine.ChangeState<FightState>();
             }
         }
     }
 
-    public void Update()
+    public override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+        CoroutineStarter.Instance.StartCoroutine(UpdateSpeed());
+    }
+
+    public override void OnTriggerExit(Collider other)
+    {
+        base.OnTriggerExit(other);
+        CoroutineStarter.Instance.StartCoroutine(UpdateSpeed());
+    }
+
+    public override void Update()
     {
         if (IsTargetGone())
         {
-            stateMachine.ChangeState<TargetSearchState>();
+            StateMachine.ChangeState<TargetSearchState>();
             return;
         }
 
@@ -100,36 +103,40 @@ public class TargetFollowingState : IState, ITargetFollower
 
     public void SetTarget(Transform transform) => target = transform;
 
-    private bool IsTargetGone() => target == null;
-
-    private void CheckIfTargetChanged() => stateMachine.ChangeState<TargetSearchState>();
-
-    private IDamagable FindTarget(Collider[] colliders)
-    {
-        foreach (Collider collider in colliders)
-        {
-            IDamagable foundTarget;
-
-            if (collider.transform != transform && collider.gameObject.TryGetComponent(out foundTarget))
-            {
-                return foundTarget;
-            }
-        }
-
-        return null;
-    }
-
     public void SetTarget(Transform transform, float enemyStoppingDistance)
     {
         target = transform;
         chaseRange = enemyStoppingDistance > defaultChaseRange ? enemyStoppingDistance : defaultChaseRange;
     }
 
+    private bool IsTargetGone() => target == null;
+
+    private void CheckIfTargetChanged() => StateMachine.ChangeState<TargetSearchState>();
+
+    private IDamagable FindTarget(Collider[] colliders)
+    {
+        foreach (Collider collider in colliders)
+        {
+            if (collider.transform != SelfTransform && collider.TryGetComponent(out IDamagable foundTarget))
+            {
+                return foundTarget;
+            }
+        }
+        return null;
+    }
+
     private void OnDamageReceived(IDamagable attacker)
     {
-        if (attacker != null && attacker.GetTransform().gameObject.name != "BaseMageCircle")
+        if (attacker != null && attacker.GetTransform().gameObject.layer != LayerMask.NameToLayer("Spell"))
         {
             SetTarget(attacker.GetTransform());
         }
+    }
+
+    private IEnumerator UpdateSpeed()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (statsCounter != null && agent != null)
+            agent.speed = statsCounter.GetStat(ResourceData.ResourceType.WarriorSpeed);
     }
 }

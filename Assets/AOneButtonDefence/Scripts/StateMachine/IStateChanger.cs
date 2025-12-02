@@ -23,4 +23,5 @@ public interface IStateChanger
     public void OnAnimationTransitionEvent();
 
     public void Exit();
+    public bool IsActive { get; }
 }

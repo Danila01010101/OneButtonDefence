@@ -19,4 +19,7 @@ public class MusicData : ScriptableObject
 	[field:SerializeField] public AudioClip UpgradeChurchSoundEffect { get; private set; }
 	[field:SerializeField] public AudioClip UpgradeCampSoundEffect { get; private set; }
 	[field:SerializeField] public AudioClip UpgradeFarmSoundEffect { get; private set; }
+	[field:SerializeField] public AudioClip UpgradeHealingTowerSoundEffect { get; private set; }
+	[field:SerializeField] public AudioClip UpgradeDefenceTowerSoundEffect { get; private set; }
+	[field:SerializeField] public AudioClip UpgradeRangeWarriorsSoundEffect { get; private set; }
 }

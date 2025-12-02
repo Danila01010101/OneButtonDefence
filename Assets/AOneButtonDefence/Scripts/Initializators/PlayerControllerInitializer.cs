@@ -18,7 +18,7 @@ namespace AOneButtonDefence.Scripts
             this.data = data;
         }
 
-        public IEnumerator Initialize()
+        public IEnumerator Initialize(SpellCanvasInitializer spellCanvasInitializer)
         {
             playerControllerInstance = Object.Instantiate(
                 data.PlayerController,
@@ -32,6 +32,8 @@ namespace AOneButtonDefence.Scripts
                 data.CharacterStartPosition,
                 data.BattleEvents);
 
+            playerControllerInstance.BindSpellStat(spellCanvasInitializer);
+            
             yield break;
         }
 
@@ -50,14 +52,14 @@ namespace AOneButtonDefence.Scripts
             public readonly PlayerControllerData PlayerData;
             public readonly Camera CameraTransform;
             public readonly Vector3 CharacterStartPosition;
-            public readonly BattleEvents BattleEvents;
+            public readonly IBattleEvent BattleEvents;
 
             public PlayerControllerInitializerData(
                 PlayerController playerController,
                 PlayerControllerData playerData,
                 Camera cameraTransform,
                 Vector3 characterStartPosition,
-                BattleEvents battleEvents)
+                IBattleEvent battleEvents)
             {
                 PlayerController = playerController;
                 PlayerData = playerData;
