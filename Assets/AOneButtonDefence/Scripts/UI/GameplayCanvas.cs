@@ -245,9 +245,10 @@ public class GameplayCanvas : MonoBehaviour
             foreach (var cost in data.buildResourceChange)
             {
                 var type = cost.ResourceAmount.Resource.Type;
-                var amount = cost.ResourceAmount.Amount;
+                var buildAmount = cost.ResourceAmount.Amount;
+                var currentAmount = GameResourcesCounter.GetResourceAmount(type);
 
-                if (GameResourcesCounter.GetResourceAmount(type) < amount)
+                if (currentAmount + buildAmount <= 0)
                     return false;
             }
         }
