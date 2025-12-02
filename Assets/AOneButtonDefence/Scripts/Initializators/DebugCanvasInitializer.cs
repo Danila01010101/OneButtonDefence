@@ -18,10 +18,17 @@ public class DebugCanvasInitializer : IGameInitializerStep
 
     public IEnumerator Initialize()
     {
-        _counter.ChangeResourceAmount(new ResourceAmount(_gemsResource, 1000));
         var debugCanvasWindow = Object.Instantiate(_prefab);
-        if (!_isTestBuild)
+        
+        if (_isTestBuild)
+        {
+            _counter.ChangeResourceAmount(new ResourceAmount(_gemsResource, 1000));
+        }
+        else
+        {
             debugCanvasWindow.SetActive(false);
+        }
+        
         yield break;
     }
 }

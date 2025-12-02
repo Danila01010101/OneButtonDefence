@@ -57,6 +57,14 @@ public class GameplayCanvas : MonoBehaviour
     private void ChoosePart(int index)
     {
         if (index < 0 || index >= partsAnimators.Count) return;
+        
+        var data = currentSelection[index];
+        
+        if (!HasEnoughResourcesToChoose(data))
+        {
+            iconsText.text = $"Недостаточно ресурсов для выбора: {data.BuildingName}";
+            return;
+        }
 
         if (beforLastKey == index)
         {
@@ -228,5 +236,22 @@ public class GameplayCanvas : MonoBehaviour
     {
         shopOpenButton.interactable = true;
         settingsOpenButton.interactable = true;
+    }
+    
+    private bool HasEnoughResourcesToChoose(BasicBuildingData data)
+    {
+        if (data.buildResourceChange != null)
+        {
+            foreach (var cost in data.buildResourceChange)
+            {
+                var type = cost.ResourceAmount.Resource.Type;
+                var amount = cost.ResourceAmount.Amount;
+
+                if (GameResourcesCounter.GetResourceAmount(type) < amount)
+                    return false;
+            }
+        }
+
+        return true;
     }
 }
