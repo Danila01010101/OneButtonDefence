@@ -114,6 +114,9 @@ public class PlayerHealthbar : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (fillCoroutine != null)
+            CoroutineStarter.Instance.StopCoroutine(fillCoroutine);
+        
         if (health != null)
             health.HealthChanged -= SetHealth;
     }

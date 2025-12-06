@@ -60,12 +60,13 @@ public class FightState : UnitStateBase, ITargetAttacker
     protected virtual void Attack()
     {
         if (Target == null) return;
-        Target.TakeDamage(SelfDamageable.GetSelfDamagable(), Damage);
+            Target.TakeDamage(SelfDamageable.GetSelfDamagable(), Damage);
     }
 
     private void CheckTarget()
     {
         var selfTransform = SelfDamageable.GetSelfDamagable().GetTransform();
+        
         if (Target == null || Target.IsAlive() == false ||
             Vector3.Distance(Target.GetTransform().position, selfTransform.position) > DefaultDistanceToLoseTarget)
         {

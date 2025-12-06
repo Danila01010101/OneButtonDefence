@@ -13,6 +13,8 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
     private readonly ISelfDamageable selfDamageable;
     private readonly NavMeshAgent agent;
     private readonly CharacterStatsCounter statsCounter;
+    private Coroutine currentCoroutine;
+    private bool isExiting;
 
     private readonly float defaultChaseRange;
     private float chaseRange;
@@ -45,6 +47,7 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
         detector.NewEnemiesDetected += CheckIfTargetChanged;
         selfDamageable.DamageRecieved += OnDamageReceived;
         agent.speed = statsCounter.GetStat(ResourceData.ResourceType.WarriorSpeed);
+        isExiting = false;
     }
 
     public override void Exit()
@@ -53,6 +56,13 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
         target = null;
         detector.NewEnemiesDetected -= CheckIfTargetChanged;
         selfDamageable.DamageRecieved -= OnDamageReceived;
+        isExiting = true;
+        
+        if (currentCoroutine != null)
+        {
+            CoroutineStarter.Instance.StopCoroutine(currentCoroutine);
+            currentCoroutine = null;
+        }
     }
 
     public override void PhysicsUpdate()
@@ -81,13 +91,27 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
     public override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-        CoroutineStarter.Instance.StartCoroutine(UpdateSpeed());
+        
+        if (currentCoroutine != null)
+        {
+            CoroutineStarter.Instance.StopCoroutine(currentCoroutine);
+            currentCoroutine = null;
+        }
+        
+        currentCoroutine = CoroutineStarter.Instance.StartCoroutine(UpdateSpeed());
     }
 
     public override void OnTriggerExit(Collider other)
     {
         base.OnTriggerExit(other);
-        CoroutineStarter.Instance.StartCoroutine(UpdateSpeed());
+        
+        if (currentCoroutine != null)
+        {
+            CoroutineStarter.Instance.StopCoroutine(currentCoroutine);
+            currentCoroutine = null;
+        }
+        
+        currentCoroutine = CoroutineStarter.Instance.StartCoroutine(UpdateSpeed());
     }
 
     public override void Update()
@@ -136,6 +160,9 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
     private IEnumerator UpdateSpeed()
     {
         yield return new WaitForSeconds(0.1f);
+        
+        if (isExiting) yield break;
+        
         if (statsCounter != null && agent != null)
             agent.speed = statsCounter.GetStat(ResourceData.ResourceType.WarriorSpeed);
     }
