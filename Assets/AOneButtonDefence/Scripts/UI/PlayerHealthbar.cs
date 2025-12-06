@@ -17,25 +17,25 @@ public class PlayerHealthbar : MonoBehaviour
     private Camera playerHealthBarCamera;
     private Health health;
     private Coroutine fillCoroutine;
+    private bool destroyed;
 
     public void Initialize(Health health, Camera camera = null)
     {
+        playerHealthBarCamera = camera != null ? camera : Camera.main;
+
         if (camera != null)
-        {
-            this.playerHealthBarCamera = camera;
             billboardCanvas.SetCamera(camera);
-        }
-        else
-        {
-            this.playerHealthBarCamera = Camera.main;
-        }
 
         this.health = health;
         SetHealthImmediate(health.Value, health.Value);
+
         health.HealthChanged += SetHealth;
 
         if (flashOverlay != null)
-            flashOverlay.color = new Color(1f, 1f, 1f, 0f);
+        {
+            var c = flashOverlay.color;
+            flashOverlay.color = new Color(c.r, c.g, c.b, 0f);
+        }
     }
 
     private void LateUpdate()
@@ -52,72 +52,89 @@ public class PlayerHealthbar : MonoBehaviour
 
         float normalized = Mathf.Clamp01(current / max);
         float fill = Mathf.Lerp(minFill, maxFill, normalized);
-        healthBar.fillAmount = Mathf.Clamp(fill, Mathf.Min(minFill, maxFill), Mathf.Max(minFill, maxFill));
+        healthBar.fillAmount = fill;
     }
 
     private void SetHealth(float current, float max)
     {
-        if (max <= 0) return;
+        if (destroyed) return;  
+        if (!gameObject.activeInHierarchy) return;
 
         float normalized = Mathf.Clamp01(current / max);
         float targetFill = Mathf.Lerp(minFill, maxFill, normalized);
 
-        if (fillCoroutine != null) StopCoroutine(fillCoroutine);
+        if (fillCoroutine != null)
+        {
+            CoroutineStarter.Instance.StopCoroutine(fillCoroutine);
+        }
+
         fillCoroutine = CoroutineStarter.Instance.StartCoroutine(FlashThenFill(targetFill));
     }
 
     private IEnumerator FlashThenFill(float targetFill)
     {
-        yield return new WaitUntil(() => gameObject.activeSelf);
-        
+        while (gameObject != null && !gameObject.activeInHierarchy)
+            yield return null;
+
+        if (destroyed) yield break;
+
         if (flashOverlay != null)
         {
             for (int i = 0; i < flashCount; i++)
             {
-                float time = 0f;
-                while (time < flashDuration * 0.5f)
+                float half = flashDuration * 0.5f;
+                float t = 0f;
+
+                while (t < half)
                 {
-                    time += Time.deltaTime;
-                    float alpha = Mathf.Lerp(0f, 1f, time / (flashDuration * 0.5f));
-                    flashOverlay.color = new Color(1f, 1f, 1f, alpha);
+                    if (destroyed) yield break;
+                    t += Time.deltaTime;
+                    flashOverlay.color = new Color(1, 1, 1, t / half);
                     yield return null;
                 }
 
-                time = 0f;
-                while (time < flashDuration * 0.5f)
+                t = 0f;
+                while (t < half)
                 {
-                    time += Time.deltaTime;
-                    float alpha = Mathf.Lerp(1f, 0f, time / (flashDuration * 0.5f));
-                    flashOverlay.color = new Color(1f, 1f, 1f, alpha);
+                    if (destroyed) yield break;
+                    t += Time.deltaTime;
+                    flashOverlay.color = new Color(1, 1, 1, 1 - t / half);
                     yield return null;
                 }
             }
 
-            flashOverlay.color = new Color(1f, 1f, 1f, 0f);
+            flashOverlay.color = new Color(1, 1, 1, 0);
         }
 
         float start = healthBar.fillAmount;
-        float timeFill = 0f;
+        float timer = 0f;
 
-        while (timeFill < smoothDuration)
+        while (timer < smoothDuration)
         {
-            timeFill += Time.deltaTime;
-            float t = timeFill / smoothDuration;
-            healthBar.fillAmount = Mathf.Lerp(start, targetFill, t);
+            if (destroyed) yield break;
+            timer += Time.deltaTime;
+            healthBar.fillAmount = Mathf.Lerp(start, targetFill, timer / smoothDuration);
             yield return null;
         }
 
-        flashOverlay.fillAmount = targetFill;
         healthBar.fillAmount = targetFill;
         fillCoroutine = null;
     }
 
     private void OnDestroy()
     {
-        if (fillCoroutine != null)
-            CoroutineStarter.Instance.StopCoroutine(fillCoroutine);
-        
+        destroyed = true;
+
         if (health != null)
             health.HealthChanged -= SetHealth;
+
+        if (fillCoroutine != null)
+            CoroutineStarter.Instance.StopCoroutine(fillCoroutine);
+    }
+    
+    private void OnEnable()
+    {
+        if (health != null)
+            SetHealthImmediate(health.Value, health.Value);
     }
 }
