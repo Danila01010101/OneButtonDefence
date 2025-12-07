@@ -31,30 +31,35 @@ MonoBehaviour:
     <buffResource>k__BackingField:
       <Resource>k__BackingField: {fileID: 0}
       <Amount>k__BackingField: 0
+      <UsedForBuilding>k__BackingField: 0
     buffEffectInfo: 
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
         <Amount>k__BackingField: 15
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0421\u0432\u0435\u0436\u0438\u0439
         \u0443\u0440\u043E\u0436\u0430\u0439, \u043F\u0430\u0445\u043D\u0435\u0442
         \u0430\u043C\u0431\u0440\u043E\u0437\u0438\u0435\u0439\u2026 \u0438 \u0443\u0434\u043E\u0431\u0440\u0435\u043D\u0438\u0435\u043C"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
         <Amount>k__BackingField: -10
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0421\u043D\u0430\u0447\u0430\u043B\u0430
         \u0432\u043A\u043B\u0430\u0434\u044B\u0432\u0430\u0435\u043C\u0441\u044F,
         \u043F\u043E\u0442\u043E\u043C \u0436\u043D\u0451\u043C"
     <resourcePerTurnChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
-        <Amount>k__BackingField: 8
+        <Amount>k__BackingField: 6
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0427\u0435\u043C \u0431\u043E\u043B\u044C\u0448\u0435
         \u043A\u043E\u043B\u043E\u0441\u044C\u0435\u0432, \u0442\u0435\u043C \u043C\u0435\u043D\u044C\u0448\u0435
         \u0433\u043E\u043B\u043E\u0434\u043D\u044B\u0445"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
-        <Amount>k__BackingField: -15
+        <Amount>k__BackingField: -7
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0417\u0435\u043C\u043B\u044E \u0432\u0441\u043F\u0430\u0445\u0430\u0442\u044C,
         \u0433\u043E\u0431\u043B\u0438\u043D\u043E\u0432 \u043E\u0442\u043E\u0433\u043D\u0430\u0442\u044C,
         \u043C\u0435\u043B\u044C\u043D\u0438\u0446\u0443 \u0441\u043C\u0430\u0437\u0430\u0442\u044C
@@ -79,23 +84,27 @@ MonoBehaviour:
     <buffResource>k__BackingField:
       <Resource>k__BackingField: {fileID: 0}
       <Amount>k__BackingField: 0
+      <UsedForBuilding>k__BackingField: 0
     buffEffectInfo: 
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
-        <Amount>k__BackingField: 30
+        <Amount>k__BackingField: 15
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0421\u0432\u044F\u0442\u044B\u0435
         \u043A\u0443\u0432\u0448\u0438\u043D\u044B, \u0431\u043E\u0440\u043E\u0434\u044B
         \u0438 \u043F\u043E\u0434\u0437\u0435\u043C\u043D\u044B\u0435 \u043F\u0441\u0430\u043B\u043C\u044B"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
-        <Amount>k__BackingField: -6
+        <Amount>k__BackingField: -7
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0410\u043B\u0442\u0430\u0440\u044C
         \u0441\u0430\u043C \u0441\u0435\u0431\u044F \u043D\u0435 \u043F\u043E\u0441\u0442\u0440\u043E\u0438\u0442"
     <resourcePerTurnChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
         <Amount>k__BackingField: 0
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041F\u0430\u0441\u0441\u0438\u0432\u043D\u044B\u0439
         \u044D\u0444\u0444\u0435\u043A\u0442 - \u0431\u043E\u0435\u0432\u043E\u0439
         \u0434\u0443\u0445 \u0443\u043C\u0435\u043D\u044C\u0448\u0430\u0435\u0442\u0441\u044F
@@ -103,13 +112,15 @@ MonoBehaviour:
         \u0433\u043D\u043E\u043C\u0430!"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
-        <Amount>k__BackingField: 5
+        <Amount>k__BackingField: 10
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041C\u043E\u043B\u0438\u0442\u0432\u0430
         \u0442\u0432\u043E\u0440\u0438\u0442 \u0447\u0443\u0434\u0435\u0441\u0430,
         \u0434\u0430\u0436\u0435 \u0435\u0441\u043B\u0438 \u0442\u044B \u0432 \u0431\u0440\u043E\u043D\u0435"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
-        <Amount>k__BackingField: -2
+        <Amount>k__BackingField: -6
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0421\u0432\u044F\u0449\u0435\u043D\u043D\u0438\u043A\u0438
         \u0442\u043E\u0436\u0435 \u043B\u044E\u0431\u044F\u0442 \u043F\u043B\u043E\u0442\u043D\u044B\u0439
         \u043E\u0431\u0435\u0434"
@@ -133,44 +144,37 @@ MonoBehaviour:
     <buffResource>k__BackingField:
       <Resource>k__BackingField: {fileID: 0}
       <Amount>k__BackingField: 0
+      <UsedForBuilding>k__BackingField: 0
     buffEffectInfo: 
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: a7a7003b21a1e244eb4249ac18a4c39d, type: 2}
-        <Amount>k__BackingField: 2
+        <Amount>k__BackingField: 3
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0441\u0435\u0440\u044C\u0451\u0437\u043D\u044B\u0435
         \u0431\u043E\u0440\u043E\u0434\u0430\u0447\u0438, \u0430 \u043D\u0435 \u044D\u0442\u0438
         \u0432\u0430\u0448\u0438 \u044D\u043B\u044C\u0444\u044B"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
-        <Amount>k__BackingField: -18
+        <Amount>k__BackingField: -25
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041D\u0430 \u0431\u0440\u043E\u043D\u044E,
         \u043E\u0440\u0443\u0436\u0438\u0435 \u0438 \u0431\u043E\u0447\u043A\u0443
         \u043F\u0438\u0432\u0430 \u043F\u0435\u0440\u0435\u0434 \u0431\u043E\u0435\u043C"
     <resourcePerTurnChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: a7a7003b21a1e244eb4249ac18a4c39d, type: 2}
-        <Amount>k__BackingField: 1
+        <Amount>k__BackingField: 2
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041A\u0430\u0436\u0434\u044B\u0439
         \u0434\u0435\u043D\u044C \u043A\u0442\u043E-\u0442\u043E \u043D\u0430\u0443\u0447\u0438\u043B\u0441\u044F
         \u043C\u0430\u0445\u0430\u0442\u044C \u0442\u043E\u043F\u043E\u0440\u043E\u043C,
         \u043D\u0435 \u043E\u0442\u0440\u0443\u0431\u0430\u044F \u0441\u0435\u0431\u0435
         \u043F\u0430\u043B\u044C\u0446\u044B"
     - <ResourceAmount>k__BackingField:
-        <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
-        <Amount>k__BackingField: 0
-      <ResourceDescription>k__BackingField: "\u041F\u0430\u0441\u0441\u0438\u0432\u043D\u044B\u0439
-        \u044D\u044D\u0444\u0435\u043A\u0442 - 1 \u0435\u0434\u0438\u043D\u0438\u0446\u0430
-        \u0435\u0434\u044B \u0443\u0445\u043E\u0434\u0438\u0442 \u0437\u0430 \u043A\u0430\u0436\u0434\u043E\u0433\u043E
-        \u0433\u043D\u043E\u043C\u0430 \u0432 \u0438\u0433\u0440\u0435."
-    - <ResourceAmount>k__BackingField:
-        <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
-        <Amount>k__BackingField: -2
-      <ResourceDescription>k__BackingField: "\u0421\u044B\u0442\u044B\u0439 \u0433\u043D\u043E\u043C
-        \u2014 \u0445\u0440\u0430\u0431\u0440\u044B\u0439 \u0433\u043D\u043E\u043C!"
-    - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
         <Amount>k__BackingField: -5
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0414\u043E\u0441\u043F\u0435\u0445\u0438
         \u043B\u043E\u043C\u0430\u044E\u0442\u0441\u044F, \u0442\u043E\u043F\u043E\u0440\u044B
         \u0442\u0443\u043F\u044F\u0442\u0441\u044F, \u0430 \u0433\u043D\u043E\u043C\u044B
@@ -193,30 +197,35 @@ MonoBehaviour:
     <buffResource>k__BackingField:
       <Resource>k__BackingField: {fileID: 0}
       <Amount>k__BackingField: 0
+      <UsedForBuilding>k__BackingField: 0
     buffEffectInfo: 
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
         <Amount>k__BackingField: -6
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0413\u043E\u043B\u043E\u0434\u043D\u044B\u0439
         \u0441\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C \u0443\u0436\u0435
         \u043D\u0435 \u0441\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
         <Amount>k__BackingField: -20
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041D\u0430\u0434\u043E \u0437\u0430\u043B\u043E\u0436\u0438\u0442\u044C
         \u043F\u0435\u0440\u0432\u044B\u0435 \u043A\u0438\u0440\u043F\u0438\u0447\u0438
         \u0448\u0440\u0435\u043A\u0441\u0430"
     <resourcePerTurnChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
-        <Amount>k__BackingField: 20
+        <Amount>k__BackingField: 35
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041F\u043E\u0442, \u0441\u0442\u0430\u043B\u044C,
         \u043C\u0430\u0433\u0438\u044F \u2014 \u0438 \u0432\u043E\u0442 \u043E\u043D,
         \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441!"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
         <Amount>k__BackingField: -3
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0420\u0430\u0431\u043E\u0447\u0438\u0435
         \u0442\u043E\u0436\u0435 \u043B\u044E\u0431\u044F\u0442 \u043F\u043E\u0435\u0441\u0442\u044C,
         \u0434\u0430\u0436\u0435 \u0435\u0441\u043B\u0438 \u0440\u0430\u0431\u043E\u0442\u0430\u044E\u0442
@@ -244,6 +253,7 @@ MonoBehaviour:
     <buffResource>k__BackingField:
       <Resource>k__BackingField: {fileID: 11400000, guid: 7bfd3351b5f6b8e46888ebe1d995ba71, type: 2}
       <Amount>k__BackingField: 10
+      <UsedForBuilding>k__BackingField: 0
     buffEffectInfo: "\u0423\u0441\u0438\u043B\u044F\u0435\u0442 \u0432\u043E\u0438\u043D\u043E\u0432
       \u043D\u0430 10 \u043F\u0440\u043E\u0446\u0435\u0442\u043E\u0432 \u0441\u0438\u043B\u044B
       \u0443\u0434\u0430\u0440\u0430"
@@ -251,24 +261,28 @@ MonoBehaviour:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 7bfd3351b5f6b8e46888ebe1d995ba71, type: 2}
         <Amount>k__BackingField: 10
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0418\u0437\u0443\u0447\u0435\u043D\u0438\u0435
         \u0442\u0435\u0445\u043D\u0438\u043A \"\u0428\u0430\u0445\u0442\u043E\u043B\u0438\u043D\u044F
         (\u0443\u0441\u0438\u043B\u0435\u043D\u0438\u044F \u0442\u043E\u0432\u0430\u0440\u0438\u0449\u0435\u0439)"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
         <Amount>k__BackingField: 20
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0411\u043E\u0435\u0432\u043E\u0439
         \u0434\u0443\u0445 \u043E\u0442 \u043A\u0443\u043B\u044C\u0442\u0443\u0440\u044B
         \"\u0428\u0430\u0445\u0442\u043E\u043B\u0438\u043D\u044F\""
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
-        <Amount>k__BackingField: -110
+        <Amount>k__BackingField: -75
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0414\u0435\u043B\u0430\u0435\u043C
         \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0435\u043D\u043D\u043E. \u0414\u0430,
         \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0435\u043D\u043D\u043E"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: f338b09ada9bdde4cbf8129f1ff59968, type: 2}
         <Amount>k__BackingField: -5
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041D\u0430 \u0434\u0430\u0440\u044B
         \u0434\u043B\u044F \u0437\u0430\u0440\u0443\u0431\u0435\u0436\u043D\u044B\u0445
         \u043F\u0430\u0440\u0442\u043D\u0435\u0440\u043E\u0432, \u0434\u043B\u044F
@@ -278,15 +292,18 @@ MonoBehaviour:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
         <Amount>k__BackingField: -5
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041F\u043E\u0434\u0434\u0435\u0440\u0436\u0430\u043D\u0438\u0435
         \u0434\u0443\u0445\u0430 \u043C\u043E\u043D\u0430\u0445\u043E\u0432"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
         <Amount>k__BackingField: -15
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041D\u0430 \u0431\u043B\u0430\u0433\u043E\u0432\u043E\u043D\u0438\u044F"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
         <Amount>k__BackingField: 5
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0417\u0430\u0440\u044F\u0436\u0430\u0435\u043C
         \u044D\u043D\u0435\u0440\u0433\u0438\u0435\u0439 \u0431\u0430\u043D\u043A\u0438
         \u0437\u0440\u0438\u0442\u0435\u043B\u0435\u0439 \u043C\u0430\u0433\u0438\u0447\u0435\u0441\u043A\u0438\u0445
@@ -310,40 +327,47 @@ MonoBehaviour:
     <buffResource>k__BackingField:
       <Resource>k__BackingField: {fileID: 11400000, guid: ccaec83cf32542b4bbb5470b547ea562, type: 2}
       <Amount>k__BackingField: 10
+      <UsedForBuilding>k__BackingField: 0
     buffEffectInfo: 
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: ccaec83cf32542b4bbb5470b547ea562, type: 2}
         <Amount>k__BackingField: 10
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u042D\u0444\u0444\u0435\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u044C
         \u0437\u0434\u0430\u043D\u0438\u0439 \u0443\u0432\u0435\u043B\u0438\u0447\u0435\u043D\u0430
         \u043D\u0430 10 \u043F\u0440\u043E\u0446\u0435\u043D\u0442\u043E\u0432."
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
-        <Amount>k__BackingField: -70
+        <Amount>k__BackingField: -45
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0414\u0435\u043B\u0430\u0435\u043C
         \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0435\u043D\u043D\u043E. \u0414\u0430,
         \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0435\u043D\u043D\u043E"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
         <Amount>k__BackingField: -10
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041D\u0430 \u0443\u0434\u043E\u0431\u0440\u0435\u043D\u0438\u044F
         \u0434\u043B\u044F \u0434\u0443\u0431\u0430."
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: f338b09ada9bdde4cbf8129f1ff59968, type: 2}
         <Amount>k__BackingField: -10
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0414\u0443\u0431 \u0432\u043E\u043B\u0448\u0435\u0431\u043D\u044B\u0439,
         \u0430 \u0437\u043D\u0430\u0447\u0438\u0442 \u0435\u043C\u0443 \u043D\u0443\u0436\u043D\u044B
         \u0438 \u0432\u043E\u043B\u0448\u0435\u0431\u043D\u044B\u0435 \u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u044B! "
     <resourcePerTurnChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
-        <Amount>k__BackingField: -10
+        <Amount>k__BackingField: -5
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041D\u0430 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0443
         \u043E\u0442 \u0442\u0435\u0440\u043C\u0438\u0442\u043E\u0432."
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
         <Amount>k__BackingField: 2
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041D\u0430 \u0441\u0442\u043E\u043B\u044C\u043A\u043E
         \u044D\u0444\u0444\u0435\u043A\u0442\u0438\u0432\u043D\u044B\u0435 \u0440\u0430\u0431\u043E\u0442\u043D\u0438\u043A\u0438
         \u0447\u0442\u043E \u0437\u0430\u0431\u044B\u0432\u0430\u044E\u0442 \u043F\u043E\u043A\u0443\u0448\u0430\u0442\u044C."
@@ -367,23 +391,27 @@ MonoBehaviour:
     <buffResource>k__BackingField:
       <Resource>k__BackingField: {fileID: 11400000, guid: cd223a14dafc18144ad81dbc48c6fad7, type: 2}
       <Amount>k__BackingField: 2
+      <UsedForBuilding>k__BackingField: 0
     buffEffectInfo: 
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: cd223a14dafc18144ad81dbc48c6fad7, type: 2}
         <Amount>k__BackingField: 10
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0418\u0437\u0443\u0447\u0435\u043D\u0438\u0435
         \u0442\u0435\u0445\u043D\u0438\u043A \"\u0428\u0430\u0445\u0442\u043E\u043B\u0438\u043D\u044F\"
         (\u0443\u0441\u043A\u043E\u0440\u0435\u043D\u0438\u0435 \u0442\u043E\u0432\u0430\u0440\u0438\u0449\u0435\u0439)"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
-        <Amount>k__BackingField: -75
+        <Amount>k__BackingField: -50
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041D\u0430 \u043B\u0430\u043F\u0442\u0438
         \u0443\u0434\u043E\u0431\u043D\u044B\u0435, \u0434\u0430 \u0440\u0443\u043A\u043E\u044F\u0442\u043A\u0438
         \u0434\u043B\u044F \u0432\u0435\u043D\u0438\u043A\u043E\u0432 \u0442\u0430\u043A\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435."
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: f338b09ada9bdde4cbf8129f1ff59968, type: 2}
         <Amount>k__BackingField: -20
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0423\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u044F
         \u0434\u043B\u044F \u0430\u043B\u0442\u0430\u0440\u044F \u0438\u0437 \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0438\u0445
         \u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u043E\u0432, \u043D\u0435
@@ -392,6 +420,7 @@ MonoBehaviour:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
         <Amount>k__BackingField: 10
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041D\u0435 \u0434\u0443\u043C\u0430\u043B\u0438,
         \u043D\u043E \u043D\u0430 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C
         \u0440\u0430\u0431\u043E\u0447\u0438\u0445 \u0430\u043B\u0442\u0430\u0440\u044C
@@ -416,18 +445,21 @@ MonoBehaviour:
     <buffResource>k__BackingField:
       <Resource>k__BackingField: {fileID: 11400000, guid: 1eb2801d98c92ca408cca0c4f3801c3d, type: 2}
       <Amount>k__BackingField: 10
+      <UsedForBuilding>k__BackingField: 0
     buffEffectInfo: 
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 1eb2801d98c92ca408cca0c4f3801c3d, type: 2}
         <Amount>k__BackingField: 10
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442
         \u0441\u0438\u043B\u0443 \u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C
         \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0439
         \u043D\u0430 10%!"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
-        <Amount>k__BackingField: -90
+        <Amount>k__BackingField: -60
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041D\u0435 \u0438\u0437 \u0432\u043E\u0437\u0434\u0443\u0445\u0430
         \u0442\u0435\u043F\u043B\u0438\u0446\u0430 \u0441\u0442\u0440\u043E\u0438\u0442\u0441\u044F!
         \u0425\u043E\u0442\u044F \u0441\u0443\u0434\u044F \u043F\u043E \u0435\u0435
@@ -435,11 +467,13 @@ MonoBehaviour:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
         <Amount>k__BackingField: -20
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041D\u0430 \u0435\u0434\u0443 \u0441\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044F\u043C."
     <resourcePerTurnChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
         <Amount>k__BackingField: 10
+        <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0418\u0437 \u043E\u0433\u0443\u0440\u0446\u043E\u0432
         \u043C\u043E\u0436\u043D\u043E \u043F\u043E\u043B\u0443\u0447\u0430\u0442\u044C
         \u043A\u0430\u043A \u0441\u0438\u043B\u0443 \u0437\u0435\u043C\u043B\u0438
