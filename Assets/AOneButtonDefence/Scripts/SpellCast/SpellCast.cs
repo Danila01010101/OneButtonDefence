@@ -70,14 +70,17 @@ public class SpellCast : IDisposable
 
     private void RandomModeCast(Vector2 position)
     {
+        if (!CanCastSpell)
+            return;
+        
         if (IsClickOnUI())
+            return;
+        
+        if (randomSpell[0] == null)
             return;
         
         Ray ray = Camera.main.ScreenPointToRay(position);
         RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity);
-        
-        if (randomSpell[0] == null || CanCastSpell == false)
-            return;
 
         foreach (var h in hits)
         {
