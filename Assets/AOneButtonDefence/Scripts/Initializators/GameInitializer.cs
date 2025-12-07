@@ -345,7 +345,7 @@ public class GameInitializer : MonoBehaviour
 
         RewardGemsActivator rewardGemsActivator = new RewardGemsActivator(resourceCounterInit.Instance, gameData.GemsResource, 25);
         
-        ShopSkinWindowInitializer shopSkinInit = new ShopSkinWindowInitializer(shopSkinWindow, upgradeCanvas != null ? upgradeCanvas.transform : null, input);
+        ShopSkinWindowInitializer shopSkinInit = new ShopSkinWindowInitializer(shopSkinWindow, upgradeCanvas != null ? upgradeCanvas.transform : null, input, rewardGemsActivator);
         yield return SafeStep("ShopSkinWindowInitializer", () => shopSkinInit.Initialize());
         shopSkinInit.SetWindowsConnection(upgradeCanvasInit.CanvasInstance);
         startAudioSources.Add(shopSkinInit.ShopWindowInstance.SkinsAudioSource);
