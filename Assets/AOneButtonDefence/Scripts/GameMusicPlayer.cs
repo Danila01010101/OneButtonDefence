@@ -74,10 +74,9 @@ public class GameMusicPlayer : IBackgroundMusicPlayer, IUpgradeEffectPlayer, IDi
 
     List<AudioSource> IUpgradeEffectPlayer.GetSources() => new List<AudioSource>() { firstAudioSource, secondAudioSource };
 
-    public void PlayUpgradesSoundEffect(BasicBuildingData.Upgrades firstType, BasicBuildingData.Upgrades secondType)
+    public void PlayUpgradesSoundEffect(BasicBuildingData.Upgrades firstType)
     {
         PlayMusic(firstAudioSource, GetSoundByType(firstType));
-        PlayMusic(secondAudioSource, GetSoundByType(secondType));
     }
 
     private void PlayMusic(AudioSource audioSource, AudioClip clip)

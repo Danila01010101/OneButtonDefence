@@ -1,36 +1,58 @@
 using System.Collections.Generic;
-using System.Linq;
 
 public class RandomBuildingsSelector
 {
-    private readonly List<BasicBuildingData> fixedBuildings;
-    private readonly List<BasicBuildingData> randomBuildings;
+    private readonly List<BasicBuildingData> allBuildings;
 
-    public RandomBuildingsSelector(IEnumerable<BasicBuildingData> all)
+    public RandomBuildingsSelector(List<BasicBuildingData> buildings)
     {
-        fixedBuildings = all.Where(b => !b.IsRandomisable).ToList();
-        randomBuildings = all.Where(b => b.IsRandomisable).ToList();
+        allBuildings = buildings;
     }
 
-    public List<BasicBuildingData> GetSelection(int randomCount)
+    public List<BasicBuildingData> GetSelection(int count)
     {
-        var result = new List<BasicBuildingData>(fixedBuildings);
+        List<BasicBuildingData> pool = new List<BasicBuildingData>();
 
-        if (randomBuildings.Count <= randomCount)
+        foreach (var building in allBuildings)
         {
-            result.AddRange(randomBuildings);
-            return result;
+            if (!building.IsRandomisable || building.SpawnChance <= 0f)
+                continue;
+
+            pool.Add(building);
         }
 
-        var selected = new HashSet<BasicBuildingData>();
+        List<BasicBuildingData> result = new List<BasicBuildingData>();
 
-        while (selected.Count < randomCount)
+        for (int i = 0; i < count; i++)
         {
-            var r = randomBuildings[UnityEngine.Random.Range(0, randomBuildings.Count)];
-            selected.Add(r);
+            if (pool.Count == 0)
+                break;
+
+            var chosen = GetRandomWeighted(pool);
+            result.Add(chosen);
+
+            pool.Remove(chosen);
         }
 
-        result.AddRange(selected);
         return result;
+    }
+
+    private BasicBuildingData GetRandomWeighted(List<BasicBuildingData> pool)
+    {
+        float totalWeight = 0f;
+        foreach (var b in pool)
+            totalWeight += b.SpawnChance;
+
+        float rand = UnityEngine.Random.value * totalWeight;
+        float cumulative = 0f;
+
+        foreach (var b in pool)
+        {
+            cumulative += b.SpawnChance;
+            if (rand <= cumulative)
+                return b;
+        }
+
+        return pool[pool.Count - 1];
     }
 }

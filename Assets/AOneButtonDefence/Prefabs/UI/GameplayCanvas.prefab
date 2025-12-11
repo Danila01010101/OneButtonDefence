@@ -131,7 +131,7 @@ MonoBehaviour:
   shopOpenButton: {fileID: 1218620076972821894}
   settingsOpenButton: {fileID: 199075852536973038}
   statisticViewInitializer: {fileID: 1971182525426096033}
-  randomBuildingsCount: 2
+  randomBuildingsCount: 3
   <AudioSettings>k__BackingField: {fileID: 332662719412894983}
 --- !u!114 &6966281153083133322
 MonoBehaviour:

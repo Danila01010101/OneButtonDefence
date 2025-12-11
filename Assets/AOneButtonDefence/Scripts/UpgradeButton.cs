@@ -5,7 +5,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class UpgradeButton : MonoBehaviour
 {
-    public static Action<BasicBuildingData.Upgrades, BasicBuildingData.Upgrades> UpgradeTypesChoosen;
+    public static Action<BasicBuildingData.Upgrades> UpgradeTypesChoosen;
     public static Action UpgradesChoosen;
 
     private Button button;
@@ -17,10 +17,10 @@ public class UpgradeButton : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    public void UpgradeChosenPart(BasicBuildingData.Upgrades firstPart, BasicBuildingData.Upgrades secondPart)
+    public void UpgradeChosenPart(BasicBuildingData.Upgrades firstPart)
     {
         UpgradesChoosen?.Invoke();
-        UpgradeTypesChoosen(firstPart, secondPart);
+        UpgradeTypesChoosen(firstPart);
     }
 
     public void Activate()

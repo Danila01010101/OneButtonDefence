@@ -22,10 +22,9 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
         SpawnBuilding(BasicBuildingData.Upgrades.MilitaryCamp);
     }
 
-    private void ActivateUpgrades(BasicBuildingData.Upgrades firstUpgrade, BasicBuildingData.Upgrades secondUpgrade)
+    private void ActivateUpgrades(BasicBuildingData.Upgrades firstUpgrade)
     {
         ActivateUpgrade(firstUpgrade);
-        ActivateUpgrade(secondUpgrade);
     }
 
     private void ActivateUpgrade(BasicBuildingData.Upgrades upgrade) => SpawnBuilding(upgrade);

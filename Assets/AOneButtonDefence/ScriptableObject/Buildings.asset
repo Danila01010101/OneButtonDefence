@@ -17,7 +17,8 @@ MonoBehaviour:
     <BuildingName>k__BackingField: "\u0424\u0435\u0440\u043C\u0430 \"\u0417\u0435\u043B\u0435\u043D\u044B\u0439
       \u0441\u043B\u043E\u043D\u0438\u043A\""
     <UpgradeType>k__BackingField: 0
-    <IsRandomisable>k__BackingField: 0
+    <SpawnChance>k__BackingField: 0.6
+    <IsRandomisable>k__BackingField: 1
     <Prefab>k__BackingField: {fileID: 4464381053238145285, guid: 034bcc6654a56b64781c5e9e13ee617d, type: 3}
     <SpawnOffset>k__BackingField: {x: -0.17, y: -0.6, z: -0.889}
     <SpawnRotations>k__BackingField:
@@ -67,7 +68,8 @@ MonoBehaviour:
   - <Icon>k__BackingField: {fileID: 448148582, guid: f66b86bc0ac3de24b897eff5ff4d167a, type: 3}
     <BuildingName>k__BackingField: "\u0425\u0440\u0430\u043C \u0412\u0421 \u0420\u0424"
     <UpgradeType>k__BackingField: 1
-    <IsRandomisable>k__BackingField: 0
+    <SpawnChance>k__BackingField: 0.45
+    <IsRandomisable>k__BackingField: 1
     <Prefab>k__BackingField: {fileID: 8130088543098789889, guid: 3c0e672a8585b634a8f15da8d9c62fca, type: 3}
     <SpawnOffset>k__BackingField: {x: 0, y: -0.6, z: 0}
     <SpawnRotations>k__BackingField:
@@ -128,7 +130,8 @@ MonoBehaviour:
     <BuildingName>k__BackingField: "\u041B\u0430\u0433\u0435\u0440\u044C \u0441\u043F\u0435\u0446\u0438\u0430\u043B\u044C\u043D\u043E\u0439
       \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u0438"
     <UpgradeType>k__BackingField: 2
-    <IsRandomisable>k__BackingField: 0
+    <SpawnChance>k__BackingField: 0.6
+    <IsRandomisable>k__BackingField: 1
     <Prefab>k__BackingField: {fileID: -8228034523765073158, guid: e63a3734f632f9a4e84bcbbcf8c68ff1, type: 3}
     <SpawnOffset>k__BackingField: {x: 0, y: -0.6, z: -0.14}
     <SpawnRotations>k__BackingField:
@@ -182,7 +185,8 @@ MonoBehaviour:
   - <Icon>k__BackingField: {fileID: 970201981, guid: 2f235c7d961df77469c835f048e20345, type: 3}
     <BuildingName>k__BackingField: "\u0424\u0430\u0431\u0440\u0438\u043A\u0430 \"\u0428\u0440\u0435\u043A\u0441\u0430\""
     <UpgradeType>k__BackingField: 3
-    <IsRandomisable>k__BackingField: 0
+    <SpawnChance>k__BackingField: 0.6
+    <IsRandomisable>k__BackingField: 1
     <Prefab>k__BackingField: {fileID: -4535492056899306338, guid: f64888de816ba6044b8012c0621bbfa2, type: 3}
     <SpawnOffset>k__BackingField: {x: 0, y: -0.6, z: 0}
     <SpawnRotations>k__BackingField:
@@ -234,6 +238,7 @@ MonoBehaviour:
     <BuildingName>k__BackingField: "\u041A\u0438\u0442\u0430\u0439\u0441\u043A\u0438\u0439
       \u0430\u043B\u0442\u0430\u0440\u044C \"\u0423\u0434\u0430\u0440!\""
     <UpgradeType>k__BackingField: 4
+    <SpawnChance>k__BackingField: 0.25
     <IsRandomisable>k__BackingField: 1
     <Prefab>k__BackingField: {fileID: 2321047435483028238, guid: fe4cc4fa5d37f5f47bea96f4acf31145, type: 3}
     <SpawnOffset>k__BackingField: {x: 0, y: -0.6, z: 0}
@@ -312,6 +317,7 @@ MonoBehaviour:
   - <Icon>k__BackingField: {fileID: 311919244, guid: fdb586b5fd0b04045a32c99eeacbfa23, type: 3}
     <BuildingName>k__BackingField: "\u041C\u0430\u0442\u0443\u0448\u043A\u0430 \u043B\u0435\u0449\u0438\u043D\u0430"
     <UpgradeType>k__BackingField: 5
+    <SpawnChance>k__BackingField: 0.25
     <IsRandomisable>k__BackingField: 1
     <Prefab>k__BackingField: {fileID: 4363163895983638128, guid: ae004d0724b37484b9c735f19af892f2, type: 3}
     <SpawnOffset>k__BackingField: {x: 0, y: -0.6, z: 0}
@@ -374,6 +380,7 @@ MonoBehaviour:
   - <Icon>k__BackingField: {fileID: -1795794816, guid: ef87f5f5417332946a2043ae834d5c7f, type: 3}
     <BuildingName>k__BackingField: "\u042F\u0434\u0440\u0435\u043D\u044B\u0439 \u043A\u043E\u043B\u043B\u0430\u0439\u0434\u0435\u0440."
     <UpgradeType>k__BackingField: 6
+    <SpawnChance>k__BackingField: 0.25
     <IsRandomisable>k__BackingField: 1
     <Prefab>k__BackingField: {fileID: 4363163895983638128, guid: 0a3f05a3286e5674d8b7aca51ce606d7, type: 3}
     <SpawnOffset>k__BackingField: {x: 0, y: -0.6, z: 0}
@@ -430,6 +437,7 @@ MonoBehaviour:
     <BuildingName>k__BackingField: "\u0424\u0435\u0440\u043C\u0430 \u0434\u043E\u043A\u0442\u043E\u0440\u0430
       \u041F\u043E\u043F\u043E\u0432\u0430"
     <UpgradeType>k__BackingField: 7
+    <SpawnChance>k__BackingField: 0.25
     <IsRandomisable>k__BackingField: 1
     <Prefab>k__BackingField: {fileID: 4363163895983638128, guid: 978e2036b9d6cf8489b6643acf03cd9c, type: 3}
     <SpawnOffset>k__BackingField: {x: 0, y: -0.6, z: 0}

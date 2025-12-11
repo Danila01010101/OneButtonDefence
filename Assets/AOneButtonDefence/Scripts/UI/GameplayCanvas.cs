@@ -19,7 +19,7 @@ public class GameplayCanvas : MonoBehaviour
     [SerializeField] private Button shopOpenButton;
     [SerializeField] private Button settingsOpenButton;
     [SerializeField] private StatisticViewInitializer statisticViewInitializer;
-    [SerializeField] private int randomBuildingsCount = 2;
+    [SerializeField] private int randomBuildingsCount = 3;
 
     private UnityAction shopWindowHandler;
     private UnityAction settingsWindowHandler;
@@ -32,7 +32,6 @@ public class GameplayCanvas : MonoBehaviour
     private List<BasicBuildingData> currentSelection = new List<BasicBuildingData>();
 
     private int lastKey = -1;
-    private int beforLastKey = -1;
     private int howManyChois = 0;
 
     [field: SerializeField] public AudioSettings AudioSettings { get; private set; }
@@ -48,7 +47,7 @@ public class GameplayCanvas : MonoBehaviour
             ResourceData.ResourceType.Material,
             ResourceData.ResourceType.Gem);
 
-        iconsText.text = "Выберите 2 здания для строительства.";
+        iconsText.text = "Выберите здание для строительства.";
         buildingsSelector = new RandomBuildingsSelector(buildingsData.Buildings);
 
         SpawnNewBuildingsSet();
@@ -66,36 +65,26 @@ public class GameplayCanvas : MonoBehaviour
             return;
         }
 
-        if (beforLastKey == index)
-        {
-            partsAnimators[beforLastKey].SwapSprites();
-            beforLastKey = -1;
-            howManyChois--;
-            UpdateUpgradeView();
-            return;
-        }
-
+        // Если клик по уже выбранной кнопке — отменяем выбор
         if (lastKey == index)
         {
             partsAnimators[lastKey].SwapSprites();
             lastKey = -1;
-            howManyChois--;
+            howManyChois = 0;
             UpdateUpgradeView();
             return;
         }
 
-        if (howManyChois >= 2)
+        // Если уже выбран один — игнорируем (разрешён только 1 выбор)
+        if (howManyChois >= 1)
         {
             return;
         }
 
-        howManyChois++;
-        partsAnimators[index].SwapSprites();
-
-        if (lastKey != -1)
-            beforLastKey = lastKey;
-
+        // Выбираем одну кнопку
+        howManyChois = 1;
         lastKey = index;
+        partsAnimators[index].SwapSprites();
 
         UpdateUpgradeView();
     }
@@ -105,15 +94,11 @@ public class GameplayCanvas : MonoBehaviour
         switch (howManyChois)
         {
             case 0:
-                iconsText.text = "Выберите 2 здания для строительства.";
+                iconsText.text = "Выберите здание для строительства.";
                 upgradeButton.Deactivate();
                 break;
             case 1:
-                iconsText.text = "Выберите ещё одно здание!";
-                upgradeButton.Deactivate();
-                break;
-            case 2:
-                iconsText.text = "Оба здания выбраны. Ожидаем приказа!";
+                iconsText.text = "Здание выбрано. Ожидаем приказа!";
                 upgradeButton.Activate();
                 break;
         }
@@ -162,19 +147,17 @@ public class GameplayCanvas : MonoBehaviour
         currentSelection.Clear();
 
         lastKey = -1;
-        beforLastKey = -1;
         howManyChois = 0;
     }
 
     public void WhenButtonClicked()
     {
-        if (lastKey == -1 || beforLastKey == -1)
+        if (lastKey == -1)
             return;
 
-        var first = currentSelection[lastKey].UpgradeType;
-        var second = currentSelection[beforLastKey].UpgradeType;
+        var chosen = currentSelection[lastKey].UpgradeType;
 
-        upgradeButton.UpgradeChosenPart(first, second);
+        upgradeButton.UpgradeChosenPart(chosen);
     }
     
     public void DetectSettingsWindow(ClosableWindow window)
