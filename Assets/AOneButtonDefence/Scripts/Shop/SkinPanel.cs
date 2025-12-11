@@ -222,17 +222,19 @@ public class SkinPanel : MonoBehaviour
         }
     }
     
-    private void DetectFirstRewardTaken() => firstRewardTaken = true;
+    private void DetectFirstSkinRewardTaken() => firstRewardTaken = true;
 
     private void OnEnable()
     {
-        RewardGemsActivator.FirstRewardActivated += DetectFirstRewardTaken;
+        RewardGemsActivator.FirstSkinRewardActivated += DetectFirstSkinRewardTaken;
+        RewardGemsActivator.SkinRewardActivated += ChangeText;
         EnablePanel();
     }
 
     private void OnDisable()
     {
-        RewardGemsActivator.FirstRewardActivated -= DetectFirstRewardTaken;
+        RewardGemsActivator.FirstSkinRewardActivated -= DetectFirstSkinRewardTaken;
+        RewardGemsActivator.SkinRewardActivated -= ChangeText;
         DisablePanel();
     }
 

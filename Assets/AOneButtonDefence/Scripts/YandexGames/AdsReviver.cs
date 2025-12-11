@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class AdsReviver : IDisposable
 {
@@ -9,6 +10,7 @@ public class AdsReviver : IDisposable
     private ReviveResourcesData reviveResourcesData;
     private Button reviveButton;
     private bool isBattleGoing;
+    private string reviveRewardText = "Revive reward.";
 
     public static event Action RewardGranted;
 
@@ -25,8 +27,25 @@ public class AdsReviver : IDisposable
     public void SubscribeButton(Button reviveButton)
     {
         this.reviveButton?.onClick.RemoveListener(Revive);
+        YG2.onRewardAdv -= ActivateReviveReward;
         this.reviveButton = reviveButton;
-        reviveButton.onClick.AddListener(Revive);
+        reviveButton.onClick.AddListener(ActivateReviveReward);
+        YG2.onRewardAdv += ActivateReviveReward;
+        reviveButton.interactable = true;
+    }
+
+    private void ActivateReviveReward()
+    {
+        YG2.RewardedAdvShow(reviveRewardText);
+    }
+
+    private void ActivateReviveReward(string id)
+    {
+        if (reviveRewardText != id)
+            return;
+        
+        reviveButton.interactable = false;
+        Revive();
     }
 
     private void Revive()
@@ -58,7 +77,7 @@ public class AdsReviver : IDisposable
     
     public void Dispose()
     {
-        reviveButton?.onClick.RemoveListener(Revive);
+        reviveButton?.onClick.RemoveListener(ActivateReviveReward);
         GameBattleState.BattleStarted += DetectBattleStart;
         GameBattleState.BattleWon += DetectBattleEnd;
     }
