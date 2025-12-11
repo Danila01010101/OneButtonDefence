@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 // Как я мог это написать? Я нифига не понимаю, ъуъуъуъ( (С) Mivoky
@@ -20,9 +21,12 @@ public class DialogueSystem : MonoBehaviour
     public Slider Slider;
     public KeyCode KeyCodePerSkip = KeyCode.G;
 
+    [SerializeField] private Button reviveButton;
+
     private int numReplic;
     private int numLabel = 0;
     private bool ASPlayingNeed;
+    private AdsReviver adsReviver;
 
     private string showReplic;
     private Coroutine replicaCoroutine;
@@ -34,8 +38,9 @@ public class DialogueSystem : MonoBehaviour
 
     public Action DialogEnded;
 
-    private void Start()
+    public void Initialize(AdsReviver adsReviver = null)
     {
+        this.adsReviver = adsReviver; 
         audioSource = GetComponent<AudioSource>();
         numReplic = 0;
         Name.text = DialogueData.Name;
@@ -48,6 +53,9 @@ public class DialogueSystem : MonoBehaviour
 
         gameObject.SetActive(true);
         replicaCoroutine = StartCoroutine(ShowReplica());
+        
+        if (adsReviver != null)
+            adsReviver.SubscribeButton(reviveButton);
     }
 
     private void Update()
@@ -71,7 +79,6 @@ public class DialogueSystem : MonoBehaviour
                 skipReplica = null;
             }
         }
-
     }
 
     public void StartDialog()
@@ -82,6 +89,9 @@ public class DialogueSystem : MonoBehaviour
 
     private void ChangeReplica() 
     {
+        if (adsReviver != null && IsClickOnUI())
+            return;
+        
         if (activeChangeReplic == false)
         {
             return;
@@ -191,6 +201,20 @@ public class DialogueSystem : MonoBehaviour
         }
         
         replicaCoroutine = null;
+    }
+
+    private bool IsClickOnUI()
+    {
+        if (EventSystem.current == null)
+            return false;
+
+        if (EventSystem.current.IsPointerOverGameObject())
+            return true;
+
+        if (EventSystem.current.IsPointerOverGameObject(0))
+            return true;
+
+        return false;
     }
 
     private void OnDestroy()

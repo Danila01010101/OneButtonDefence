@@ -12,6 +12,8 @@ namespace AOneButtonDefence.Scripts
         private CharacterVisibilityToggler visibilityToggler;
 
         private readonly PlayerControllerInitializerData data;
+        
+        public PlayerController PlayerInstance => playerControllerInstance;
 
         public PlayerControllerInitializer(PlayerControllerInitializerData data)
         {

@@ -11,9 +11,10 @@ public class StateMachineInitializer : IGameInitializerStep
     private CellsGrid _grid;
     private IDisableableInput _input;
     private IEnemyDetector _detector;
+    private AdsReviver _adsReviver;
     public GameStateMachine Instance { get; private set; }
 
-    public StateMachineInitializer(GameData gameData, EnemiesData enemiesData, GameplayCanvas canvas, GameObject battleCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput input, IEnemyDetector detector)
+    public StateMachineInitializer(GameData gameData, EnemiesData enemiesData, GameplayCanvas canvas, GameObject battleCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput input, IEnemyDetector detector, AdsReviver adsReviver)
     {
         _gameData = gameData;
         _enemiesData = enemiesData;
@@ -23,6 +24,7 @@ public class StateMachineInitializer : IGameInitializerStep
         _grid = grid;
         _input = input;
         _detector = detector;
+        _adsReviver = adsReviver;
     }
 
     public IEnumerator Initialize()
@@ -38,7 +40,8 @@ public class StateMachineInitializer : IGameInitializerStep
             _input,
             _gameData.UpgradeStateDuration,
             _gameData.UpgradeStateCompletionDelay,
-            _detector
+            _detector,
+            _adsReviver
         );
         Instance = new GameStateMachine(stateData, _enemiesData, _gameData.EnemiesSpawnOffset, LayerMask.GetMask(_gameData.EnemyLayerName));
         

@@ -82,11 +82,13 @@ public class RadiusVisualizer : MonoBehaviour
     {
         GameBattleState.BattleStarted += EnableRadiusEffect;
         GameBattleState.BattleWon += DisableRadiusEffect;
+        GameBattleState.BattleLost += DisableRadiusEffect;
     }
 
     private void OnDisable()
     {
         GameBattleState.BattleStarted -= EnableRadiusEffect;
         GameBattleState.BattleWon -= DisableRadiusEffect;
+        GameBattleState.BattleLost -= DisableRadiusEffect;
     }
 }

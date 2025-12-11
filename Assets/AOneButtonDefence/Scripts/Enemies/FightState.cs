@@ -59,16 +59,36 @@ public class FightState : UnitStateBase, ITargetAttacker
 
     protected virtual void Attack()
     {
-        if (Target == null) return;
+        if (ReferenceEquals(Target, null)) return;
             Target.TakeDamage(SelfDamageable.GetSelfDamagable(), Damage);
     }
 
     private void CheckTarget()
     {
-        var selfTransform = SelfDamageable.GetSelfDamagable().GetTransform();
-        
-        if (Target == null || Target.IsAlive() == false ||
-            Vector3.Distance(Target.GetTransform().position, selfTransform.position) > DefaultDistanceToLoseTarget)
+        try
+        {
+            if (ReferenceEquals(Target, null) || Target.IsAlive() == false)
+            {
+                StateMachine.ChangeState<TargetSearchState>();
+                return;
+            }
+
+            var selfTransform = SelfDamageable.GetSelfDamagable().GetTransform();
+
+            var targetTransform = Target.GetTransform();
+
+            if (targetTransform == null)
+            {
+                StateMachine.ChangeState<TargetSearchState>();
+                return;
+            }
+
+            if (Vector3.Distance(targetTransform.position, selfTransform.position) > DefaultDistanceToLoseTarget)
+            {
+                StateMachine.ChangeState<TargetSearchState>();
+            }
+        }
+        catch (MissingReferenceException)
         {
             StateMachine.ChangeState<TargetSearchState>();
         }

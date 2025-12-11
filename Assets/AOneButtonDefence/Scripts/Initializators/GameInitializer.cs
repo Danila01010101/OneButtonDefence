@@ -30,6 +30,8 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
     [SerializeField] private ClosableWindow infoCanvas;
     [SerializeField] private WrightAngle.Waypoint.WaypointUIManager waypointUIManager;
+    [Header("Ads")]
+    [SerializeField] private ReviveResourcesData reviveResourcesData;
 
     private bool isSerializationCompleted;
     public static Action GameInitialized;
@@ -320,13 +322,17 @@ public class GameInitializer : MonoBehaviour
         disposables.Add(playerInitializer);
 
         try { battleNotifier?.Subscribe(); } catch { }
+        disposables.Add(battleNotifier);
         
         yield return SafeStep("SpellCanvasInitializer", () => spellCanvasInit.Initialize(), () =>
         {
             try { spellCanvasObj = spellCanvasInit.Instance; } catch { spellCanvasObj = null; }
         });
+
+        AdsReviver adsReviver = new AdsReviver(playerInitializer.PlayerInstance, resourceCounterInit.Instance, reviveResourcesData);
+        disposables.Add(adsReviver);
         
-        StateMachineInitializer stateMachineInit = new StateMachineInitializer(gameData, enemiesData, upgradeCanvas, spellCanvasObj, worldCreator, worldGrid, disableableInput, gnomeDetector);
+        StateMachineInitializer stateMachineInit = new StateMachineInitializer(gameData, enemiesData, upgradeCanvas, spellCanvasObj, worldCreator, worldGrid, disableableInput, gnomeDetector, adsReviver);
         yield return SafeStep("StateMachineInitializer", () => stateMachineInit.Initialize(), () =>
         {
             try { gameStateMachine = stateMachineInit.Instance; } catch { gameStateMachine = null; }

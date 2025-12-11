@@ -11,12 +11,15 @@ public class DialogState : IState
     private readonly GameObject resourceWindow;
     private DialogueSystem spawnedDialog;
     private Canvas gamePlayCanvas;
+    private AdsReviver adsReviver;
+    private string reviveStateName = GameStateNames.Upgrade;
 
     public static Action AnimatableDialogueStarted;
     public static Action AnimatableDialogueEnded;
 
-    public DialogState(IStringStateChanger stateMachine, GameObject resourceWindow, DialogueSystem newDialog, string nextState, IDisableableInput input, bool isDialogAnimatable = false)
+    public DialogState(IStringStateChanger stateMachine, GameObject resourceWindow, DialogueSystem newDialog, string nextState, IDisableableInput input, AdsReviver adsReviver = null, bool isDialogAnimatable = false)
     {
+        this.adsReviver = adsReviver;
         this.stateMachine = stateMachine;
         this.resourceWindow = resourceWindow;
         startDialogPrefab = newDialog;
@@ -29,6 +32,7 @@ public class DialogState : IState
     {
         input.Disable();
         SpawnDialogCanvas();
+        AdsReviver.RewardGranted += EndDialogWithReward;
         
         if (isDialogAnimatable)
         {
@@ -41,6 +45,7 @@ public class DialogState : IState
     {
         input.Enable();
         RemoveDialogCanvas();
+        AdsReviver.RewardGranted -= EndDialogWithReward;
         
         if (isDialogAnimatable)
         {
@@ -68,6 +73,7 @@ public class DialogState : IState
     private void SpawnDialogCanvas()
     { 
         spawnedDialog = MonoBehaviour.Instantiate(startDialogPrefab);
+        spawnedDialog.Initialize(adsReviver);
         spawnedDialog.DialogEnded += EndDialog;
     }
 
@@ -76,6 +82,14 @@ public class DialogState : IState
     private void EndDialog()
     {
         spawnedDialog.DialogEnded -= EndDialog;
-        stateMachine.ChangeStateWithString(nextState);
+        
+        if (nextState != GameStateNames.Reload)
+            stateMachine.ChangeStateWithString(nextState);
+    }
+
+    private void EndDialogWithReward()
+    {
+        spawnedDialog.DialogEnded -= EndDialog;
+        stateMachine.ChangeStateWithString(reviveStateName);
     }
 }

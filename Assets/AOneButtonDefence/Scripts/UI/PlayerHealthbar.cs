@@ -128,7 +128,7 @@ public class PlayerHealthbar : MonoBehaviour
         if (health != null)
             health.HealthChanged -= SetHealth;
 
-        if (fillCoroutine != null)
+        if (fillCoroutine != null && CoroutineStarter.Instance != null)
             CoroutineStarter.Instance.StopCoroutine(fillCoroutine);
     }
     

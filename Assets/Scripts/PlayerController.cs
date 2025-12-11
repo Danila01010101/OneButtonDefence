@@ -79,7 +79,6 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         PlayerDead?.Invoke();
         Disable();
-        Destroy(gameObject, 0.1f);
         Debug.Log("Player died");
     }
 

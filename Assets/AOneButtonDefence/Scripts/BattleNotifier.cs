@@ -1,4 +1,6 @@
-public class BattleNotifier : IBattleNotifier
+using System;
+
+public class BattleNotifier : IBattleNotifier, IDisposable
 {
     private static BattleNotifier instance;
 
@@ -20,7 +22,7 @@ public class BattleNotifier : IBattleNotifier
         GameBattleState.BattleLost += DetectBattleEnd;
     }
 
-    public void Unsubscribe()
+    public void Dispose()
     {
         GameBattleState.BattleStarted -= DetectBattleStart;
         GameBattleState.BattleWon -= DetectBattleEnd;

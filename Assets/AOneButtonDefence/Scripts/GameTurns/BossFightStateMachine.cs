@@ -11,7 +11,7 @@ public class BossFightStateMachine : StateMachine, IStringStateChanger
         
         stringStates = new Dictionary<string, IState>()
         {
-            { GameStateNames.StartDialog, new DialogState(this, null, data.GameTurnsData.StartDragonDialogCanvas, GameStateNames.BattleState, data.Input, false) },
+            { GameStateNames.StartDialog, new DialogState(this, null, data.GameTurnsData.StartDragonDialogCanvas, GameStateNames.BattleState, data.Input, null, false) },
             { GameStateNames.Reload, new ReloadingState() },
             { GameStateNames.BattleState, new BossFightBattleState(bossFightBattleStateData) },
         };

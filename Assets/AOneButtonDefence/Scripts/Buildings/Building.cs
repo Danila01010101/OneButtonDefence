@@ -8,6 +8,8 @@ public class Building : MonoBehaviour, IEffectActivator
     [SerializeField] private Transform castPositionTransform;
     
     public Vector3 BuildingOffset => data.SpawnOffset;
+    public BasicBuildingData.Upgrades UpgradeType => data.UpgradeType;
+    public Vector3 ResourceSpawnPosition => resourceSpawnPosition;
 
     protected BasicBuildingData data;
 
