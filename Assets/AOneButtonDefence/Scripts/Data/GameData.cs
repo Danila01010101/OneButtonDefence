@@ -6,6 +6,8 @@ using UnityEngine;
 public class GameData : ScriptableObject
 {
     [field: SerializeField] public Vector3 WorldSize { get; private set; }
+    [field: SerializeField] public List<TradeDialogueData> RandomEventsDialogs { get; private set; }
+    [field: SerializeField] public int EventIntervalInTurns { get; private set; } = 3;
 
     [field: Header("Start resources")]
     [field: SerializeField] public List<StartResourceAmount> StartResources { get; private set; }

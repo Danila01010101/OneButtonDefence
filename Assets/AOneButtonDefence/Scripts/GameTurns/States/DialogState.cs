@@ -12,12 +12,13 @@ public class DialogState : IState
     private DialogueSystem spawnedDialog;
     private Canvas gamePlayCanvas;
     private AdsReviver adsReviver;
-    private string reviveStateName = GameStateNames.Upgrade;
+    private string reviveStateName = GameStateNames.RandomEvent;
 
     public static Action AnimatableDialogueStarted;
     public static Action AnimatableDialogueEnded;
 
-    public DialogState(IStringStateChanger stateMachine, GameObject resourceWindow, DialogueSystem newDialog, string nextState, IDisableableInput input, AdsReviver adsReviver = null, bool isDialogAnimatable = false)
+    public DialogState(IStringStateChanger stateMachine, GameObject resourceWindow, DialogueSystem newDialog, string nextState, 
+        IDisableableInput input, AdsReviver adsReviver = null, bool isDialogAnimatable = false)
     {
         this.adsReviver = adsReviver;
         this.stateMachine = stateMachine;

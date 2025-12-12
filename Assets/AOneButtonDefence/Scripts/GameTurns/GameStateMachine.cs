@@ -15,11 +15,12 @@ public class GameStateMachine : StateMachine, IStringStateChanger
         {
             { GameStateNames.StartDialog, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.StartDialogCanvas, GameStateNames.StartTutorial, data.Input, null, true) },
             { GameStateNames.StartTutorial, new TutorialStartState(this, GameStateNames.Upgrade) },
-            { GameStateNames.WinDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.EndTurnWinDialogCanvas, GameStateNames.Upgrade, data.Input) },
+            { GameStateNames.WinDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.EndTurnWinDialogCanvas, GameStateNames.RandomEvent, data.Input) },
             { GameStateNames.BattleLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.BattleLoseDialogCanvas, GameStateNames.Reload, data.Input, data.AdsReviver) },
             { GameStateNames.SpiritLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.SpiritLoseDialogCanvas, GameStateNames.Reload, data.Input, data.AdsReviver) },
             { GameStateNames.ResourcesLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.ResourceLoseDialogCanvas, GameStateNames.Reload, data.Input, data.AdsReviver) },
             { GameStateNames.FoodLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.FoodLoseDialogCanvas, GameStateNames.Reload, data.Input, data.AdsReviver) },
+            { GameStateNames.RandomEvent, new RandomEventsState(this, data.GameTurnsData.RandomEventsDialogs, data.GameResourcesCounter, data.TradeDialoguePrefab, data.GameTurnsData.EventIntervalInTurns, GameStateNames.Upgrade)},
             { GameStateNames.Reload, new ReloadingState() },
             //{ GameStateNames.DragonDialog, new DialogState(this, gameData.EndTurnDialogCanvas) },
             { GameStateNames.BattleState, new GameBattleState(battleStateData) },
@@ -44,12 +45,16 @@ public class GameStateMachine : StateMachine, IStringStateChanger
         public readonly string GnomeTag;
         public readonly IDisableableInput Input;
         public readonly IEnemyDetector Detector;
+        public readonly TradeDialogueSystem TradeDialoguePrefab;
+        public readonly GameResourcesCounter GameResourcesCounter;
         public readonly AdsReviver AdsReviver;
 
         public GameStateMachineData(GameplayCanvas upgradeUIGameObject, GameData gameTurnsData, MonoBehaviour coroutineStarter, CellsGrid buildingsGrid,
-           GameObject spellCanvas, string enemyTag, string gnomeTag, IDisableableInput input, float upgradeStateDuration, float upgradeStateCompletionDelay, IEnemyDetector detector, AdsReviver adsReviver)
+           GameObject spellCanvas, string enemyTag, string gnomeTag, IDisableableInput input, float upgradeStateDuration, float upgradeStateCompletionDelay, 
+           IEnemyDetector detector, AdsReviver adsReviver, TradeDialogueSystem tradeDialoguePrefab, GameResourcesCounter gameResourcesCounter)
         {
             AdsReviver = adsReviver;
+            TradeDialoguePrefab = tradeDialoguePrefab;
             UpgradeUIGameObject = upgradeUIGameObject;
             GameTurnsData = gameTurnsData;
             CoroutineStarter = coroutineStarter;
@@ -61,6 +66,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
             UpgradeStateDuration = upgradeStateDuration;
             UpgradeStateCompletionDelay = upgradeStateCompletionDelay;
             Detector = detector;
+            GameResourcesCounter = gameResourcesCounter;
         }
     }
 }

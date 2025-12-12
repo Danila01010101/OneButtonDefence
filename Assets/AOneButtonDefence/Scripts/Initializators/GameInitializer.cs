@@ -30,6 +30,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private UIGameObjectShower uiGameObjectShowerPrefab;
     [SerializeField] private ClosableWindow infoCanvas;
     [SerializeField] private WrightAngle.Waypoint.WaypointUIManager waypointUIManager;
+    [SerializeField] private TradeDialogueSystem TradeDialoguePerefab;
     [Header("Ads")]
     [SerializeField] private ReviveResourcesData reviveResourcesData;
 
@@ -332,7 +333,7 @@ public class GameInitializer : MonoBehaviour
         AdsReviver adsReviver = new AdsReviver(playerInitializer.PlayerInstance, resourceCounterInit.Instance, reviveResourcesData);
         disposables.Add(adsReviver);
         
-        StateMachineInitializer stateMachineInit = new StateMachineInitializer(gameData, enemiesData, upgradeCanvas, spellCanvasObj, worldCreator, worldGrid, disableableInput, gnomeDetector, adsReviver);
+        StateMachineInitializer stateMachineInit = new StateMachineInitializer(gameData, enemiesData, upgradeCanvas, spellCanvasObj, worldCreator, worldGrid, disableableInput, gnomeDetector, adsReviver, TradeDialoguePerefab, gameResourcesCounter);
         yield return SafeStep("StateMachineInitializer", () => stateMachineInit.Initialize(), () =>
         {
             try { gameStateMachine = stateMachineInit.Instance; } catch { gameStateMachine = null; }

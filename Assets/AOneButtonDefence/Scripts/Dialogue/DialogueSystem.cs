@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// Как я мог это написать? Я нифига не понимаю, ъуъуъуъ( (С) Mivoky
 [RequireComponent(typeof(AudioSource))]
 public class DialogueSystem : MonoBehaviour
 {
@@ -14,8 +13,10 @@ public class DialogueSystem : MonoBehaviour
     public TextMeshProUGUI Name;
     public TextMeshProUGUI Text;
     public Image GnomeAdvisor;
+
     [Header("Text Speed")]
     public float ReplicSpeed;
+
     [Header("Skip dialog")]
     public float SkipTime;
     public Slider Slider;
@@ -23,37 +24,40 @@ public class DialogueSystem : MonoBehaviour
 
     [SerializeField] private Button reviveButton;
 
-    private int numReplic;
-    private int numLabel = 0;
-    private bool ASPlayingNeed;
-    private AdsReviver adsReviver;
-
+    protected int numReplic { get; private set; }
+    protected int numLabel { get; private set; }
+    
+    protected bool closeOnReplicFinish = true;
+    
     private string showReplic;
     private Coroutine replicaCoroutine;
-    private Coroutine skipReplica;
-
-    private bool activeChangeReplic = true;
+    private Coroutine skipCoroutine;
 
     private AudioSource audioSource;
+    private AdsReviver adsReviver;
 
     public Action DialogEnded;
 
-    public void Initialize(AdsReviver adsReviver = null)
+    public virtual void Initialize(AdsReviver adsReviver = null)
     {
-        this.adsReviver = adsReviver; 
+        this.adsReviver = adsReviver;
         audioSource = GetComponent<AudioSource>();
+
         numReplic = 0;
+        numLabel = 0;
+
         Name.text = DialogueData.Name;
-        
+
         if (Slider != null)
             Slider.value = 0;
-        
+
         if (GnomeAdvisor != null)
             GnomeAdvisor.sprite = DialogueData.Label[numLabel].CharacterEmotion.Emotion();
 
         gameObject.SetActive(true);
+
         replicaCoroutine = StartCoroutine(ShowReplica());
-        
+
         if (adsReviver != null)
             adsReviver.SubscribeButton(reviveButton);
     }
@@ -61,22 +65,18 @@ public class DialogueSystem : MonoBehaviour
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
-        {
             ChangeReplica();
-        }
-        
+
         if (Input.GetKeyDown(KeyCodePerSkip) && Slider != null)
-        {
-            skipReplica = StartCoroutine(Timer(SkipTime));
-        }
-        
+            skipCoroutine = StartCoroutine(Timer(SkipTime));
+
         if (Input.GetKeyUp(KeyCodePerSkip))
         {
             Slider.value = 0;
-            if (skipReplica != null)
+            if (skipCoroutine != null)
             {
-                StopCoroutine(skipReplica);
-                skipReplica = null;
+                StopCoroutine(skipCoroutine);
+                skipCoroutine = null;
             }
         }
     }
@@ -87,148 +87,106 @@ public class DialogueSystem : MonoBehaviour
         replicaCoroutine = StartCoroutine(ShowReplica());
     }
 
-    private void ChangeReplica() 
+    protected virtual void ChangeReplica()
     {
         if (adsReviver != null && IsClickOnUI())
             return;
-        
-        if (activeChangeReplic == false)
+
+        if (replicaCoroutine != null)
         {
+            StopCoroutine(replicaCoroutine);
+            replicaCoroutine = null;
+
+            Text.text = DialogueData.Label[numLabel].Replic[numReplic];
             return;
         }
 
         if (numReplic < DialogueData.Label[numLabel].Replic.Count - 1)
         {
-            if (replicaCoroutine != null)
-            {
-                StopCoroutine(replicaCoroutine);
-                replicaCoroutine = null;
-            }
-            
-            numReplic++; 
-            DetectReplicaSkip();
+            numReplic++;
+            replicaCoroutine = StartCoroutine(ShowReplica());
             return;
         }
-        else if (DialogueData.Label[numLabel].NextLabel != 0)
+
+        if (DialogueData.Label[numLabel].NextLabel != 0)
         {
             ChangeLabel(DialogueData.Label[numLabel].NextLabel);
+            return;
         }
-        else
-        {
-            Destroy(gameObject);
-            DialogEnded?.Invoke();
-        }
+
+        if (closeOnReplicFinish)
+            SkipDialog();
     }
 
-    private void DetectReplicaSkip()
-    {
-        if (replicaCoroutine != null)
-        {
-            StopCoroutine(replicaCoroutine);
-            replicaCoroutine = null;
-            Text.text = DialogueData.Label[numLabel].Replic[numReplic - 1];
-        }
-        else
-        {
-            replicaCoroutine = StartCoroutine(ShowReplica());
-        }
-    }
-
-    public void ChooseReplica(int num)
-    {
-
-        activeChangeReplic = true;
-        numLabel = DialogueData.Label[numLabel].Answers[num].MoveTo;
-        numReplic = 0;
-
-        showReplic = "";
-
-        StopCoroutine(replicaCoroutine);
-        replicaCoroutine = StartCoroutine(ShowReplica());
-    }
-    
     private void ChangeLabel(int label)
     {
         numLabel = label;
         numReplic = 0;
-        
-        if (replicaCoroutine != null)
-        {
-            StopCoroutine(replicaCoroutine);
-            replicaCoroutine = null;
-        }
-        
-        GnomeAdvisor.sprite = DialogueData.Label[numLabel].CharacterEmotion.Emotion();
+
+        if (GnomeAdvisor != null)
+            GnomeAdvisor.sprite = DialogueData.Label[numLabel].CharacterEmotion.Emotion();
+
         replicaCoroutine = StartCoroutine(ShowReplica());
     }
 
-    private void SkipDialog()
+    protected virtual void SkipDialog()
     {
         Destroy(gameObject);
         DialogEnded?.Invoke();
     }
-    
+
     private IEnumerator Timer(float time)
     {
-        float timerTime = 0;
-        
-        while (true) 
+        float timer = 0;
+
+        while (true)
         {
-            yield return new WaitForEndOfFrame();
-            timerTime += Time.deltaTime;
-            Slider.value = timerTime / time;
-            
-            if (timerTime >= time)
+            yield return null;
+            timer += Time.deltaTime;
+
+            Slider.value = timer / time;
+
+            if (timer >= time)
             {
                 SkipDialog();
+                yield break;
             }
         }
     }
-    
+
     private IEnumerator ShowReplica()
     {
         showReplic = "";
-        foreach (var replica in DialogueData.Label[numLabel].Replic[numReplic])
+        var targetText = DialogueData.Label[numLabel].Replic[numReplic];
+
+        foreach (char c in targetText)
         {
             yield return new WaitForSeconds(ReplicSpeed);
-            showReplic += replica;
+
+            showReplic += c;
             Text.text = showReplic;
-            
-            if(audioSource.isPlaying == false)
-            {
+
+            if (!audioSource.isPlaying)
                 audioSource.Play();
-            }
         }
-        
+
         replicaCoroutine = null;
     }
 
     private bool IsClickOnUI()
     {
-        if (EventSystem.current == null)
-            return false;
+        if (EventSystem.current == null) return false;
 
-        if (EventSystem.current.IsPointerOverGameObject())
-            return true;
-
-        if (EventSystem.current.IsPointerOverGameObject(0))
-            return true;
-
-        return false;
+        return EventSystem.current.IsPointerOverGameObject() ||
+               EventSystem.current.IsPointerOverGameObject(0);
     }
 
     private void OnDestroy()
     {
         if (replicaCoroutine != null)
-        {
             StopCoroutine(replicaCoroutine);
-            replicaCoroutine = null;
-        }
-        
-        if (skipReplica != null)
-        {
-            StopCoroutine(skipReplica);
-            skipReplica = null;
-        }
+
+        if (skipCoroutine != null)
+            StopCoroutine(skipCoroutine);
     }
 }

@@ -2,6 +2,7 @@ public static class GameStateNames
 {
     public const string StartDialog = "Start Dialog";
     public const string StartTutorial = "Start Tutorial";
+    public const string RandomEvent = "Trade Dialog";
     public const string DragonDialog = "Dragon Dialog";
     public const string FrogDialog = "Frog Dialog";
     public const string BattleState = "Battle";

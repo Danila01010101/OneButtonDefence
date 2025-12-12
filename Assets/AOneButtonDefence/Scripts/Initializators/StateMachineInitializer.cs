@@ -12,9 +12,12 @@ public class StateMachineInitializer : IGameInitializerStep
     private IDisableableInput _input;
     private IEnemyDetector _detector;
     private AdsReviver _adsReviver;
+    private TradeDialogueSystem _tradeDialoguePrefab;
+    private GameResourcesCounter _gameResourcesCounter;
     public GameStateMachine Instance { get; private set; }
 
-    public StateMachineInitializer(GameData gameData, EnemiesData enemiesData, GameplayCanvas canvas, GameObject battleCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput input, IEnemyDetector detector, AdsReviver adsReviver)
+    public StateMachineInitializer(GameData gameData, EnemiesData enemiesData, GameplayCanvas canvas, GameObject battleCanvas, GroundBlocksSpawner worldCreator, CellsGrid grid, IDisableableInput input,
+        IEnemyDetector detector, AdsReviver adsReviver, TradeDialogueSystem tradeDialoguePrefab, GameResourcesCounter gameResourcesCounter)
     {
         _gameData = gameData;
         _enemiesData = enemiesData;
@@ -25,6 +28,7 @@ public class StateMachineInitializer : IGameInitializerStep
         _input = input;
         _detector = detector;
         _adsReviver = adsReviver;
+        _tradeDialoguePrefab = tradeDialoguePrefab;
     }
 
     public IEnumerator Initialize()
@@ -41,7 +45,9 @@ public class StateMachineInitializer : IGameInitializerStep
             _gameData.UpgradeStateDuration,
             _gameData.UpgradeStateCompletionDelay,
             _detector,
-            _adsReviver
+            _adsReviver,
+            _tradeDialoguePrefab,
+            _gameResourcesCounter
         );
         Instance = new GameStateMachine(stateData, _enemiesData, _gameData.EnemiesSpawnOffset, LayerMask.GetMask(_gameData.EnemyLayerName));
         
