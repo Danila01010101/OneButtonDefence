@@ -14,7 +14,7 @@ public class TradeResourceLabel : MonoBehaviour
         
         StringBuilder sb = new StringBuilder();
         sb.Append("Добавлено ");
-        sb.Append(info.Amount > 0 ? " + " : " - ");
+        sb.Append(info.Amount > 0 ? " + " : " ");
         sb.Append(info.Amount);
         sb.Append(" ресурса ");
         sb.Append(info.Resource.Name);
