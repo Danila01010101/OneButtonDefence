@@ -29,6 +29,7 @@ public class StateMachineInitializer : IGameInitializerStep
         _detector = detector;
         _adsReviver = adsReviver;
         _tradeDialoguePrefab = tradeDialoguePrefab;
+        _gameResourcesCounter = gameResourcesCounter;
     }
 
     public IEnumerator Initialize()

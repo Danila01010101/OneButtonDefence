@@ -15,7 +15,7 @@ MonoBehaviour:
   <WorldSize>k__BackingField: {x: 350, y: 20, z: 350}
   <RandomEventsDialogs>k__BackingField:
   - {fileID: 11400000, guid: 703a2f33fcc56df4fb5ff551061d25f3, type: 2}
-  <EventIntervalInTurns>k__BackingField: 3
+  <EventIntervalInTurns>k__BackingField: 0
   <StartResources>k__BackingField:
   - <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
     <Amount>k__BackingField: 100

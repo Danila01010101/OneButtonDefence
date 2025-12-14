@@ -7,15 +7,16 @@ public class RandomEventsState : IState
     private readonly IStringStateChanger stateMachine;
     private readonly List<TradeDialogueData> dialogues;
     private readonly TradeDialogueSystem tradeDialoguePrefab;
+    private readonly Transform upgradeCanvasTransform;
     private readonly int eventsTurnInterval;
     private readonly string nextStateName;
     
     private List<TradeDialogueData> unusedDialogues = new List<TradeDialogueData>();
     private GameResourcesCounter resourcesCounter;
     private TradeDialogueSystem spawnedDialog;
-    private int eventsTurnCounter;
+    private int eventsTurnCounter = 1;
 
-    public RandomEventsState(IStringStateChanger stateMachine, List<TradeDialogueData> allDialogs, GameResourcesCounter resourcesCounter, TradeDialogueSystem tradeDialoguePrefab, int eventsTurnInterval, string nextStateName)
+    public RandomEventsState(IStringStateChanger stateMachine, List<TradeDialogueData> allDialogs, Transform upgradeCanvasTransform, GameResourcesCounter resourcesCounter, TradeDialogueSystem tradeDialoguePrefab, int eventsTurnInterval, string nextStateName)
     {
         dialogues = allDialogs;
         this.stateMachine = stateMachine;
@@ -23,11 +24,12 @@ public class RandomEventsState : IState
         this.tradeDialoguePrefab = tradeDialoguePrefab;
         this.nextStateName = nextStateName;
         this.eventsTurnInterval = eventsTurnInterval;
+        this.upgradeCanvasTransform = upgradeCanvasTransform;
     }
     
     public void Enter()
     {
-        if (eventsTurnCounter++ < eventsTurnInterval)
+        if (eventsTurnCounter++ <= eventsTurnInterval)
         {
             stateMachine.ChangeStateWithString(GameStateNames.Upgrade);
             return;
@@ -41,7 +43,7 @@ public class RandomEventsState : IState
         int randomDialogueIndex = Random.Range(0, unusedDialogues.Count);
         
         spawnedDialog.Initialize();
-        spawnedDialog.SetupTradeDialogueComponents(resourcesCounter, unusedDialogues[randomDialogueIndex]);
+        spawnedDialog.SetupTradeDialogueComponents(resourcesCounter, unusedDialogues[randomDialogueIndex], upgradeCanvasTransform);
         unusedDialogues.RemoveAt(randomDialogueIndex);
         spawnedDialog.DialogEnded += FinishTrade;
     }

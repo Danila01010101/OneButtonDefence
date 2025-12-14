@@ -7,7 +7,7 @@ public class TradeResourceInfoWindow : MonoBehaviour
     [Header("UI")]
     [SerializeField] private RectTransform window;
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private Transform resourceLinesContainer;
+    [SerializeField] private RectTransform resourceLinesContainer;
 
     [Header("Prefabs")]
     [SerializeField] private TradeResourceLabel resourceLinePrefab;
@@ -24,14 +24,25 @@ public class TradeResourceInfoWindow : MonoBehaviour
         foreach (Transform child in resourceLinesContainer)
             Destroy(child.gameObject);
 
-        int objectsCounter = 0;
-        
+        int count = 0;
+
         foreach (var r in resourceAmounts)
         {
+            count++;
+            
             var line = Instantiate(resourceLinePrefab, resourceLinesContainer);
-            line.transform.position += objectsCounter++ * Vector3.up * distanceBetweenLines;
+            RectTransform rect = line.GetComponent<RectTransform>();
+
+            rect.anchoredPosition = Vector2.up * (distanceBetweenLines * count);
             line.Set(r);
         }
+
+        resourceLinesContainer.anchoredPosition += Vector2.up * (distanceBetweenLines * (count - 1) / 2f);
+
+        window.sizeDelta = new Vector2(
+            window.sizeDelta.x,
+            window.sizeDelta.y + distanceBetweenLines * count
+        );
 
         StartCoroutine(AnimateWindow());
     }

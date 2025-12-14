@@ -12,7 +12,7 @@ public class TradeDialogueSystem : DialogueSystem
     [SerializeField] private Button declineButton;
     [SerializeField] private TradeResourceInfoWindow tradeInfoPanelPrefab;
 
-    private Canvas infoPanelParent;
+    private Transform infoPanelParent;
     private GameResourcesCounter resourcesCounter;
 
     public override void Initialize(AdsReviver adsReviver = null)
@@ -27,15 +27,16 @@ public class TradeDialogueSystem : DialogueSystem
         base.Initialize(adsReviver);
     }
 
-    public void SetupTradeDialogueComponents(GameResourcesCounter resourcesCounter, TradeDialogueData tradeDialogueData)
+    public void SetupTradeDialogueComponents(GameResourcesCounter resourcesCounter, TradeDialogueData tradeDialogueData, Transform infoPanelParent)
     {
         this.resourcesCounter = resourcesCounter;
         this.tradeDialogueData = tradeDialogueData;
+        this.infoPanelParent = infoPanelParent;
     }
 
     protected override void ChangeReplica()
     {
-        if (numReplic == DialogueData.Label[numLabel].Replic.Count)
+        if (numReplic == DialogueData.Label[numLabel].Replic.Count - 1)
         {
             agreeButton.interactable = true;
             declineButton.interactable = true;
@@ -58,7 +59,8 @@ public class TradeDialogueSystem : DialogueSystem
             resourcesCounter.ChangeResourceAmount(new ResourceAmount(resource.Resource, resource.Amount));
         }
 
-        TradeResourceInfoWindow infoWindow = Instantiate(tradeInfoPanelPrefab, infoPanelParent.transform);
+        TradeResourceInfoWindow infoWindow = Instantiate(tradeInfoPanelPrefab, infoPanelParent);
+        infoWindow.Animate(resourceAmounts);
         SkipDialog();
     }
 }

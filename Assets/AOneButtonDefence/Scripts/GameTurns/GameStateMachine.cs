@@ -20,7 +20,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
             { GameStateNames.SpiritLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.SpiritLoseDialogCanvas, GameStateNames.Reload, data.Input, data.AdsReviver) },
             { GameStateNames.ResourcesLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.ResourceLoseDialogCanvas, GameStateNames.Reload, data.Input, data.AdsReviver) },
             { GameStateNames.FoodLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.FoodLoseDialogCanvas, GameStateNames.Reload, data.Input, data.AdsReviver) },
-            { GameStateNames.RandomEvent, new RandomEventsState(this, data.GameTurnsData.RandomEventsDialogs, data.GameResourcesCounter, data.TradeDialoguePrefab, data.GameTurnsData.EventIntervalInTurns, GameStateNames.Upgrade)},
+            { GameStateNames.RandomEvent, new RandomEventsState(this, data.GameTurnsData.RandomEventsDialogs, data.UpgradeUIGameObject.transform, data.GameResourcesCounter, data.TradeDialoguePrefab, data.GameTurnsData.EventIntervalInTurns, GameStateNames.Upgrade)},
             { GameStateNames.Reload, new ReloadingState() },
             //{ GameStateNames.DragonDialog, new DialogState(this, gameData.EndTurnDialogCanvas) },
             { GameStateNames.BattleState, new GameBattleState(battleStateData) },
