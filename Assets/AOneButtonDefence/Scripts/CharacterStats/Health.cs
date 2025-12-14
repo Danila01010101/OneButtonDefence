@@ -5,7 +5,7 @@ public class Health : ICharacterStat
 {
     public float Value { get; private set; }
     
-    public Action<Transform> DamagReceivedFromTarget;
+    public Action<Transform> DamageReceivedFromTarget;
     public Action<float, float> HealthChanged;
     public Action Death;
 
@@ -24,7 +24,19 @@ public class Health : ICharacterStat
 
         Value -= damage;
         HealthChanged?.Invoke(Value, maxHealth);
-        DamagReceivedFromTarget?.Invoke(damagerTransform);
+        DamageReceivedFromTarget?.Invoke(damagerTransform);
+
+        if (Value <= 0)
+            Death?.Invoke();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if (damage < 0)
+            throw new ArgumentOutOfRangeException();
+
+        Value -= damage;
+        HealthChanged?.Invoke(Value, maxHealth);
 
         if (Value <= 0)
             Death?.Invoke();

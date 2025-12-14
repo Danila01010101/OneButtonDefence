@@ -59,11 +59,19 @@ public class TradeDialogueSystem : DialogueSystem
         
         foreach (var resource in resourceAmounts)
         {
-            if (resource.Resource.Type == ResourceData.ResourceType.Warrior)
+            if (resource.Resource.Type == ResourceData.ResourceType.Warrior && resource.Amount > 0)
+            {
                 ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(resource.Resource, resource.Amount, warriorsIncomePosition));
+            }
             else
             {
-                ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(resource.Resource, resource.Amount));
+                var warriors = GameObject.FindObjectsOfType<GnomeFightingUnit>();
+                int warriorsAmountToKill = -resource.Amount > warriors.Length ? warriors.Length : -resource.Amount;
+                
+                for (int i = 0; i < warriorsAmountToKill; i++)
+                {
+                    warriors[i].TakeDamage(10000f);
+                }
             }
         }
 

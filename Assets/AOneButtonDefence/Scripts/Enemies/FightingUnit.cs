@@ -87,6 +87,12 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
         DamageRecieved?.Invoke(damagerTransform);
     }
 
+    public virtual void TakeDamage(float damage)
+    {
+        if (isDead) return;
+        health.TakeDamage(damage);
+    }
+
     public IDamagable GetSelfDamagable() => this;
 
     public Transform GetTransform() => transform;
