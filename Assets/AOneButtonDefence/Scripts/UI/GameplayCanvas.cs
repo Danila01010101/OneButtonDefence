@@ -65,7 +65,6 @@ public class GameplayCanvas : MonoBehaviour
             return;
         }
 
-        // Если клик по уже выбранной кнопке — отменяем выбор
         if (lastKey == index)
         {
             partsAnimators[lastKey].SwapSprites();
@@ -75,13 +74,11 @@ public class GameplayCanvas : MonoBehaviour
             return;
         }
 
-        // Если уже выбран один — игнорируем (разрешён только 1 выбор)
         if (howManyChois >= 1)
         {
             return;
         }
 
-        // Выбираем одну кнопку
         howManyChois = 1;
         lastKey = index;
         partsAnimators[index].SwapSprites();
