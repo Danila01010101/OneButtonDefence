@@ -12,6 +12,7 @@ public class TradeDialogueSystem : DialogueSystem
     [SerializeField] private Button declineButton;
     [SerializeField] private TradeResourceInfoWindow tradeInfoPanelPrefab;
 
+    private Vector3 warriorsIncomePosition;
     private Transform infoPanelParent;
     private GameResourcesCounter resourcesCounter;
 
@@ -24,14 +25,16 @@ public class TradeDialogueSystem : DialogueSystem
         agreeButton.onClick.AddListener(AcceptTrade);
         declineButton.interactable = false;
         declineButton.onClick.AddListener(DeclineTrade);
-        base.Initialize(adsReviver);
     }
 
-    public void SetupTradeDialogueComponents(GameResourcesCounter resourcesCounter, TradeDialogueData tradeDialogueData, Transform infoPanelParent)
+    public void SetupTradeDialogueComponents(GameResourcesCounter resourcesCounter, TradeDialogueData tradeDialogueData, Transform infoPanelParent, Vector3 warriorsIncomePosition)
     {
         this.resourcesCounter = resourcesCounter;
         this.tradeDialogueData = tradeDialogueData;
+        DialogueData = tradeDialogueData;
         this.infoPanelParent = infoPanelParent;
+        this.warriorsIncomePosition = warriorsIncomePosition;
+        base.Initialize();
     }
 
     protected override void ChangeReplica()
@@ -56,7 +59,12 @@ public class TradeDialogueSystem : DialogueSystem
         
         foreach (var resource in resourceAmounts)
         {
-            resourcesCounter.ChangeResourceAmount(new ResourceAmount(resource.Resource, resource.Amount));
+            if (resource.Resource.Type == ResourceData.ResourceType.Warrior)
+                ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(resource.Resource, resource.Amount, warriorsIncomePosition));
+            else
+            {
+                ResourceIncomeCounter.Instance.InstantResourceChange(new ResourceAmount(resource.Resource, resource.Amount));
+            }
         }
 
         TradeResourceInfoWindow infoWindow = Instantiate(tradeInfoPanelPrefab, infoPanelParent);

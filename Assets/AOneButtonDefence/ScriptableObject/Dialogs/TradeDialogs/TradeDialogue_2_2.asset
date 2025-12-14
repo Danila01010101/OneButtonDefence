@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 6b343d3e8f528a34a9724f9efa1b7166, type: 3}
+  m_Name: TradeDialogue_2_2
+  m_EditorClassIdentifier: 
+  _label:
+  - LabelName: "Срочное объявление"
+    CharacterEmotion: {fileID: 11400000, guid: 17cecf56c08bd884594e059c6c24d573, type: 2}
+    Replic:
+    - "Срочное объявление от звёзды храма, Модной Свечки Анжелики! Сейчас в тренде отдать еды в храм, будьте на хайпе!"
+    Answers: []
+    NextLabel: 0
+  _name: "Хайп в храме"
+  AcceptResources:
+  - <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
+    <Amount>k__BackingField: -25
+    <UsedForBuilding>k__BackingField: 0
+  - <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
+    <Amount>k__BackingField: 15
+    <UsedForBuilding>k__BackingField: 0
+  DeclineResources: []

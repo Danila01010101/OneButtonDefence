@@ -15,8 +15,9 @@ public class RandomEventsState : IState
     private GameResourcesCounter resourcesCounter;
     private TradeDialogueSystem spawnedDialog;
     private int eventsTurnCounter = 1;
+    private Vector3 warriorsIncomePosition;
 
-    public RandomEventsState(IStringStateChanger stateMachine, List<TradeDialogueData> allDialogs, Transform upgradeCanvasTransform, GameResourcesCounter resourcesCounter, TradeDialogueSystem tradeDialoguePrefab, int eventsTurnInterval, string nextStateName)
+    public RandomEventsState(IStringStateChanger stateMachine, List<TradeDialogueData> allDialogs, Transform upgradeCanvasTransform, GameResourcesCounter resourcesCounter, TradeDialogueSystem tradeDialoguePrefab, Vector3 warriorsIncomePosition, int eventsTurnInterval, string nextStateName)
     {
         dialogues = allDialogs;
         this.stateMachine = stateMachine;
@@ -25,6 +26,7 @@ public class RandomEventsState : IState
         this.nextStateName = nextStateName;
         this.eventsTurnInterval = eventsTurnInterval;
         this.upgradeCanvasTransform = upgradeCanvasTransform;
+        this.warriorsIncomePosition = warriorsIncomePosition;
     }
     
     public void Enter()
@@ -43,7 +45,7 @@ public class RandomEventsState : IState
         int randomDialogueIndex = Random.Range(0, unusedDialogues.Count);
         
         spawnedDialog.Initialize();
-        spawnedDialog.SetupTradeDialogueComponents(resourcesCounter, unusedDialogues[randomDialogueIndex], upgradeCanvasTransform);
+        spawnedDialog.SetupTradeDialogueComponents(resourcesCounter, unusedDialogues[randomDialogueIndex], upgradeCanvasTransform, warriorsIncomePosition);
         unusedDialogues.RemoveAt(randomDialogueIndex);
         spawnedDialog.DialogEnded += FinishTrade;
     }

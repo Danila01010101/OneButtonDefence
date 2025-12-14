@@ -27,6 +27,7 @@ public class GameData : ScriptableObject
     
     //[field: SerializeField] public int TurnAmountBeforeEvent { get; private set; } = 4;
     [field: Header("Battle parameters")]
+    [field: SerializeField] public Vector3 DefaultWarriorSpawnPosition { get; private set; }
     [field: SerializeField] public PlayerControllerData PlayerUnitData { get; private set; }
     [field: SerializeField] public PlayerController PlayerUnit { get; private set; }
     [field: SerializeField] public GnomeFightingUnit GnomeUnit { get; private set; }

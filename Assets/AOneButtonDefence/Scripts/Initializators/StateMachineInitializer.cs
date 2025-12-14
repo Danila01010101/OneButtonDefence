@@ -48,7 +48,8 @@ public class StateMachineInitializer : IGameInitializerStep
             _detector,
             _adsReviver,
             _tradeDialoguePrefab,
-            _gameResourcesCounter
+            _gameResourcesCounter,
+            _gameData.DefaultWarriorSpawnPosition
         );
         Instance = new GameStateMachine(stateData, _enemiesData, _gameData.EnemiesSpawnOffset, LayerMask.GetMask(_gameData.EnemyLayerName));
         

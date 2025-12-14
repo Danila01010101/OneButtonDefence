@@ -20,7 +20,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
             { GameStateNames.SpiritLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.SpiritLoseDialogCanvas, GameStateNames.Reload, data.Input, data.AdsReviver) },
             { GameStateNames.ResourcesLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.ResourceLoseDialogCanvas, GameStateNames.Reload, data.Input, data.AdsReviver) },
             { GameStateNames.FoodLoseDialogue, new DialogState(this, data.UpgradeUIGameObject.ResourceInfo, data.GameTurnsData.FoodLoseDialogCanvas, GameStateNames.Reload, data.Input, data.AdsReviver) },
-            { GameStateNames.RandomEvent, new RandomEventsState(this, data.GameTurnsData.RandomEventsDialogs, data.UpgradeUIGameObject.transform, data.GameResourcesCounter, data.TradeDialoguePrefab, data.GameTurnsData.EventIntervalInTurns, GameStateNames.Upgrade)},
+            { GameStateNames.RandomEvent, new RandomEventsState(this, data.GameTurnsData.RandomEventsDialogs, data.UpgradeUIGameObject.transform, data.GameResourcesCounter, data.TradeDialoguePrefab, data.WarriorsIncomePosition, data.GameTurnsData.EventIntervalInTurns, GameStateNames.Upgrade)},
             { GameStateNames.Reload, new ReloadingState() },
             //{ GameStateNames.DragonDialog, new DialogState(this, gameData.EndTurnDialogCanvas) },
             { GameStateNames.BattleState, new GameBattleState(battleStateData) },
@@ -39,6 +39,7 @@ public class GameStateMachine : StateMachine, IStringStateChanger
         public readonly MonoBehaviour CoroutineStarter;
         public readonly CellsGrid CellsGrid;
         public readonly GameObject SpellCanvas;
+        public readonly Vector3 WarriorsIncomePosition;
         public readonly float UpgradeStateCompletionDelay;
         public readonly float UpgradeStateDuration;
         public readonly string EnemyTag;
@@ -51,13 +52,14 @@ public class GameStateMachine : StateMachine, IStringStateChanger
 
         public GameStateMachineData(GameplayCanvas upgradeUIGameObject, GameData gameTurnsData, MonoBehaviour coroutineStarter, CellsGrid buildingsGrid,
            GameObject spellCanvas, string enemyTag, string gnomeTag, IDisableableInput input, float upgradeStateDuration, float upgradeStateCompletionDelay, 
-           IEnemyDetector detector, AdsReviver adsReviver, TradeDialogueSystem tradeDialoguePrefab, GameResourcesCounter gameResourcesCounter)
+           IEnemyDetector detector, AdsReviver adsReviver, TradeDialogueSystem tradeDialoguePrefab, GameResourcesCounter gameResourcesCounter, Vector3 warriorsIncomePosition)
         {
             AdsReviver = adsReviver;
             TradeDialoguePrefab = tradeDialoguePrefab;
             UpgradeUIGameObject = upgradeUIGameObject;
             GameTurnsData = gameTurnsData;
             CoroutineStarter = coroutineStarter;
+            WarriorsIncomePosition = warriorsIncomePosition;
             CellsGrid = buildingsGrid;
             SpellCanvas = spellCanvas;
             EnemyTag = enemyTag;

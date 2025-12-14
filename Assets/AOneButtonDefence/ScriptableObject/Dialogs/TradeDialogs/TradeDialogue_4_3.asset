@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 6b343d3e8f528a34a9724f9efa1b7166, type: 3}
+  m_Name: TradeDialogue_4_3
+  m_EditorClassIdentifier: 
+  _label:
+  - LabelName: "Доклад паладинов"
+    CharacterEmotion: {fileID: 11400000, guid: 17cecf56c08bd884594e059c6c24d573, type: 2}
+    Replic:
+    - "Ваше святейшество, мы элитный отряд паладинов ордена истинного шоколада и недавно в наши ряды подали заявку на вступление от проклятых адептов сгущенкозаменителя! Мы можем их принять, ибо сейчас время неспокойное, но это пошатнет моральный дух ордена."
+    Answers: []
+    NextLabel: 0
+  _name: "Проблема паладинов"
+  AcceptResources:
+  - <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
+    <Amount>k__BackingField: -12
+    <UsedForBuilding>k__BackingField: 0
+  - <Resource>k__BackingField: {fileID: 11400000, guid: a7a7003b21a1e244eb4249ac18a4c39d, type: 2}
+    <Amount>k__BackingField: 10
+    <UsedForBuilding>k__BackingField: 0
+  DeclineResources: []

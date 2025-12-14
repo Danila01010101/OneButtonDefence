@@ -40,6 +40,12 @@ MonoBehaviour:
   - <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
     <Amount>k__BackingField: 40
     <UsedForBuilding>k__BackingField: 0
+  - <Resource>k__BackingField: {fileID: 11400000, guid: a7a7003b21a1e244eb4249ac18a4c39d, type: 2}
+    <Amount>k__BackingField: 40
+    <UsedForBuilding>k__BackingField: 0
+  - <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
+    <Amount>k__BackingField: 40
+    <UsedForBuilding>k__BackingField: 0
   DeclineResources:
   - <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
     <Amount>k__BackingField: -45

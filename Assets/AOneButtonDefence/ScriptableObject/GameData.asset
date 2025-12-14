@@ -14,7 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <WorldSize>k__BackingField: {x: 350, y: 20, z: 350}
   <RandomEventsDialogs>k__BackingField:
-  - {fileID: 11400000, guid: 703a2f33fcc56df4fb5ff551061d25f3, type: 2}
+  - {fileID: 11400001, guid: 4ac8ae5b17adf8c41b3710e8b5c80894, type: 2}
+  - {fileID: 11400002, guid: 70033e805be47274b94ac3126e6a8199, type: 2}
+  - {fileID: 11400003, guid: ee0d3773e9f0b8c47a5f5c9dae5a64ec, type: 2}
+  - {fileID: 11400004, guid: f56272193133ae64fb3f8f85f4d8be0c, type: 2}
+  - {fileID: 11400005, guid: fcc97400473db974a9a2d1e8e97613fe, type: 2}
+  - {fileID: 11400006, guid: f47c207e82322ce46985c747359fd2b0, type: 2}
+  - {fileID: 11400007, guid: 945ca0e0cdf409346a711833f220f524, type: 2}
+  - {fileID: 11400008, guid: 6b45c5a6a4bbf824a95db0e255edfd67, type: 2}
+  - {fileID: 11400009, guid: 962228727500bde45b600e5d22aa69cd, type: 2}
+  - {fileID: 11400010, guid: 730c20a30765d9645a388d47a293c00e, type: 2}
+  - {fileID: 11400011, guid: 81b16814dc929734cabcdaec53c1949a, type: 2}
+  - {fileID: 11400012, guid: 1233bd6d5bd87db479718a049e4c3390, type: 2}
   <EventIntervalInTurns>k__BackingField: 0
   <StartResources>k__BackingField:
   - <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
@@ -55,6 +66,7 @@ MonoBehaviour:
   <FoodLoseDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: c123dfa5a0fce6443a870eabc57f1038, type: 3}
   <ResourceLoseDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: a1e0690fdfac01446956167e57663b91, type: 3}
   <SpiritLoseDialogCanvas>k__BackingField: {fileID: 6066843327004986940, guid: 7d2b860d160963442b34d290028a8f67, type: 3}
+  <DefaultWarriorSpawnPosition>k__BackingField: {x: 157.508, y: -0.41799998, z: 159.9}
   <PlayerUnitData>k__BackingField: {fileID: 11400000, guid: f8c77499fbc32ed4c9b0e3cbdf7fb257, type: 2}
   <PlayerUnit>k__BackingField: {fileID: 382914475558998754, guid: 85eec022b9e078f4e880d71c8cb5ca38, type: 3}
   <GnomeUnit>k__BackingField: {fileID: 2094672045661467839, guid: f4f495098b5f5c3449dc8000417df478, type: 3}
