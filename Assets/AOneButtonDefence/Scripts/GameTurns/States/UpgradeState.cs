@@ -20,6 +20,7 @@ public class UpgradeState : IState
 
     public UpgradeState(IStringStateChanger stateMachine, GameplayCanvas upgradeUI, float upgradePhaseDuration, float upgradePhaseCompletionDelay)
     {
+        this.upgradePhaseCompletionDelay = upgradePhaseCompletionDelay;
         this.stateMachine = stateMachine;
         this.upgradeUI = upgradeUI;
         this.upgradePhaseDuration = upgradePhaseDuration;
