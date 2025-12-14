@@ -31,8 +31,11 @@ public class DesctopInput : IInput, IDisableableInput
 
     public void Update()
     {
-        if (Input.GetMouseButtonUp(spellCastButton) && Time.time - mouseClickButtonTouchTime < clickMaxTime)
+        if (Input.GetMouseButton(spellCastButton) && Time.time - mouseClickButtonTouchTime < clickMaxTime)
+        {
             Clicked?.Invoke(Input.mousePosition);
+            Debug.Log("ClickHappened");
+        }
         
         HandleMoveInput();
     }

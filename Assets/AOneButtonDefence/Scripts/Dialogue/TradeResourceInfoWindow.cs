@@ -75,5 +75,7 @@ public class TradeResourceInfoWindow : MonoBehaviour
 
             yield return null;
         }
+        
+        Destroy(gameObject);
     }
 }

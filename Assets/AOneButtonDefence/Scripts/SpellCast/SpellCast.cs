@@ -40,8 +40,6 @@ public class SpellCast : IDisposable
         GameBattleState.BattleStarted += Enable;
         BossFightBattleState.BattleStarted += Enable;
         InitilizeRandomMode();
-        
-        Physics.queriesHitTriggers = false;
     }
 
     private void InitilizeRandomMode()
@@ -70,31 +68,94 @@ public class SpellCast : IDisposable
 
     private void RandomModeCast(Vector2 position)
     {
-        if (!CanCastSpell)
-            return;
-        
-        if (IsClickOnUI())
-            return;
-        
-        if (randomSpell[0] == null)
-            return;
-        
-        Ray ray = Camera.main.ScreenPointToRay(position);
-        RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity);
+    #if UNITY_EDITOR
+        Debug.Log("SpellCast: Click received");
+    #endif
 
-        foreach (var h in hits)
+        if (!CanCastSpell)
         {
-            if (((1 << h.collider.gameObject.layer) & spellSurfaceLayer) != 0)
-            {
-                Vector3 spawnPos = new Vector3(h.point.x, 1.01f, h.point.z);
-                GameObject spell = GameObject.Instantiate(randomSpell[0].BaseMagicCircle, spawnPos, Quaternion.identity);
-                spell.GetComponent<Spell>().Initialize(randomSpell[0], damagableTargetLayer, stat.Value);
-                randomSpell[0] = null;
-                AddNextSpell();
-                CoroutineStarter.Instance.StartCoroutine(Reload());
-                break;
-            }
+    #if UNITY_EDITOR
+            Debug.LogWarning(
+                $"SpellCast blocked: CanCastSpell = false " +
+                $"(Battle: {isBattleGoing}, Reloading: {isReloading})"
+            );
+    #endif
+            return;
         }
+
+        if (IsClickOnUI())
+        {
+    #if UNITY_EDITOR
+            Debug.LogWarning("SpellCast blocked: click is over UI");
+    #endif
+            return;
+        }
+
+        if (randomSpell[0] == null)
+        {
+    #if UNITY_EDITOR
+            Debug.LogWarning("SpellCast blocked: no spell loaded in slot 0");
+    #endif
+            return;
+        }
+
+        Camera cam = Camera.main;
+        if (cam == null)
+        {
+    #if UNITY_EDITOR
+            Debug.LogError("SpellCast failed: Camera.main is null");
+    #endif
+            return;
+        }
+
+        Ray ray = cam.ScreenPointToRay(position);
+
+    #if UNITY_EDITOR
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.cyan, 1.5f);
+    #endif
+
+        if (!Physics.Raycast(
+                ray,
+                out RaycastHit hit,
+                Mathf.Infinity,
+                spellSurfaceLayer,
+                QueryTriggerInteraction.Ignore))
+        {
+    #if UNITY_EDITOR
+            Debug.LogWarning(
+                $"SpellCast blocked: Raycast did not hit spell surface. " +
+                $"LayerMask: {spellSurfaceLayer.value}"
+            );
+    #endif
+            return;
+        }
+
+    #if UNITY_EDITOR
+        Debug.Log(
+            $"SpellCast success: hit {hit.collider.name} " +
+            $"(Layer: {LayerMask.LayerToName(hit.collider.gameObject.layer)}) " +
+            $"at distance {hit.distance}"
+        );
+    #endif
+
+        Vector3 spawnPos = new Vector3(hit.point.x, 1.01f, hit.point.z);
+
+        isReloading = true;
+
+        GameObject spell = GameObject.Instantiate(
+            randomSpell[0].BaseMagicCircle,
+            spawnPos,
+            Quaternion.identity);
+
+        spell.GetComponent<Spell>().Initialize(
+            randomSpell[0],
+            damagableTargetLayer,
+            stat.Value);
+
+        randomSpell[0] = null;
+        AddNextSpell();
+
+        CoroutineStarter.Instance.StartCoroutine(Reload());
     }
     
     private IEnumerator Reload()
@@ -109,13 +170,36 @@ public class SpellCast : IDisposable
         if (EventSystem.current == null)
             return false;
 
-        if (EventSystem.current.IsPointerOverGameObject())
-            return true;
+        PointerEventData eventData = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
 
-        if (EventSystem.current.IsPointerOverGameObject(0))
-            return true;
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
 
-        return false;
+        if (results.Count == 0)
+            return false;
+
+#if UNITY_EDITOR
+        Debug.Log("UI blocks click. Hit elements:");
+        foreach (var r in results)
+        {
+            var canvas = r.gameObject.GetComponentInParent<Canvas>();
+
+            string canvasInfo = canvas != null
+                ? $"Canvas: {canvas.name}, RenderMode: {canvas.renderMode}"
+                : "Canvas: none";
+
+            Debug.Log(
+                $"UI Element: {r.gameObject.name} | " +
+                $"Layer: {LayerMask.LayerToName(r.gameObject.layer)} | " +
+                canvasInfo
+            );
+        }
+#endif
+
+        return true;
     }
 
     public void AddNextSpell()
