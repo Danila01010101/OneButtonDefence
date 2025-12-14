@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Snow
   m_EditorClassIdentifier: 
   time: 8
-  timePerDamage: 3
-  damage: 13
+  timePerDamage: 2
+  damage: 6
   effect:
     <Resource>k__BackingField: {fileID: 11400000, guid: efbb60488a7d31f41864787b2e1dd300, type: 2}
     <Amount>k__BackingField: -1
+    <UsedForBuilding>k__BackingField: 0
+  effectForEveryEnemy: {fileID: 0}
   baseMagicCircle: {fileID: 141406376336512300, guid: d05efe7fd44f4064e96c746027d4c1dd, type: 3}
   iconForUI: {fileID: -899585829, guid: b03dc1658a9192d449fbd853e0eff459, type: 3}
   background: {fileID: 21300000, guid: 5ea1ed43b72eb864f88120d8b4e6bb40, type: 3}
