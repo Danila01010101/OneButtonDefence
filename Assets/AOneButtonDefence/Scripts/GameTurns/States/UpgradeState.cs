@@ -30,6 +30,7 @@ public class UpgradeState : IState
 
     public void Enter()
     {
+        CheckIfStateCanStart();
         isUpgradeChosen = false;
         upgradePhaseStartTime = Time.time;
         upgradeUI.UpgradeWindow.gameObject.SetActive(true);
@@ -71,6 +72,24 @@ public class UpgradeState : IState
         isUpgradeChosen = true;
     }
 
+    private void CheckIfStateCanStart()
+    {
+        if (GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.Material) <= 0)
+        {
+            stateMachine.ChangeStateWithString(GameStateNames.ResourcesLoseDialogue);
+        }
+
+        if (GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.Food) <= 0)
+        {
+            stateMachine.ChangeStateWithString(GameStateNames.FoodLoseDialogue);
+        }
+        
+        if (GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.Spirit) <= 0)
+        {
+            stateMachine.ChangeStateWithString(GameStateNames.SpiritLoseDialogue);
+        }
+    }  
+
     private IEnumerator CompleteUpgradeState()
     {
         isCompletingTurn = true;
@@ -80,24 +99,6 @@ public class UpgradeState : IState
         UpgradeStateEnding?.Invoke();
 
         yield return new WaitForSeconds(upgradePhaseCompletionDelay);
-        
-        if (GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.Material) <= 0)
-        {
-            stateMachine.ChangeStateWithString(GameStateNames.ResourcesLoseDialogue);
-            yield break;
-        }
-
-        if (GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.Food) <= 0)
-        {
-            stateMachine.ChangeStateWithString(GameStateNames.FoodLoseDialogue);
-            yield break;
-        }
-        
-        if (GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.Spirit) <= 0)
-        {
-            stateMachine.ChangeStateWithString(GameStateNames.SpiritLoseDialogue);
-            yield break;
-        }
 
         stateMachine.ChangeStateWithString(GameStateNames.BattleState);
         isCompletingTurn = false;
