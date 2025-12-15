@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1311686508088642988}
   - component: {fileID: 7610342783746401978}
   - component: {fileID: 2745672032082640991}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7371973763552672672}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EffectCastPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 1891148704851249733}
   - component: {fileID: 5874870400941111637}
   - component: {fileID: -7937591861307493883}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BuildingForUnitSpeedBuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,6 +341,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e2418e34d2fef3644be86e93f0ba5a61, type: 3}
       propertyPath: m_Name
       value: SpeedTower1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e2418e34d2fef3644be86e93f0ba5a61, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: e2418e34d2fef3644be86e93f0ba5a61, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
