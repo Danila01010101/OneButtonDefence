@@ -26,6 +26,6 @@ MonoBehaviour:
   <Delay>k__BackingField: 0
   <StartColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   <EndColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
-  <MinGemSpawn>k__BackingField: 3
-  <MaxGemSpawn>k__BackingField: 6
+  <MinGemSpawn>k__BackingField: 0
+  <MaxGemSpawn>k__BackingField: 4
   <DeathSound>k__BackingField: {fileID: 8300000, guid: e170dcdfcc169154b9d9efcd2abc3697, type: 3}
