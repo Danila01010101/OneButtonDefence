@@ -39,13 +39,13 @@ public class TradeDialogueSystem : DialogueSystem
 
     protected override void ChangeReplica()
     {
+        base.ChangeReplica();
+        
         if (numReplic == DialogueData.Label[numLabel].Replic.Count - 1)
         {
             agreeButton.interactable = true;
             declineButton.interactable = true;
         }
-        
-        base.ChangeReplica();
     }
 
     private void AcceptTrade() => FinishTrade(tradeDialogueData.AcceptResources);
