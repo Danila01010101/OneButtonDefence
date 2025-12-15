@@ -16,7 +16,8 @@ public class MusicPlayerMediator
     {
         DialogState.AnimatableDialogueStarted += backgroundMusicPlayer.StartDialogueMusic;
         GameBattleState.BattleStarted += backgroundMusicPlayer.StartBattleMusic;
-        UpgradeState.UpgradeStateStarted += backgroundMusicPlayer.StartUpgradeStateMusic;
+        GameBattleState.BattleWon += backgroundMusicPlayer.StartUpgradeStateMusic;
+        GameBattleState.BattleLost += backgroundMusicPlayer.StartUpgradeStateMusic;
         UpgradeButton.UpgradeTypesChoosen += effectsPlayer.PlayUpgradesSoundEffect;
         GameBattleState.BattleWon += effectsPlayer.PlayBattleWinEffect;
         GameBattleState.BattleLost += effectsPlayer.PlayDefeatEffect;
@@ -26,8 +27,9 @@ public class MusicPlayerMediator
     public void Unsubscribe()
     {
         DialogState.AnimatableDialogueStarted -= backgroundMusicPlayer.StartDialogueMusic;
-        GameBattleState.BattleStarted -= backgroundMusicPlayer.StartBattleMusic;
-        UpgradeState.UpgradeStateStarted -= backgroundMusicPlayer.StartUpgradeStateMusic;
+        GameBattleState.BattleStarted -= backgroundMusicPlayer.StartBattleMusic
+        GameBattleState.BattleWon -= backgroundMusicPlayer.StartUpgradeStateMusic;
+        GameBattleState.BattleLost -= backgroundMusicPlayer.StartUpgradeStateMusic;
         UpgradeButton.UpgradeTypesChoosen -= effectsPlayer.PlayUpgradesSoundEffect;
         GameBattleState.BattleWon -= effectsPlayer.PlayBattleWinEffect;
         GameBattleState.BattleLost -= effectsPlayer.PlayDefeatEffect;
