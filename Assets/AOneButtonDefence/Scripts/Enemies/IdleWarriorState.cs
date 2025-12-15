@@ -8,8 +8,8 @@ public class IdleWarriorState : UnitStateBase, IState
 	private IStateChanger stateMachine;
 	private Vector3 startPosition;
 
-	public IdleWarriorState(IStateChanger stateChanger, Vector3 startPosition, WalkingAnimation walkingAnimation, NavMeshAgent agent, CharacterStatsCounter statsCounter) : 
-		base(stateChanger, agent.transform, statsCounter)
+	public IdleWarriorState(IStateChanger stateChanger, Vector3 startPosition, WalkingAnimation walkingAnimation, NavMeshAgent agent, CharacterStatsCounter statsCounter, Transform selfTransform) : 
+		base(stateChanger, selfTransform, statsCounter)
 	{
         stateMachine = stateChanger;
 		this.agent = agent;

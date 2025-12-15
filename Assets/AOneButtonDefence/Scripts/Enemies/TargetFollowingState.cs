@@ -28,8 +28,9 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
         LayerMask targetMask,
         WalkingAnimation animation,
         IEnemyDetector detector,
-        ISelfDamageable selfDamageable)
-        : base(stateMachine, agent.transform, stats)
+        ISelfDamageable selfDamageable,
+        Transform selfTransform)
+        : base(stateMachine, selfTransform, stats)
     {
         this.targetAttacker = targetAttacker;
         this.targetMask = targetMask;

@@ -23,14 +23,14 @@ public class UnitWithUltimateStateMachine : StateMachine
         
         var fightState = new FightWithUltimateState(fightDragonStateData);
         var targetFollowingState = new TargetFollowingState(this, data.Agent, data.StatsCounter, Mathf.Infinity, fightState, 
-            data.TargetLayer, data.WalkingAnimation, data.EnemyDetector, data.SelfDamageable);
+            data.TargetLayer, data.WalkingAnimation, data.EnemyDetector, data.SelfDamageable, data.SelfTransform);
         var targetSearchStateData = new TargetSearchState.TargetSearchStateData(
             this, data.SelfTransform, targetFollowingState, data.Agent, data.WalkingAnimation, data.EnemyDetector);
 
         states = new List<IState>()
         {
             new TargetSearchState(targetSearchStateData, data.StatsCounter),
-            new IdleWarriorState(this, data.SelfTransform.position, data.WalkingAnimation, data.Agent, data.StatsCounter),
+            new IdleWarriorState(this, data.SelfTransform.position, data.WalkingAnimation, data.Agent, data.StatsCounter, data.SelfTransform),
             fightState,
             targetFollowingState
         };
