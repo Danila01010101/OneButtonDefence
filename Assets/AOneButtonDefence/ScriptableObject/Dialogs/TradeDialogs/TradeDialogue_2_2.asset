@@ -8,22 +8,41 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b343d3e8f528a34a9724f9efa1b7166, type: 3}
   m_Name: TradeDialogue_2_2
   m_EditorClassIdentifier: 
   _label:
-  - LabelName: "Срочное объявление"
+  - LabelName: "\u0421\u0440\u043E\u0447\u043D\u043E\u0435 \u043E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0435"
     CharacterEmotion: {fileID: 11400000, guid: 17cecf56c08bd884594e059c6c24d573, type: 2}
     Replic:
-    - "Срочное объявление от звёзды храма, Модной Свечки Анжелики! Сейчас в тренде отдать еды в храм, будьте на хайпе!"
+    - "\u0421\u0440\u043E\u0447\u043D\u043E\u0435 \u043E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0435
+      \u043E\u0442 \u0437\u0432\u0451\u0437\u0434\u044B \u0445\u0440\u0430\u043C\u0430,
+      \u041C\u043E\u0434\u043D\u043E\u0439 \u0421\u0432\u0435\u0447\u043A\u0438 \u0410\u043D\u0436\u0435\u043B\u0438\u043A\u0438!
+      \u0421\u0435\u0439\u0447\u0430\u0441 \u0432 \u0442\u0440\u0435\u043D\u0434\u0435
+      \u043E\u0442\u0434\u0430\u0442\u044C \u0435\u0434\u044B \u0432 \u0445\u0440\u0430\u043C,
+      \u0431\u0443\u0434\u044C\u0442\u0435 \u043D\u0430 \u0445\u0430\u0439\u043F\u0435!"
     Answers: []
     NextLabel: 0
-  _name: "Хайп в храме"
+  - LabelName: "\u0421\u0440\u043E\u0447\u043D\u043E\u0435 \u043E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0435"
+    CharacterEmotion: {fileID: 11400000, guid: 17cecf56c08bd884594e059c6c24d573, type: 2}
+    Replic:
+    - "\u041D\u0430\u0448\u0438\u043C \u0433\u043E\u043B\u043E\u0434\u0430\u044E\u0449\u0438\u043C
+      \u043C\u043D\u043E\u0433\u043E\u0433\u043E \u043D\u0435 \u043D\u0443\u0436\u043D\u043E,
+      \u043D\u0430\u043C \u0431\u044B \u0445\u0432\u0430\u0442\u0438\u043B\u043E
+      \u0438 30 \u043A\u0430\u0441\u0442\u0440\u044E\u043B\u044C \u0432\u0430\u0448\u0435\u0433\u043E
+      \u043E\u0442\u0432\u0430\u0440\u0430."
+    Answers: []
+    NextLabel: 0
+  _name: "\u0425\u0430\u0439\u043F \u0432 \u0445\u0440\u0430\u043C\u0435"
   AcceptResources:
   - <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
-    <Amount>k__BackingField: -25
+    <Amount>k__BackingField: -30
     <UsedForBuilding>k__BackingField: 0
   - <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
-    <Amount>k__BackingField: 15
+    <Amount>k__BackingField: 10
     <UsedForBuilding>k__BackingField: 0
-  DeclineResources: []
+  DeclineResources:
+  - <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
+    <Amount>k__BackingField: -50
+    <UsedForBuilding>k__BackingField: 0

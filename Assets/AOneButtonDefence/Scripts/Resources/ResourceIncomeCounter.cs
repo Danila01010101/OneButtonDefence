@@ -42,6 +42,11 @@ public class ResourceIncomeCounter
                 effect.ApplyEffect(startResourceAmount.Amount, startResourceAmount.ResourceSpawnPositon);
             }
         }
+
+        if (resourceWithBuff.Resource.Type == ResourceData.ResourceType.Warrior && GameResourcesCounter.GetResourceAmount(ResourceData.ResourceType.Warrior) < 0)
+        {
+            Debug.Log("Somehow this happened :)");
+        }
     }
 
     public void RegisterResourcePerTurnChange(ResourceAmount startResourceAmount) =>

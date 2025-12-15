@@ -14,8 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <WorldSize>k__BackingField: {x: 350, y: 20, z: 350}
   <RandomEventsDialogs>k__BackingField:
+  - {fileID: 11400001, guid: 4ac8ae5b17adf8c41b3710e8b5c80894, type: 2}
+  - {fileID: 11400002, guid: 70033e805be47274b94ac3126e6a8199, type: 2}
+  - {fileID: 11400003, guid: ee0d3773e9f0b8c47a5f5c9dae5a64ec, type: 2}
+  - {fileID: 11400004, guid: f56272193133ae64fb3f8f85f4d8be0c, type: 2}
+  - {fileID: 11400005, guid: fcc97400473db974a9a2d1e8e97613fe, type: 2}
+  - {fileID: 11400006, guid: f47c207e82322ce46985c747359fd2b0, type: 2}
+  - {fileID: 11400007, guid: 945ca0e0cdf409346a711833f220f524, type: 2}
+  - {fileID: 11400008, guid: 6b45c5a6a4bbf824a95db0e255edfd67, type: 2}
   - {fileID: 11400009, guid: 962228727500bde45b600e5d22aa69cd, type: 2}
-  <EventIntervalInTurns>k__BackingField: 0
+  - {fileID: 11400010, guid: 730c20a30765d9645a388d47a293c00e, type: 2}
+  - {fileID: 11400011, guid: 81b16814dc929734cabcdaec53c1949a, type: 2}
+  - {fileID: 11400012, guid: 1233bd6d5bd87db479718a049e4c3390, type: 2}
+  <EventIntervalInTurns>k__BackingField: 1
   <StartResources>k__BackingField:
   - <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
     <Amount>k__BackingField: 100
