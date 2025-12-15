@@ -153,6 +153,9 @@ public class GameInitializer : MonoBehaviour
             catch { input = null; disableableInput = null; }
         });
 
+        CursorLocker locker = new CursorLocker(input);
+        disposables.Add(locker);
+
         CoroutineStarterInitializer coroutineStarterInit = new CoroutineStarterInitializer(initializedObjectsParent);
         yield return SafeStep("CoroutineStarterInitializer", () => coroutineStarterInit.Initialize());
 
