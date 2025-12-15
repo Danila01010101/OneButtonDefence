@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac828f26a1091cd44aea27397667cde9, type: 3}
   m_Name: Gems
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Gems
+  <Name>k__BackingField: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u044B"
   <Type>k__BackingField: 4
   <IsSpawnable>k__BackingField: 0
   <Icon>k__BackingField: {fileID: 21300000, guid: 38eb4bf18837c844caa3b2b17c12697c, type: 3}
+  <ResourceEffect>k__BackingField: {fileID: 0}

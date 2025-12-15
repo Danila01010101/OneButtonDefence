@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac828f26a1091cd44aea27397667cde9, type: 3}
   m_Name: Materials
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Material
+  <Name>k__BackingField: "\u041C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B"
   <Type>k__BackingField: 3
   <IsSpawnable>k__BackingField: 0
   <Icon>k__BackingField: {fileID: 21300000, guid: 12601a8f5f0b5fb4da5ac6b1cadf6c17, type: 3}
+  <ResourceEffect>k__BackingField: {fileID: 0}

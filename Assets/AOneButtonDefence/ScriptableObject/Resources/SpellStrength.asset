@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac828f26a1091cd44aea27397667cde9, type: 3}
   m_Name: SpellStrength
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Spell strength
+  <Name>k__BackingField: "\u0421\u0438\u043B\u0430 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0439"
   <Type>k__BackingField: 13
   <IsSpawnable>k__BackingField: 0
   <Icon>k__BackingField: {fileID: 21300000, guid: 5895d3bb85bb25949b2c9ab629ae1ab2, type: 3}

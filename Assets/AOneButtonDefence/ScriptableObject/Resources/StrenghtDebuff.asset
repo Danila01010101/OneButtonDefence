@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac828f26a1091cd44aea27397667cde9, type: 3}
   m_Name: StrenghtDebuff
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: StrenghtBuff
+  <Name>k__BackingField: "\u041E\u0441\u043B\u0430\u0431\u043B\u0435\u043D\u0438\u0435
+    \u043F\u0440\u043E\u0442\u0438\u0432\u043D\u0438\u043A\u043E\u0432"
   <Type>k__BackingField: 5
   <IsSpawnable>k__BackingField: 0
   <Icon>k__BackingField: {fileID: 21300000, guid: 74d1f080f1cabb44482e03205a6761a7, type: 3}
