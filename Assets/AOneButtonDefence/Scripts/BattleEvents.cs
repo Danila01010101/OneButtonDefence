@@ -6,11 +6,13 @@ public class BattleEvents : IBattleEvent
     {
         GameBattleState.BattleStarted += startHandler;
         GameBattleState.BattleWon += endHandler;
+        GameBattleState.BattleLost += endHandler;
     }
 
     public void Unsubscribe(Action startHandler, Action endHandler)
     {
         GameBattleState.BattleStarted -= startHandler;
         GameBattleState.BattleWon -= endHandler;
+        GameBattleState.BattleLost -= endHandler;
     }
 }
