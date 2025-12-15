@@ -2,10 +2,11 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class MusicPlayerInitializer : IGameInitializerStep
+public class MusicPlayerInitializer : IGameInitializerStep, IDisposable
 {
     private Transform _parent;
     private MusicData _musicData;
+    private GameMusicPlayer _musicPlayer;
     public IBackgroundMusicPlayer BackgroundPlayer { get; private set; }
     public IUpgradeEffectPlayer UpgradeEffectPlayer { get; private set; }
 
@@ -25,9 +26,14 @@ public class MusicPlayerInitializer : IGameInitializerStep
         firstUpgradePlayer.volume = 0.8f;
         var secondUpgradePlayer = go.AddComponent<AudioSource>();
         secondUpgradePlayer.volume = 0.8f;
-        var musicPlayer = new GameMusicPlayer(_musicData, backgroundPlayer, firstUpgradePlayer, secondUpgradePlayer);
-        BackgroundPlayer = musicPlayer;
-        UpgradeEffectPlayer = musicPlayer;
+        _musicPlayer = new GameMusicPlayer(_musicData, backgroundPlayer, firstUpgradePlayer, secondUpgradePlayer);
+        BackgroundPlayer = _musicPlayer;
+        UpgradeEffectPlayer = _musicPlayer;
         yield break;
+    }
+
+    public void Dispose()
+    {
+        _musicPlayer.Dispose();
     }
 }

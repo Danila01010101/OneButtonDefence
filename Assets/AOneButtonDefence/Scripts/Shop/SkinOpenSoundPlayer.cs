@@ -24,6 +24,6 @@ public class SkinOpenSoundPlayer : IDisposable
 
     public void Dispose()
     {
-        SkinPanel.SkinBought -= PlaySound;
+        SkinPanel.SkinChanged -= PlaySound;
     }
 }

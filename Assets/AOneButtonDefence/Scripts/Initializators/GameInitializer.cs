@@ -177,6 +177,7 @@ public class GameInitializer : MonoBehaviour
             }
             catch { backgroundMusicPlayer = null; upgradeEffectPlayer = null; }
         });
+        disposables.Add(musicPlayerInit);
 
         MusicMediatorInitializer musicMediatorInit = new MusicMediatorInitializer(backgroundMusicPlayer, upgradeEffectPlayer);
         yield return SafeStep("MusicMediatorInitializer", () => musicMediatorInit.Initialize(), () =>
