@@ -27,7 +27,7 @@ public class MusicPlayerMediator
     public void Unsubscribe()
     {
         DialogState.AnimatableDialogueStarted -= backgroundMusicPlayer.StartDialogueMusic;
-        GameBattleState.BattleStarted -= backgroundMusicPlayer.StartBattleMusic
+        GameBattleState.BattleStarted -= backgroundMusicPlayer.StartBattleMusic;
         GameBattleState.BattleWon -= backgroundMusicPlayer.StartUpgradeStateMusic;
         GameBattleState.BattleLost -= backgroundMusicPlayer.StartUpgradeStateMusic;
         UpgradeButton.UpgradeTypesChoosen -= effectsPlayer.PlayUpgradesSoundEffect;
