@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Waves data
   m_EditorClassIdentifier: 
   <waves>k__BackingField:
-  - spawnInterval: 0.55
+  - spawnInterval: 0.7
     enemiesToGenerate:
     - isEnabled: 1
       EnemyPrefab: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
@@ -21,36 +21,36 @@ MonoBehaviour:
       startAmount: 1
       growthPerWave: 1
       growthType: 0
-      maxWave: 200
-      customSpawnInterval: 0.2
+      maxWave: 16
+      customSpawnInterval: 0.3
       randomVariancePercent: 50
     - isEnabled: 1
       EnemyPrefab: {fileID: -4759624641507810172, guid: 185a3dbff5ad8eb4d85b94761469bdc0, type: 3}
       startWave: 3
-      startAmount: 2
+      startAmount: 1
       growthPerWave: 1
       growthType: 0
-      maxWave: 200
-      customSpawnInterval: 0.2
+      maxWave: 16
+      customSpawnInterval: 0.35
       randomVariancePercent: 7
   - spawnInterval: 0.3
     enemiesToGenerate:
     - isEnabled: 1
       EnemyPrefab: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
       startWave: 5
-      startAmount: 5
+      startAmount: 3
       growthPerWave: 2
       growthType: 0
-      maxWave: 200
+      maxWave: 20
       customSpawnInterval: 0.6
       randomVariancePercent: 30
     - isEnabled: 1
       EnemyPrefab: {fileID: -4759624641507810172, guid: 185a3dbff5ad8eb4d85b94761469bdc0, type: 3}
       startWave: 5
       startAmount: 2
-      growthPerWave: 2
+      growthPerWave: 1
       growthType: 0
-      maxWave: 200
+      maxWave: 20
       customSpawnInterval: 0.6
       randomVariancePercent: 15
   - spawnInterval: 1
@@ -61,8 +61,8 @@ MonoBehaviour:
       startAmount: 4
       growthPerWave: 2
       growthType: 0
-      maxWave: 200
-      customSpawnInterval: 0.8
+      maxWave: 20
+      customSpawnInterval: 1
       randomVariancePercent: 30
     - isEnabled: 1
       EnemyPrefab: {fileID: -4759624641507810172, guid: 185a3dbff5ad8eb4d85b94761469bdc0, type: 3}
@@ -70,7 +70,7 @@ MonoBehaviour:
       startAmount: 2
       growthPerWave: 2
       growthType: 0
-      maxWave: 200
+      maxWave: 20
       customSpawnInterval: 2
       randomVariancePercent: 20
   - spawnInterval: 1
@@ -81,7 +81,7 @@ MonoBehaviour:
       startAmount: 1
       growthPerWave: 1
       growthType: 0
-      maxWave: 200
+      maxWave: 20
       customSpawnInterval: 0.8
       randomVariancePercent: 40
     - isEnabled: 1
@@ -90,7 +90,7 @@ MonoBehaviour:
       startAmount: 2
       growthPerWave: 1
       growthType: 0
-      maxWave: 200
+      maxWave: 20
       customSpawnInterval: 2
       randomVariancePercent: 15
     - isEnabled: 1
@@ -99,6 +99,35 @@ MonoBehaviour:
       startAmount: 2
       growthPerWave: 1
       growthType: 0
-      maxWave: 200
+      maxWave: 20
       customSpawnInterval: 5
       randomVariancePercent: 40
+  - spawnInterval: 1
+    enemiesToGenerate:
+    - isEnabled: 1
+      EnemyPrefab: {fileID: -4759624641507810172, guid: b0d921cdbc97e45489a2d2e29ad6b26c, type: 3}
+      startWave: 20
+      startAmount: 8
+      growthPerWave: 1
+      growthType: 0
+      maxWave: 300
+      customSpawnInterval: 0.8
+      randomVariancePercent: 30
+    - isEnabled: 1
+      EnemyPrefab: {fileID: -4759624641507810172, guid: 185a3dbff5ad8eb4d85b94761469bdc0, type: 3}
+      startWave: 20
+      startAmount: 4
+      growthPerWave: 2
+      growthType: 0
+      maxWave: 300
+      customSpawnInterval: 0
+      randomVariancePercent: 5
+    - isEnabled: 1
+      EnemyPrefab: {fileID: -4759624641507810172, guid: 8feedc3c226413845bce325d81c7a675, type: 3}
+      startWave: 20
+      startAmount: 3
+      growthPerWave: 1
+      growthType: 0
+      maxWave: 300
+      customSpawnInterval: 7
+      randomVariancePercent: 12
