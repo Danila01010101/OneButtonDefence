@@ -36,7 +36,8 @@ public class RandomEventsState : IState
             stateMachine.ChangeStateWithString(GameStateNames.Upgrade);
             return;
         }
-        
+
+        eventsTurnCounter = 0;
         spawnedDialog = MonoBehaviour.Instantiate(tradeDialoguePrefab);
 
         if (unusedDialogues.Count == 0)

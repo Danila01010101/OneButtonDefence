@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400010, guid: 730c20a30765d9645a388d47a293c00e, type: 2}
   - {fileID: 11400011, guid: 81b16814dc929734cabcdaec53c1949a, type: 2}
   - {fileID: 11400012, guid: 1233bd6d5bd87db479718a049e4c3390, type: 2}
-  <EventIntervalInTurns>k__BackingField: 3
+  <EventIntervalInTurns>k__BackingField: 1
   <StartResources>k__BackingField:
   - <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
     <Amount>k__BackingField: 80

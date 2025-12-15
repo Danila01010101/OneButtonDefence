@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 20
   timePerDamage: 1
-  damage: 20
+  damage: 16
   effect:
     <Resource>k__BackingField: {fileID: 11400000, guid: fde2e599e5d594c429ac4784be12eb0b, type: 2}
     <Amount>k__BackingField: -30
+    <UsedForBuilding>k__BackingField: 0
   effectForEveryEnemy: {fileID: 5985634496115995770, guid: 463cf9f7af4680240898f6aeba3fe3e6, type: 3}
   baseMagicCircle: {fileID: 544068497971431647, guid: 5062f45c25ad80448bae2af196350121, type: 3}
   iconForUI: {fileID: -1019100004, guid: 42d0bd423fc50354e84d64ac783a4cd1, type: 3}
