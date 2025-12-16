@@ -84,8 +84,7 @@ public class DialogState : IState
     {
         spawnedDialog.DialogEnded -= EndDialog;
         
-        if (nextState != GameStateNames.Reload)
-            stateMachine.ChangeStateWithString(nextState);
+        stateMachine.ChangeStateWithString(nextState);
     }
 
     private void EndDialogWithReward()

@@ -30,12 +30,12 @@ public class UpgradeState : IState
 
     public void Enter()
     {
-        CheckIfStateCanStart();
         isUpgradeChosen = false;
         upgradePhaseStartTime = Time.time;
         upgradeUI.UpgradeWindow.gameObject.SetActive(true);
         UpgradeStateStarted?.Invoke();
         UpgradeButton.UpgradesChoosen += DetectUpgradeChoosing;
+        CheckIfStateCanStart();
     }
 
     public void Exit()
