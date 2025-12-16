@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FatKnight
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 400
-  <Damage>k__BackingField: 40
+  <Damage>k__BackingField: 20
   <DamageUpgradeValue>k__BackingField: 0
   <Speed>k__BackingField: 1.5
   <DetectionRadius>k__BackingField: 100
