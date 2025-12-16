@@ -9,7 +9,7 @@ public class EnemyStateMachine : WarriorStateMachine
         var targetFollowingState = new TargetFollowingState(this, data.Agent, data.CharacterStatsCounter, data.EnemyChaseRange, fightState, data.EnemyLayerMask,
             data.WalkingAnimation, data.EnemyDetector, data.SelfDamageable, data.SelfTransform);
         var targetSearchStateData = new TargetSearchState.TargetSearchStateData(
-            this, data.SelfTransform, targetFollowingState, data.Agent, data.WalkingAnimation, data.EnemyDetector);
+            this, data.SelfTransform, targetFollowingState, data.Agent, data.WalkingAnimation, data.EnemyDetector, data.DetectionRadius, data.SelfTransform.position);
 
         states = new List<IState>()
         {

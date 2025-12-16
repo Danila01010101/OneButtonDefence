@@ -112,7 +112,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
     {
         var data = new WarriorStateMachine.WarriorStateMachineData(
             transform, statsCounter, characterStats.ChaseRange, characterStats.EnemyLayerMask, navMeshComponent,
-            walkingAnimation, fightAnimation, detector, this);
+            walkingAnimation, fightAnimation, detector, this, characterStats.DetectionRadius);
         stateMachine = new WarriorStateMachine(data);
     }
 

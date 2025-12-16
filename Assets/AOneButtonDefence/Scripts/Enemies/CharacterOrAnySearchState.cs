@@ -36,7 +36,7 @@ public class CharacterOrAnySearchState : TargetSearchState
         }
         else if (transform != null)
         {
-            var enemyInfo = detector.GetClosestEnemy(transform.position);
+            var enemyInfo = detector.GetClosestEnemy(transform.position, detectionRadius);
             
             if (enemyInfo.Target != null)
             {

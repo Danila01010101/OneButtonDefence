@@ -25,7 +25,7 @@ public class UnitWithUltimateStateMachine : StateMachine
         var targetFollowingState = new TargetFollowingState(this, data.Agent, data.StatsCounter, Mathf.Infinity, fightState, 
             data.TargetLayer, data.WalkingAnimation, data.EnemyDetector, data.SelfDamageable, data.SelfTransform);
         var targetSearchStateData = new TargetSearchState.TargetSearchStateData(
-            this, data.SelfTransform, targetFollowingState, data.Agent, data.WalkingAnimation, data.EnemyDetector);
+            this, data.SelfTransform, targetFollowingState, data.Agent, data.WalkingAnimation, data.EnemyDetector, 1000f, data.SelfTransform.position);
 
         states = new List<IState>()
         {

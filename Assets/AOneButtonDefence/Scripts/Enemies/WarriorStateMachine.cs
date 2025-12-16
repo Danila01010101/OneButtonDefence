@@ -35,7 +35,10 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
             targetFollowingState,
             data.Agent,
             data.WalkingAnimation,
-            data.EnemyDetector);
+            data.EnemyDetector,
+            data.DetectionRadius,
+            data.SelfTransform.position
+            );
 
         states = new List<IState>()
         {
@@ -57,6 +60,7 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
         public readonly CharacterStatsCounter CharacterStatsCounter;
         public readonly LayerMask EnemyLayerMask;
         public readonly float EnemyChaseRange;
+        public readonly float DetectionRadius;
         
         public WarriorStateMachineData(
             Transform selfTransform,
@@ -67,9 +71,11 @@ public class WarriorStateMachine : StateMachine, IUnitStateMachineWithEffects
             WalkingAnimation walkingAnimation,
             FightAnimation fightAnimation,
             IEnemyDetector detector,
-            ISelfDamageable selfDamagable) 
+            ISelfDamageable selfDamagable,
+            float detectionRadius) 
             : base(selfTransform, agent, walkingAnimation, fightAnimation, detector, selfDamagable)
         {
+            DetectionRadius = detectionRadius;
             EnemyLayerMask = enemyLayerMask;
             CharacterStatsCounter = statsCounterCounter;
             EnemyChaseRange = enemyChaseRange;

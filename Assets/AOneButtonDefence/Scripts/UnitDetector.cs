@@ -27,23 +27,28 @@ public class UnitDetector : IEnemyDetector
         CoroutineStarter.Instance.StartCoroutine(EnemyDetection());
     }
 
-    public TargetToFollowInfo GetClosestEnemy(Vector3 searchCenter)
+    public TargetToFollowInfo GetClosestEnemy(Vector3 searchCenter, float viewRadius)
     {
         float closestDistanceSqr = float.MaxValue;
         Transform closestTransform = null;
         NavMeshAgent foundAgent;
 
+        float viewRadiusSqr = viewRadius * viewRadius;
+
         foreach (Transform enemy in detectedEnemies)
         {
             if (enemy == null)
                 continue;
-            
+        
             float distanceSqr = (searchCenter - enemy.position).sqrMagnitude;
 
-            if (distanceSqr < closestDistanceSqr)
+            if (distanceSqr < viewRadiusSqr)
             {
-                closestDistanceSqr = distanceSqr;
-                closestTransform = enemy;
+                if (distanceSqr < closestDistanceSqr)
+                {
+                    closestDistanceSqr = distanceSqr;
+                    closestTransform = enemy;
+                }
             }
         }
 

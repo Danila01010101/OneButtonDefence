@@ -18,7 +18,7 @@ MonoBehaviour:
   spellTargetLayer:
     serializedVersion: 2
     m_Bits: 256
-  reloadDuration: 4.5
+  reloadDuration: 9
   SpellStorage:
   - Name: Fire
     Spell: {fileID: 11400000, guid: 1ba577e4bf8b04240834096db5fc8a49, type: 2}

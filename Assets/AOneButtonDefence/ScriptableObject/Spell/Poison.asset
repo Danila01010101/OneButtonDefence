@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Poison
   m_EditorClassIdentifier: 
   time: 20
-  timePerDamage: 1
-  damage: 16
+  timePerDamage: 1.2
+  damage: 10
   effect:
     <Resource>k__BackingField: {fileID: 11400000, guid: fde2e599e5d594c429ac4784be12eb0b, type: 2}
     <Amount>k__BackingField: -30
