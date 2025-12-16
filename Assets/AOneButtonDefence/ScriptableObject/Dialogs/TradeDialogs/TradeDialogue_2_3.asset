@@ -24,7 +24,7 @@ MonoBehaviour:
       \u0422\u0432\u043E\u0439 \u0432\u0440\u0430\u0433 \u0436\u0430\u043B\u0435\u0442\u044C,
       \u0447\u0442\u043E \u043D\u0435 \u0434\u0430\u0442\u044C \u043D\u0430\u043C
       \u043F\u0435\u0440\u0432\u044B\u043C \u043F\u043E\u043A\u0443\u0448\u0430\u0442\u044C."
-    - "\u0425\u043E\u0442\u0435\u0442\u044C35 \u043C\u0438\u0441\u043A\u0430 \u0440\u0438\u0441,
+    - "\u0425\u043E\u0442\u0435\u0442\u044C 80 \u043C\u0438\u0441\u043A\u0430 \u0440\u0438\u0441,
       \u0431\u0443\u0434\u0435\u043C \u0432\u0430\u043C \u0432\u043E\u0435\u0432\u0430\u0442\u044C,
       \u0446\u0435\u043B\u044B\u0439 \u0434\u044E\u0436\u0438\u043D\u0430 \u0432\u043E\u0438\u043D!
       \u0418\u043D\u0430\u0447\u0435 \u043A\u043E\u043B\u043E\u0442\u0438\u0442\u044C,
@@ -34,12 +34,12 @@ MonoBehaviour:
   _name: "\u041D\u0430\u0435\u043C\u043D\u0438\u043A\u0438 \u0437\u0430 \u0435\u0434\u0443"
   AcceptResources:
   - <Resource>k__BackingField: {fileID: 11400000, guid: 2ab81e2375d428d489e7aec91de477d4, type: 2}
-    <Amount>k__BackingField: -35
+    <Amount>k__BackingField: -80
     <UsedForBuilding>k__BackingField: 0
   - <Resource>k__BackingField: {fileID: 11400000, guid: a7a7003b21a1e244eb4249ac18a4c39d, type: 2}
     <Amount>k__BackingField: 12
     <UsedForBuilding>k__BackingField: 0
   DeclineResources:
   - <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
-    <Amount>k__BackingField: -40
+    <Amount>k__BackingField: -50
     <UsedForBuilding>k__BackingField: 0
