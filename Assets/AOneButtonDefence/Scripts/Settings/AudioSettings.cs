@@ -44,7 +44,8 @@ public class AudioSettings : MonoBehaviour
         
         foreach (AudioSource audioSource in registeredAudioSources)
         {
-            audioSource.volume = value;
+            if (audioSource != null)
+                audioSource.volume = value;
         }
     }
 
