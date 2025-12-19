@@ -19,7 +19,7 @@ public class TradeDialogueSystem : DialogueSystem
     public override void Initialize(AdsReviver adsReviver = null)
     {
         closeOnReplicFinish = false;
-        Slider.gameObject.SetActive(false);
+        SkipButton.gameObject.SetActive(false);
         SkipTime = Mathf.Infinity;
         agreeButton.interactable = false;
         agreeButton.onClick.AddListener(AcceptTrade);

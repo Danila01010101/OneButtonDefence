@@ -17,10 +17,10 @@ public class DialogueSystem : MonoBehaviour
     [Header("Text Speed")]
     public float ReplicSpeed;
 
-    [Header("Skip dialog")]
-    public float SkipTime;
-    public Slider Slider;
-    public KeyCode KeyCodePerSkip = KeyCode.G;
+    [Header("Skip Dialog")]
+    public float SkipTime = 2f;
+    public Slider SkipProgressSlider;
+    public Button SkipButton;
 
     [SerializeField] private Button reviveButton;
 
@@ -32,6 +32,9 @@ public class DialogueSystem : MonoBehaviour
     private string showReplic;
     private Coroutine replicaCoroutine;
     private Coroutine skipCoroutine;
+    
+    private bool isSkipButtonHeld = false;
+    private float currentSkipProgress = 0f;
 
     private AudioSource audioSource;
     private AdsReviver adsReviver;
@@ -48,11 +51,16 @@ public class DialogueSystem : MonoBehaviour
 
         Name.text = DialogueData.Name;
 
-        if (Slider != null)
-            Slider.value = 0;
+        if (SkipProgressSlider != null)
+        {
+            SkipProgressSlider.gameObject.SetActive(true);
+            SkipProgressSlider.value = 0f;
+        }
 
         if (GnomeAdvisor != null)
             GnomeAdvisor.sprite = DialogueData.Label[numLabel].CharacterEmotion.Emotion();
+
+        SetupSkipButton();
 
         gameObject.SetActive(true);
 
@@ -62,23 +70,69 @@ public class DialogueSystem : MonoBehaviour
             adsReviver.SubscribeButton(reviveButton);
     }
 
+    private void SetupSkipButton()
+    {
+        if (SkipButton == null) return;
+
+        SkipButton.onClick.RemoveAllListeners();
+
+        var eventTrigger = SkipButton.gameObject.GetComponent<EventTrigger>();
+        if (eventTrigger == null)
+            eventTrigger = SkipButton.gameObject.AddComponent<EventTrigger>();
+
+        eventTrigger.triggers.Clear();
+
+        var pointerDownEntry = new EventTrigger.Entry();
+        pointerDownEntry.eventID = EventTriggerType.PointerDown;
+        pointerDownEntry.callback.AddListener((data) => { OnSkipButtonDown(); });
+        eventTrigger.triggers.Add(pointerDownEntry);
+
+        var pointerUpEntry = new EventTrigger.Entry();
+        pointerUpEntry.eventID = EventTriggerType.PointerUp;
+        pointerUpEntry.callback.AddListener((data) => { OnSkipButtonUp(); });
+        eventTrigger.triggers.Add(pointerUpEntry);
+
+        var pointerExitEntry = new EventTrigger.Entry();
+        pointerExitEntry.eventID = EventTriggerType.PointerExit;
+        pointerExitEntry.callback.AddListener((data) => { OnSkipButtonUp(); });
+        eventTrigger.triggers.Add(pointerExitEntry);
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
             ChangeReplica();
 
-        if (Input.GetKeyDown(KeyCodePerSkip) && Slider != null)
-            skipCoroutine = StartCoroutine(Timer(SkipTime));
-
-        if (Input.GetKeyUp(KeyCodePerSkip))
+        if (isSkipButtonHeld && SkipProgressSlider != null)
         {
-            Slider.value = 0;
-            if (skipCoroutine != null)
+            currentSkipProgress += Time.deltaTime;
+            SkipProgressSlider.value = currentSkipProgress / SkipTime;
+
+            if (currentSkipProgress >= SkipTime)
             {
-                StopCoroutine(skipCoroutine);
-                skipCoroutine = null;
+                SkipDialog();
             }
         }
+    }
+
+    private void OnSkipButtonDown()
+    {
+        if (SkipProgressSlider == null) return;
+
+        isSkipButtonHeld = true;
+        currentSkipProgress = 0f;
+        SkipProgressSlider.value = 0f;
+        SkipProgressSlider.gameObject.SetActive(true);
+    }
+
+    private void OnSkipButtonUp()
+    {
+        if (SkipProgressSlider == null) return;
+
+        isSkipButtonHeld = false;
+        currentSkipProgress = 0f;
+        SkipProgressSlider.value = 0f;
+        SkipProgressSlider.gameObject.SetActive(false);
     }
 
     public void StartDialog()
@@ -131,27 +185,11 @@ public class DialogueSystem : MonoBehaviour
 
     protected virtual void SkipDialog()
     {
+        if (SkipProgressSlider != null)
+            SkipProgressSlider.gameObject.SetActive(false);
+
         Destroy(gameObject);
         DialogEnded?.Invoke();
-    }
-
-    private IEnumerator Timer(float time)
-    {
-        float timer = 0;
-
-        while (true)
-        {
-            yield return null;
-            timer += Time.deltaTime;
-
-            Slider.value = timer / time;
-
-            if (timer >= time)
-            {
-                SkipDialog();
-                yield break;
-            }
-        }
     }
 
     private IEnumerator ShowReplica()
@@ -185,8 +223,5 @@ public class DialogueSystem : MonoBehaviour
     {
         if (replicaCoroutine != null)
             StopCoroutine(replicaCoroutine);
-
-        if (skipCoroutine != null)
-            StopCoroutine(skipCoroutine);
     }
 }
