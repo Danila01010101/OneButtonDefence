@@ -48,6 +48,7 @@ public class SpellCast : IDisposable
         randomSpell.Add(spellStorage[Random.Range(0, spellStorage.Count)].Spell);
         spellCanvas.ChangeUI(randomSpell[0].IconForUI, randomSpell[1].IconForUI, randomSpell[0].Background, randomSpell[1].MiniIcon, reloadDuration);
         AddNextSpell();
+        spellCanvas.SetIcon(randomSpell[0].IconForUI, randomSpell[1].IconForUI, randomSpell[0].Background, randomSpell[1].MiniIcon);
     }
     
     private void Enable() => isBattleGoing = true;

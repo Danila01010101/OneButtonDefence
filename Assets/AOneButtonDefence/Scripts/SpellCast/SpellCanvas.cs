@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,9 +11,24 @@ public class SpellCanvas : MonoBehaviour
     [SerializeField] private Image nextSpell;
     [SerializeField] private Image nextSpellIcon;
     
+    private Coroutine currentCoroutine;
+
+    public void SetIcon(Sprite currentSpell, Sprite nextSpell, Sprite currentSpellBackground, Sprite nextSpellIcon)
+    {
+        if (currentCoroutine != null) StopCoroutine(currentCoroutine);
+        
+        this.currentSpell.sprite = currentSpell;
+        this.currentSpellBackground.sprite = currentSpellBackground;
+        this.nextSpellIcon.sprite = nextSpellIcon;
+        this.nextSpell.sprite = nextSpell;
+        this.currentSpell.fillAmount = 1f;
+    }
+
     public void ChangeUI(Sprite currentSpell, Sprite nextSpell, Sprite currentSpellBackground, Sprite nextSpellIcon, float duration)
     {
-        StartCoroutine(ChangeUICoroutine(currentSpell, nextSpell, currentSpellBackground, nextSpellIcon, duration));
+        if (currentCoroutine != null) StopCoroutine(currentCoroutine);
+        
+        currentCoroutine = StartCoroutine(ChangeUICoroutine(currentSpell, nextSpell, currentSpellBackground, nextSpellIcon, duration));
     }
 
     private IEnumerator ChangeUICoroutine(Sprite currentSpell, Sprite nextSpell, Sprite currentSpellBackground, Sprite nextSpellIcon, float duration)
