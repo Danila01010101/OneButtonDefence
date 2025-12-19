@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ResourcesStatisticInitializer : IGameInitializerStep
+public class ResourcesStatisticInitializer : IGameInitializerStep, IDisposable
 {
     private GameData _gameData;
     private GameResourcesCounter _counter;
     private UnitsFactory _gnomeFactory;
+    private ResourceIncomeCounter _incomeCounter;
     public IncomeDifferenceTextConverter IncomeConverter { get; private set; }
 
     public ResourcesStatisticInitializer(GameData data, GameResourcesCounter counter, UnitsFactory gnomeFactory)
@@ -26,8 +28,13 @@ public class ResourcesStatisticInitializer : IGameInitializerStep
             { ResourceData.ResourceType.Warrior, new WarriorResourceEffect(_gnomeFactory, _gameData.GnomeSpawnOffset) }
         };
 
-        new ResourceIncomeCounter(_counter, resources, resourceEffectsDictionary);
+        _incomeCounter = new ResourceIncomeCounter(_counter, resources, resourceEffectsDictionary);
         IncomeConverter = new IncomeDifferenceTextConverter();
         yield break;
+    }
+
+    public void Dispose()
+    {
+        _incomeCounter.Unsubscribe();
     }
 }

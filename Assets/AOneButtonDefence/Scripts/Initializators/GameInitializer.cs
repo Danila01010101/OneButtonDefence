@@ -215,6 +215,7 @@ public class GameInitializer : MonoBehaviour
         {
             try { incomeDifferenceTextConverter = resourcesStatisticInit.IncomeConverter; } catch { incomeDifferenceTextConverter = null; }
         });
+        disposables.Add(resourcesStatisticInit);
 
         ResourceChangeMediatorInitializer resourceChangeMediatorInit = new ResourceChangeMediatorInitializer(gameData);
         yield return SafeStep("ResourceChangeMediatorInitializer", () => resourceChangeMediatorInit.Initialize(), () =>
