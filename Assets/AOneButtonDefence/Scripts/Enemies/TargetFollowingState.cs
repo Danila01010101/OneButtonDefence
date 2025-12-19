@@ -47,7 +47,10 @@ public class TargetFollowingState : UnitStateBase, ITargetFollower
         animation.StartAnimation();
         detector.NewEnemiesDetected += CheckIfTargetChanged;
         selfDamageable.DamageRecieved += OnDamageReceived;
-        agent.speed = statsCounter.GetStat(ResourceData.ResourceType.WarriorSpeed);
+        
+        if (agent != null)
+            agent.speed = statsCounter.GetStat(ResourceData.ResourceType.WarriorSpeed);
+        
         isExiting = false;
     }
 

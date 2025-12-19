@@ -143,7 +143,7 @@ public class Spell : MonoBehaviour, IDamagable, IEffectActivator
             
             foreach (IDamagable target in list) 
             {
-                if (target != null && target.IsAlive())
+                if (target != null && target.GetTransform() != null && target.IsAlive())
                 {
                     if (spell.EffectForEveryEnemy != null)
                         Instantiate(spell.EffectForEveryEnemy, target.GetTransform().position + spell.EffectForEveryEnemy.transform.localPosition, Quaternion.identity);

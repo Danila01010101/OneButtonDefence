@@ -25,6 +25,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
     protected MaterialChanger materialChanger;
     protected AudioSource audioSource;
     protected CharacterStatsCounter statsCounter;
+    protected Transform unitTransform;
 
     private bool isDead;
 
@@ -32,6 +33,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
 
     public virtual void Initialize(IEnemyDetector detector)
     {
+        unitTransform = transform;
         audioSource = GetComponent<AudioSource>();
         InitializeAnimationComponents();
         navMeshComponent = GetComponent<NavMeshAgent>();
@@ -95,7 +97,17 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
 
     public IDamagable GetSelfDamagable() => this;
 
-    public Transform GetTransform() => transform;
+    public Transform GetTransform()
+    {
+        if (unitTransform != null && !ReferenceEquals(unitTransform, null))
+        {
+            return unitTransform;
+        }
+        else
+        {
+            return null;
+        }
+    }
     
     public string GetName() => gameObject.name;
 
@@ -111,7 +123,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
     protected virtual void InitializeStateMachine(IEnemyDetector detector)
     {
         var data = new WarriorStateMachine.WarriorStateMachineData(
-            transform, statsCounter, characterStats.ChaseRange, characterStats.EnemyLayerMask, navMeshComponent,
+            unitTransform, statsCounter, characterStats.ChaseRange, characterStats.EnemyLayerMask, navMeshComponent,
             walkingAnimation, fightAnimation, detector, this, characterStats.DetectionRadius);
         stateMachine = new WarriorStateMachine(data);
     }
@@ -131,7 +143,7 @@ public class FightingUnit : MonoBehaviour, IDamagable, ISelfDamageable
 
         if (audioSource != null && audioSource.clip != null)
         {
-            AudioUtility.PlayClipAtPoint(audioSource, transform.position);
+            AudioUtility.PlayClipAtPoint(audioSource, unitTransform.position);
         }
 
         Destroy(gameObject, 0.1f);
