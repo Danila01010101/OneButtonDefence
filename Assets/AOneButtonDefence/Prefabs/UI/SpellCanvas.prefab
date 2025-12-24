@@ -1258,6 +1258,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a2b60456384f114284e78e1e047921a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableOnMobileWebGL: 0
+  disableOnDesktop: 1
 --- !u!1 &9139637377637212560 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 162992, guid: 7973d81b61b491640b7a0d00c9de83d3, type: 3}
