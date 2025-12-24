@@ -20,6 +20,7 @@ public class BuildingSpawner : MonoBehaviour, ICellPlacer
         SpawnBuilding(BasicBuildingData.Upgrades.SpiritBuilding);
         SpawnBuilding(BasicBuildingData.Upgrades.Factory);
         SpawnBuilding(BasicBuildingData.Upgrades.MilitaryCamp);
+        SpawnBuilding(BasicBuildingData.Upgrades.MilitaryCamp);
     }
 
     private void ActivateUpgrades(BasicBuildingData.Upgrades firstUpgrade)

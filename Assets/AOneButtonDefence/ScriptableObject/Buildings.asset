@@ -91,7 +91,7 @@ MonoBehaviour:
     <buildResourceChange>k__BackingField:
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
-        <Amount>k__BackingField: 20
+        <Amount>k__BackingField: 15
         <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u0421\u0432\u044F\u0442\u044B\u0435
         \u043A\u0443\u0432\u0448\u0438\u043D\u044B, \u0431\u043E\u0440\u043E\u0434\u044B
@@ -114,7 +114,7 @@ MonoBehaviour:
         \u0433\u043D\u043E\u043C\u0430!"
     - <ResourceAmount>k__BackingField:
         <Resource>k__BackingField: {fileID: 11400000, guid: 1c8857840f214ce41aa93c000aafcbe6, type: 2}
-        <Amount>k__BackingField: 25
+        <Amount>k__BackingField: 15
         <UsedForBuilding>k__BackingField: 0
       <ResourceDescription>k__BackingField: "\u041C\u043E\u043B\u0438\u0442\u0432\u0430
         \u0442\u0432\u043E\u0440\u0438\u0442 \u0447\u0443\u0434\u0435\u0441\u0430,
