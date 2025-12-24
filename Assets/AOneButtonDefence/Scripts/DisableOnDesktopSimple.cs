@@ -1,14 +1,9 @@
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class DisableOnDesktopSimple : MonoBehaviour
 {
     [SerializeField] private bool disableOnMobileWebGL = true;
     [SerializeField] private bool disableOnDesktop = true;
-    
-    // JS функция для получения User Agent (только для WebGL)
-    [DllImport("__Internal")]
-    private static extern string GetUserAgent();
     
     private void Start()
     {
@@ -32,45 +27,46 @@ public class DisableOnDesktopSimple : MonoBehaviour
         // Если не нужно отключать на мобильном WebGL, возвращаем false
         if (!disableOnMobileWebGL) return false;
         
-        try
-        {
-            // Пытаемся получить User Agent через JS
-            string userAgent = GetUserAgent();
-            return IsMobileUserAgent(userAgent);
-        }
-        catch
-        {
-            // Если не удалось, используем fallback методы
-            return CheckMobileFallback();
-        }
+        return IsMobileDevice();
     }
     
-    private bool IsMobileUserAgent(string userAgent)
+    private bool IsMobileDevice()
     {
-        if (string.IsNullOrEmpty(userAgent))
-            return false;
-            
-        string ua = userAgent.ToLower();
-        
-        // Проверяем мобильные ключевые слова в User Agent
-        return ua.Contains("mobile") || 
-               ua.Contains("android") || 
-               ua.Contains("iphone") || 
-               ua.Contains("ipad") || 
-               ua.Contains("ipod");
-    }
-    
-    private bool CheckMobileFallback()
-    {
-        // Fallback метод через Screen
+        // Метод 1: Проверка соотношения сторон (самый надежный для WebGL)
         float screenRatio = (float)Screen.width / Screen.height;
         
-        // Мобильные устройства обычно имеют соотношение сторон близкое к портретному
-        bool isLikelyMobile = screenRatio < 0.75f || screenRatio > 1.5f;
+        // Мобильные устройства обычно имеют соотношение сторон:
+        // - Портрет: ~9:16 = 0.5625
+        // - Ландшафт: ~16:9 = 1.777
+        bool isPortrait = screenRatio < 0.75f;  // Ширина < 75% высоты
+        bool isLandscapeMobile = screenRatio > 1.5f && screenRatio < 2.0f;  // Типичное для мобильных
         
-        // Дополнительная проверка по DPI
-        bool highDPI = Screen.dpi > 250;
+        // Метод 2: Размер экрана в пикселях
+        bool smallScreen = Screen.width <= 768 || Screen.height <= 768;
         
-        return isLikelyMobile || highDPI;
+        // Метод 3: Проверка touch support
+        bool hasTouch = Input.touchSupported;
+        
+        // Метод 4: Плотность пикселей (только если доступно)
+        bool highDPI = false;
+        if (Screen.dpi > 0)
+        {
+            highDPI = Screen.dpi > 200; // Мобильные обычно > 200 DPI
+        }
+        
+        // Логика определения:
+        // Если устройство поддерживает тач И (имеет портретную ориентацию ИЛИ маленький экран)
+        if (hasTouch)
+            return true;
+            
+        // Если высокий DPI И портретная ориентация
+        if (highDPI && isPortrait)
+            return true;
+            
+        // Если специфичное для мобильных соотношение сторон
+        if (isPortrait || isLandscapeMobile)
+            return true;
+            
+        return false;
     }
 }
