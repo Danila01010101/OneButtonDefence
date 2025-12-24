@@ -16,4 +16,4 @@ MonoBehaviour:
   <Type>k__BackingField: 10
   <IsSpawnable>k__BackingField: 0
   <Icon>k__BackingField: {fileID: 21300000, guid: 74d1f080f1cabb44482e03205a6761a7, type: 3}
-  <ResourceEffect>k__BackingField: {fileID: 0}
+  <ResourceEffect>k__BackingField: {fileID: 5112403345868107899, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
