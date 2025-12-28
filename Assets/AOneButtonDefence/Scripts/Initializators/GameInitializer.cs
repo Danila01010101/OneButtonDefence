@@ -5,7 +5,7 @@ using AOneButtonDefence.Scripts;
 using AOneButtonDefence.Scripts.Initializators;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization; 
+using UnityEngine.Serialization;
 
 public class GameInitializer : MonoBehaviour
 {
