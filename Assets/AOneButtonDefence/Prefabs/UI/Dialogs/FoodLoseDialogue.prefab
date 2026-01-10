@@ -1257,8 +1257,8 @@ MonoBehaviour:
   GnomeAdvisor: {fileID: 0}
   ReplicSpeed: 0.03
   SkipTime: 0
-  Slider: {fileID: 0}
-  KeyCodePerSkip: 103
+  SkipProgressSlider: {fileID: 0}
+  SkipButton: {fileID: 0}
   reviveButton: {fileID: 4351392623283779567}
 --- !u!82 &8217856072385390231
 AudioSource:
@@ -2289,6 +2289,10 @@ PrefabInstance:
     - target: {fileID: 1738001527605149384, guid: bc9bc1326265dd84f9f26c11b8ba5a31, type: 3}
       propertyPath: m_Name
       value: Bg Lose
+      objectReference: {fileID: 0}
+    - target: {fileID: 1738001527605149384, guid: bc9bc1326265dd84f9f26c11b8ba5a31, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5797436951271562057, guid: bc9bc1326265dd84f9f26c11b8ba5a31, type: 3}
       propertyPath: m_Pivot.x

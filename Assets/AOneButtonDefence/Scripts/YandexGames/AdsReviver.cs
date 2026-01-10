@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using YG;
 
 public class AdsReviver : IDisposable
 {
@@ -27,16 +26,16 @@ public class AdsReviver : IDisposable
     public void SubscribeButton(Button reviveButton)
     {
         this.reviveButton?.onClick.RemoveListener(Revive);
-        YG2.onRewardAdv -= ActivateReviveReward;
+        //YG2.onRewardAdv -= ActivateReviveReward;
         this.reviveButton = reviveButton;
         reviveButton.onClick.AddListener(ActivateReviveReward);
-        YG2.onRewardAdv += ActivateReviveReward;
+        //YG2.onRewardAdv += ActivateReviveReward;
         reviveButton.interactable = true;
     }
 
     private void ActivateReviveReward()
     {
-        YG2.RewardedAdvShow(reviveRewardText);
+        //YG2.RewardedAdvShow(reviveRewardText);
     }
 
     private void ActivateReviveReward(string id)

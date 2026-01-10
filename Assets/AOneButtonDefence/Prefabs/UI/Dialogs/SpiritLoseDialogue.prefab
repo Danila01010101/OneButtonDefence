@@ -676,7 +676,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2843943599229829416
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1513,8 +1513,8 @@ MonoBehaviour:
   GnomeAdvisor: {fileID: 0}
   ReplicSpeed: 0.03
   SkipTime: 0
-  Slider: {fileID: 0}
-  KeyCodePerSkip: 103
+  SkipProgressSlider: {fileID: 0}
+  SkipButton: {fileID: 0}
   reviveButton: {fileID: 1903519642105930946}
 --- !u!82 &8217856072385390231
 AudioSource:

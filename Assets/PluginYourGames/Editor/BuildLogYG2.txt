@@ -1,3 +1,0 @@
-﻿Build path: D:/11GnomesBuilds/FinalNoBoss
-Build number: 19
-PluginYG version: 2.007

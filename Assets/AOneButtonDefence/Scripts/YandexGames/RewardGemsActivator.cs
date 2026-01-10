@@ -1,6 +1,5 @@
 using System;
 using UnityEngine.UI;
-using YG;
 
 public class RewardGemsActivator : IDisposable
 {
@@ -20,7 +19,7 @@ public class RewardGemsActivator : IDisposable
         this.resourceCounter = resourceCounter;
         this.gemsResource = gemsResource;
         this.rewardAmount = rewardAmount;
-        YG2.onRewardAdv += ActivateReward;
+        //YG2.onRewardAdv += ActivateReward;
     }
 
     public void InitializeSkinPanel(SkinPanel skinPanel)
@@ -32,7 +31,7 @@ public class RewardGemsActivator : IDisposable
 
     private void ActivateReward()
     {
-        YG2.RewardedAdvShow(rewardGemsText);
+        //YG2.RewardedAdvShow(rewardGemsText);
     }
 
     private void ActivateReward(string id)
@@ -58,7 +57,7 @@ public class RewardGemsActivator : IDisposable
 
     public void Dispose()
     {
-        YG2.onRewardAdv -= ActivateReward;
+        //YG2.onRewardAdv -= ActivateReward;
         adsButton.onClick.RemoveListener(ActivateReward);
     }
 }
