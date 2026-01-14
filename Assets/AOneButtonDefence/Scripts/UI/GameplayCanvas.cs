@@ -95,7 +95,7 @@ public class GameplayCanvas : MonoBehaviour
                 upgradeButton.Deactivate();
                 break;
             case 1:
-                iconsText.text = "Здание выбрано. Ожидаем приказа!";
+                iconsText.text = "Здание выбрано. Ждем приказа!";
                 upgradeButton.Activate();
                 break;
         }
