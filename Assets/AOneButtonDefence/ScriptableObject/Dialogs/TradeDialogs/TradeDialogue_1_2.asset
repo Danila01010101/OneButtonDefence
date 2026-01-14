@@ -38,7 +38,7 @@ MonoBehaviour:
       \u043D\u0430\u043C \u043F\u043E\u043C\u043E\u0447\u044C..."
     Answers: []
     NextLabel: 0
-  _name: "\u041F\u043E\u0447\u0438\u043D\u043A\u0430 \u043A\u043E\u0432\u0440\u043E\u0432-\u0432\u0435\u0440\u0442\u043E\u043B\u0435\u0442\u043E\u0432"
+  _name: "\u041A\u043E\u0432\u0440\u044B-\u0432\u0435\u0440\u0442\u043E\u043B\u0435\u0442\u044B"
   AcceptResources:
   - <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
     <Amount>k__BackingField: -45

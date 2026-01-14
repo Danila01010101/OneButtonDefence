@@ -29,8 +29,7 @@ MonoBehaviour:
       \u0434\u043E\u043C\u0430 \u043F\u043E\u0436\u0438\u043B\u044B\u043C \u043A\u043E\u0442\u044F\u0442\u0430\u043C??"
     Answers: []
     NextLabel: 0
-  _name: "\u0414\u043E\u043C \u0434\u043B\u044F \u043F\u043E\u0436\u0438\u043B\u044B\u0445
-    \u043A\u043E\u0442\u044F\u0442"
+  _name: "\u041F\u043E\u0436\u0438\u043B\u044B\u0435 \u043A\u043E\u0442\u044F\u0442\u0430"
   AcceptResources:
   - <Resource>k__BackingField: {fileID: 11400000, guid: 52231b3f92e9e6a4ea9e9255ec446cc3, type: 2}
     <Amount>k__BackingField: -55
