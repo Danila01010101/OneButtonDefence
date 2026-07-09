@@ -193,6 +193,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 9ac77c570b0a27644a2e0bfed9457895, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 69a342d2231d0ec4bb8c032e00180359, type: 2}
     - target: {fileID: 919132149155446097, guid: 9ac77c570b0a27644a2e0bfed9457895, type: 3}
       propertyPath: m_Name
       value: BuildingEffectivenessMudriyDub

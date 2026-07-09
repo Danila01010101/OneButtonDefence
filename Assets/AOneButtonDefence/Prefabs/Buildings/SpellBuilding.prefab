@@ -6449,7 +6449,7 @@ PrefabInstance:
     - target: {fileID: -7635826562936255635, guid: 52cb48bfeb8b2de4d9530444d8c1a1a8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8700d5ee2fec8be428b1f3d94f95f6a2, type: 2}
+      objectReference: {fileID: 2100000, guid: 69a342d2231d0ec4bb8c032e00180359, type: 2}
     - target: {fileID: 919132149155446097, guid: 52cb48bfeb8b2de4d9530444d8c1a1a8, type: 3}
       propertyPath: m_Name
       value: SpellStrenght Popov building
