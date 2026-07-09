@@ -5,88 +5,96 @@ using UnityEngine;
 
 public class RendererDisabler : IDisposable
 {
-    private readonly List<Renderer> renderers = new List<Renderer>();
-    private readonly List<Renderer> nearbyRenderers = new List<Renderer>();
+    private readonly List<Renderer> renderers = new();
 
     private Camera mainCamera;
-    private bool isActivated = false;
+    private bool isActivated;
 
     private float renderDistance = 75f;
-    private float updateNearbyInterval = 0.4f;
-    private float lastNearbyUpdateTime = -1f;
-
-    private Plane[] cameraPlanes;
+    private float renderDistanceSqr;
+    private float updateInterval = 0.4f;
+    private float nextUpdateTime;
 
     public IEnumerator Initialize()
     {
+        renderDistanceSqr = renderDistance * renderDistance;
+
         GameInitializer.GameInitialized += StartFindingObjects;
         yield break;
     }
 
     private void StartFindingObjects()
-        => CoroutineStarter.Instance.StartCoroutine(FindObjects());
+    {
+        CoroutineStarter.Instance.StartCoroutine(FindObjects());
+    }
 
     private IEnumerator FindObjects()
     {
         yield return new WaitForSeconds(0.1f);
 
         mainCamera = Camera.main;
-        GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("RenderDisableable");
+
+        GameObject[] taggedObjects =
+            GameObject.FindGameObjectsWithTag("RenderDisableable");
 
         renderers.Clear();
+
         foreach (var obj in taggedObjects)
         {
-            var found = obj.GetComponentsInChildren<Renderer>(true);
-            renderers.AddRange(found);
+            if (obj == null)
+                continue;
+
+            renderers.AddRange(obj.GetComponentsInChildren<Renderer>(true));
         }
 
-        foreach (var r in renderers)
-            if (r != null) r.enabled = false;
-
         isActivated = true;
+
+        UpdateRenderers();
     }
 
     public void LateUpdate()
     {
-        if (!isActivated || mainCamera == null) return;
+        if (!isActivated || mainCamera == null)
+            return;
 
+        if (Time.time < nextUpdateTime)
+            return;
+
+        nextUpdateTime = Time.time + updateInterval;
+
+        UpdateRenderers();
+    }
+
+    private void UpdateRenderers()
+    {
         Vector3 camPos = mainCamera.transform.position;
-        cameraPlanes = GeometryUtility.CalculateFrustumPlanes(mainCamera);
 
-        if (Time.time - lastNearbyUpdateTime > updateNearbyInterval)
+        for (int i = renderers.Count - 1; i >= 0; i--)
         {
-            UpdateNearbyRenderers(camPos);
-            lastNearbyUpdateTime = Time.time;
-        }
+            Renderer r = renderers[i];
 
-        foreach (var r in nearbyRenderers)
-        {
-            if (r == null) continue;
-            r.enabled = GeometryUtility.TestPlanesAABB(cameraPlanes, r.bounds);
+            if (r == null)
+            {
+                renderers.RemoveAt(i);
+                continue;
+            }
+
+            bool shouldBeEnabled =
+                (r.transform.position - camPos).sqrMagnitude <= renderDistanceSqr;
+
+            if (r.enabled != shouldBeEnabled)
+                r.enabled = shouldBeEnabled;
         }
     }
 
-    private void UpdateNearbyRenderers(Vector3 camPos)
+    public void SetRenderDistance(float distance)
     {
-        nearbyRenderers.Clear();
-
-        foreach (var r in renderers)
-        {
-            if (r == null) continue;
-
-            float d = Vector3.Distance(camPos, r.transform.position);
-            if (d <= renderDistance)
-                nearbyRenderers.Add(r);
-            else
-                r.enabled = false;
-        }
+        renderDistance = distance;
+        renderDistanceSqr = distance * distance;
     }
 
     public void Dispose()
     {
         GameInitializer.GameInitialized -= StartFindingObjects;
     }
-
-    public void SetRenderDistance(float distance)
-        => renderDistance = distance;
 }
