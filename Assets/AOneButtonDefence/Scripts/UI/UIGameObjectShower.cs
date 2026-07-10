@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class UIGameObjectShower : MonoBehaviour
@@ -19,9 +20,14 @@ public class UIGameObjectShower : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        SkinPanel.ShopEnabled += EnableGameObject;
+        SkinPanel.ShopDisabled += DisableGameObject;
         
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        DisableGameObject();
     }
 
     public T RenderPrefab<T>(T modelPrefab, Vector3 position, Quaternion? rotation = null) where T : MonoBehaviour
@@ -65,5 +71,15 @@ public class UIGameObjectShower : MonoBehaviour
         {
             SetLayerRecursively(child.gameObject, layerMask);
         }
+    }
+
+    private void EnableGameObject() => gameObject.SetActive(true);
+
+    private void DisableGameObject() => gameObject.SetActive(false);
+
+    private void OnDestroy()
+    {
+        SkinPanel.ShopEnabled -= EnableGameObject;
+        SkinPanel.ShopDisabled -= DisableGameObject;
     }
 }
